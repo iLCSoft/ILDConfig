@@ -1,0 +1,52 @@
+##########################
+#
+#
+# fg:  for now this only works with this development detector model 
+#      with simplified SIT, SET, FTD and ETD removed
+#      -> to be fixed
+#
+#/Mokka/init/detectorModel ILD_01_dev
+#  -> use -M ILD_Ox_v01 , x=1,2,3 
+####################################
+
+
+/Mokka/init/BatchMode true
+
+/Mokka/init/lcioFilename bbudsc_3evt.slcio
+
+
+#/Mokka/init/registerPlugin TrackingOnlyPlugin 
+
+
+/Mokka/init/initialMacroFile bbudsc_3evt.g4macro
+#-------- don't specify the mysql host when running with the mokka-wrapper.sh
+#         that starts a local DB 
+#/Mokka/init/dbHost polui01.in2p3.fr
+/Mokka/init/user consult
+/Mokka/init/dbPasswd consult
+/Mokka/init/lcioWriteMode WRITE_NEW
+/Mokka/init/lorentzTransformationAngle 7 mrad
+/Mokka/init/BFactor 1.0
+/Mokka/init/userDeltaIntersection 1e-5 mm
+/Mokka/init/userDeltaOneStep 1e-4 mm
+/Mokka/init/lcioDetailedShowerMode false
+
+#/Mokka/init/lcioDetailedTRKHitMode SITCollection
+#/Mokka/init/lcioDetailedTRKHitMode VXDCollection
+#/Mokka/init/lcioDetailedTRKHitMode FTDCollection
+#/Mokka/init/lcioDetailedTRKHitMode TPCCollection
+#/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
+
+/Mokka/init/physicsListName QGSP_BERT
+/Mokka/init/visumode false
+/Mokka/init/rangeCut 0.1 mm
+
+#/Mokka/init/TPCLowPtStepLimit true
+#/Mokka/init/TPCLowPtCut 10 MeV
+#/Mokka/init/TPCLowPtStoreMCPForHits true
+
+/Mokka/init/randomSeed 1240
+/Mokka/init/lcioWriteCompleteHepEvt true
+/Mokka/init/BatchMode true
+
+

@@ -1,0 +1,4 @@
+/generator/generator bbudsc_3evt.stdhep
+/run/beamOn 3
+exit
+

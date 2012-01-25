@@ -1,0 +1,172 @@
+############################################################
+#
+#  StandardConfig - package for ilcsoft configuration files
+#  such as Marlin steering files, gear geometry files,...
+#
+#  12/2010
+#  F.Gaede, DESY
+############################################################
+
+ subdirectories:
+
+ current
+ -------
+ current example files for running Mokka and Marlin
+ (see: ./current/README for mini howto on using (this version of) ilcsoft )
+  
+
+ mc2008
+ ------
+ configuration files for 2008 Monte Carlo production for LOI
+
+
+ clic_cdr
+ ------
+ configuration files for CLIC CDR production (2011)
+
+
+
+ versions:
+ ========
+
+ -----------   
+| v03-51-01 |
+ -----------
+
+    - fixed typo in documentation (current/README)
+
+ --------    
+| v03-51 |
+ --------   
+     -  bbudsc_3evt.steer: - removed detector model from steering file
+     	-> use "Mokka -M ILD_Ox_v01" instead
+     -  bbudsc_3evt_stdreco.xml:   added BCalReco processor for beam cal reconstruction 
+
+ --------    
+| v03-50 |
+ --------   
+     - switched examples/test steering files in current
+       to use ILD_01_dev
+     - updated current/README 
+
+ --------    
+| v03-00 |
+ --------   
+
+    added configuration files for CLIC CDR production (2011)
+
+ --------    
+| v02-02 |
+ --------   
+     - switched to use PandoraPFANew in the examples in ./current
+     - made examples work with any detector model (ILD_00/ILD_01pre0) 
+       (use Mokka -M modelName bbudsc_3evt.steer)
+ 
+ --------    
+| v02-01 |
+ --------   
+   - added ./current/README with mini user howto
+   - added ./current/bbudsc_3evt_viewerDST.xml as example 
+     for using the DSTViewer
+
+
+ --------    
+| v02-00 |
+ --------   
+
+   - added the directory "current". This directory contains: an stdhep 
+        file containing 3 ttbar events; a Mokka steering file and related
+        macro; the gearfile produced for ILD_00fw by running Mokka using 
+        the included steering file; a Marlin Reconstruction steering file
+        based on the standard configuration; the necessary energy 
+        dependent pdf files needed by PFOID; and a Marlin steering file 
+        which can be used to view the reconstructed events in CED.
+        
+    - this directory should be kept upto date so that it can form the basis
+        of testing when producing releases.
+
+    - when needed for mass production a suitible directory should be created
+        in the same way as mc2008, which can then be modified during preparation 
+        of a round of mass production and then "frozen "in order to preserve the 
+        configuration. 
+
+ --------    
+| v01-01 |
+ --------   
+    * updated LCFI flavour tag (R.Walsh)
+    - mc2008/: stdreco.xml, stdreco_IN.xml: - added parameters for the
+      joint probabilities for ILD_00 in FlavourTagInputsProcessor; -
+      fixed b3_D0CutValue = 5O -> 50; - using realistic V0Finder
+      processor: h1_MCPIDEnable = false, in all RPCutProcessors.
+
+    * included PFOID processor for calo based particle ID (plus
+      necessary energy dependent pdf files)
+
+    * use LCalDigi forBCal as opposed to MuonDigi 
+      (layer decodes as "K" not "K-1")
+
+ --------    
+| v01-00 |
+ --------   
+  * updated to new ILD_00 detector
+    - include LHcal, Bcal
+	- latest Pandora steering
+	- new number from SILC for SIT,SET,ETD and FTD resolution
+
+  
+ -----------
+| v00-06-00 |
+ -----------
+ *  added FTDOnlyTracksMinimumHits=4  to Pandora steering
+
+ -----------
+| v00-05-02 |
+ -----------
+   * added mu+/-,K+/-,pi+/- decays to MCParticlesSkimmed collection
+
+ -----------
+| v00-05-01 |
+ -----------
+ 
+    * bug fix: renamed FTSelected_NJet to  Durham_NJet in MCTruthJetEnergy
+
+ --------
+| v00-05 |
+ --------
+    * added directory scripts
+      -> python tool for creating steering files from template
+         stdreco_IN.xml
+ 
+ --------
+| v00-04 |
+ --------
+    * Replaced FTSelected_NJets by Durham_NJets in DSTs (R.Walsh)
+    * added MyMCTruthJetEnergy processor -
+    * removed flavour tag for 7 and 8 jets 
+	* replaced FTDDigiProcessor w/ ETDDigiProcessor (same code)
+	* included lcfi vertex charge processors							  
+    * fixed TPC hit collection names
+    * removed CurlKiller as processor 
+      - now be included in LEPTracking (MarlinReco v00-08)
+    * added example section for VTXNoiseHits (not active) (MarlinReco v00-08)
+
+ --------
+| v00-03 |
+ --------
+     
+     * renamed FTFinal_NJets to FTSelected_NJets (LCFIVertex v00-02-04-dev) 
+     * changed ETD point resolution to 12 mu  CVS:
+     * added Lcal digi 
+     * fixed typos in col names of LDCCaloDigi
+
+ --------
+| v00-02 |
+ --------
+   * updated tracker resolutions (VTX,SIT,FTD,ETD,SET)
+     according to notes from Marc Winter (VTX) and Marcel Vos (SiLC)
+
+ --------
+| v00-01 |
+ --------
+
+   * initial release  

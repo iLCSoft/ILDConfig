@@ -1,0 +1,634 @@
+<marlin>
+
+<execute>
+  <processor name="MyOverlayTiming"/>
+  <processor name="MyCLICCDRMaterialDB"/>
+  <processor name="MyTPCDigiProcessor"/> 
+  <processor name="MyLEPTrackingProcessor"/>
+  <processor name="MyVTXDigiProcessor"/>
+  <processor name="MyNewFTDDigiProcessor"/>
+  <processor name="MyETDDigiProcessor"/>
+  <processor name="MyILDCaloDigi"/>
+  <processor name="MySimpleMuonDigi"/>
+  <processor name="MySiliconTrackingCLIC"/>
+  <processor name="MyFullLDCTracking"/>
+  <processor name="MyCLICTrackSelector"/>
+  <processor name="MyV0Finder"/>
+  <processor name="MyKinkFinder"/>
+  <processor name="MyMarlinPandora"/>
+  <processor name="MyCLICPfoSelectorLoose"/>
+  <processor name="MyCLICPfoSelectorDefault"/>
+  <processor name="MyCLICPfoSelectorTight"/>
+  <processor name="MyRecoMCTruthLinker"/>
+  <processor name="MyLCIOOutputProcessor"/>
+  <processor name="DSTOutput"/>
+</execute>
+
+<global>
+  <parameter name="LCIOInputFiles">
+    /r15/calice/thomson/lciodata/CLIC_ILD_CDR/UDS91/clic_ild_cdr_uds91_2.slcio
+  </parameter>
+  <parameter name="SkipNEvents" value="0" />
+  <parameter name="MaxRecordNumber" value="10000" />
+  <parameter name="SupressCheck" value="true" />
+  <parameter name="GearXMLFile"> clic_ild_cdr.gear </parameter> 
+  <parameter name="Verbosity" options="DEBUG2-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> WARNING </parameter>
+</global>
+
+<processor name="MyOverlayTiming" type="OverlayTiming">
+  <!--Processor to overlay events from the background taking the timing of the subdetectors into account-->
+  <!--Name of the lcio input file(s) with background - assume one file per bunch crossing.-->
+  <parameter name="BackgroundFileNames" type="StringVec">
+    /r15/calice/thomson/lciodata/CLIC_ILD_CDR/GGHADRONS/gg_hh_SIM_001.slcio
+    /r15/calice/thomson/lciodata/CLIC_ILD_CDR/GGHADRONS/gg_hh_SIM_002.slcio
+    /r15/calice/thomson/lciodata/CLIC_ILD_CDR/GGHADRONS/gg_hh_SIM_003.slcio
+    /r15/calice/thomson/lciodata/CLIC_ILD_CDR/GGHADRONS/gg_hh_SIM_004.slcio
+    /r15/calice/thomson/lciodata/CLIC_ILD_CDR/GGHADRONS/gg_hh_SIM_005.slcio
+  </parameter>
+  <!--Integration time for the BeamCalCollection-->
+  <parameter name="BeamCalCollection_IntegrationTime" type="float" value="10"/>
+  <!--Time difference between bunches in the bunch train in ns-->
+  <parameter name="Delta_t" type="float" value="0.5"/>
+  <!--Integration time for the ETDCollection-->
+  <parameter name="ETDCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the EcalBarrelCollection-->
+  <parameter name="EcalBarrelCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the EcalBarrelPreShowerCollection-->
+  <parameter name="EcalBarrelPreShowerCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the EcalEndcapCollection-->
+  <parameter name="EcalEndcapCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the EcalEndcapPreShowerCollection-->
+  <parameter name="EcalEndcapPreShowerCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the EcalEndcapRingCollection-->
+  <parameter name="EcalEndcapRingCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the  EcalEndcapRingPreShowerCollection-->
+  <parameter name="EcalEndcapRingPreShowerCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the FTDCollection-->
+  <parameter name="FTDCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the HcalBarrelRegCollection-->
+  <parameter name="HcalBarrelRegCollection_Integration_Time" type="float" value="100"/>
+  <!--Integration time for the HcalEndCapRingsCollection-->
+  <parameter name="HcalEndCapRingsCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the HcalEndCapsCollection-->
+  <parameter name="HcalEndCapsCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the LHcalCollection-->
+  <parameter name="LHcalCollection_Integration_Time" type="float" value="0"/>
+  <!--Integration time for the LumiCalCollection-->
+  <parameter name="LumiCalCollection_Integration_Time" type="float" value="0"/>
+  <!--Integration time for the MuonBarrelCollection-->
+  <parameter name="MuonBarrelCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the MuonEndCapCollection-->
+  <parameter name="MuonEndCapCollection_Integration_Time" type="float" value="10"/>
+  <!--Number of bunches in a bunch train-->
+  <parameter name="NBunchtrain" type="int" value="60"/>
+  <!--Number of Background events to overlay - either fixed or Poisson mean-->
+  <parameter name="NumberBackground" type="float" value="3.2"/>
+  <!--Number of the Bunch crossing of the physics event-->
+  <parameter name="PhysicsBX" type="int" value="10"/>
+  <!--Draw random number of Events to overlay from Poisson distribution with  mean value NumberBackground-->
+  <parameter name="Poisson_random_NOverlay" type="bool" value="true"/>
+  <!--Place the physics event at an random position in the train - overrides PhysicsBX-->
+  <parameter name="RandomBx" type="bool" value="false"/>
+  <!--random seed - default 42-->
+  <parameter name="RandomSeed" type="int" value="42"/>
+  <!--Integration time for the SETCollection-->
+  <parameter name="SETCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the SITCollection-->
+  <parameter name="SITCollection_Integration_Time" type="float" value="10"/>
+  <!--Integration time for the TPCCollection-->
+  <parameter name="TPCCollection_Integration_Time" type="float" value="100000"/>
+  <!--[mm/ns] (float) - default 5.0e-2 (5cm/us)-->
+  <parameter name="TPCDriftvelocity" type="float" value="0.05"/>
+  <!--Integration time for the TPCSpacePointCollection-->
+  <parameter name="TPCSpacePointCollection_Integration_Time" type="float" value="100000"/>
+  <!--Integration time for the VXDCollection-->
+  <parameter name="VXDCollection_Integration_Time" type="float" value="10"/>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string" value=""/-->
+</processor>
+
+<processor name="MyCLICCDRMaterialDB" type="CLICCDRMaterialDB">
+  <!--Material DB builder...-->
+  <parameter name="UseExtrapolations" type="int" value="1"/>
+  <parameter name="UseMaterials" type="int" value="1"/>
+</processor>
+
+<processor name="MyTPCDigiProcessor" type="TPCDigiProcessor">
+  <!--Produces TPC TrackerHit collection from SimTrackerHit collection, smeared in RPhi and Z-->
+  <!--Name of the SimTrackerHit collection-->
+  <parameter name="CollectionName" type="string"> TPCCollection </parameter>
+  <!--parameter name="CollectionName"> STpc01_TPC </parameter-->
+  <parameter name="TPCTrackerHitsCol" type="string"> AllTPCTrackerHits </parameter>
+</processor>
+
+<processor name="MyLEPTrackingProcessor" type="LEPTrackingProcessor">
+  <parameter name="TPCTrackerHitCollectionName" type="string" lcioInType="TrackerHit">AllTPCTrackerHits</parameter>
+  <parameter name="MCTPCTrackRelCollectionName" type="string" lcioOutType="LCRelation">TPCTracksMCP</parameter>
+  <parameter name="UsedCollectionName" type="string" lcioOutType="TrackerHit">UsedTPCTrackerHits</parameter>
+  <parameter name="DroppedCollectionName" type="string" lcioOutType="TrackerHit">DroppedTPCTrackeHits</parameter>
+  <parameter name="TPCTrackCollectionName" type="string">TPCTracks</parameter>
+  <parameter name="AlwaysRunCurlKiller" type="int"> 1 </parameter>
+  <parameter name="Histograms" type="int"> 0 </parameter>
+  <parameter name="MultiplicityCut" type="int"> 4 </parameter>
+  <parameter name="BinHeight" type="int"> 1 </parameter>
+  <parameter name="BinWidth" type="int"> 7 </parameter>
+  <parameter name="SlicesInZ" type="int"> 2 </parameter>
+  <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> WARNING </parameter>
+</processor>
+
+<processor name="MyVTXDigiProcessor" type="VTXDigiProcessor">
+  <!--VTXDigiProcessor should create VTX TrackerHits from SimTrackerHits-->
+  <!--Debugging option-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Momentum Cut For D Rays (MeV)-->
+  <parameter name="MomentumCutForDRays" type="float">10 </parameter>
+  <!--R-Phi Resolution in SET-->
+  <parameter name="PointResolutionRPhi_SET" type="float">0.007 </parameter>
+  <!--R-Phi Resolution in SIT-->
+  <parameter name="PointResolutionRPhi_SIT" type="float">0.007 </parameter>
+  <!--R-Phi Resolution in VTX-->
+  <parameter name="PointResolutionRPhi_VTX" type="float">0.0028 </parameter>
+  <!--Z Resolution in SET-->
+  <parameter name="PointResolutionZ_SET" type="float">0.050 </parameter>
+  <!--only SET hits from active layers are digitized (mimic stereo layers)-->
+  <parameter name="ActiveSETLayers" type="IntVec"> 1 </parameter>
+  <!--Z Resolution in SIT-->
+  <parameter name="PointResolutionZ_SIT" type="float">0.050 </parameter>
+  <!--Z Resolution in VTX-->
+  <parameter name="PointResolutionZ_VTX" type="float">0.0028 </parameter>
+  <!--Remove D-rays ?-->
+  <parameter name="RemoveDrays" type="int">0 </parameter>
+  <!--Name of the SET SimTrackerHit collection-->
+  <parameter name="SETCollectionName" type="string" lcioInType="SimTrackerHit">SETCollection </parameter>
+  <!--Name of the set TrackerHit output collection-->
+  <parameter name="SETHitCollection" type="string" lcioOutType="TrackerHit">SETTrackerHits </parameter>
+  <!--Name of the SIT SimTrackerHit collection-->
+  <parameter name="SITCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
+  <!--Name of the sit TrackerHit output collection-->
+  <parameter name="SITHitCollection" type="string" lcioOutType="TrackerHit">SITTrackerHits </parameter>
+  <!--Name of the VTX SimTrackerHit collection-->
+  <parameter name="VTXCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+  <!--Name of the vxd TrackerHit output collection-->
+  <parameter name="VTXHitCollection" type="string" lcioOutType="TrackerHit">VTXTrackerHits </parameter>
+</processor>
+
+<processor name="MyNewFTDDigiProcessor" type="NewFTDDigiProcessor">
+  <!--FTDDigiProcessor creates FTD TrackerHits from SimTrackerHits-->
+  <!--Name of the SimTrackerHit collection-->
+  <parameter name="CollectionName" type="string" lcioInType="SimTrackerHit">FTDCollection </parameter>
+  <!--Momentum Cut For D Rays (GeV)-->
+  <parameter name="MomentumCutForDRays" type="float">10 </parameter>
+  <!--Name of the TrackerHit output collection-->
+  <parameter name="OutputCollectionName" type="string" lcioOutType="TrackerHit">FTDTrackerHits </parameter>
+  <!--Point Resolution in FTD for Pixels-->
+  <parameter name="PointResolutionPixel" type="float">0.005 </parameter>
+  <parameter name="PointResolutionStripR" type="float">0.007 </parameter>
+  <parameter name="PointResolutionStripPhi" type="float">0.007 </parameter>
+  <!--Min Strip-->
+  <parameter name="minIdStrip" type="int">6</parameter>
+  <!--Remove D rays?-->
+  <parameter name="RemoveDrays" type="int">0 </parameter>
+</processor>
+
+<processor name="MyETDDigiProcessor" type="ETDDigiProcessor">
+  <!--ETDDigiProcessor creates FTD TrackerHits from SimTrackerHits-->
+  <!--only hits from active layers are digitized (mimicking stereo layers)-->
+  <parameter name="ActiveLayers" type="IntVec">-2 2  </parameter>
+  <!--Name of the SimTrackerHit collection-->
+  <parameter name="CollectionName" type="string" lcioInType="SimTrackerHit"> ETDCollection </parameter>
+  <!--Momentum Cut For D Rays (GeV)-->
+  <parameter name="MomentumCutForDRays" type="float">10 </parameter>
+  <!--Name of the TrackerHit output collection-->
+  <parameter name="OutputCollectionName" type="string" lcioOutType="TrackerHit"> ETDTrackerHits </parameter>
+  <!--Point Resolution in ETD-->
+  <parameter name="PointResolution" type="float">0.0058</parameter>
+  <!--Remove D rays?-->
+  <parameter name="RemoveDrays" type="int">0 </parameter>
+</processor>
+
+<processor name="MyILDCaloDigi" type="ILDCaloDigi">
+  <!--ILD digitizer...-->
+  <!--Calibration coefficients for ECAL-->
+  <parameter name="CalibrECAL" type="FloatVec">40.9 81.8</parameter>
+  <!--Calibration coefficients for HCAL barrel-->
+  <parameter name="CalibrHCALBarrel" type="FloatVec">33.5</parameter>
+  <!--Calibration coefficients for HCAL endcap -->
+  <parameter name="CalibrHCALEndcap" type="FloatVec">36.0</parameter>
+  <!--Calibration coefficients for HCAL plug-->
+  <parameter name="CalibrHCALOther" type="FloatVec">36.0</parameter>
+  <!--ECAL Collection Names-->
+  <parameter name="ECALCollections" type="StringVec">EcalBarrelCollection EcalEndcapCollection EcalEndcapRingCollection </parameter>
+  <!--Index of ECal Layers-->
+  <parameter name="ECALLayers" type="IntVec">20 100  </parameter>
+  <!--Threshold for ECAL Hits in GeV-->
+  <parameter name="ECALThreshold" type="float">5e-05 </parameter>
+  <!--HCAL Collection Names-->
+  <parameter name="HCALCollections" type="StringVec">HcalBarrelRegCollection  HcalEndCapsCollection HcalEndCapRingsCollection</parameter>
+  <!--Index of HCal Layers-->
+  <parameter name="HCALLayers" type="IntVec">100  </parameter>
+  <!--Threshold for HCAL Hits in GeV-->
+  <parameter name="HCALThreshold" type="float">0.00025 </parameter>
+  <!--Digital Ecal-->
+  <parameter name="IfDigitalEcal" type="int">0 </parameter>
+  <!--Digital Hcal-->
+  <parameter name="IfDigitalHcal" type="int">0 </parameter>
+  <!--name for the new collection -->
+  <parameter name="ECALOutputCollection0" type="stringVec">ECALBarrel </parameter>
+  <parameter name="ECALOutputCollection1" type="stringVec">ECALEndcap </parameter>
+  <parameter name="ECALOutputCollection2" type="stringVec">ECALOther </parameter>
+  <parameter name="HCALOutputCollection0" type="stringVec">HCALBarrel </parameter>
+  <parameter name="HCALOutputCollection1" type="stringVec">HCALEndcap </parameter>
+  <parameter name="HCALOutputCollection2" type="stringVec">HCALOther </parameter>
+  <!--CaloHit Relation Collection-->
+  <parameter name="RelationCollName" type="string">RelationCaloHit </parameter>
+  <!--Gap Correction-->
+  <parameter name="ECALGapCorrection" type="int"> 1 </parameter>
+  <!--Gap Correction Fudge Factor-->
+  <parameter name="ECALGapCorrectionFactor" type="int"> 1.0 </parameter>
+  <parameter name="ECALModuleGapCorrectionFactor" type="int"> 0.0 </parameter>
+  <!-- Timing -->
+  <parameter name="UseEcalTiming" type="int">1</parameter>
+  <parameter name="UseHcalTiming" type="int">1</parameter>
+  <parameter name="ECALBarrelTimeWindowMax" type="float"> 10.0 </parameter>
+  <parameter name="HCALBarrelTimeWindowMax" type="float"> 100.0 </parameter>
+  <parameter name="ECALEndcapTimeWindowMax" type="float"> 10.0 </parameter>
+  <parameter name="HCALEndcapTimeWindowMax" type="float"> 10.0 </parameter>
+  <parameter name="ECALTimeWindowMin" type="float"> -1.0 </parameter>
+  <parameter name="HCALTimeWindowMin" type="float"> -1.0 </parameter>
+  <parameter name="ECALCorrectTimesForPropagation" type="int">1</parameter>
+  <parameter name="HCALCorrectTimesForPropagation" type="int">1</parameter>  
+  <parameter name="ECALDeltaTimeHitResolution" type="float"> 20.0 </parameter>
+  <parameter name="HCALDeltaTimeHitResolution" type="float"> 20.0 </parameter>
+  <!-- Histograms-->
+  <parameter name="Histograms" type="int"> 0 </parameter>
+  <parameter name="RootFile" type="string">filename.root</parameter>
+</processor>
+
+<processor name="MySimpleMuonDigi" type="SimpleMuonDigi">
+  <!--Performs simple digitization of sim calo hits...-->
+  <!--Calibration coefficients for MUON-->
+  <parameter name="CalibrMUON" type="FloatVec">100000</parameter>
+  <!--MUON Collection Names-->
+  <parameter name="MUONCollections" type="StringVec"> MuonPlugCollection MuonBarrelCollection MuonEndCapCollection</parameter>
+  <!--MUON Collection of real Hits-->
+  <parameter name="MUONOutputCollection" type="string">MUON </parameter>
+  <!--Threshold for MUON Hits in GeV-->
+  <parameter name="MUONThreshold" type="float">1e-06 </parameter>
+  <!--MuonHit Relation Collection-->
+  <parameter name="RelationOutputCollection" type="string">RelationMuonHit </parameter>
+  <!-- Vector of Barrel layers to be kept. Layers start at 1!  --> 
+  <parameter name="KeepBarrelLayersVec" type="IntVec">1 2 3 8 9 10 15 16 17</parameter> 
+  <!-- Vector of Endcap layers to be kept. Layers start at 1!  --> 
+  <parameter name="KeepEndcapLayersVec" type="IntVec">1 2 3 8 9 10 15 16 17</parameter> 
+</processor>
+
+<processor name="MySiliconTrackingCLIC" type="SiliconTrackingCLIC">
+  <!--Vertex Tracking-->
+  <parameter name="Chi2WRphiTriplet" type="float"> 1</parameter>
+  <parameter name="Chi2WRphiQuartet" type="float"> 1</parameter>
+  <parameter name="Chi2WRphiSeptet" type="float"> 1</parameter>
+  <parameter name="Chi2WZTriplet" type="float"> 0.5</parameter>
+  <parameter name="Chi2WZQuartet" type="float"> 0.5</parameter>
+  <parameter name="Chi2WZSeptet" type="float"> 0.5 </parameter>
+  <parameter name="Chi2FitCut" type="float">120.0 </parameter>
+  <parameter name="Chi2PrefitCut" type="float"> 1e+10 </parameter>
+  <parameter name="NDivisionsInPhi" type="int"> 80 </parameter>
+  <parameter name="NDivisionsInPhiFTD" type="int"> 45 </parameter>
+  <parameter name="NDivisionsInTheta" type="int"> 80 </parameter>
+  <parameter name="LayerCombinations" type="IntVec">    7 6 5  7 6 4  6 5 4  6 5 3  6 4 3
+                                                        7 5 3  7 4 3  5 4 3  5 4 2  5 3 2  5 3 1
+                                                        5 2 1  4 3 2  4 3 1  4 2 1  3 2 1 </parameter>
+  <parameter name="LayerCombinationsFTD" type="IntVec"> 8 6 4  10 9 8 10 9 7 10 8 7
+                                                        9 8 7  9 8 6  9 7 6  8 7 6  8 7 5  8 6 5
+                                                        7 6 5  7 6 4  7 5 4  
+                                                        6 5 4  6 5 3  5 4 3  5 4 2  5 4 1  5 3 2
+                                                        5 3 1  5 2 1  4 3 2  4 3 1  4 3 0  4 2 1
+                                                        4 2 0  4 1 0  3 2 1  3 2 0  3 1 0  2 1 0</parameter>
+  <parameter name="MinimalHits" type="int"> 5 </parameter>
+  <parameter name="FastAttachment" type="int"> 0 </parameter>
+  <parameter name="MinDistCutAttach" type="float"> 2.5 </parameter>
+  <parameter name="AngleCutForMerging" type="float"> 0.1 </parameter>
+  <parameter name="SimpleHelixFit" type="int"> 1 </parameter>
+  <parameter name="FinalRefit" type="int"> 1 </parameter>
+  <parameter name="UseSIT" type="int"> 1 </parameter>
+  <parameter name="UseExtraPoint" type="int"> 0 </parameter>
+</processor>
+
+<processor name="MyFullLDCTracking" type="FullLDCTracking">
+  <!--Performs full tracking in LDC detector-->
+  <!--Assign ETD Hits-->
+  <parameter name="AssignETDHits" type="int"> 1 </parameter>
+  <!--Assign left over FTD hits-->
+  <parameter name="AssignFTDHits" type="int"> 1 </parameter>
+  <!--Assign SET Hits-->
+  <parameter name="AssignSETHits" type="int"> 1 </parameter>
+  <!--Assign left over SIT hits-->
+  <parameter name="AssignSITHits" type="int"> 1 </parameter>
+  <!--Assign left over TPC hits-->
+  <parameter name="AssignTPCHits" type="int"> 1 </parameter>
+  <!--Assign left over VTX hits-->
+  <parameter name="AssignVTXHits" type="int"> 1 </parameter>
+  <!--Cut on fit Chi2-->
+  <parameter name="Chi2FitCut" type="float">100 </parameter>
+  <!--Cut on fit Chi2-->
+  <parameter name="Chi2PrefitCut" type="float">100000 </parameter>
+  <!--Create Track to MCP Relations-->
+  <parameter name="CreateMap" type="int">1 </parameter>
+  <!--Cut on the number of the TPC hits for tracks with no Si hits-->
+  <parameter name="CutOnTPCHits" type="int"> 35 </parameter>
+  <!--Cut on the track parameter D0-->
+  <parameter name="CutOnTrackD0" type="float"> 500 </parameter>
+  <!--Cut on the track parameter Z0-->
+  <parameter name="CutOnTrackZ0" type="float"> 500 </parameter>
+  <!--Cut on D0 difference for forced merging of Si and TPC segments-->
+  <parameter name="D0CutForForcedMerging" type="float"> 50 </parameter>
+  <!--Cut on D0 difference for merging of Si and TPC segments-->
+  <parameter name="D0CutForMerging" type="float"> 500 </parameter>
+  <!--Cut on D0 difference for merging TPC segments-->
+  <parameter name="D0CutToMergeTPCSegments" type="float">100 </parameter>
+  <!--Activate debugging?-->
+  <parameter name="Debug" type="int"> 0 </parameter>
+  <!--Cut on Omega difference for forced merging of Si and TPC segments-->
+  <parameter name="OmegaCutForForcedMerging" type="float">0.15 </parameter>
+  <!--Cut on Omega difference for merging Si and TPC segments-->
+  <parameter name="OmegaCutForMerging" type="float">0.25 </parameter>
+  <!--Cut on Opening Angle for forced merging of Si and TPC segments-->
+  <parameter name="AngleCutForForcedMerging" type="float">0.05 </parameter>
+  <!--Cut on Opening Angle for merging Si and TPC segments-->
+  <parameter name="AngleCutForMerging" type="float">0.1 </parameter>
+  <!--Cut on dP/P difference for merging TPC segments-->
+  <parameter name="DeltaPCutToMergeTPCSegments" type="float">0.06 </parameter>
+  <!--ETD Hit Collection Name-->
+  <parameter name="ETDHitCollection" type="string" lcioInType="TrackerHit">ETDTrackerHits </parameter>
+  <!--Cut on distance between track and ETD hits-->
+  <parameter name="ETDHitToTrackDistance" type="float">10 </parameter>
+  <!--SET Hit Collection Name-->
+  <parameter name="SETHitCollection" type="string" lcioInType="TrackerHit">SETTrackerHits </parameter>
+  <!--Cut on distance between track and SET hits-->
+  <parameter name="SETHitToTrackDistance" type="float">2 </parameter>
+  <!--FTD Hit Collection Name-->
+  <parameter name="FTDHitCollection" type="string" lcioInType="TrackerHit">FTDTrackerHits </parameter>
+  <!--Cut on distance between track and FTD hits-->
+  <parameter name="FTDHitToTrackDistance" type="float"> 1 </parameter>
+  <!--Forbid overlap in Z for combining TPC segments with tracks having Si hits-->
+  <parameter name="ForbidOverlapInZComb" type="int"> 0 </parameter>
+  <!--Forbid overlap in Z for the merged TPC segments-->
+  <parameter name="ForbidOverlapInZTPC" type="int"> 0 </parameter>
+  <!--Force merging of Si and TPC segments?-->
+  <parameter name="ForceSiTPCMerging" type="int"> 0 </parameter>
+  <!--Force merging of TPC Segments?-->
+  <parameter name="ForceTPCSegmentsMerging" type="int"> 1 </parameter>
+  <!--Option for the LDC Track fit-->
+  <parameter name="OptFit" type="int"> 4 </parameter>
+  <!--Option for Si tracks refitting-->
+  <parameter name="OptFitSi" type="int"> 2 </parameter>
+  <!--Option for TPC tracks refitting-->
+  <parameter name="OptFitTPC" type="int"> 2 </parameter>
+  <!--Refit Si Tracks ?-->
+  <parameter name="RefitSiTracks" type="int"> 0 </parameter>
+  <!--Refit TPC Tracks ?-->
+  <parameter name="RefitTPCTracks" type="int"> 1 </parameter>
+  <!--SIT Hit Collection Name-->
+  <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit">SITTrackerHits </parameter>
+  <!--Cut on distance between track and SIT hits-->
+  <parameter name="SITHitToTrackDistance" type="float"> 1 </parameter>
+  <!--Si Track Collection-->
+  <parameter name="SiTracks" type="string" lcioInType="Track">SiTracks </parameter>
+  <!--Store only hits used in fit?-->
+  <parameter name="StoreHitsInFit" type="int">0 </parameter>
+  <!--Store Refitted Si Tracks ?-->
+  <parameter name="StoreRefittedSiTracks" type="int">0 </parameter>
+  <!--Store Refitted TPC Tracks ?-->
+  <parameter name="StoreRefittedTPCTracks" type="int">0 </parameter>
+  <!--TPC Hit Collection Name-->
+  <parameter name="TPCHitCollection" type="string" lcioInType="TrackerHit">AllTPCTrackerHits </parameter>
+  <!--Cut on distance between track and TPC hits-->
+  <parameter name="TPCHitToTrackDistance" type="float"> 10 </parameter>
+  <!--TPC Track Collection-->
+  <parameter name="TPCTracks" type="string" lcioInType="Track"> TPCTracks </parameter>
+  <!--TPC Track Relation Collection-->
+  <parameter name="TPCTracksMCPRelColl" type="string" lcioInType="Track"> TPCTracksMCP </parameter>
+  <!--Use Extra Point in Fit-->
+  <parameter name="UseExtraPoint" type="int"> 0 </parameter>
+  <!--VTX Hit Collection Name-->
+  <parameter name="VTXHitCollection" type="string" lcioInType="TrackerHit"> VTXTrackerHits </parameter>
+  <!--Cut on distance between track and VTX hits-->
+  <parameter name="VTXHitToTrackDistance" type="float"> 0.5 </parameter>
+  <!--Cut on Z0 difference for forced merging of Si and TPC segments-->
+  <parameter name="Z0CutForForcedMerging" type="float">500 </parameter>
+  <!--Cut on Z0 difference for merging of Si and TPC segments-->
+  <parameter name="Z0CutForMerging" type="float"> 1000 </parameter>
+  <!--Cut on Z0 difference for merging TPC segments-->
+  <parameter name="Z0CutToMergeTPCSegments" type="float">5000 </parameter>
+  <!--Parameter a to define minimal IP error-->
+  <parameter name="aParameterForIPError" type="float">0.002 </parameter>
+  <!--Parameter b to define minimal IP error-->
+  <parameter name="bParameterForIPError" type="float">0.0076 </parameter>
+  <!--Parameter s to define minimal IP error-->
+  <parameter name="sParameterForIPError" type="float">0.75 </parameter>
+</processor>
+
+<processor name="MyCLICTrackSelector" type="CLICTrackSelector">
+  <!--Performs full tracking in LDC detector-->
+  <!--Create Track to MCP Relations-->
+  <parameter name="CreateMap" type="int">1</parameter>
+  <!--Cut on the number of the Si hits for tracks with no TPC hits-->
+  <parameter name="CutOnSiHits" type="int">4</parameter>
+  <!--Cut on the number of the TPC hits for tracks with no Si hits-->
+  <parameter name="CutOnTPCHits" type="int">30</parameter>
+  <!-- Cut on arrival time at ECAL in ns-->
+  <parameter name="TimingCutAtEcal" type="float">50.0</parameter>
+  <!--Activate debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Input Track Collection-->
+  <parameter name="InputTracks" type="string" lcioInType="Track">LDCTracks</parameter>
+  <!--Input Track to MCP Relation Collection Name-->
+  <parameter name="InputTracksMCPRelColl" type="string" lcioInType="LCRelation">LDCTracksMCP</parameter>
+  <!--Selected track collection name-->
+  <parameter name="SelectedTrackCollection" type="string" lcioOutType="Track">SelectedLDCTracks</parameter>
+  <!--Collection name for the selected track to MCParticle relations-->
+  <parameter name="SelectedTracksMCPRelCollection" type="string" lcioOutType="LCRelation">SelectedLDCTracksMCP</parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">SILENT</parameter>
+</processor>
+
+<processor name="MyV0Finder" type="V0Finder">
+  <parameter name="TrackCollection" type="string">SelectedLDCTracks</parameter>
+  <parameter name="MassRangeGamma"  type="float"> 0.01 </parameter>
+  <parameter name="MassRangeK0S"    type="float"> 0.02 </parameter>
+  <parameter name="MassRangeL0"     type="float"> 0.02 </parameter>
+</processor>
+
+<processor name="MyKinkFinder" type="KinkFinder">
+  <parameter name="DebugPrinting" type="int">0</parameter>
+  <parameter name="TrackCollection" type="string">SelectedLDCTracks</parameter>
+</processor>
+
+<processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
+  <parameter name="PandoraSettingsXmlFile" type="String">clic_ild_cdr_pandora_settings.xml</parameter>
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">SelectedLDCTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec"></parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec"></parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit</parameter> 
+  <parameter name="RelTrackCollections" type="StringVec">SelectedLDCTracksMCP</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices ProngVertices SplitVertices</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFANewPFOs</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
+  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.0</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.16</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.03</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.0</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.0</parameter>
+  <parameter name="MuonHitEnergy" type="float">0.5</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">10000.</parameter>
+  <!-- Material constants -->
+  <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+</processor>
+
+ <processor name="MyCLICPfoSelectorLoose" type="CLICPfoSelector">
+ <!--Selects Pfos from full PFO list using timing cuts-->
+  <!--Input PFO Collection-->
+  <parameter name="InputPfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFANewPFOs </parameter>
+  <!--ChargedPfoNegativeLooseTimingCut-->
+  <parameter name="ChargedPfoNegativeLooseTimingCut" type="float">-2.0</parameter>
+  <!--ChargedPfoNegativeTightTimingCut-->
+  <parameter name="ChargedPfoNegativeTightTimingCut" type="float">-2.0</parameter>
+  <!-- ClusterLessPfoTrackTimeCut -->
+  <parameter name = "ClusterLessPfoTrackTimeCut" type="float">1000.</parameter>
+  <!--MinMomentumForClusterLessPfos-->
+  <parameter name="MinMomentumForClusterLessPfos" type="float">0.0 </parameter>
+  <!--MaxMomentumForClusterLessPfos-->
+  <parameter name="MinPtForClusterLessPfos" type="float">0.25 </parameter>
+  <!--MinimumEnergyForNeutronTiming-->
+  <!--NeutralFarForwardLooseTimingCut-->
+  <parameter name="NeutralFarForwardLooseTimingCut" type="float">2.5 </parameter>
+  <!--NeutralFarForwardTightTimingCut-->
+  <parameter name="NeutralFarForwardTightTimingCut" type="float">1.5 </parameter>
+  <!--PhotonLooseTimingCut-->
+  <parameter name="PhotonLooseTimingCut" type="float">2. </parameter>
+  <!--PhotonTightTimingCut-->
+  <parameter name="PhotonTightTimingCut" type="float">2. </parameter>
+  <!--Selected pfo collection name-->
+  <parameter name="SelectedPfoCollection" type="string" lcioOutType="ReconstructedParticle">LooseSelectedPandoraPFANewPFOs </parameter>
+  <parameter name="Monitoring" type="int">0</parameter>
+</processor>
+
+ <processor name="MyCLICPfoSelectorDefault" type="CLICPfoSelector">
+ <!--Selects Pfos from full PFO list using timing cuts-->
+  <!--Input PFO Collection-->
+  <parameter name="InputPfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFANewPFOs </parameter>
+  <!--Selected pfo collection name-->
+  <parameter name="SelectedPfoCollection" type="string" lcioOutType="ReconstructedParticle">SelectedPandoraPFANewPFOs </parameter>
+  <parameter name="Monitoring" type="int">0</parameter>
+</processor>
+
+ <processor name="MyCLICPfoSelectorTight" type="CLICPfoSelector">
+ <!--Selects Pfos from full PFO list using timing cuts-->
+  <!--Input PFO Collection-->
+  <parameter name="InputPfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFANewPFOs </parameter>
+  <!--ChargedPfoLooseTimingCut-->
+  <parameter name="ChargedPfoLooseTimingCut" type="float">2.0 </parameter>
+  <!--ChargedPfoNegativeLooseTimingCut-->
+  <parameter name="ChargedPfoNegativeLooseTimingCut" type="float">-0.5 </parameter>
+  <!--ChargedPfoNegativeTightTimingCut-->
+  <parameter name="ChargedPfoNegativeTightTimingCut" type="float">-0.25 </parameter>
+  <!--ChargedPfoTightTimingCut-->
+  <parameter name="ChargedPfoTightTimingCut" type="float">1.0 </parameter>
+  <!--FarForwardCosTheta-->
+  <parameter name="FarForwardCosTheta" type="float">0.95 </parameter>
+  <!--MaxMomentumForClusterLessPfos-->
+  <parameter name="MaxMomentumForClusterLessPfos" type="float">1.5 </parameter>
+  <!--MinPtForClusterLessPfos-->
+  <parameter name="MinPtForClusterLessPfos" type="float">1.0 </parameter>
+  <!--NeutralFarForwardLooseTimingCut-->
+  <parameter name="NeutralFarForwardLooseTimingCut" type="float">1.5 </parameter>
+  <!--NeutralHadronPtCut-->
+  <parameter name="NeutralHadronPtCut" type="float">0.5 </parameter>
+  <!--PhotonPtCut-->
+  <parameter name="PhotonPtCut" type="float">0.2 </parameter>
+  <!--PtCutForTightTiming-->
+  <parameter name="PtCutForTightTiming" type="float">1.0 </parameter>
+  <!--Selected pfo collection name-->
+  <parameter name="SelectedPfoCollection" type="string" lcioOutType="ReconstructedParticle">TightSelectedPandoraPFANewPFOs </parameter>
+  <!--UseClusterLessPfos-->
+  <parameter name="UseClusterLessPfos" type="int">0 </parameter>
+  <parameter name="Monitoring" type="int">0</parameter>
+</processor>
+
+ <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
+ <!--links RecontructedParticles to the MCParticle based on number of hits used-->
+  <!--Name of the MCParticle input collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCPhysicsParticles </parameter>
+  <!--Name of the Cluster input collection-->
+  <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraPFANewClusters </parameter>
+  <!--Name of the Track input collection-->
+  <parameter name="TrackCollection" type="string" lcioInType="Track"> SelectedLDCTracks </parameter>
+  <!--Name of the ReconstructedParticles input collection-->
+  <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFANewPFOs </parameter>
+  <!--Name of the  SimCalorimeterHit - CalorimeterHit relation-->
+  <parameter name="SimCalorimeterHitRelationName" type="string" lcioInType="LCRelation"> RelationCaloHit </parameter>
+  <!--Name of the  SimTrackerHit - TrackerHit relation-->
+  <parameter name="SimTrackerHitRelationName" type="string" lcioInType="LCRelation"> SelectedLDCTracksMCP </parameter>
+  <!--Name of the skimmed MCParticle  output collection-->
+  <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
+  <!--Name of the RecoMCTruthLink output collection-->
+  <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
+  <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection -->
+  <parameter name="KeepDaughtersPDG" type="IntVec">22 111 310 13 211 321 3122 3112 3312 3212 </parameter>
+  <parameter name="CalohitMCTruthLinkName" type="string" lcioOutType="LCRelation"> CalohitMCTruthLink </parameter>
+  <parameter name="ClusterMCTruthLinkName" type="string" lcioOutType="LCRelation"> ClusterMCTruthLink </parameter>
+  <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> TrackMCTruthLink </parameter>
+  <!-- Default values -->
+  <parameter name="OutputCalohitRelation" type="bool" value="false"/>
+  <parameter name="OutputClusterRelation" type="bool" value="true"/>
+  <parameter name="OutputTrackRelation" type="bool" value="true"/>
+  <parameter name="FullRecoRelation" type="bool" value="false"/>
+  <parameter name="daughtersECutMeV" type="float" value="10"/>
+</processor>
+
+<processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
+  <!--   standard output: full reconstruction keep all collections -->
+  <parameter name="LCIOOutputFile" type="string">  Output_REC.slcio
+ </parameter>
+  <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+ </processor>
+
+ <processor name="DSTOutput" type="LCIOOutputProcessor">
+   <parameter name="LCIOOutputFile" type="string" > Output_AOD.slcio </parameter>
+   <parameter name="DropCollectionTypes" type="StringVec"> 
+       MCParticle 
+       LCRelation 
+       SimTrackerHit 
+       SimCalorimeterHit
+       TrackerHit 
+       CalorimeterHit 
+       Track 
+       ReconstructedParticle
+       LCFloatVec      
+    </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
+    <parameter name="KeepCollectionNames" type="StringVec"> 
+       MCParticlesSkimmed 
+       RecoMCTruthLink
+       SelectedLDCTracks 
+       PandoraPFAClusters
+       PandoraPFANewPFOs
+       SelectedPandoraPFANewPFOs
+       LooseSelectedPandoraPFANewPFOs
+       TightSelectedPandoraPFANewPFOs
+    </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+ </processor>
+
+</marlin>

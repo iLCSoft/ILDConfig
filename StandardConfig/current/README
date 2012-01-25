@@ -1,0 +1,92 @@
+###################################################
+#
+# HOWTO run Mokka and Marlin examples
+# with standard configuration
+# 
+# F.Gaede, DESY
+#   12/2011: F.G.: updated to new ILD_01_dev model 
+#   01/2012: J.E.: updated to new ILD_O{1,2,3}_v01 models
+###################################################
+
+#  These little examples server as an ultra quick introduction on 
+#  how to run ilcsoft programs and as a mini-test after installation
+#  of a new (complete) ilcsoft release.
+#
+#  Have a look at the scripts (mokka-wrapper.sh) and the
+#  steering files (bbudsc_3evt_stdreco.xml) for more details.
+# 
+
+
+# 1. ----  initialize the current ilcsoft release, e.g.  ------
+
+  . /afs/desy.de/project/ilcsoft/sw/x86_64_gcc41_sl5/v01-13/init_ilcsoft.sh 
+
+#-- this sets:  
+#   MARLIN_DLL=libMarlinReco.so:libPandoraAnalysis.so:libMarlinPandora.so:libLCFIVertex.so:libCEDViewer.so:libEutelescope.so:libMarlinTPC.so:libOverlay.so
+#-- so these packages need to be present in the release for the standard examples
+
+# 2. ---- run a Mokka example  ------
+ a)
+
+  mokka-wrapper.sh -M ILD_O1_v01 bbudsc_3evt.steer
+
+# b)
+#  the above starts a MySQL server and populates it with a dump of the Mokka central DB
+#  you can also run Mokka directly (using the central DB):
+
+  Mokka -M ILD_O1_v01 bbudsc_3evt.steer
+  
+# c) 
+#  to make sure that the extra partice tables (for SUSY etc) is loaded: 
+ 
+  Mokka -M ILD_O1_v01 -e $MOKKADBCONFIG/particle.tbl bbudsc_3evt.steer
+  # OR:
+  mokka-wrapper.sh -M ILD_O1_v01 -e $MOKKADBCONFIG/particle.tbl bbudsc_3evt.steer
+
+
+#--   this creates the file:    bbudsc_3evt.slcio
+
+#- example: examine the collections in the file:
+
+  anajob bbudsc_3evt.slcio
+
+
+
+# 3. ----  reconstruct these events:  ------
+
+  Marlin bbudsc_3evt_stdreco.xml
+
+
+#-- creates:   bbudsc_3evt_REC.slcio 
+#   and        bbudsc_3evt_DST.slcio
+
+#- example: dump the details of the 2nd event in the DST file: 
+
+   dumpevent bbudsc_3evt_DST.slcio 2 | less
+   
+
+# 4. ---- view the result in the event display
+ 
+# a) 
+
+#--- start the event display (server) first: 
+  
+   glced &
+
+
+#--- view rec or DST events:
+
+   Marlin bbudsc_3evt_viewer.xml
+
+   Marlin bbudsc_3evt_viewerDST.xml
+
+ 
+# b)  (new in v01-10) 
+  
+# or start both, glced and Marlin in one go:
+
+ ced2go   -d GearOutput.xml  bbudsc_3evt_REC.slcio
+
+ 
+
+
