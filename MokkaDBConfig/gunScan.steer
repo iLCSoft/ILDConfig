@@ -1,0 +1,28 @@
+/Mokka/init/lcioFilename gunScan.slcio
+/Mokka/init/detectorModel ILD_00fw
+/Mokka/init/MokkaGearFileName gear_ILD_00fw.xml
+/Mokka/init/lcioWriteMode WRITE_NEW
+/Mokka/init/lorentzTransformationAngle 7 mrad
+/Mokka/init/BFactor 1.0
+/Mokka/init/userDeltaIntersection 1e-5 mm
+/Mokka/init/userDeltaOneStep 1e-4 mm
+/Mokka/init/lcioDetailedShowerMode false
+/Mokka/init/lcioDetailedTRKHitMode SITCollection
+/Mokka/init/lcioDetailedTRKHitMode VXDCollection
+/Mokka/init/lcioDetailedTRKHitMode FTDCollection
+/Mokka/init/lcioDetailedTRKHitMode TPCCollection
+/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
+/Mokka/init/physicsListName LCPhys
+/Mokka/init/visumode false
+/Mokka/init/rangeCut 0.1 mm
+/Mokka/init/TPCCut 0 keV
+/Mokka/init/randomSeed 1240
+/Mokka/init/lcioWriteCompleteHepEvt true
+/Mokka/init/user consult
+/Mokka/init/dbPasswd consult
+#/Mokka/init/dbHost polui01.in2p3.fr
+#/Mokka/init/dbHost localhost:/tmp/mysql.sock
+
+/Mokka/init/initialMacroFile gunScan.g4macro
+/Mokka/init/BatchMode true
+

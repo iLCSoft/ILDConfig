@@ -1,0 +1,11 @@
+# gun scan macro for muons p = 10.000000, uniformly distributed from theta +5 to -175 degrees, isotropic in phi
+/generator/generator particleGun
+/gun/position 0 0 0
+/gun/direction 0.0 -1.000000 -1.000000
+/gun/directionSmearingMode uniform
+/gun/thetaSmearing 5 deg
+/gun/phiSmearing 180 deg
+/gun/particle mu-
+/gun/momentum 10.000000
+/run/beamOn 10
+exit

@@ -1,0 +1,37 @@
+Name of network description file									b_net-2vtx.xml
+     (e.g. b_net-3vtx.xml)
+     
+Size of training sample:
+number of signal jets used for training						43703
+number of background jets used for training					41891
+
+Information on the training sample:
+Event generator used (e.g. PYTHIA version 6.400)			PYTHIA 6.152
+Event type generated (e.g. e+e- . qqbar)						e+e- --> qqbar for (q = u,d,s,c,b), 
+								natural flavour composition
+sqrt(s) [GeV] at which events are generated					92.0
+Event generator settings											MSTP(11) = 0, i.e. initial state rad.n off
+      If you are using special event generator settings,
+      please give details (e.g. initial state radiation off)
+
+Detector simulation used (e.g. MOKKA v06-03)					MOKKA v06-07-p01
+Detector model used (e.g. LDC01Sc)				      		ILD_00
+								
+Detector simulation settings					-        		photon conversion switched on
+	 please list special settings, 
+	 e.g. photon conversion switched off
+
+Reconstruction code used (e.g. MarlinReco v00-03)			ILCSOFT v01-05-02
+Special parameter settings					-
+	if using modules from different reconstruction
+	frameworks, please give further details
+Changes made to the default parameters of the code		n.a.
+	please give module and parameter names and
+values
+
+Input variables							-                  	JetCollectionName = Durham_2Jets
+																			FlavourTagInputsCollection = FlavourTagInputs_2Jets
+																			TrueJetFlavourCollection = TrueJetFlavour_2Jets
+      please state any changes made to the
+      default input variables
+

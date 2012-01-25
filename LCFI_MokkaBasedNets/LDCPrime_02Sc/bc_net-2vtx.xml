@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<NeuralNet NumberOfInputs="8" NumberOfLayers="2">
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<InputNormalisationData>
+<InputNormaliser Type="PassthroughNormaliser"/>
+</InputNormalisationData>
+<TargetNormalisationData Offset="-0" Range="1"/>
+<NeuronLayer NumberOfNeurons="14">
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>2.49448351265</weight>
+<weight>-1.25090414116</weight>
+<weight>-0.0984089572603</weight>
+<weight>-0.469106911919</weight>
+<weight>-5.3667720298</weight>
+<weight>-3.05704465506</weight>
+<weight>-0.0109000622188</weight>
+<weight>1.1563032488</weight>
+<weight>2.11935684258</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.25981004634</weight>
+<weight>1.44910928659</weight>
+<weight>2.61460778658</weight>
+<weight>1.37072709242</weight>
+<weight>0.217108787921</weight>
+<weight>-0.721874554207</weight>
+<weight>-1.97201569742</weight>
+<weight>0.595477387518</weight>
+<weight>0.0873668994276</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-3.85607540437</weight>
+<weight>-1.86606790972</weight>
+<weight>5.45719252275</weight>
+<weight>-1.85017845572</weight>
+<weight>0.276382875606</weight>
+<weight>1.07148201784</weight>
+<weight>-2.7271452332</weight>
+<weight>-0.595136653383</weight>
+<weight>1.78515981653</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-1.89405112524</weight>
+<weight>0.243852554189</weight>
+<weight>1.19591145334</weight>
+<weight>-3.33592973211</weight>
+<weight>0.178041778801</weight>
+<weight>0.438252900313</weight>
+<weight>-1.91391199623</weight>
+<weight>-0.148478210959</weight>
+<weight>-3.4309203912</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.378607700598</weight>
+<weight>0.00926783545881</weight>
+<weight>0.908733284437</weight>
+<weight>0.0119411158514</weight>
+<weight>0.20977497716</weight>
+<weight>0.0244269492506</weight>
+<weight>-0.400541927711</weight>
+<weight>-0.4258663094</weight>
+<weight>0.404137876506</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>2.26898423098</weight>
+<weight>-0.40414208027</weight>
+<weight>-13.3925352552</weight>
+<weight>2.45341455749</weight>
+<weight>0.0912155171251</weight>
+<weight>0.398579936481</weight>
+<weight>1.22914704655</weight>
+<weight>0.120006613476</weight>
+<weight>-3.23334692152</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.130836030956</weight>
+<weight>0.758576823256</weight>
+<weight>3.8531922573</weight>
+<weight>1.40707878062</weight>
+<weight>-0.504143608354</weight>
+<weight>-0.954348985494</weight>
+<weight>-0.350782342271</weight>
+<weight>0.131922856344</weight>
+<weight>0.499601766101</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.134401479286</weight>
+<weight>0.447524293138</weight>
+<weight>-1.09407622433</weight>
+<weight>1.95891759548</weight>
+<weight>-3.17473274011</weight>
+<weight>-3.0250054333</weight>
+<weight>-2.55335160196</weight>
+<weight>-5.28470744122</weight>
+<weight>0.586127941201</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>1.72156486514</weight>
+<weight>1.93231049233</weight>
+<weight>-0.954763878742</weight>
+<weight>-0.404630456182</weight>
+<weight>-0.586614204986</weight>
+<weight>-3.27051962233</weight>
+<weight>-1.67377552645</weight>
+<weight>-0.649555226958</weight>
+<weight>0.260313780433</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>6.12224786559</weight>
+<weight>-5.34309710709</weight>
+<weight>3.54151463042</weight>
+<weight>2.43517368315</weight>
+<weight>-0.169801671051</weight>
+<weight>0.359705565142</weight>
+<weight>2.54448118088</weight>
+<weight>-0.482699844062</weight>
+<weight>4.47029838933</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.606815134411</weight>
+<weight>-1.76579201759</weight>
+<weight>-2.0518731191</weight>
+<weight>-0.904891406341</weight>
+<weight>-1.43850422615</weight>
+<weight>-0.921972696487</weight>
+<weight>1.36462579735</weight>
+<weight>0.870730858329</weight>
+<weight>0.125345784342</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.302427575578</weight>
+<weight>-0.739367327309</weight>
+<weight>1.09531059856</weight>
+<weight>0.747629530396</weight>
+<weight>-0.212737850696</weight>
+<weight>1.28724660995</weight>
+<weight>0.561424662328</weight>
+<weight>0.0516702385565</weight>
+<weight>0.0739593683174</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>-0.302579628458</weight>
+<weight>0.260000647766</weight>
+<weight>-0.0167835952511</weight>
+<weight>1.18561257864</weight>
+<weight>0.00733160153187</weight>
+<weight>0.00839944764961</weight>
+<weight>-0.37142118249</weight>
+<weight>-0.735221744989</weight>
+<weight>0.254861823544</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+<Neuron Type="SigmoidNeuron" NumberOfInputs="8">
+<weight>0.0974833607145</weight>
+<weight>-0.523440854104</weight>
+<weight>-1.68705200877</weight>
+<weight>-1.00146349348</weight>
+<weight>0.820007973838</weight>
+<weight>1.76984667582</weight>
+<weight>-0.229740886162</weight>
+<weight>-0.430354893227</weight>
+<weight>0.194119250363</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+</NeuronLayer>
+<NeuronLayer NumberOfNeurons="1">
+<Neuron Type="SigmoidNeuron" NumberOfInputs="14">
+<weight>-5.14533353931</weight>
+<weight>2.40095859654</weight>
+<weight>6.2611421362</weight>
+<weight>-4.70652881473</weight>
+<weight>0.396681071578</weight>
+<weight>7.35849000318</weight>
+<weight>3.09828076477</weight>
+<weight>-5.77507248357</weight>
+<weight>-3.96150304173</weight>
+<weight>-6.46987731777</weight>
+<weight>-3.35943411549</weight>
+<weight>0.603234820419</weight>
+<weight>-0.222413869134</weight>
+<weight>-2.40829967125</weight>
+<weight>1.59394555264</weight>
+<bias>-1</bias>
+<response>1</response>
+</Neuron>
+</NeuronLayer>
+</NeuralNet>
