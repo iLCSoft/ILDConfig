@@ -88,10 +88,12 @@
        SimTrackerHit 
        SimCalorimeterHit
        TrackerHit 
+       TrackerHitPlane 
+       TrackerHitZCylinder
        CalorimeterHit 
        Track 
-       ReconstructedParticle
-       LCFloatVec      
+       LCFloatVec
+       LCGenericObject 
     </parameter>
     <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
     <parameter name="KeepCollectionNames" type="StringVec"> 
