@@ -1,0 +1,63 @@
+############################################################
+#
+#  ILDConfig - package for ilcsoft configuration files
+#  such as Marlin steering files, gear geometry files,...
+#  related to ILD (or CLIC_ILD)
+#
+#  01/2012
+#  F.Gaede, DESY
+############################################################
+
+This new package just combines the old packages StandardConfig and MokkaDBConfig,
+which will be obsolete form now on (iLCSoft release v01-13-03).
+
+
+
+subdirectories:
+
+ StandardConfig/
+ ----------------
+    current
+    -------
+    current example files for running Mokka and Marlin
+    (see: ./current/README for mini howto on using (this version of) ilcsoft )
+     
+    
+    mc2008
+    ------
+    configuration files for 2008 Monte Carlo production for LOI
+    
+    
+    clic_cdr
+    ------
+    configuration files for CLIC CDR production (2011)
+
+
+ MokkaDBConfig/
+ -------------
+
+    current dump of the Mokka DB: mokka-dbdump.sql.tgz
+
+    
+    scripts
+    -------
+    scripts for related to running Mokka or the Mokka DB 
+
+
+
+
+ versions:
+ ========
+
+ --------
+| v00-01 |
+ --------
+    first version based on 
+
+        - StandardConfig  v03-51-01
+	  with fixes: 
+          -  bbudsc_stdreco.xml: removed picking up of Si-hits in Clupatra 
+             and fixed collections and types for DST  
+
+        - MokkaDBConfig v03-06
+
