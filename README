@@ -13,6 +13,13 @@ which will be obsolete form now on (iLCSoft release v01-13-03).
 
 
 
+The configuration files in this release should work with the following Mokka models:
+  ILD_O1_v01
+  ILD_O2_v01
+  ILD_O3_v01
+
+
+
 subdirectories:
 
  StandardConfig/
