@@ -88,12 +88,10 @@
        SimTrackerHit 
        SimCalorimeterHit
        TrackerHit 
-       TrackerHitPlane 
-       TrackerHitZCylinder
        CalorimeterHit 
        Track 
-       LCFloatVec
-       LCGenericObject 
+       ReconstructedParticle
+       LCFloatVec      
     </parameter>
     <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
     <parameter name="KeepCollectionNames" type="StringVec"> 
@@ -121,7 +119,7 @@
  <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or 
 SET described using ZPlannarLayout-->
   <!--Mokka has encoded the ladder number in the cellID-->
-  <parameter name="Ladder_Number_encoded_in_cellID" type="bool">false </parameter>
+  <parameter name="Ladder_Number_encoded_in_cellID" type="bool"> true </parameter>
   <!--R-Phi Resolution-->
   <parameter name="PointResolutionRPhi" type="float">0.003 </parameter>
   <!--Z Resolution-->
