@@ -567,48 +567,29 @@ SET described using ZPlannarLayout-->
 </processor>
 
 <processor name="MyTruthTracker" type="TruthTracker">
- <!--Creates Track Collection from MC Truth-->
+  <!--Creates Track Collection from MC Truth. Can handle composite spacepoints as long as they consist of two TrackerHits-->
   <!--Use Energy Loss in Fit-->
   <parameter name="EnergyLossOn" type="bool">true </parameter>
-  <!--Name of the collection of FTD tracker hits-->
-  <parameter name="FTDCollectionName" type="string" lcioInType="TrackerHit">FTDTrackerHits </parameter>
-  <!--Name of the FTD sim trk hit collection-->
-  <parameter name="FTDSimTrkhitCollectionName" type="string" lcioInType="SimTrackerHit">FTDCollection </parameter>
   <!--Fit the Tracks with MarlinTrk, otherwise take track parameters from MCParticle-->
   <parameter name="FitTracksWithMarlinTrk" type="bool">true </parameter>
-  <!--Momentume Threshold MC particles which will produce tracks GeV-->
+  <!--Transverse Momentum Threshold MC particles which will produce tracks GeV-->
   <parameter name="MCpThreshold" type="float">0.1 </parameter>
   <!--Use MultipleScattering in Fit-->
   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
   <!--Name of the output track collection-->
-  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track"> TruthTracks </parameter>
+  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">TruthTracks </parameter>
   <!--Name of the MCParticle-Track Relations collection for output tracks-->
-  <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation"> TruthTracksMCP </parameter>
-  <!--Name of the collection of SIT tracker hits-->
-  <parameter name="SITCollectionName" type="string" lcioInType="TrackerHit">SITTrackerHits </parameter>
-  <!--Name of the SIT sim trk hit collection-->
-  <parameter name="SITSimTrkhitCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
+  <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation">TruthTracksMCP </parameter>
   <!--Smooth All Mesurement Sites in Fit-->
   <parameter name="SmoothOn" type="bool">false </parameter>
-  <!--Name of the collection of TPC tracker hits-->
-  <parameter name="TPCCollectionName" type="string" lcioInType="TrackerHit">TPCTrackerHits </parameter>
-  <!--Name of the TPC sim trk hit collection-->
-  <parameter name="TPCSimTrkhitCollectionName" type="string" lcioInType="SimTrackerHit">TPCCollection </parameter>
-  <!--Name of the collection of VTX tracker hits-->
-  <parameter name="VTXCollectionName" type="string" lcioInType="TrackerHit">VXDTrackerHits </parameter>
-  <!--Name of the VTX sim trk hit collection-->
-  <parameter name="VTXSimTrkhitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+  <!--Name of the tracker hit input collections-->
+  <parameter name="TrackerHitsInputCollections" type="StringVec">FTDTrackerHits SITTrackerHits TPCTrackerHits VXDTrackerHits  </parameter>
+  <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. Have to be in same order as TrackerHitsInputCollections!!!-->
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec">FTDTrackerHitRelations SITTrackerHitRelations TPCTrackerHitRelations VXDTrackerHitRelations  </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-  <!--Print out progress every N events -->
-  <parameter name="nEventPrintout" type="int">1000 </parameter>
-  <!--Name of the rel collection for SET TrackerHit collection-->
-  <parameter name="SETTrackerHitRelInputCollection" type="string" lcioInType="LCRelation">SETTrackerHitRelations </parameter>
-  <!--Name of the rel collection for SIT TrackerHit collection-->
-  <parameter name="SITTrackerHitRelInputCollection" type="string" lcioInType="LCRelation">SITTrackerHitRelations </parameter>
-  <!--Name of the rel collection for VXD TrackerHit collection-->
-  <parameter name="VXDTrackerHitRelInputCollection" type="string" lcioInType="LCRelation">VXDTrackerHitRelations </parameter>
 </processor>
+ 
 
 <!--########## KinkFinder ###################################### -->
 
