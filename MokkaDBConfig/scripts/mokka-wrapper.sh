@@ -120,7 +120,8 @@ fi
 
 msg INFO "RUN MOKKA"
 Mokka -hlocalhost:$MOKKA_TMP_DIR/mysql.sock $*
-msg INFO "Mokka exit status: $?"
+mokka_exit_status=$?
+msg INFO "Mokka exit status: $mokka_exit_status"
 
-exit 0
+exit $mokka_exit_status
 
