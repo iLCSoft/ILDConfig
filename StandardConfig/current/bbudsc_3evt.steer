@@ -33,7 +33,8 @@
 
 #/Mokka/init/lcioDetailedTRKHitMode SITCollection
 #/Mokka/init/lcioDetailedTRKHitMode VXDCollection
-#/Mokka/init/lcioDetailedTRKHitMode FTDCollection
+#/Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
+#/Mokka/init/lcioDetailedTRKHitMode FTD_STRIPCollection
 #/Mokka/init/lcioDetailedTRKHitMode TPCCollection
 #/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
 

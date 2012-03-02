@@ -176,11 +176,11 @@
  <processor name="FTDSimpleDiscDigiProcessor" type="SimpleDiscDigiProcessor">
  <!--SimpleDiscDigiProcessor creates FTD TrackerHits from SimTrackerHits-->
   <!--Name of the SimTrackerHit collection-->
-  <parameter name="CollectionName" type="string" lcioInType="SimTrackerHit">FTDCollection </parameter>
+  <parameter name="CollectionName" type="string" lcioInType="SimTrackerHit"> FTD_PIXELCollection </parameter>
   <!--Name of the TrackerHit output collection-->
-  <parameter name="OutputCollectionName" type="string" lcioOutType="TrackerHit">FTDTrackerHits </parameter>
+  <parameter name="OutputCollectionName" type="string" lcioOutType="TrackerHit">FTDPixelTrackerHits </parameter>
   <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDTrackerHitRelations </parameter>
+  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDPixelTrackerHitRelations </parameter>
   <!--Point Resolution-->
   <parameter name="PointResolution" type="float">0.01 </parameter>
   <!--ID of Sub-Detector using UTIL/ILDConf.h from lcio.-->

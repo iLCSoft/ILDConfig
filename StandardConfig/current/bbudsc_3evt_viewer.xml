@@ -52,7 +52,8 @@
        
        VXDCollection 0 5 1
        SITCollection 0 5 1
-       FTDCollection 0 5 1
+       FTD_PIXELCollection 0 5 1
+       FTD_STRIPCollection 0 5 1
        TPCCollection 0 3 1
        SETCollection 0 3 1
        ETDCollection 0 3 1
