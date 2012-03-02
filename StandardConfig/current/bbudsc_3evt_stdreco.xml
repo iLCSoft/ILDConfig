@@ -14,7 +14,8 @@
      <!-- ========== track digitization and tracking  === -->
      <processor name="VXDSimplePlanarDigiProcessor"/>
      <processor name="SITSimplePlanarDigiProcessor"/>
-     <processor name="FTDSimpleDiscDigiProcessor"/>
+     <processor name="SITSpacePointBuilder" />
+     <XXXXprocessor name="FTDSimpleDiscDigiProcessor"/>
      <processor name="MyTPCDigiProcessor"/>
      
      <!-- ========== the new C++ tracking =============== -->
@@ -23,7 +24,7 @@
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
 
      <!-- ========== new fwd tracking ( create fwd tracks in parallel) ====== -->
-     <processor name="MyForwardTracking"/>
+     <XXXXprocessor name="MyForwardTracking"/>
 
      <!-- ========== the track cheater (works only for single particles, so far)  ================= -->
      <!-- processor name="MyTruthTracker"/-->
@@ -114,50 +115,62 @@
   <parameter name="FileType" type="string" value="root "/>
 </processor>
 
-
- <processor name="VXDSimplePlanarDigiProcessor" type="SimplePlanarDigiProcessor">
- <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or 
-SET described using ZPlannarLayout-->
-  <!--Mokka has encoded the ladder number in the cellID-->
-  <parameter name="Ladder_Number_encoded_in_cellID" type="bool"> true </parameter>
-  <!--R-Phi Resolution-->
-  <parameter name="PointResolutionRPhi" type="float">0.003 </parameter>
-  <!--Z Resolution-->
-  <parameter name="PointResolutionZ" type="float">0.003 </parameter>
-  <!--Name of the Input SimTrackerHit collection-->
-  <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
-  <!--ID of Sub-Detector using UTIL/ILDConf.h from lcio. Either VXD, SIT or SET-->
-  <parameter name="Sub_Detector_ID" type="int">1 </parameter>
-  <!--Name of the TrackerHit output collection-->
-  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHit">VXDTrackerHits </parameter>
-  <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-</processor>
-
- <processor name="SITSimplePlanarDigiProcessor" type="SimplePlanarDigiProcessor">
- <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or 
-SET described using ZPlannarLayout-->
+<processor name="VXDSimplePlanarDigiProcessor" type="SimplePlanarDigiProcessor">                                   
+  <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or SET described using ZPlannarLayout-->
+  <!--whether hits are 1D strip hits-->
+  <parameter name="IsStrip" type="bool">false </parameter>
   <!--Mokka has encoded the ladder number in the cellID-->
   <parameter name="Ladder_Number_encoded_in_cellID" type="bool">true </parameter>
-  <!--R-Phi Resolution-->
-  <parameter name="PointResolutionRPhi" type="float">0.007 </parameter>
-  <!--Z Resolution-->
-  <parameter name="PointResolutionZ" type="float">0.007 </parameter>
+  <!--U Resolution-->
+  <parameter name="PointResolutionU" type="float">0.003 </parameter>
+  <!--V Resolution-->
+  <parameter name="PointResolutionV" type="float">0.003 </parameter>
+  <!--Name of the Input SimTrackerHit collection-->
+  <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+  <!--Name of TrackerHit SimTrackHit relation collection-->
+  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+  <!--ID of Sub-Detector from UTIL/ILDConf.h from lcio. Either for VXD, SIT or SET. Only used if Ladder_Number_encoded_in_cellID == false-->
+  <parameter name="Sub_Detector_ID" type="int">1 </parameter>
+  <!--Name of the TrackerHit output collection-->
+  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane"> VXDTrackerHits</parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>    
+
+<processor name="SITSimplePlanarDigiProcessor" type="SimplePlanarDigiProcessor">                                   
+  <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or SET described using ZPlannarLayout-->
+  <!--whether hits are 1D strip hits-->
+  <parameter name="IsStrip" type="bool"> true </parameter>
+  <!--Mokka has encoded the ladder number in the cellID-->
+  <parameter name="Ladder_Number_encoded_in_cellID" type="bool">true </parameter>
+  <!--U Resolution-->
+  <parameter name="PointResolutionU" type="float">0.007 </parameter>
   <!--Name of the Input SimTrackerHit collection-->
   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
-  <!--ID of Sub-Detector using UTIL/ILDConf.h from lcio. Either VXD, SIT or SET-->
+  <!--Name of TrackerHit SimTrackHit relation collection-->
+  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SITTrackerHitRelations </parameter>
+  <!--ID of Sub-Detector from UTIL/ILDConf.h from lcio. Either for VXD, SIT or SET. Only used if Ladder_Number_encoded_in_cellID == false-->
   <parameter name="Sub_Detector_ID" type="int">2 </parameter>
   <!--Name of the TrackerHit output collection-->
-  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHit">SITTrackerHits </parameter>
-  <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SITTrackerHitRelations </parameter>
+  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane"> SITTrackerHits</parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
-  <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SITTrackerHitRelations </parameter>
-</processor>
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>    
+
+
+<processor name="SITSpacePointBuilder" type="SpacePointBuilder">
+  <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+  <!--Name of the SpacePoint SimTrackerHit relation collection-->
+  <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SITSpacePointRelations </parameter>
+  <!--SpacePointsCollection-->
+  <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SITSpacePoints </parameter>
+  <!--TrackerHitCollection-->
+  <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter>
+  <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+  <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SITTrackerHitRelations </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter--> 
+</processor>     
 
  <processor name="FTDSimpleDiscDigiProcessor" type="SimpleDiscDigiProcessor">
  <!--SimpleDiscDigiProcessor creates FTD TrackerHits from SimTrackerHits-->
@@ -283,7 +296,7 @@ SET described using ZPlannarLayout-->
   <!--Chi2WZTriplet-->
   <parameter name="Chi2WZTriplet" type="float">0.5 </parameter>
   <!--Create Track To MCP Relations-->
-  <parameter name="CreateMap" type="int">1 </parameter>
+  <parameter name="CreateMap" type="int">0 </parameter>
   <!--cut on D0 for tracks-->
   <parameter name="CutOnD0" type="float">100 </parameter>
   <!--cut on Pt-->
@@ -291,7 +304,9 @@ SET described using ZPlannarLayout-->
   <!--cut on Z0 for tracks-->
   <parameter name="CutOnZ0" type="float">100 </parameter>
   <!--Print out debugging info?-->
-  <parameter name="Debug" type="int">1 </parameter>
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Use Energy Loss in Fit-->
+  <parameter name="EnergyLossOn" type="bool">true </parameter>    
   <!--FTD Hit Collection Name-->
   <parameter name="FTDHitCollectionName" type="string" lcioInType="TrackerHit">FTDTrackerHits </parameter>
   <!--Fast attachment-->
@@ -299,7 +314,14 @@ SET described using ZPlannarLayout-->
   <!--Final Refit ?-->
   <parameter name="FinalRefit" type="int">1 </parameter>
   <!--Combinations of Hits in Layers-->
-  <parameter name="LayerCombinations" type="IntVec">6 4 3 6 4 2 6 3 2 5 4 3 5 4 2 5 3 2 5 3 1 5 2 1 4 3 2 4 3 1 4 2 1 3 2 1  </parameter>
+  <parameter name="LayerCombinations" type="IntVec"> 
+    7 6 4  7 6 3  7 6 2
+    7 5 3  7 5 2  7 4 3  7 4 2  
+    6 5 3  6 5 2  6 4 3  6 4 2 
+    6 3 1  6 3 0  6 2 1  6 2 0 
+    5 3 1  5 3 0  5 2 1  5 2 0
+    4 3 1  4 3 0  4 2 1  4 2 0    
+  </parameter>
   <!--Combinations of Hits in FTD-->
   <parameter name="LayerCombinationsFTD" type="IntVec">6 5 4 6 5 3 5 4 3 5 4 2 5 4 1 5 3 2 5 3 1 5 2 1 4 3 2 4 3 1 4 3 0 4 2 1 4 2 0 4 1 0 3 2 1 3 2 0 3 1 0 2 1 0  </parameter>
   <!--MinDistCutAttach-->
@@ -310,24 +332,26 @@ SET described using ZPlannarLayout-->
   <parameter name="MinLayerToAttach" type="int">-1 </parameter>
   <!--minimal hits-->
   <parameter name="MinimalHits" type="int">3 </parameter>
+  <!--Use MultipleScattering in Fit--> 
+  <parameter name="MultipleScatteringOn" type="bool">true </parameter>        
   <!--Number of divisions in Phi-->
   <parameter name="NDivisionsInPhi" type="int">80 </parameter>
   <!--Number of divisions in Phi for FTD-->
   <parameter name="NDivisionsInPhiFTD" type="int">30 </parameter>
   <!--Number of divisions in Theta-->
   <parameter name="NDivisionsInTheta" type="int">80 </parameter>
-  <!--Option of prefit ?-->
-  <parameter name="OptPrefit" type="int">0 </parameter>
+ <!--Maximal number of hits for which a track with n hits is better than one with n-1hits. (defaut 5)-->
+  <parameter name="NHitsChi2" type="int">5 </parameter>
+ <!--Legacy mode for reading loi data-->
+  <parameter name="ReadingLoiData" type="bool">false </parameter> 
   <!--SIT Hit Collection Name-->
-  <parameter name="SITHitCollectionName" type="string" lcioInType="TrackerHit">SITTrackerHits </parameter>
+  <parameter name="SITHitCollectionName" type="string" lcioInType="TrackerHit">SITSpacePoints </parameter>
   <!--Silicon track Collection Name-->
   <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track">SiTracks </parameter>
   <!--Name of Si track MC particle relation collection-->
   <parameter name="SiTrackMCPRelCollection" type="string" lcioOutType="LCRelation">SiTracksMCP </parameter>
-  <!--Simple Helix Fit ?-->
-  <parameter name="SimpleHelixFit" type="int">1 </parameter>
-  <!--Use Extra Point in Fit-->
-  <parameter name="UseExtraPoint" type="int">0 </parameter>
+  <!--Smooth All Mesurement Sites in Fit-->
+  <parameter name="SmoothOn" type="bool">true </parameter> 
   <!--Use SIT-->
   <parameter name="UseSIT" type="int">1 </parameter>
   <!--VTX Hit Collection Name-->
@@ -359,7 +383,7 @@ SET described using ZPlannarLayout-->
   <!--Cut on fit Chi2-->
   <parameter name="Chi2PrefitCut" type="float">100000 </parameter>
   <!--Create Track to MCP Relations-->
-  <parameter name="CreateMap" type="int">1 </parameter>
+  <parameter name="CreateMap" type="int">0 </parameter>
   <!--Cut on the number of the Si hits for tracks with no TPC hits-->
   <parameter name="CutOnSiHits" type="int">4 </parameter>
   <!--Cut on the number of the TPC hits for tracks with no Si hits-->
@@ -378,10 +402,8 @@ SET described using ZPlannarLayout-->
   <parameter name="Debug" type="int">0 </parameter>
   <!--Cut on dP/P difference for merging TPC segments-->
   <parameter name="DeltaPCutToMergeTPCSegments" type="float">0.1 </parameter>
-  <!--ETD Hit Collection Name-->
-  <parameter name="ETDHitCollection" type="string" lcioInType="TrackerHit">ETDTrackerHits </parameter>
-  <!--Cut on distance between track and ETD hits-->
-  <parameter name="ETDHitToTrackDistance" type="float">10 </parameter>
+  <!--Use Energy Loss in Fit-->
+  <parameter name="EnergyLossOn" type="bool"> true </parameter>
   <!--FTD Hit Collection Name-->
   <parameter name="FTDHitCollection" type="string" lcioInType="TrackerHit">FTDTrackerHits </parameter>
   <!--Cut on distance between track and FTD hits-->
@@ -398,20 +420,14 @@ SET described using ZPlannarLayout-->
   <parameter name="LDCTrackCollection" type="string" lcioOutType="Track">MarlinTrkTracks </parameter>
   <!--Collection name for the LDC track to MCParticle relations-->
   <parameter name="LDCTrackMCPRelCollection" type="string" lcioOutType="LCRelation">MarlinTrkTracksMCP </parameter>
-  <!--Switch on the Material in MaterialDB_F77-->
-  <parameter name="MaterialOn" type="bool">true </parameter>
+  <!--Use MultipleScattering in Fit-->
+  <parameter name="MultipleScatteringOn" type="bool"> true </parameter>
   <!--number of hits for outward extrapolation-->
   <parameter name="NHitsExtrapolation" type="int">35 </parameter>
   <!--Cut on Omega difference for forced merging of Si and TPC segments-->
   <parameter name="OmegaCutForForcedMerging" type="float">0.15 </parameter>
   <!--Cut on Omega difference for merging Si and TPC segments-->
   <parameter name="OmegaCutForMerging" type="float">0.25 </parameter>
-  <!--Option for the LDC Track fit-->
-  <parameter name="OptFit" type="int">4 </parameter>
-  <!--Option for Si tracks refitting-->
-  <parameter name="OptFitSi" type="int">2 </parameter>
-  <!--Option for TPC tracks refitting-->
-  <parameter name="OptFitTPC" type="int">2 </parameter>
   <!--Cut on Pt of tracks for merging TPC segments-->
   <parameter name="PtCutToMergeTPCSegments" type="float">1.2 </parameter>
   <!--Refitted TPC track collection name-->
@@ -431,7 +447,7 @@ SET described using ZPlannarLayout-->
   <!--Cut on distance between track and SET hits-->
   <parameter name="SETHitToTrackDistance" type="float">2 </parameter>
   <!--SIT Hit Collection Name-->
-  <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit">SITTrackerHits </parameter>
+  <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit">SITSpacePoints </parameter>
   <!--Cut on distance between track and SIT hits-->
   <parameter name="SITHitToTrackDistance" type="float">2 </parameter>
   <!--Si Track Collection-->
@@ -452,8 +468,6 @@ SET described using ZPlannarLayout-->
   <parameter name="TPCTracks" type="string" lcioInType="Track">ClupatraTracks </parameter>
   <!--TPC Track to MCP Relation Collection Name-->
   <parameter name="TPCTracksMCPRelColl" type="string" lcioInType="LCRelation">XTPCTracksMCP </parameter>
-  <!--Use Extra Point in Fit-->
-  <parameter name="UseExtraPoint" type="int">0 </parameter>
   <!--VTX Hit Collection Name-->
   <parameter name="VTXHitCollection" type="string" lcioInType="TrackerHit">VXDTrackerHits </parameter>
   <!--Cut on distance between track and VTX hits-->
@@ -466,10 +480,6 @@ SET described using ZPlannarLayout-->
   <parameter name="Z0CutForMerging" type="float">1000 </parameter>
   <!--Cut on Z0 difference for merging TPC segments-->
   <parameter name="Z0CutToMergeTPCSegments" type="float">5000 </parameter>
-  <!--Parameter a to define minimal IP error-->
-  <parameter name="aParameterForIPError" type="float">0.002 </parameter>
-  <!--Parameter b to define minimal IP error-->
-  <parameter name="bParameterForIPError" type="float">0.0076 </parameter>
   <!--Cut on cos theta between the two momentum vectors when considering merger of high Pt tracks-->
   <parameter name="cosThetaCutHighPtMerge" type="float">0.99 </parameter>
   <!--cut on cos theta between the two momentum vectors when considering merger of high Pt tracks for softer dp/p cut-->
@@ -484,8 +494,6 @@ SET described using ZPlannarLayout-->
   <parameter name="momDiffCutHighPtMerge" type="float">0.01 </parameter>
   <!--softer cut on dp/p when considering merger of high Pt tracks-->
   <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
-  <!--Parameter s to define minimal IP error-->
-  <parameter name="sParameterForIPError" type="float">0.75 </parameter>
 </processor>
 
 
