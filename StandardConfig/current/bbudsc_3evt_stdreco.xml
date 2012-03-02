@@ -388,7 +388,7 @@
   <!--Cut on the number of the Si hits for tracks with no TPC hits-->
   <parameter name="CutOnSiHits" type="int">4 </parameter>
   <!--Cut on the number of the TPC hits for tracks with no Si hits-->
-  <parameter name="CutOnTPCHits" type="int">35 </parameter>
+  <parameter name="CutOnTPCHits" type="int">10 </parameter>
   <!--Cut on the track parameter D0-->
   <parameter name="CutOnTrackD0" type="float">500 </parameter>
   <!--Cut on the track parameter Z0-->
