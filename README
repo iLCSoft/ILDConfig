@@ -12,11 +12,10 @@ This new package just combines the old packages StandardConfig and MokkaDBConfig
 which will be obsolete form now on (iLCSoft release v01-13-03).
 
 
-
 The configuration files in this release should work with the following Mokka models:
-  ILD_O1_v01
-  ILD_O2_v01
-  ILD_O3_v01
+  ILD_O1_v02
+  ILD_O2_v02
+  ILD_O3_v02
 
 
 
@@ -55,6 +54,15 @@ subdirectories:
 
  versions:
  ========
+ --------
+| v00-02 |
+ --------
+     - works with iLCSoft release v01-13-04 
+     - use with model ILD_O1_v02
+     - StandardConfig/current:
+        updated steering parameters in bbudsc_stdreco.xml
+        ( new Si-strip tracking )
+  
 
  --------
 | v00-01 |
