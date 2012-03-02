@@ -20,6 +20,7 @@
      
      <!-- ========== the new C++ tracking =============== -->
      <processor name="MyClupatraProcessor" />
+
      <processor name="MySiliconTracking_MarlinTrk"/>  
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
 
@@ -811,10 +812,12 @@
   <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
   <!--Name of the  SimCalorimeterHit - CalorimeterHit relation-->
   <parameter name="SimCalorimeterHitRelationName" type="string" lcioInType="LCRelation"> RelationCaloHit </parameter>
-  <!--Name of the  SimTrackerHit - TrackerHit relation-->
-  <parameter name="SimTrackerHitRelationName" type="string" lcioInType="LCRelation"> TPCTracksMCP </parameter>
- <!--Name of the Tracks input collection-->
+  <!--Name of the Tracks input collection-->
   <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
+  <!--Name of the trackMCTruthLink output collection - not created if empty()-->
+  <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> MarlinTrkTracksMCTruthLink </parameter>
+  <!--Name of the MCParticle to Track relation output collection - not created if empty()-->
+  <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthMarlinTrkTracksLink </parameter>
    <!--Name of the skimmed MCParticle  output collection-->
   <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
   <!--Name of the RecoMCTruthLink output collection-->
@@ -838,8 +841,6 @@
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <parameter name="Verbosity" type="string">MESSAGE DEBUG </parameter>
   </processor>
-
-
 
 
  <processor name="MyLcfiplusProcessor" type="LcfiplusProcessor">

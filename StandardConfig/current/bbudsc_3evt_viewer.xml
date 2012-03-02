@@ -31,7 +31,7 @@
    <processor name="MyCEDViewer" type="CEDViewer">
 
      <!--draw a helix for Track objects:0 none, 1: atIP, 2: atFirstHit, 3: atLastHit, 4: atCalorimeter-->
-     <parameter name="DrawHelixForTrack" type="int"> 1 </parameter>
+     <parameter name="DrawHelixForTrack" type="int"> 0 </parameter>
     
      <!--minimum energy of MCParticles to be drawn-->
      <parameter name="MCParticleEnergyCut" type="float"> 1. </parameter>
