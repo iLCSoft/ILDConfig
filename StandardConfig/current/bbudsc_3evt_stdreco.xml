@@ -504,16 +504,18 @@
   <parameter name="ForwardTrackCollection" type="string" lcioOutType="Track">ForwardTracks </parameter>
   <!--Use Energy Loss in Fit-->
   <parameter name="EnergyLossOn" type="bool">true </parameter>
-  <!--FTD Hit Collection Name-->
-  <parameter name="FTDHitCollectionName" type="string" lcioInType="TrackerHit">FTDTrackerHits </parameter>
+  <!--FTD Hit Collections-->
+  <parameter name="FTDHitCollections" type="StringVec">FTDPixelTrackerHits FTDSpacePoints</parameter>
   <!--Use MultipleScattering in Fit-->
   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
   <!--Smooth All Measurement Sites in Fit-->
   <parameter name="SmoothOn" type="bool">false </parameter>
   <!--The chi2 probability value below which tracks will be cut-->
   <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+  <!--The maximum distance of overlapping hits-->
+  <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <parameter name="Verbosity" type="string">MESSAGE0 </parameter>
+  <parameter name="Verbosity" type="string">DEBUG3 </parameter>
   
   <parameter name="Crit2_DeltaPhi_min" type="float">0</parameter>
   <parameter name="Crit2_DeltaPhi_max" type="float">13.1435</parameter>
@@ -555,22 +557,22 @@
   <parameter name="Crit4_RChange_max" type="float">2.14321</parameter>
   
   <parameter name="Criteria" type="StringVec">Crit2_DeltaPhi
-  Crit2_DeltaRho
-  Crit2_HelixWithIP
-  Crit2_RZRatio
-  Crit2_StraightTrackRatio
-  Crit3_2DAngle
-  Crit3_3DAngle
-  Crit3_ChangeRZRatio
-  Crit3_IPCircleDist
-  Crit3_PT
-  Crit4_2DAngleChange
-  Crit4_3DAngleChange
-  Crit4_DistOfCircleCenters
-  Crit4_DistToExtrapolation
-  Crit4_NoZigZag
-  Crit4_PhiZRatioChange
-  Crit4_RChange
+    Crit2_DeltaRho
+    Crit2_HelixWithIP
+    Crit2_RZRatio
+    Crit2_StraightTrackRatio
+    Crit3_2DAngle
+    Crit3_3DAngle
+    Crit3_ChangeRZRatio
+    Crit3_IPCircleDist
+    Crit3_PT
+    Crit4_2DAngleChange
+    Crit4_3DAngleChange
+    Crit4_DistOfCircleCenters
+    Crit4_DistToExtrapolation
+    Crit4_NoZigZag
+    Crit4_PhiZRatioChange
+    Crit4_RChange
   </parameter>
   
 </processor>
