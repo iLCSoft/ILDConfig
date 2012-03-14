@@ -514,6 +514,8 @@
   <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
   <!--The maximum distance of overlapping hits-->
   <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
+  <!--The method used to find the best non overlapping subset of tracks. Available are: TrackSubsetHopfieldNN and TrackSubsetSimple-->
+  <parameter name="BestSubsetFinder" type="string">TrackSubsetHopfieldNN </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <parameter name="Verbosity" type="string">DEBUG3 </parameter>
   
