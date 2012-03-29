@@ -31,12 +31,12 @@
 /Mokka/init/userDeltaOneStep 1e-4 mm
 /Mokka/init/lcioDetailedShowerMode false
 
-#/Mokka/init/lcioDetailedTRKHitMode SITCollection
-#/Mokka/init/lcioDetailedTRKHitMode VXDCollection
-#/Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
-#/Mokka/init/lcioDetailedTRKHitMode FTD_STRIPCollection
-#/Mokka/init/lcioDetailedTRKHitMode TPCCollection
-#/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
+/Mokka/init/lcioDetailedTRKHitMode SITCollection
+/Mokka/init/lcioDetailedTRKHitMode VXDCollection
+/Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
+/Mokka/init/lcioDetailedTRKHitMode FTD_STRIPCollection
+/Mokka/init/lcioDetailedTRKHitMode TPCCollection
+/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
 
 /Mokka/init/physicsListName QGSP_BERT
 /Mokka/init/visumode false
