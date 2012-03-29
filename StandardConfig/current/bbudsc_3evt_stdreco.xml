@@ -499,7 +499,7 @@
 
 
 <processor name="MyForwardTracking" type="ForwardTracking">
-  <!--ForwardTracking reconstructs tracks through the FTDs-->
+  <!--ForwardTracking reconstructs tracks through the FTD-->
   <!--Name of the Forward Tracking output collection-->
   <parameter name="ForwardTrackCollection" type="string" lcioOutType="Track">ForwardTracks </parameter>
   <!--Use Energy Loss in Fit-->
@@ -512,6 +512,8 @@
   <parameter name="SmoothOn" type="bool">false </parameter>
   <!--The chi2 probability value below which tracks will be cut-->
   <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+  <!--The minimum number of hits to create a track-->
+  <parameter name="HitsPerTrackMin" type="int">4 </parameter>
   <!--The maximum distance of overlapping hits-->
   <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
   <!--The method used to find the best non overlapping subset of tracks. Available are: TrackSubsetHopfieldNN and TrackSubsetSimple-->
@@ -519,7 +521,7 @@
   <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
   <parameter name="TakeBestVersionOfTrack" type="bool">true </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <parameter name="Verbosity" type="string">DEBUG3 </parameter>
+  <!--parameter name="Verbosity" type="string"> </parameter-->
   
   <parameter name="Crit2_DeltaPhi_min" type="float">0</parameter>
   <parameter name="Crit2_DeltaPhi_max" type="float">13.1435</parameter>
