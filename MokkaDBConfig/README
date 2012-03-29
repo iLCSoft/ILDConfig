@@ -9,10 +9,10 @@
 --- how to update the Mokka DB dump in this package ---------
 
 # 1. check which is the most up to date Mokka tag (e.g. mokka-07-07-p05)
-export newmokkaver=mokka-07-07-p05
-export oldmokkaver=mokka-07-07-p04
+export newmokkaver=mokka-07-07-p07
+export oldmokkaver=mokka-07-07-p06
 # 2. run ./scripts/mokkadump.sh
-./scripts/mokkadump.sh $newmokkaver-dbdump.sql
+test -e $newmokkaver-dbdump.sql || ./scripts/mokkadump.sh $newmokkaver-dbdump.sql
 # 3. compress sql file
 tar czf $newmokkaver-dbdump.sql.tgz $newmokkaver-dbdump.sql
 # 4. update symbolic link
