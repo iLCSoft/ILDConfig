@@ -19,7 +19,7 @@
 
 # 1. ----  initialize the current ilcsoft release, e.g.  ------
 
-  . /afs/desy.de/project/ilcsoft/sw/x86_64_gcc41_sl5/v01-13/init_ilcsoft.sh 
+  . /afs/desy.de/project/ilcsoft/sw/x86_64_gcc41_sl5/v01-13-05/init_ilcsoft.sh 
 
 #-- this sets:  
 #   MARLIN_DLL=libMarlinReco.so:libPandoraAnalysis.so:libMarlinPandora.so:libLCFIVertex.so:libCEDViewer.so:libEutelescope.so:libMarlinTPC.so:libOverlay.so
@@ -28,20 +28,22 @@
 # 2. ---- run a Mokka example  ------
  a)
 
-  mokka-wrapper.sh -M ILD_O1_v01 bbudsc_3evt.steer
+  export PATH=$PWD/../../MokkaDBConfig/scripts:$PATH
+  export MOKKA_DUMP_FILE=$PWD/../../MokkaDBConfig/mokka-dbdump.sql.tgz
+  mokka-wrapper.sh -M ILD_O1_v02 bbudsc_3evt.steer
 
 # b)
 #  the above starts a MySQL server and populates it with a dump of the Mokka central DB
 #  you can also run Mokka directly (using the central DB):
 
-  Mokka -M ILD_O1_v01 bbudsc_3evt.steer
+  Mokka -M ILD_O1_v02 bbudsc_3evt.steer
   
 # c) 
 #  to make sure that the extra partice tables (for SUSY etc) is loaded: 
  
-  Mokka -M ILD_O1_v01 -e ../../MokkaDBConfig/particle.tbl bbudsc_3evt.steer
+  Mokka -M ILD_O1_v02 -e ../../MokkaDBConfig/particle.tbl bbudsc_3evt.steer
   # OR:
-  mokka-wrapper.sh -M ILD_O1_v01 -e ../../MokkaDBConfig/particle.tbl bbudsc_3evt.steer
+  mokka-wrapper.sh -M ILD_O1_v02 -e ../../MokkaDBConfig/particle.tbl bbudsc_3evt.steer
 
 
 #--   this creates the file:    bbudsc_3evt.slcio
