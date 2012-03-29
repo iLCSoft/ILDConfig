@@ -332,43 +332,51 @@
 </processor>
 
 
-
   <processor name="MyClupatraProcessor" type="ClupatraProcessor">
     <!--ClupatraProcessor : nearest neighbour clustering seeded pattern recognition-->
+    <!--the maximum chi2-distance for which a hit is considered for merging -->
+    <parameter name="Chi2Cut" type="float">100 </parameter>
+    <!--optionally create some debug collection with intermediate track segments and used and unused hits-->
+    <parameter name="CreateDebugCollections" type="bool"> false true  </parameter>
     <!--Cut for distance between hits in mm-->
     <parameter name="DistanceCut" type="float">40 </parameter>
     <!--allowed fraction of hits in same pad row per track-->
     <parameter name="DuplicatePadRowFraction" type="float">0.1 </parameter>
     <!--Use Energy Loss in Fit-->
-    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <parameter name="EnergyLossOn" type="bool"> true </parameter>
+    <!--the maximum delta Chi2 for which a hit is added to a track segement-->
+    <parameter name="MaxDeltaChi2" type="float">35 </parameter>
+    <!--the maximum number of layers without finding a hit before hit search search is stopped -->
+    <parameter name="MaxStepWithoutHit" type="int">6 </parameter>
+    <!--minimum fraction of layers that have a given multiplicity, when forcing a cluster into sub clusters-->
+    <parameter name="MinLayerFractionWithMultiplicity" type="float">0.5 </parameter>
+    <!--minimum number of layers that have a given multiplicity, when forcing a cluster into sub clusters-->
+    <parameter name="MinLayerNumberWithMultiplicity" type="int">3 </parameter>
     <!--minimum number of hits per cluster-->
     <parameter name="MinimumClusterSize" type="int">6 </parameter>
     <!--Use MultipleScattering in Fit-->
-    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <parameter name="MultipleScatteringOn" type="bool">false true </parameter>
+    <!--number of bins in z over total length of TPC - hits from different z bins are nver merged-->
+    <parameter name="NumberOfZBins" type="int">150 </parameter>
     <!--Name of the output collection-->
     <parameter name="OutputCollection" type="string" lcioOutType="Track">ClupatraTracks </parameter>
-    
     <!--number of pad rows used in initial seed clustering-->
-    <parameter name="PadRowRange" type="int">15</parameter>
+    <parameter name="PadRowRange" type="int">15 </parameter>
     
-    <!--Cut for r_min in mm-->
-    <parameter name="RCut" type="float">0 </parameter>
+    <!--try to pick up hits from Si-trackers-->
+    <parameter name="pickUpSiHits" type="bool">false </parameter>
+    <!--name of the SIT hit collections - used to extend TPC tracks if (pickUpSiHits==true)-->
+    <parameter name="SITHitCollection" type="string">SITTrackerHits </parameter>
+    <!--name of the VXD hit collections - used to extend TPC tracks if (pickUpSiHits==true)-->
+    <parameter name="VXDHitCollection" type="string">VXDTrackerHits </parameter>
+    
     <!--Smooth All Mesurement Sites in Fit-->
     <parameter name="SmoothOn" type="bool">false </parameter>
     <!--Name of the tpc hit input collections-->
-    <parameter name="TPCHitCollection" type="string" lcioInType="TrackerHit"> TPCTrackerHits </parameter>
-    
-    <!--try to pick up hits from Si-trackers-->
-    <parameter name="pickUpSiHits" type="bool"> false </parameter>
-    
-    <!--name of the SIT hit collections - used to extend TPC tracks if (pickUpSiHits==true)-->
-    <parameter name="SITHitCollection" type="string">SITTrackerHits </parameter>
-
-    <!--name of the vxd hit collections - if given, tracks are etxended by picking up hits-->
-    <parameter name="VXDHitCollection" type="string">VXDTrackerHits </parameter>
+    <parameter name="TPCHitCollection" type="string" lcioInType="TrackerHit">TPCTrackerHits </parameter>
     
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <parameter name="Verbosity" type="string"> MESSAGE DEBUG4 </parameter>
+    <parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter>
   </processor>
 
 
