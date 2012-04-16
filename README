@@ -54,6 +54,19 @@ subdirectories:
 
  versions:
  ========
+
+ -----------
+| v01-13-05 |
+ -----------
+   - switched to versioning scheme that is parallel to iLCSoft 
+     (additional releases should be patch releases v01-13-05-p0x) 
+   
+   - reactivated ForwardTracking and changed steering parameter BestSubsetFinder to SubsetHopfieldNN
+   - added new mokka dump: mokka-07-07-p07-dbdump.sql.tgz (2012-03-29 - 17:56:36)
+   - updated Clupatra steering section
+   - updated planar digitiser and RecoMCTruthLinker for silicon strip hits
+   - activated lcioDetailedTRKHitMode for all tracking detectors
+
  --------
 | v00-02 |
  --------
