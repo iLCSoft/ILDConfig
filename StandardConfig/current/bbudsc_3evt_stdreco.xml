@@ -640,7 +640,7 @@
   <parameter name="HitsPerTrackMin" type="int">4 </parameter>
   <!--The maximum distance of overlapping hits-->
   <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
-  <!--The method used to find the best non overlapping subset of tracks. Available are: TrackSubsetHopfieldNN and TrackSubsetSimple-->
+  <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple-->
   <parameter name="BestSubsetFinder" type="string">SubsetHopfieldNN </parameter>
   <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
   <parameter name="TakeBestVersionOfTrack" type="bool">true </parameter>
