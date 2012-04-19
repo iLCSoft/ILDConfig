@@ -28,14 +28,16 @@
      <processor name="MyTPCDigiProcessor"/>
      
      <!-- ========== the new C++ tracking =============== -->
+     
      <processor name="MyClupatraProcessor" />
-
+      
      <processor name="MySiliconTracking_MarlinTrk"/>  
+     <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
+     
+     <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
+     
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
-
-     <!-- ========== new fwd tracking ( create fwd tracks in parallel) ====== -->
-     <processor name="MyForwardTracking"/>
-
+      
      <!-- ========== the track cheater (works only for single particles, so far)  ================= -->
      <!-- processor name="MyTruthTracker"/-->
      
@@ -483,6 +485,24 @@
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
 
+<processor name="MyTrackSubsetProcessor" type="TrackSubsetProcessor">
+   <!--TrackSubsetProcessor takes tracks from multiple sources and outputs them (or modified versions, or a subset of them) as one track collection.-->
+   <!--Use Energy Loss in Fit-->
+   <parameter name="EnergyLossOn" type="bool">true </parameter>
+   <!--Use MultipleScattering in Fit-->
+   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+   <!--The parameter omega for the HNN. Controls the influence of the quality indicator.-->
+   <parameter name="Omega" type="double">0.75 </parameter>
+   <!--Smooth All Measurement Sites in Fit-->
+   <parameter name="SmoothOn" type="bool">false </parameter>
+   <!--A vector of the input track collections-->
+   <parameter name="TrackInputCollections" type="StringVec">ForwardTracks SiTracks  </parameter>
+   <!--Name of the output track collection-->
+   <parameter name="TrackOutputCollection" type="string" lcioOutType="Track">SubsetTracks </parameter>
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+  
 <processor name="MyFullLDCTracking_MarlinTrk" type="FullLDCTracking_MarlinTrk">
  <!--Performs full tracking in LDC detector-->
   <!--Cut on Opening Angle for forced merging of Si and TPC segments-->
@@ -576,7 +596,7 @@
   <!--Cut on distance between track and SIT hits-->
   <parameter name="SITHitToTrackDistance" type="float">2 </parameter>
   <!--Si Track Collection-->
-  <parameter name="SiTracks" type="string" lcioInType="Track">SiTracks </parameter>
+  <parameter name="SiTracks" type="string" lcioInType="Track">SubsetTracks </parameter>
   <!--Si Track to Collection-->
   <parameter name="SiTracksMCPRelColl" type="string" lcioInType="LCRelation">SiTracksMCP </parameter>
   <!--Store only hits used in fit?-->
