@@ -39,7 +39,7 @@
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
       
      <!-- ========== the track cheater   ================= -->
-     <!-- processor name="MyTruthTracker"/-->
+     <!--processor name="MyTruthTracker"/-->
      
      <processor name="MyV0Finder"/>               
      <XXXXprocessor name="MyKinkFinder"/>         
@@ -741,9 +741,9 @@
   <!--Smooth All Mesurement Sites in Fit-->
   <parameter name="SmoothOn" type="bool">false </parameter>
   <!--Name of the tracker hit input collections-->
-  <parameter name="TrackerHitsInputCollections" type="StringVec">FTDTrackerHits SITTrackerHits TPCTrackerHits VXDTrackerHits  </parameter>
+  <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITSpacePoints FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETTrackerHits  </parameter>
   <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. Have to be in same order as TrackerHitsInputCollections!!!-->
-  <parameter name="TrackerHitsRelInputCollections" type="StringVec">FTDTrackerHitRelations SITTrackerHitRelations TPCTrackerHitRelations VXDTrackerHitRelations  </parameter>
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETTrackerHitRelations  </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
