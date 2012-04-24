@@ -679,25 +679,23 @@
   <parameter name="Crit2_StraightTrackRatio_max" type="float">1.03181</parameter>
   
   
-  <parameter name="Crit3_2DAngle_min" type="float">0.00580995</parameter>
+  <parameter name="Crit3_2DAngle_min" type="float">0.0</parameter>
   <parameter name="Crit3_2DAngle_max" type="float">23.3652</parameter>
-  <parameter name="Crit3_3DAngle_min" type="float">0.0032876</parameter>
+  <parameter name="Crit3_3DAngle_min" type="float">0.0</parameter>
   <parameter name="Crit3_3DAngle_max" type="float">6.91779</parameter>
   <parameter name="Crit3_ChangeRZRatio_min" type="float">0.998229</parameter>
   <parameter name="Crit3_ChangeRZRatio_max" type="float">1.00448</parameter>
   <parameter name="Crit3_IPCircleDist_min" type="float">0</parameter>
   <parameter name="Crit3_IPCircleDist_max" type="float">5.89122</parameter>
   <parameter name="Crit3_PT_min" type="float">0.196965</parameter>
-  <parameter name="Crit3_PT_max" type="float">25.6927</parameter>
+  <parameter name="Crit3_PT_max" type="float">9999999999</parameter>
   
   
   <parameter name="Crit4_2DAngleChange_min" type="float">0.247732</parameter>
   <parameter name="Crit4_2DAngleChange_max" type="float">2.39607</parameter>
   <parameter name="Crit4_3DAngleChange_min" type="float">0.72113</parameter>
   <parameter name="Crit4_3DAngleChange_max" type="float">1.35853</parameter>
-  <parameter name="Crit4_DistOfCircleCenters_min" type="float">0.00173495</parameter>
-  <parameter name="Crit4_DistOfCircleCenters_max" type="float">5088.1</parameter>
-  <parameter name="Crit4_DistToExtrapolation_min" type="float">2.71904e-06</parameter>
+  <parameter name="Crit4_DistToExtrapolation_min" type="float">0</parameter>
   <parameter name="Crit4_DistToExtrapolation_max" type="float">4.75636</parameter>
   <parameter name="Crit4_NoZigZag_min" type="float">0.00732441</parameter>
   <parameter name="Crit4_NoZigZag_max" type="float">528.418</parameter>
@@ -718,7 +716,6 @@
     Crit3_PT
     Crit4_2DAngleChange
     Crit4_3DAngleChange
-    Crit4_DistOfCircleCenters
     Crit4_DistToExtrapolation
     Crit4_NoZigZag
     Crit4_PhiZRatioChange
