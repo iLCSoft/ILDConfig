@@ -38,7 +38,7 @@
      
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
       
-     <!-- ========== the track cheater (works only for single particles, so far)  ================= -->
+     <!-- ========== the track cheater   ================= -->
      <!-- processor name="MyTruthTracker"/-->
      
      <processor name="MyV0Finder"/>               
