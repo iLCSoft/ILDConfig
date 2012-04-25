@@ -1,0 +1,60 @@
+##########################
+#
+#
+# fg:  for now this only works with this development detector model 
+#      with simplified SIT, SET, FTD and ETD removed
+#      -> to be fixed
+#
+#/Mokka/init/detectorModel ILD_01_dev
+#  -> use -M ILD_Ox_v01 , x=1,2,3 
+####################################
+
+
+/Mokka/init/startEventNumber %(start_event)s
+/Mokka/init/detectorModel %(detector_model)s
+/Mokka/init/physicsListName %(physics_list)s
+/Mokka/init/randomSeed %(random_seed)s
+/Mokka/init/lcioFilename %(lcio_filename)s
+
+/Mokka/init/lcioEventParameter string Process %(process)s
+/Mokka/init/lcioEventParameter float Energy %(energy)s
+/Mokka/init/lcioEventParameter float Pol_ep %(pol_ep)s
+/Mokka/init/lcioEventParameter float Pol_em %(pol_em)s
+/Mokka/init/lcioEventParameter float CrossSection_fb %(cross_section)s
+
+#/Mokka/init/registerPlugin TrackingOnlyPlugin 
+
+
+#-------- don't specify the mysql host when running with the mokka-wrapper.sh
+#         that starts a local DB 
+#/Mokka/init/dbHost polui01.in2p3.fr
+/Mokka/init/user consult
+/Mokka/init/dbPasswd consult
+
+/Mokka/init/lcioWriteMode WRITE_NEW
+/Mokka/init/lorentzTransformationAngle 7 mrad
+/Mokka/init/BFactor 1.0
+/Mokka/init/userDeltaIntersection 1e-5 mm
+/Mokka/init/userDeltaOneStep 1e-4 mm
+/Mokka/init/lcioDetailedShowerMode false
+/Mokka/init/lcioWriteCompleteHepEvt true
+
+
+#/Mokka/init/lcioDetailedTRKHitMode SITCollection
+#/Mokka/init/lcioDetailedTRKHitMode VXDCollection
+#/Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
+#/Mokka/init/lcioDetailedTRKHitMode FTD_STRIPCollection
+#/Mokka/init/lcioDetailedTRKHitMode TPCCollection
+#/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
+
+/Mokka/init/rangeCut 0.1 mm
+
+#/Mokka/init/TPCLowPtStepLimit true
+#/Mokka/init/TPCLowPtCut 10 MeV
+#/Mokka/init/TPCLowPtStoreMCPForHits true
+
+/Mokka/init/initialMacroFile mokka.g4macro
+
+/Mokka/init/visumode false
+/Mokka/init/BatchMode true
+
