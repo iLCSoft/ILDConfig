@@ -41,9 +41,9 @@
 # c) 
 #  to make sure that the extra partice tables (for SUSY etc) is loaded: 
  
-  Mokka -M ILD_O1_v02 -e ../../MokkaDBConfig/particle.tbl bbudsc_3evt.steer
+  Mokka -M ILD_O1_v02 -e ./particle.tbl bbudsc_3evt.steer
   # OR:
-  mokka-wrapper.sh -M ILD_O1_v02 -e ../../MokkaDBConfig/particle.tbl bbudsc_3evt.steer
+  mokka-wrapper.sh -M ILD_O1_v02 -e ./particle.tbl bbudsc_3evt.steer
 
 
 #--   this creates the file:    bbudsc_3evt.slcio
