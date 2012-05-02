@@ -177,7 +177,7 @@ trap cleanup EXIT
 # check script syntax
 # -----------------------------------------------------------------------------
 
-if [ $# -ne 1 -a $# -ne 12 ]; then
+if [ $# -ne 1 -a $# -ne 11 ]; then
     exit 2
 fi
 
