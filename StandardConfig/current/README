@@ -28,8 +28,9 @@
 # 2. ---- run a Mokka example  ------
  a)
 
-  export PATH=$PWD/../../MokkaDBConfig/scripts:$PATH
-  export MOKKA_DUMP_FILE=$PWD/../../MokkaDBConfig/mokka-dbdump.sql.tgz
+  # init MokkaDBConfig (this sets MOKKA_DUMP_FILE and adds mokka-wrapper.sh to your PATH)
+  . ../../MokkaDBConfig/init.sh
+
   mokka-wrapper.sh -M ILD_O1_v02 bbudsc_3evt.steer
 
 # b)

@@ -231,25 +231,6 @@ export MSG_LOG_FILE_PREFIX=${MSG_LOG_FILE_PREFIX:-"[ \$(date +%F--%H-%M-%S) ] - 
 
 
 
-# ----- ILDConfig ------------------------------------------------------------
-# currently only MokkaDBConfig is needed...
-# svn is not available on the grid.. we need to use wget
-#svn co http://svnsrv.desy.de/public/marlinreco/ILDConfig/tags/$CFG_VER/MokkaDBConfig
-if [ ! -d MokkaDBConfig ] ; then
-    if [ ! -e MokkaDBConfig.tgz ] ; then
-        # need to use websvn due to broken symlinks when using viewvc
-        #wget "http://svnsrv.desy.de/viewvc/marlinreco/ILDConfig/tags/$CFG_VER/MokkaDBConfig/?view=tar" -O MokkaDBConfig.tgz
-        wget "http://svnsrv.desy.de/websvn/wsvn/General.marlinreco/ILDConfig/tags/$CFG_VER/MokkaDBConfig/?op=dl&isdir=1" -O MokkaDBConfig.tgz
-        test $? -eq 0 || { echo "failed to download MokkaDBConfig" ; exit 65 ; }
-    fi
-    tar xzf MokkaDBConfig.tgz
-    test $? -eq 0 || { echo "failed to untar MokkaDBConfig" ; exit 65 ; }
-fi
-export MOKKADBCONFIG=$PWD/MokkaDBConfig.r*
-# ----------------------------------------------------------------------------
-
-
-
 usage >> $MSG_LOG_FILE
 msg INFO "RUNNING: $0 $JOB_ARGS"
 
@@ -376,29 +357,59 @@ test $? -eq 0 || msg CRITICAL 70 "failed to pass basic system tests"
 
 
 # ------- setup ilcsoft ------------------------------------------------------
-# download an ilcsoft version not yet installed on the grid
-tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
-if [ ! -d ilcsoft ] ; then
-    if [ ! -e "$tarball" ] ; then
-        msg INFO "downloading ilcsoft tarball..."
-        wget "http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
-        test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft"
-    fi
-    msg INFO "unpacking ilcsoft tarball..."
-    tar -xzf $tarball
-    test $? -eq 0 || msg CRITICAL 71 "failed to unpack ilcsoft tarball"
-    rm -f $tarball
-fi
-export VO_ILC_SW_DIR=$PWD
+ILCSOFT="$VO_ILC_SW_DIR/ilcsoft/$ARCH"
+# check if required ilcsoft version is available on the grid
+if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
 
-# msg INFO "applying patch..."
-#tarball=ilcsoft-$SW_VER-$ARCH-patch-vormwald-0001.tgz
-#wget "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
-#test $? -eq 0 || msg CRITICAL 71 "failed to initialize ilcsoft"
+    # download an ilcsoft version not yet installed on the grid
+    tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
+    if [ ! -d ilcsoft ] ; then
+        if [ ! -e "$tarball" ] ; then
+            msg INFO "downloading ilcsoft tarball..."
+            wget "http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+            test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft"
+        fi
+        msg INFO "unpacking ilcsoft tarball..."
+        tar -xzf $tarball
+        test $? -eq 0 || msg CRITICAL 71 "failed to unpack ilcsoft tarball"
+        rm -f $tarball
+    fi
+
+    #msg INFO "applying patch..."
+    #tarball=ilcsoft-$SW_VER-$ARCH-patch-0001.tgz
+    #wget "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
+    #test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft patch"
+
+    export ILCSOFT=$PWD
+fi
 
 msg INFO "initialize ilcsoft..."
-. $VO_ILC_SW_DIR/ilcsoft/$ARCH/init_ilcsoft.sh $SW_VER
+. $ILCSOFT/init_ilcsoft.sh $SW_VER
 test $? -eq 0 || msg CRITICAL 71 "failed to initialize ilcsoft"
+# ----------------------------------------------------------------------------
+
+
+
+
+# ----- setup ildconfig ------------------------------------------------------
+ILDCONFIG="$VO_ILC_SW_DIR/ilcsoft/ILDConfig"
+if [ ! -r "$ILDCONFIG/$CFG_VER" ] ; then
+    # svn is not available on the grid.. we need to use wget
+    if [ ! -d MokkaDBConfig ] ; then
+        tarball=ILDConfig.tgz
+        if [ ! -e "$tarball" ] ; then
+            # need to use websvn due to broken symlinks when using viewvc (affects MokkaDBConfig)
+            wget "http://svnsrv.desy.de/websvn/wsvn/General.marlinreco/ILDConfig/tags/$CFG_VER/?op=dl&isdir=1" -O $tarball
+            test $? -eq 0 || { echo "failed to download ILDConfig" ; exit 65 ; }
+        fi
+        tar --strip-components 1 -xzf $tarball
+        test $? -eq 0 || { echo "failed to untar ILDConfig" ; exit 65 ; }
+
+    fi
+    export ILDCONFIG=$PWD
+fi
+# currently only MokkaDBConfig is needed...
+. $ILDCONFIG/MokkaDBConfig/init.sh
 # ----------------------------------------------------------------------------
 
 
@@ -486,7 +497,7 @@ test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"
 
 msg INFO "Mokka started on ($(date))"
 #mokka-wrapper.sh mokka.steer 2>&1 > mokka.log
-mokka-wrapper.sh -e $MOKKADBCONFIG/particle.tbl mokka.steer 2>&1 > mokka.log
+mokka-wrapper.sh -e ./particle.tbl mokka.steer 2>&1 > mokka.log
 mokka_exit_code=$?
 if [ $mokka_exit_code -ne 0 ] ; then
     msg ERROR "************* MOKKA ERROR **********************"
