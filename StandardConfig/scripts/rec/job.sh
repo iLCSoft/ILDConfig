@@ -404,7 +404,7 @@ fi
 #    s/\$LCIODSTFILE/$JOB_PREFIX-DST.slcio/;\
 #    s/\$RAIDAFILE/$JOB_PREFIX/;\
 #    " steer.xml.in > steer.xml
-#test $? -eq 0 || msg CRITICAL 72 "failed to generate Marlin steering file"
+#test $? -eq 0 || msg CRITICAL 74 "failed to generate Marlin steering file"
 # ----------------------------------------------------------------------------
 
 

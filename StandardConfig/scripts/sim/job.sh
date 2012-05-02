@@ -240,6 +240,9 @@ for i in $JOB_STARTDIR/* ; do
     test ! -d $i && { test -e $(basename $i) || cp -va $i . ; }
 done
 
+# if job-wrapper.sh was called to run this script (job.sh) we can get MokkaDBConfig from JOB_STARTDIR
+test -d "$JOB_STARTDIR/MokkaDBConfig" && ln -s "$JOB_STARTDIR/MokkaDBConfig"
+
 
 # ----------------------------------------------------------------------------
 # parse command line arguments
@@ -395,21 +398,22 @@ test $? -eq 0 || msg CRITICAL 71 "failed to initialize ilcsoft"
 ILDCONFIG="$VO_ILC_SW_DIR/ilcsoft/ILDConfig"
 if [ ! -r "$ILDCONFIG/$CFG_VER" ] ; then
     # svn is not available on the grid.. we need to use wget
-    if [ ! -d MokkaDBConfig ] ; then
+    if [ ! -r MokkaDBConfig ] ; then
         tarball=ILDConfig.tgz
         if [ ! -e "$tarball" ] ; then
             # need to use websvn due to broken symlinks when using viewvc (affects MokkaDBConfig)
             wget "http://svnsrv.desy.de/websvn/wsvn/General.marlinreco/ILDConfig/tags/$CFG_VER/?op=dl&isdir=1" -O $tarball
-            test $? -eq 0 || { echo "failed to download ILDConfig" ; exit 65 ; }
+            test $? -eq 0 || { echo "failed to download ILDConfig" ; exit 72 ; }
         fi
         tar --strip-components 1 -xzf $tarball
-        test $? -eq 0 || { echo "failed to untar ILDConfig" ; exit 65 ; }
+        test $? -eq 0 || { echo "failed to untar ILDConfig" ; exit 72 ; }
 
     fi
     export ILDCONFIG=$PWD
 fi
 # currently only MokkaDBConfig is needed...
 . $ILDCONFIG/MokkaDBConfig/init.sh
+test $? -eq 0 || { echo "failed to initialize MokkaDBConfig" ; exit 72 ; }
 # ----------------------------------------------------------------------------
 
 
@@ -464,7 +468,7 @@ if [ ! -e "mokka.steer" ] ; then
         --mokka-pol-em $POL_EM \
         --mokka-cross-section $CROSS_SECTION \
         mokka.steer.in
-    test $? -eq 0 || msg CRITICAL 72 "failed to generate Mokka steering file"
+    test $? -eq 0 || msg CRITICAL 74 "failed to generate Mokka steering file"
 fi
 # ----------------------------------------------------------------------------
 
