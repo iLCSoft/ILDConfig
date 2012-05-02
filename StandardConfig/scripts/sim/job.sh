@@ -380,7 +380,7 @@ if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
     #wget "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
     #test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft patch"
 
-    export ILCSOFT=$PWD
+    export ILCSOFT="$PWD/ilcsoft/$ARCH"
 fi
 
 msg INFO "initialize ilcsoft..."
