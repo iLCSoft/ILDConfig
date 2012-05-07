@@ -668,58 +668,54 @@
   <!--parameter name="Verbosity" type="string"> </parameter-->
   
   <parameter name="Crit2_DeltaPhi_min" type="float">0</parameter>
-  <parameter name="Crit2_DeltaPhi_max" type="float">13.1435</parameter>
-  <parameter name="Crit2_DeltaRho_min" type="float">27.086</parameter>
-  <parameter name="Crit2_DeltaRho_max" type="float">116.188</parameter>
-  <parameter name="Crit2_HelixWithIP_min" type="float">0.905471</parameter>
-  <parameter name="Crit2_HelixWithIP_max" type="float">1.05315</parameter>
-  <parameter name="Crit2_RZRatio_min" type="float">1.00483</parameter>
-  <parameter name="Crit2_RZRatio_max" type="float">1.08011</parameter>
-  <parameter name="Crit2_StraightTrackRatio_min" type="float">0.951636</parameter>
-  <parameter name="Crit2_StraightTrackRatio_max" type="float">1.03181</parameter>
+  <parameter name="Crit2_DeltaPhi_max" type="float">15.1078</parameter>
+  <parameter name="Crit2_DeltaRho_min" type="float">27.5779</parameter>
+  <parameter name="Crit2_DeltaRho_max" type="float">115.38</parameter>
+  <parameter name="Crit2_HelixWithIP_min" type="float">0.765425</parameter>
+  <parameter name="Crit2_HelixWithIP_max" type="float">1.14405</parameter>
+  <parameter name="Crit2_RZRatio_min" type="float">1.00492</parameter>
+  <parameter name="Crit2_RZRatio_max" type="float">1.07854</parameter>
+  <parameter name="Crit2_StraightTrackRatio_min" type="float">0.89682</parameter>
+  <parameter name="Crit2_StraightTrackRatio_max" type="float">1.08166</parameter>
   
+  <parameter name="Crit3_2DAngleTimesR_min" type="float">0</parameter>
+  <parameter name="Crit3_2DAngleTimesR_max" type="float">5603.57</parameter>
+  <parameter name="Crit3_ChangeRZRatio_min" type="float">0.995826</parameter>
+  <parameter name="Crit3_ChangeRZRatio_max" type="float">1.01308</parameter>
+  <parameter name="Crit3_IPCircleDistTimesR_min" type="float">0</parameter>
+  <parameter name="Crit3_IPCircleDistTimesR_max" type="float">8281.24</parameter>
+  <parameter name="Crit3_PT_min" type="float">0.1</parameter>
+  <parameter name="Crit3_PT_max" type="float">99999999</parameter>
   
-  <parameter name="Crit3_2DAngle_min" type="float">0.0</parameter>
-  <parameter name="Crit3_2DAngle_max" type="float">23.3652</parameter>
-  <parameter name="Crit3_3DAngle_min" type="float">0.0</parameter>
-  <parameter name="Crit3_3DAngle_max" type="float">6.91779</parameter>
-  <parameter name="Crit3_ChangeRZRatio_min" type="float">0.998229</parameter>
-  <parameter name="Crit3_ChangeRZRatio_max" type="float">1.00448</parameter>
-  <parameter name="Crit3_IPCircleDist_min" type="float">0</parameter>
-  <parameter name="Crit3_IPCircleDist_max" type="float">5.89122</parameter>
-  <parameter name="Crit3_PT_min" type="float">0.196965</parameter>
-  <parameter name="Crit3_PT_max" type="float">9999999999</parameter>
-  
-  
-  <parameter name="Crit4_2DAngleChange_min" type="float">0.247732</parameter>
-  <parameter name="Crit4_2DAngleChange_max" type="float">2.39607</parameter>
-  <parameter name="Crit4_3DAngleChange_min" type="float">0.72113</parameter>
-  <parameter name="Crit4_3DAngleChange_max" type="float">1.35853</parameter>
+  <parameter name="Crit4_2DAngleChange_min" type="float">-1.35346</parameter>
+  <parameter name="Crit4_2DAngleChange_max" type="float">2.75487</parameter>
+  <parameter name="Crit4_3DAngleChangeNormed_min" type="float">-113.3</parameter>
+  <parameter name="Crit4_3DAngleChangeNormed_max" type="float">140.267</parameter>
   <parameter name="Crit4_DistToExtrapolation_min" type="float">0</parameter>
-  <parameter name="Crit4_DistToExtrapolation_max" type="float">4.75636</parameter>
-  <parameter name="Crit4_NoZigZag_min" type="float">0.00732441</parameter>
-  <parameter name="Crit4_NoZigZag_max" type="float">528.418</parameter>
-  <parameter name="Crit4_PhiZRatioChange_min" type="float">0.495788</parameter>
-  <parameter name="Crit4_PhiZRatioChange_max" type="float">2.56987</parameter>
-  <parameter name="Crit4_RChange_min" type="float">0.389283</parameter>
-  <parameter name="Crit4_RChange_max" type="float">2.14321</parameter>
+  <parameter name="Crit4_DistToExtrapolation_max" type="float">1.3377</parameter>
+  <parameter name="Crit4_NoZigZag_min" type="float">-36.0224</parameter>
+  <parameter name="Crit4_NoZigZag_max" type="float">1091.72</parameter>
+  <parameter name="Crit4_PhiZRatioChange_min" type="float">0.340416</parameter>
+  <parameter name="Crit4_PhiZRatioChange_max" type="float">3.72186</parameter>
+  <parameter name="Crit4_RChange_min" type="float">0.277964</parameter>
+  <parameter name="Crit4_RChange_max" type="float">3.02557</parameter>
   
-  <parameter name="Criteria" type="StringVec">Crit2_DeltaPhi
-    Crit2_DeltaRho
-    Crit2_HelixWithIP
-    Crit2_RZRatio
-    Crit2_StraightTrackRatio
-    Crit3_2DAngle
-    Crit3_3DAngle
-    Crit3_ChangeRZRatio
-    Crit3_IPCircleDist
-    Crit3_PT
-    Crit4_2DAngleChange
-    Crit4_3DAngleChange
-    Crit4_DistToExtrapolation
-    Crit4_NoZigZag
-    Crit4_PhiZRatioChange
-    Crit4_RChange
+  <parameter name="Criteria" type="StringVec">
+     Crit2_DeltaRho
+     Crit2_RZRatio
+     Crit2_StraightTrackRatio
+     Crit2_DeltaPhi
+     Crit2_HelixWithIP
+     Crit3_2DAngleTimesR
+     Crit3_ChangeRZRatio
+     Crit3_IPCircleDistTimesR
+     Crit3_PT
+     Crit4_RChange
+     Crit4_DistToExtrapolation
+     Crit4_2DAngleChange
+     Crit4_3DAngleChangeNormed
+     Crit4_NoZigZag
+     Crit4_PhiZRatioChange
   </parameter>
   
 </processor>
