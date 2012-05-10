@@ -131,6 +131,8 @@ cleanup(){
     tar_rc=$?
     # --------------------------------------------------------------------
 
+    # make sure to unlock any shared resources
+    resource_sharing_cleanup
 
     # copy log tarball to SE and update database
     # only for grid jobs and if marlin has been executed
@@ -196,9 +198,11 @@ cd $JOB_TMPDIR
 
 
 # ----- gridtools ------------------------------------------------------------
+# get gridtools from JOB_STARTDIR if job-wrapper.sh was called to run this script
+test -d "$JOB_STARTDIR/gridtools" && cp -a "$JOB_STARTDIR/gridtools" .
 if [ ! -d gridtools ] ; then
     if [ ! -e gridtools.tgz ] ; then
-        wget "http://svnsrv.desy.de/viewvc/ilctools/mcprdsys/trunk/gridtools/?view=tar" -O gridtools.tgz
+        wget --no-verbose -c "http://svnsrv.desy.de/viewvc/ilctools/mcprdsys/trunk/gridtools/?view=tar" -O gridtools.tgz
         test $? -eq 0 || { echo "failed to download gridtools" ; exit 65 ; }
     fi
     tar xzf gridtools.tgz 
@@ -213,6 +217,9 @@ export MSG_LOG_FILE=${MSG_LOG_FILE:-"$JOB_TMPDIR/job.log"}
 export MSG_STDOUT_PREFIX=${MSG_STDOUT_PREFIX:-"[ \${MSG_LEVEL} ] - [\$(basename \$0)]\\\t"}
 export MSG_LOG_FILE_PREFIX=${MSG_LOG_FILE_PREFIX:-"[ \$(date +%F--%H-%M-%S) ] - [ \${MSG_LEVEL} ] - [\$(basename \$0)]\\\t"}
 . $GRIDTOOLSDIR/hepshlib/bash_logger.sh
+test $? -eq 0 || { echo "failed to initialize bash_logger" ; exit 65 ; }
+. $GRIDTOOLSDIR/hepshlib/resource_sharing_lockutils.sh
+test $? -eq 0 || msg CRITICAL 65 "failed to initialize resource_sharing tools"
 # ----------------------------------------------------------------------------
 
 
@@ -323,20 +330,20 @@ if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
     # download an ilcsoft version not yet installed on the grid
     tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
     if [ ! -d ilcsoft ] ; then
-        if [ ! -e "$tarball" ] ; then
-            msg INFO "downloading ilcsoft tarball..."
-            wget "http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
-            test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft"
-        fi
-        msg INFO "unpacking ilcsoft tarball..."
+        url="http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+        msg INFO "downloading ilcsoft tarball..."
+
+        resource_share_url_download "$url"
+        test $? -eq 0 || msg CRITICAL 71 "failed to download $url"
+        
+        msg INFO "unpack ilcsoft tarball..."
         tar -xzf $tarball
         test $? -eq 0 || msg CRITICAL 71 "failed to unpack ilcsoft tarball"
-        rm -f $tarball
     fi
 
     #msg INFO "applying patch..."
     #tarball=ilcsoft-$SW_VER-$ARCH-patch-0001.tgz
-    #wget "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
+    #wget --no-verbose -c "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
     #test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft patch"
 
     export ILCSOFT="$PWD/ilcsoft/$ARCH"

@@ -144,6 +144,8 @@ cleanup(){
     tar_rc=$?
     # --------------------------------------------------------------------
 
+    # make sure to unlock any shared resources
+    resource_sharing_cleanup
 
     # copy log tarball to SE and update database
     # only for grid jobs and if mokka has been executed
@@ -210,9 +212,11 @@ cd $JOB_TMPDIR
 
 
 # ----- gridtools ------------------------------------------------------------
+# get gridtools from JOB_STARTDIR if job-wrapper.sh was called to run this script
+test -d "$JOB_STARTDIR/gridtools" && cp -a "$JOB_STARTDIR/gridtools" .
 if [ ! -d gridtools ] ; then
     if [ ! -e gridtools.tgz ] ; then
-        wget "http://svnsrv.desy.de/viewvc/ilctools/mcprdsys/trunk/gridtools/?view=tar" -O gridtools.tgz
+        wget --no-verbose -c "http://svnsrv.desy.de/viewvc/ilctools/mcprdsys/trunk/gridtools/?view=tar" -O gridtools.tgz
         test $? -eq 0 || { echo "failed to download gridtools" ; exit 65 ; }
     fi
     tar xzf gridtools.tgz
@@ -227,6 +231,9 @@ export MSG_LOG_FILE=${MSG_LOG_FILE:-"$JOB_TMPDIR/job.log"}
 export MSG_STDOUT_PREFIX=${MSG_STDOUT_PREFIX:-"[ \${MSG_LEVEL} ] - [\$(basename \$0)]\\\t"}
 export MSG_LOG_FILE_PREFIX=${MSG_LOG_FILE_PREFIX:-"[ \$(date +%F--%H-%M-%S) ] - [ \${MSG_LEVEL} ] - [\$(basename \$0)]\\\t"}
 . $GRIDTOOLSDIR/hepshlib/bash_logger.sh
+test $? -eq 0 || { echo "failed to initialize bash_logger" ; exit 65 ; }
+. $GRIDTOOLSDIR/hepshlib/resource_sharing_lockutils.sh
+test $? -eq 0 || msg CRITICAL 65 "failed to initialize resource_sharing tools"
 # ----------------------------------------------------------------------------
 
 
@@ -240,7 +247,7 @@ for i in $JOB_STARTDIR/* ; do
     test ! -d $i && { test -e $(basename $i) || cp -va $i . ; }
 done
 
-# if job-wrapper.sh was called to run this script (job.sh) we can get MokkaDBConfig from JOB_STARTDIR
+# get MokkaDBConfig from JOB_STARTDIR if job-wrapper.sh was called to run this script
 test -d "$JOB_STARTDIR/MokkaDBConfig" && ln -s "$JOB_STARTDIR/MokkaDBConfig"
 
 
@@ -367,20 +374,20 @@ if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
     # download an ilcsoft version not yet installed on the grid
     tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
     if [ ! -d ilcsoft ] ; then
-        if [ ! -e "$tarball" ] ; then
-            msg INFO "downloading ilcsoft tarball..."
-            wget "http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
-            test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft"
-        fi
-        msg INFO "unpacking ilcsoft tarball..."
-        tar -xzf $tarball
+        url="http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+        msg INFO "downloading ilcsoft tarball..."
+
+        resource_share_url_download "$url" 
+        test $? -eq 0 || msg CRITICAL 71 "failed to download $url"
+
+        msg INFO "unpack ilcsoft tarball..."
+        tar -xzf $resource_replica
         test $? -eq 0 || msg CRITICAL 71 "failed to unpack ilcsoft tarball"
-        rm -f $tarball
     fi
 
     #msg INFO "applying patch..."
     #tarball=ilcsoft-$SW_VER-$ARCH-patch-0001.tgz
-    #wget "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
+    #wget --no-verbose -c "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
     #test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft patch"
 
     export ILCSOFT="$PWD/ilcsoft/$ARCH"
@@ -399,15 +406,12 @@ ILDCONFIG="$VO_ILC_SW_DIR/ilcsoft/ILDConfig"
 if [ ! -r "$ILDCONFIG/$CFG_VER" ] ; then
     # svn is not available on the grid.. we need to use wget
     if [ ! -r MokkaDBConfig ] ; then
-        tarball=ILDConfig.tgz
-        if [ ! -e "$tarball" ] ; then
-            # need to use websvn due to broken symlinks when using viewvc (affects MokkaDBConfig)
-            wget "http://svnsrv.desy.de/websvn/wsvn/General.marlinreco/ILDConfig/tags/$CFG_VER/?op=dl&isdir=1" -O $tarball
-            test $? -eq 0 || { echo "failed to download ILDConfig" ; exit 72 ; }
-        fi
-        tar --strip-components 1 -xzf $tarball
+        # need to use websvn due to broken symlinks when using viewvc (affects MokkaDBConfig)
+        url="http://svnsrv.desy.de/websvn/wsvn/General.marlinreco/ILDConfig/tags/$CFG_VER/?op=dl&isdir=1"
+        resource_share_url_download "$url"
+        test $? -eq 0 || { echo "failed to download ILDConfig" ; exit 72 ; }
+        tar --strip-components 1 -xzf $resource_replica
         test $? -eq 0 || { echo "failed to untar ILDConfig" ; exit 72 ; }
-
     fi
     export ILDCONFIG=$PWD
 fi
@@ -479,9 +483,10 @@ fi
 msg INFO "copy input file [ $INPUT_FILE ] ..."
 timeout=$(( ($RANDOM + $RANDOM_SEED) % 600 ))
 test -n "$GRID_JOB" && { echo "sleep $timeout seconds..." ; sleep $timeout ; }
-c="grid-dl-file.py -o ignore --timeout 3600 $INPUT_FILE ."
-msg DEBUG "> $c"
-eval $c >> $MSG_LOG_FILE
+#c="grid-dl-file.py -o ignore --timeout 3600 $INPUT_FILE ."
+#msg DEBUG "> $c"
+#eval $c >> $MSG_LOG_FILE
+resource_share_url_download $INPUT_FILE $PWD/$INPUT_FILE_NAME
 test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"
 # TODO check number of events from INPUT_FILE
 # ----------------------------------------------------------------------------
