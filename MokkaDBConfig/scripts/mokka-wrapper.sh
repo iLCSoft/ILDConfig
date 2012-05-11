@@ -47,6 +47,10 @@ cleanup(){
     # save exit code
     exit_code=$?
 
+    if [ -e "$MOKKA_TMP_DIR/mysql-cleanup.sh" ] ; then
+        $MOKKA_TMP_DIR/mysql-cleanup.sh
+    fi
+
     if [ $exit_code -eq 2 ] ; then
         usage
         exit $exit_code
@@ -64,10 +68,6 @@ cleanup(){
         test -e $MSG_LOG_FILE && cat $MSG_LOG_FILE >&2
         echo >&2
         echo >&2
-    fi
-
-    if [ -e "$MOKKA_TMP_DIR/mysql-cleanup.sh" ] ; then
-        $MOKKA_TMP_DIR/mysql-cleanup.sh
     fi
 
     exit $exit_code
