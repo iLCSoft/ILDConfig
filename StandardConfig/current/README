@@ -19,7 +19,7 @@
 
 # 1. ----  initialize the current ilcsoft release, e.g.  ------
 
-  . /afs/desy.de/project/ilcsoft/sw/x86_64_gcc41_sl5/v01-13-05/init_ilcsoft.sh 
+  . /afs/desy.de/project/ilcsoft/sw/x86_64_gcc41_sl5/v01-13-06/init_ilcsoft.sh 
 
 #-- this sets:  
 #   MARLIN_DLL=libMarlinReco.so:libPandoraAnalysis.so:libMarlinPandora.so:libLCFIVertex.so:libCEDViewer.so:libEutelescope.so:libMarlinTPC.so:libOverlay.so

@@ -13,9 +13,9 @@ which will be obsolete form now on (iLCSoft release v01-13-03).
 
 
 The configuration files in this release should work with the following Mokka models:
-  ILD_O1_v02
-  ILD_O2_v02
-  ILD_O3_v02
+  ILD_O1_v03
+  ILD_O2_v03
+  ILD_O3_v03
 
 
 
@@ -54,6 +54,19 @@ subdirectories:
 
  versions:
  ========
+
+ -----------
+| v01-13-06 |
+ -----------
+    - updated mokka dump: mokka-07-07-p08-dbdump.sql.tgz (2012-05-16 - 18:33:52)
+    - updated Clupatra steering parameters to v00-06
+    - changed steering parameters for the Cellular Automaton in ForwardTracking
+    - updated TruthTracker parameters
+    - Added TrackSubsetProcessor to the standard steer. It combines the tracks of SiliconTracking_MarlinTrk and ForwardTracking to one collection of tracks. This collections is then passed to FullLDCTracking_MarlinTrk
+    - added MokkaDBConfig init.sh script
+    - added scripts to run sim/rec jobs on the grid
+    - moved particle.tbl from MokkaDBConfig to StandardConfig/current
+    - fixed cleanup of mysql socket in mokka-wrapper.sh
 
  -----------
 | v01-13-05 |
