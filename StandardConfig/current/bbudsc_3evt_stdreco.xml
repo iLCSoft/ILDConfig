@@ -362,6 +362,9 @@
     <parameter name="NumberOfZBins" type="int">150 </parameter>
     <!--Name of the output collection-->
     <parameter name="OutputCollection" type="string" lcioOutType="Track">ClupatraTracks </parameter>
+    <!--Name of the output collection that has the individual track segments-->
+    <parameter name="SegmentCollectionName" type="string" lcioOutType="Track">ClupatraTrackSegments </parameter>
+
     <!--number of pad rows used in initial seed clustering-->
     <parameter name="PadRowRange" type="int">15 </parameter>
     
@@ -377,8 +380,17 @@
     <!--Name of the tpc hit input collections-->
     <parameter name="TPCHitCollection" type="string" lcioInType="TrackerHit">TPCTrackerHits </parameter>
     
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter>
+   <!--maximum radial distance [mm] from outer field cage of last hit, such that the track is considered to end at the end -->
+   <parameter name="TrackEndsOuterCentralDist" type="float">25 </parameter>
+   <!--maximum distance in z [mm] from endplate of last hit, such that the track is considered to end at the end -->
+   <parameter name="TrackEndsOuterForwardDist" type="float">40 </parameter>
+   <!--minimum curvature omega of a track segment for being considered a curler-->
+   <parameter name="TrackIsCurlerOmega" type="float">0.001 </parameter>
+   <!--maximum radial distance [mm] from inner field cage of first hit, such that the track is considered to start at the beginning -->
+   <parameter name="TrackStartsInnerDist" type="float">25 </parameter>
+
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter>
   </processor>
 
 
