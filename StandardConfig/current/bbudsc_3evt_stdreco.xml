@@ -655,74 +655,82 @@
 
 
 <processor name="MyForwardTracking" type="ForwardTracking">
-   <!--ForwardTracking reconstructs tracks through the FTDs-->
-   <!--Name of the Forward Tracking output collection-->
-   <parameter name="ForwardTrackCollection" type="string" lcioOutType="Track">ForwardTracks </parameter>
-   <!--Use Energy Loss in Fit-->
-   <parameter name="EnergyLossOn" type="bool">true </parameter>
-   <!--FTD Hit Collections-->
-   <parameter name="FTDHitCollections" type="StringVec">FTDPixelTrackerHits FTDSpacePoints</parameter>
-   <!--Use MultipleScattering in Fit-->
-   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
-   <!--Smooth All Measurement Sites in Fit-->
-   <parameter name="SmoothOn" type="bool">false </parameter>
-   <!--The chi2 probability value below which tracks will be cut-->
-   <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
-   <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
-   <parameter name="HelixFitMax" type="double">500 </parameter>
-   <!--The maximum distance of overlapping hits-->
-   <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
-   <!--The minimum number of hits to create a track-->
-   <parameter name="HitsPerTrackMin" type="int">4 </parameter>
-   <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple-->
-   <parameter name="BestSubsetFinder" type="string">SubsetHopfieldNN </parameter>
-   <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
-   <parameter name="TakeBestVersionOfTrack" type="bool">true </parameter>
-   <!--If the automaton has more connections than this it will be redone with the next parameters-->
-   <parameter name="MaxConnectionsAutomaton" type="int">100000 </parameter>
-   
-   <parameter name="Crit2_DeltaPhi_min" type="float">0 0</parameter>
-   <parameter name="Crit2_DeltaPhi_max" type="float">30 0.8</parameter>
-   <parameter name="Crit2_DeltaRho_min" type="float">20</parameter>
-   <parameter name="Crit2_DeltaRho_max" type="float">120</parameter>
-   <parameter name="Crit2_RZRatio_min" type="float">1.002</parameter>
-   <parameter name="Crit2_RZRatio_max" type="float">1.08</parameter>
-   <parameter name="Crit2_StraightTrackRatio_min" type="float">0.9 0.99</parameter>
-   <parameter name="Crit2_StraightTrackRatio_max" type="float">1.02 1.01</parameter>
-   
-   <parameter name="Crit3_3DAngle_min" type="float">0 0</parameter>
-   <parameter name="Crit3_3DAngle_max" type="float">10 0.35</parameter>
-   <parameter name="Crit3_ChangeRZRatio_min" type="float">0.995 0.999</parameter>
-   <parameter name="Crit3_ChangeRZRatio_max" type="float">1.015 1.001</parameter>
-   <parameter name="Crit3_IPCircleDist_min" type="float">0 0</parameter>
-   <parameter name="Crit3_IPCircleDist_max" type="float">20 1.5</parameter>
-   <parameter name="Crit3_PT_min" type="float">0.1</parameter>
-   <parameter name="Crit3_PT_max" type="float">99999999</parameter>
-   
-   <parameter name="Crit4_3DAngleChange_min" type="float">0.8 0.99</parameter>
-   <parameter name="Crit4_3DAngleChange_max" type="float">1.3 1.01</parameter>
-   <parameter name="Crit4_DistToExtrapolation_min" type="float">0 0</parameter>
-   <parameter name="Crit4_DistToExtrapolation_max" type="float">1.0 0.05</parameter>
-   
-   <parameter name="Criteria" type="StringVec">
-      Crit2_DeltaPhi
-      Crit2_DeltaRho
-      Crit2_RZRatio
-      Crit2_StraightTrackRatio
-      
-      Crit3_3DAngle
-      Crit3_ChangeRZRatio
-      Crit3_IPCircleDist
-      Crit3_PT
-      
-      Crit4_DistToExtrapolation
-      Crit4_3DAngleChange
-   </parameter>
-   
-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-   
-</processor> 
+  <!--ForwardTracking reconstructs tracks through the FTD-->
+  <!--Name of the Forward Tracking output collection-->
+  <parameter name="ForwardTrackCollection" type="string" lcioOutType="Track">ForwardTracks </parameter>
+  <!--Use Energy Loss in Fit-->
+  <parameter name="EnergyLossOn" type="bool">true </parameter>
+  <!--FTD Hit Collections-->
+  <parameter name="FTDHitCollections" type="StringVec">FTDPixelTrackerHits FTDSpacePoints</parameter>
+  <!--Use MultipleScattering in Fit-->
+  <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+  <!--Smooth All Measurement Sites in Fit-->
+  <parameter name="SmoothOn" type="bool">false </parameter>
+  <!--The chi2 probability value below which tracks will be cut-->
+  <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+  <!--The minimum number of hits to create a track-->
+  <parameter name="HitsPerTrackMin" type="int">4 </parameter>
+  <!--The maximum distance of overlapping hits-->
+  <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
+  <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple-->
+  <parameter name="BestSubsetFinder" type="string">SubsetHopfieldNN </parameter>
+  <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
+  <parameter name="TakeBestVersionOfTrack" type="bool">true </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string"> </parameter-->
+  
+  <parameter name="Crit2_DeltaPhi_min" type="float">0</parameter>
+  <parameter name="Crit2_DeltaPhi_max" type="float">15.1078</parameter>
+  <parameter name="Crit2_DeltaRho_min" type="float">27.5779</parameter>
+  <parameter name="Crit2_DeltaRho_max" type="float">115.38</parameter>
+  <parameter name="Crit2_HelixWithIP_min" type="float">0.765425</parameter>
+  <parameter name="Crit2_HelixWithIP_max" type="float">1.14405</parameter>
+  <parameter name="Crit2_RZRatio_min" type="float">1.00492</parameter>
+  <parameter name="Crit2_RZRatio_max" type="float">1.07854</parameter>
+  <parameter name="Crit2_StraightTrackRatio_min" type="float">0.89682</parameter>
+  <parameter name="Crit2_StraightTrackRatio_max" type="float">1.08166</parameter>
+  
+  <parameter name="Crit3_2DAngleTimesR_min" type="float">0</parameter>
+  <parameter name="Crit3_2DAngleTimesR_max" type="float">5603.57</parameter>
+  <parameter name="Crit3_ChangeRZRatio_min" type="float">0.995826</parameter>
+  <parameter name="Crit3_ChangeRZRatio_max" type="float">1.01308</parameter>
+  <parameter name="Crit3_IPCircleDistTimesR_min" type="float">0</parameter>
+  <parameter name="Crit3_IPCircleDistTimesR_max" type="float">8281.24</parameter>
+  <parameter name="Crit3_PT_min" type="float">0.1</parameter>
+  <parameter name="Crit3_PT_max" type="float">99999999</parameter>
+  
+  <parameter name="Crit4_2DAngleChange_min" type="float">-1.35346</parameter>
+  <parameter name="Crit4_2DAngleChange_max" type="float">2.75487</parameter>
+  <parameter name="Crit4_3DAngleChangeNormed_min" type="float">-113.3</parameter>
+  <parameter name="Crit4_3DAngleChangeNormed_max" type="float">140.267</parameter>
+  <parameter name="Crit4_DistToExtrapolation_min" type="float">0</parameter>
+  <parameter name="Crit4_DistToExtrapolation_max" type="float">1.3377</parameter>
+  <parameter name="Crit4_NoZigZag_min" type="float">-36.0224</parameter>
+  <parameter name="Crit4_NoZigZag_max" type="float">1091.72</parameter>
+  <parameter name="Crit4_PhiZRatioChange_min" type="float">0.340416</parameter>
+  <parameter name="Crit4_PhiZRatioChange_max" type="float">3.72186</parameter>
+  <parameter name="Crit4_RChange_min" type="float">0.277964</parameter>
+  <parameter name="Crit4_RChange_max" type="float">3.02557</parameter>
+  
+  <parameter name="Criteria" type="StringVec">
+     Crit2_DeltaRho
+     Crit2_RZRatio
+     Crit2_StraightTrackRatio
+     Crit2_DeltaPhi
+     Crit2_HelixWithIP
+     Crit3_2DAngleTimesR
+     Crit3_ChangeRZRatio
+     Crit3_IPCircleDistTimesR
+     Crit3_PT
+     Crit4_RChange
+     Crit4_DistToExtrapolation
+     Crit4_2DAngleChange
+     Crit4_3DAngleChangeNormed
+     Crit4_NoZigZag
+     Crit4_PhiZRatioChange
+  </parameter>
+  
+</processor>
 
 <processor name="MyTruthTracker" type="TruthTracker">
   <!--Creates Track Collection from MC Truth. Can handle composite spacepoints as long as they consist of two TrackerHits-->
