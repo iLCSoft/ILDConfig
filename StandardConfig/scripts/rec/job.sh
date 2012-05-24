@@ -337,7 +337,7 @@ if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
         test $? -eq 0 || msg CRITICAL 71 "failed to download $url"
         
         msg INFO "unpack ilcsoft tarball..."
-        tar -xzf $tarball
+        tar -xzf $resource_replica
         test $? -eq 0 || msg CRITICAL 71 "failed to unpack ilcsoft tarball"
     fi
 
