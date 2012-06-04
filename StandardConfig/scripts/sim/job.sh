@@ -244,7 +244,7 @@ msg INFO "RUNNING: $0 $JOB_ARGS"
 
 msg INFO "copy input files from $JOB_STARTDIR"
 for i in $JOB_STARTDIR/* ; do
-    test ! -d $i && { test -e $(basename $i) || cp -va $i . ; }
+    test ! -d $i && { test -e $(basename $i) || cp -v $i . ; }
 done
 
 # get MokkaDBConfig from JOB_STARTDIR if job-wrapper.sh was called to run this script
