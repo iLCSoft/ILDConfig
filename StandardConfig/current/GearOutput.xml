@@ -1,10 +1,10 @@
 <gear>
-    <global detectorName="ILD_O1_v03" />
+    <global detectorName="ILD_O1_v04" />
     <!--Gear XML file automatically created with GearXML::createXMLFile ....-->
     <BField type="ConstantBField" x="0.000000000e+00" y="0.000000000e+00" z="3.500000000e+00" />
     <detectors>
         <detector geartype="TPCParameters" name="TPC">
-            <maxDriftLength value="2.150000000e+03" />
+            <maxDriftLength value="2.225000000e+03" />
             <driftVelocity value="0.000000000e+00" />
             <coordinateType value="polar" />
             <modules>
@@ -54,25 +54,25 @@
         </detector>
         <detector name="YokeBarrel" geartype="CalorimeterParameters">
             <layout type="Barrel" symmetry="12" phi0="0.000000000e+00" />
-            <dimensions inner_r="4.391089844e+03" outer_z="4.047000000e+03" />
+            <dimensions inner_r="4.424959961e+03" outer_z="4.047000000e+03" />
             <layer repeat="10" thickness="1.400000000e+02" absorberThickness="1.000000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <layer repeat="3" thickness="6.000000000e+02" absorberThickness="5.600000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
         </detector>
         <detector name="YokeEndcap" geartype="CalorimeterParameters">
             <layout type="Endcap" symmetry="2" phi0="0.000000000e+00" />
-            <dimensions inner_r="3.000000000e+02" outer_r="7.591089844e+03" inner_z="4.072000000e+03" />
+            <dimensions inner_r="3.000000000e+02" outer_r="7.624959961e+03" inner_z="4.072000000e+03" />
             <layer repeat="10" thickness="1.400000000e+02" absorberThickness="1.000000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <layer repeat="2" thickness="6.000000000e+02" absorberThickness="5.600000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
         </detector>
         <detector name="YokePlug" geartype="CalorimeterParameters">
             <layout type="Endcap" symmetry="2" phi0="0.000000000e+00" />
-            <dimensions inner_r="3.000000000e+02" outer_r="3.046028962e+03" inner_z="3.934000000e+03" />
-            <parameter name="YokePlugThickness" type="double" value="1.380000000e+02" />
+            <dimensions inner_r="3.000000000e+02" outer_r="3.076719499e+03" inner_z="3.982000000e+03" />
+            <parameter name="YokePlugThickness" type="double" value="9.000000000e+01" />
         </detector>
         <detector name="HcalBarrel" geartype="CalorimeterParameters">
             <layout type="Barrel" symmetry="8" phi0="0.000000000e+00" />
             <dimensions inner_r="2.058000000e+03" outer_z="2.350000000e+03" />
-            <layer repeat="48" thickness="2.550000000e+01" absorberThickness="2.000000000e+01" cellSize0="3.032467532e+01" cellSize1="3.000000000e+01" />
+            <layer repeat="48" thickness="2.650000000e+01" absorberThickness="2.000000000e+01" cellSize0="3.032467532e+01" cellSize1="3.000000000e+01" />
             <parameter name="Hcal_barrel_end_module_type" type="int" value="1" />
             <parameter name="Hcal_outer_polygon_order" type="int" value="16" />
             <parameter name="Hcal_outer_polygon_phi0" type="int" value="0" />
@@ -91,7 +91,7 @@
         <detector name="HcalEndcap" geartype="CalorimeterParameters">
             <layout type="Endcap" symmetry="2" phi0="0.000000000e+00" />
             <dimensions inner_r="3.500000000e+02" outer_r="3.246928703e+03" inner_z="2.650000000e+03" />
-            <layer repeat="48" thickness="2.550000000e+01" absorberThickness="2.000000000e+01" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
+            <layer repeat="48" thickness="2.650000000e+01" absorberThickness="2.000000000e+01" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <parameter name="Hcal_Cu_thickness" type="double" value="1.000000000e-01" />
             <parameter name="Hcal_PCB_thickness" type="double" value="7.000000000e-01" />
             <parameter name="Hcal_endcap_lateral_structure_thickness" type="double" value="5.000000000e+00" />
@@ -105,8 +105,8 @@
         </detector>
         <detector name="HcalRing" geartype="CalorimeterParameters">
             <layout type="Endcap" symmetry="2" phi0="0.000000000e+00" />
-            <dimensions inner_r="2.138800000e+03" outer_r="3.046030819e+03" inner_z="2.450000000e+03" />
-            <layer repeat="6" thickness="2.550000000e+01" absorberThickness="2.120000000e+01" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
+            <dimensions inner_r="2.138800000e+03" outer_r="3.137000000e+03" inner_z="2.450000000e+03" />
+            <layer repeat="6" thickness="2.650000000e+01" absorberThickness="2.220000000e+01" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <parameter name="Hcal_Cu_thickness" type="double" value="1.000000000e-01" />
             <parameter name="Hcal_PCB_thickness" type="double" value="7.000000000e-01" />
             <parameter name="Hcal_lateral_structure_thickness" type="double" value="1.500000000e+01" />
@@ -175,28 +175,28 @@
                     <sensitive thickness="2.000000000e-02" width="1.075723890e+02" lengthMin="2.920504287e+01" lengthMax="7.200000000e+01" rInner="4.000000000e+01" radLength="9.366070445e+01" />
                 </layer>
                 <layer nPetals="16" nSensors="1" isDoubleSided="0" sensorType="PIXEL" petalOpenningAngle="1.963495408e-01" phi0="0.000000000e+00" alpha="0.000000000e+00" zoffset="1.500000000e+00" zsign0="-1.000000000e+00" zposition="3.713094000e+02">
-                    <support thickness="1.000000000e+00" width="9.680387430e+01" lengthMin="3.348902438e+01" lengthMax="7.200000000e+01" rInner="5.076851472e+01" radLength="9.366070445e+01" />
-                    <sensitive thickness="2.000000000e-02" width="9.680387430e+01" lengthMin="3.348902438e+01" lengthMax="7.200000000e+01" rInner="5.076851472e+01" radLength="9.366070445e+01" />
+                    <support thickness="1.000000000e+00" width="9.689766827e+01" lengthMin="3.345171082e+01" lengthMax="7.200000000e+01" rInner="5.067472075e+01" radLength="9.366070445e+01" />
+                    <sensitive thickness="2.000000000e-02" width="9.689766827e+01" lengthMin="3.345171082e+01" lengthMax="7.200000000e+01" rInner="5.067472075e+01" radLength="9.366070445e+01" />
                 </layer>
                 <layer nPetals="16" nSensors="2" isDoubleSided="1" sensorType="STRIP" petalOpenningAngle="1.963495408e-01" phi0="0.000000000e+00" alpha="0.000000000e+00" zoffset="1.500000000e+00" zsign0="-1.000000000e+00" zposition="6.449058000e+02">
-                    <support thickness="2.000000000e+00" width="2.211785131e+02" lengthMin="3.449971669e+01" lengthMax="1.224900000e+02" rInner="7.137961783e+01" radLength="9.366070445e+01" />
-                    <sensitive thickness="2.000000000e-01" width="2.211785131e+02" lengthMin="3.449971669e+01" lengthMax="1.224900000e+02" rInner="7.137961783e+01" radLength="9.366070445e+01" />
+                    <support thickness="2.000000000e+00" width="2.214518302e+02" lengthMin="3.439098440e+01" lengthMax="1.224900000e+02" rInner="7.110630075e+01" radLength="9.366070445e+01" />
+                    <sensitive thickness="2.000000000e-01" width="2.214518302e+02" lengthMin="3.439098440e+01" lengthMax="1.224900000e+02" rInner="7.110630075e+01" radLength="9.366070445e+01" />
                 </layer>
                 <layer nPetals="16" nSensors="2" isDoubleSided="1" sensorType="STRIP" petalOpenningAngle="1.963495408e-01" phi0="0.000000000e+00" alpha="0.000000000e+00" zoffset="1.500000000e+00" zsign0="-1.000000000e+00" zposition="1.046116600e+03">
-                    <support thickness="2.000000000e+00" width="2.013424042e+02" lengthMin="4.239101144e+01" lengthMax="1.224900000e+02" rInner="1.015272872e+02" radLength="9.366070445e+01" />
-                    <sensitive thickness="2.000000000e-01" width="2.013424042e+02" lengthMin="4.239101144e+01" lengthMax="1.224900000e+02" rInner="1.015272872e+02" radLength="9.366070445e+01" />
+                    <support thickness="2.000000000e+00" width="2.018783081e+02" lengthMin="4.217781563e+01" lengthMax="1.224900000e+02" rInner="1.009913833e+02" radLength="9.366070445e+01" />
+                    <sensitive thickness="2.000000000e-01" width="2.018783081e+02" lengthMin="4.217781563e+01" lengthMax="1.224900000e+02" rInner="1.009913833e+02" radLength="9.366070445e+01" />
                 </layer>
                 <layer nPetals="16" nSensors="2" isDoubleSided="1" sensorType="STRIP" petalOpenningAngle="1.963495408e-01" phi0="0.000000000e+00" alpha="0.000000000e+00" zoffset="1.500000000e+00" zsign0="-1.000000000e+00" zposition="1.447327400e+03">
-                    <support thickness="2.000000000e+00" width="1.711947349e+02" lengthMin="5.438450000e+01" lengthMax="1.224900000e+02" rInner="1.316749565e+02" radLength="9.366070445e+01" />
-                    <sensitive thickness="2.000000000e-01" width="1.711947349e+02" lengthMin="5.438450000e+01" lengthMax="1.224900000e+02" rInner="1.316749565e+02" radLength="9.366070445e+01" />
+                    <support thickness="2.000000000e+00" width="1.719932255e+02" lengthMin="5.406684067e+01" lengthMax="1.224900000e+02" rInner="1.308764659e+02" radLength="9.366070445e+01" />
+                    <sensitive thickness="2.000000000e-01" width="1.719932255e+02" lengthMin="5.406684067e+01" lengthMax="1.224900000e+02" rInner="1.308764659e+02" radLength="9.366070445e+01" />
                 </layer>
                 <layer nPetals="16" nSensors="2" isDoubleSided="1" sensorType="STRIP" petalOpenningAngle="1.963495408e-01" phi0="0.000000000e+00" alpha="0.000000000e+00" zoffset="1.500000000e+00" zsign0="-1.000000000e+00" zposition="1.848535850e+03">
-                    <support thickness="2.000000000e+00" width="1.410472421e+02" lengthMin="6.637791831e+01" lengthMax="1.224900000e+02" rInner="1.618224493e+02" radLength="9.366070445e+01" />
-                    <sensitive thickness="2.000000000e-01" width="1.410472421e+02" lengthMin="6.637791831e+01" lengthMax="1.224900000e+02" rInner="1.618224493e+02" radLength="9.366070445e+01" />
+                    <support thickness="2.000000000e+00" width="1.421083180e+02" lengthMin="6.595579608e+01" lengthMax="1.224900000e+02" rInner="1.607613734e+02" radLength="9.366070445e+01" />
+                    <sensitive thickness="2.000000000e-01" width="1.421083180e+02" lengthMin="6.595579608e+01" lengthMax="1.224900000e+02" rInner="1.607613734e+02" radLength="9.366070445e+01" />
                 </layer>
                 <layer nPetals="16" nSensors="2" isDoubleSided="1" sensorType="STRIP" petalOpenningAngle="1.963495408e-01" phi0="0.000000000e+00" alpha="0.000000000e+00" zoffset="1.500000000e+00" zsign0="-1.000000000e+00" zposition="2.250000000e+03">
-                    <support thickness="2.000000000e+00" width="1.108805356e+02" lengthMin="7.837898032e+01" lengthMax="1.224900000e+02" rInner="1.919891558e+02" radLength="9.366070445e+01" />
-                    <sensitive thickness="2.000000000e-01" width="1.108805356e+02" lengthMin="7.837898032e+01" lengthMax="1.224900000e+02" rInner="1.919891558e+02" radLength="9.366070445e+01" />
+                    <support thickness="2.000000000e+00" width="1.122043641e+02" lengthMin="7.785232860e+01" lengthMax="1.224900000e+02" rInner="1.906653273e+02" radLength="9.366070445e+01" />
+                    <sensitive thickness="2.000000000e-01" width="1.122043641e+02" lengthMin="7.785232860e+01" lengthMax="1.224900000e+02" rInner="1.906653273e+02" radLength="9.366070445e+01" />
                 </layer>
             </layers>
             <parameter name="strip_angle_deg" type="double" value="5.000000000e+00" />
@@ -259,50 +259,50 @@
             <parameter name="BeamPipeRadius" type="double" value="1.450000000e+01" />
             <parameter name="BeamPipeThickness" type="double" value="5.000000000e-01" />
             <parameter name="RInner" type="DoubleVec" value="1.450000000e+01 1.450000000e+01 2.300000000e+01 2.300000000e+01 2.300000000e+01 2.300000000e+01 3.447600000e+01 5.670600000e+01 8.927400000e+01 1.218430000e+02 1.544520000e+02 1.830000000e+02" />
-            <parameter name="ROuter" type="DoubleVec" value="1.500000000e+01 1.500000000e+01 2.400000000e+01 2.367000000e+01 2.500000000e+01 2.500000000e+01 3.647600000e+01 6.015600000e+01 9.339400000e+01 1.250430000e+02 1.571920000e+02 1.853900000e+02" />
+            <parameter name="ROuter" type="DoubleVec" value="1.500000000e+01 1.500000000e+01 2.400000000e+01 2.367000000e+01 2.500000000e+01 2.500700000e+01 3.648300000e+01 5.947500000e+01 9.146100000e+01 1.233880000e+02 1.556760000e+02 1.839930000e+02" />
             <parameter name="Z" type="DoubleVec" value="0.000000000e+00 8.000000000e+01 1.500000000e+02 1.750000000e+02 2.200000000e+02 2.300000000e+02 5.358000000e+02 8.095000000e+02 1.210500000e+03 1.611500000e+03 2.013000000e+03 2.364500000e+03" />
         </detector>
         <detector name="CoilParameters" geartype="GearParameters">
             <parameter name="Coil_cryostat_c_modules_half_z" type="double" value="1.224000000e+03" />
-            <parameter name="Coil_cryostat_c_modules_inner_radius" type="double" value="3.566090000e+03" />
-            <parameter name="Coil_cryostat_c_modules_outer_radius" type="double" value="3.951090000e+03" />
+            <parameter name="Coil_cryostat_c_modules_inner_radius" type="double" value="3.599960000e+03" />
+            <parameter name="Coil_cryostat_c_modules_outer_radius" type="double" value="3.984960000e+03" />
             <parameter name="Coil_cryostat_half_z" type="double" value="3.872000000e+03" />
             <parameter name="Coil_cryostat_inner_cyl_half_z" type="double" value="3.872000000e+03" />
-            <parameter name="Coil_cryostat_inner_cyl_inner_radius" type="double" value="3.391090000e+03" />
-            <parameter name="Coil_cryostat_inner_cyl_outer_radius" type="double" value="4.181090000e+03" />
-            <parameter name="Coil_cryostat_inner_radius" type="double" value="3.391090000e+03" />
+            <parameter name="Coil_cryostat_inner_cyl_inner_radius" type="double" value="3.424960000e+03" />
+            <parameter name="Coil_cryostat_inner_cyl_outer_radius" type="double" value="4.214960000e+03" />
+            <parameter name="Coil_cryostat_inner_radius" type="double" value="3.424960000e+03" />
             <parameter name="Coil_cryostat_mandrel_half_z" type="double" value="3.675000000e+03" />
-            <parameter name="Coil_cryostat_mandrel_inner_radius" type="double" value="3.951090000e+03" />
-            <parameter name="Coil_cryostat_mandrel_outer_radius" type="double" value="4.026090000e+03" />
+            <parameter name="Coil_cryostat_mandrel_inner_radius" type="double" value="3.984960000e+03" />
+            <parameter name="Coil_cryostat_mandrel_outer_radius" type="double" value="4.059960000e+03" />
             <parameter name="Coil_cryostat_modules_half_z" type="double" value="7.960000000e+02" />
-            <parameter name="Coil_cryostat_modules_inner_radius" type="double" value="3.566090000e+03" />
-            <parameter name="Coil_cryostat_modules_outer_radius" type="double" value="3.951090000e+03" />
+            <parameter name="Coil_cryostat_modules_inner_radius" type="double" value="3.599960000e+03" />
+            <parameter name="Coil_cryostat_modules_outer_radius" type="double" value="3.984960000e+03" />
             <parameter name="Coil_cryostat_outer_cyl_half_z" type="double" value="3.872000000e+03" />
-            <parameter name="Coil_cryostat_outer_cyl_inner_radius" type="double" value="4.111090000e+03" />
-            <parameter name="Coil_cryostat_outer_cyl_outer_radius" type="double" value="4.141090000e+03" />
-            <parameter name="Coil_cryostat_outer_radius" type="double" value="4.141090000e+03" />
-            <parameter name="Coil_cryostat_scint1_inner_radius" type="double" value="3.481090000e+03" />
-            <parameter name="Coil_cryostat_scint1_outer_radius" type="double" value="3.491090000e+03" />
+            <parameter name="Coil_cryostat_outer_cyl_inner_radius" type="double" value="4.144960000e+03" />
+            <parameter name="Coil_cryostat_outer_cyl_outer_radius" type="double" value="4.174960000e+03" />
+            <parameter name="Coil_cryostat_outer_radius" type="double" value="4.174960000e+03" />
+            <parameter name="Coil_cryostat_scint1_inner_radius" type="double" value="3.514960000e+03" />
+            <parameter name="Coil_cryostat_scint1_outer_radius" type="double" value="3.524960000e+03" />
             <parameter name="Coil_cryostat_scint1_zposend" type="double" value="3.972000000e+03" />
             <parameter name="Coil_cryostat_scint1_zposin" type="double" value="3.772000000e+03" />
-            <parameter name="Coil_cryostat_scint2_inner_radius" type="double" value="3.496090000e+03" />
-            <parameter name="Coil_cryostat_scint2_outer_radius" type="double" value="3.506090000e+03" />
+            <parameter name="Coil_cryostat_scint2_inner_radius" type="double" value="3.529960000e+03" />
+            <parameter name="Coil_cryostat_scint2_outer_radius" type="double" value="3.539960000e+03" />
             <parameter name="Coil_cryostat_scint2_zposend" type="double" value="3.972000000e+03" />
             <parameter name="Coil_cryostat_scint2_zposin" type="double" value="3.772000000e+03" />
-            <parameter name="Coil_cryostat_scint3_inner_radius" type="double" value="4.051090000e+03" />
-            <parameter name="Coil_cryostat_scint3_outer_radius" type="double" value="4.061090000e+03" />
+            <parameter name="Coil_cryostat_scint3_inner_radius" type="double" value="4.084960000e+03" />
+            <parameter name="Coil_cryostat_scint3_outer_radius" type="double" value="4.094960000e+03" />
             <parameter name="Coil_cryostat_scint3_zposend" type="double" value="3.972000000e+03" />
             <parameter name="Coil_cryostat_scint3_zposin" type="double" value="3.772000000e+03" />
-            <parameter name="Coil_cryostat_scint4_inner_radius" type="double" value="4.036090000e+03" />
-            <parameter name="Coil_cryostat_scint4_outer_radius" type="double" value="4.046090000e+03" />
+            <parameter name="Coil_cryostat_scint4_inner_radius" type="double" value="4.069960000e+03" />
+            <parameter name="Coil_cryostat_scint4_outer_radius" type="double" value="4.079960000e+03" />
             <parameter name="Coil_cryostat_scint4_zposend" type="double" value="3.972000000e+03" />
             <parameter name="Coil_cryostat_scint4_zposin" type="double" value="3.772000000e+03" />
             <parameter name="Coil_cryostat_side_l_half_z" type="double" value="2.500000000e+01" />
-            <parameter name="Coil_cryostat_side_l_inner_radius" type="double" value="3.431090000e+03" />
-            <parameter name="Coil_cryostat_side_l_outer_radius" type="double" value="4.111090000e+03" />
+            <parameter name="Coil_cryostat_side_l_inner_radius" type="double" value="3.464960000e+03" />
+            <parameter name="Coil_cryostat_side_l_outer_radius" type="double" value="4.144960000e+03" />
             <parameter name="Coil_cryostat_side_r_half_z" type="double" value="2.500000000e+01" />
-            <parameter name="Coil_cryostat_side_r_inner_radius" type="double" value="3.431090000e+03" />
-            <parameter name="Coil_cryostat_side_r_outer_radius" type="double" value="4.111090000e+03" />
+            <parameter name="Coil_cryostat_side_r_inner_radius" type="double" value="3.464960000e+03" />
+            <parameter name="Coil_cryostat_side_r_outer_radius" type="double" value="4.144960000e+03" />
             <parameter name="Coil_material_c_modules" type="string" value="aluminium" />
             <parameter name="Coil_material_inner_cyl" type="string" value="aluminium" />
             <parameter name="Coil_material_mandrel" type="string" value="aluminium" />
@@ -321,28 +321,28 @@
             <parameter name="Ecal_endcap_zmax" type="string" value="2635" />
             <parameter name="Ecal_endcap_zmin" type="string" value="2450" />
             <parameter name="Ecal_outer_radius" type="string" value="2028" />
-            <parameter name="Hcal_R_max" type="string" value="3361.59" />
+            <parameter name="Hcal_R_max" type="string" value="3395.46" />
             <parameter name="Hcal_endcap_zmin" type="string" value="2650" />
             <parameter name="LHcal_zend" type="string" value="3205" />
             <parameter name="Lcal_z_begin" type="string" value="2506.9" />
             <parameter name="Lcal_z_thickness" type="string" value="128.1" />
-            <parameter name="MokkaModel" type="string" value="ILD_O1_v03" />
-            <parameter name="MokkaVersion" type="string" value="tag mokka-07-07-p08" />
+            <parameter name="MokkaModel" type="string" value="ILD_O1_v04" />
+            <parameter name="MokkaVersion" type="string" value="tag mokka-07-07-p09" />
             <parameter name="SIT1_Half_Length_Z" type="string" value="368" />
             <parameter name="SIT1_Radius" type="string" value="152.9" />
             <parameter name="SIT2_Half_Length_Z" type="string" value="644" />
             <parameter name="SIT2_Radius" type="string" value="299.9" />
             <parameter name="TPC_Ecal_Hcal_barrel_halfZ" type="string" value="2350" />
-            <parameter name="TUBE_IPOuterBulge_end_radius" type="string" value="185.39" />
+            <parameter name="TUBE_IPOuterBulge_end_radius" type="string" value="183.993" />
             <parameter name="TUBE_IPOuterBulge_end_z" type="string" value="2364.5" />
             <parameter name="TUBE_IPOuterTube_end_radius" type="string" value="25" />
             <parameter name="TUBE_IPOuterTube_end_z" type="string" value="230" />
             <parameter name="TUBE_IPOuterTube_start_radius" type="string" value="25" />
             <parameter name="TUBE_IPOuterTube_start_z" type="string" value="220" />
             <parameter name="Yoke_Z_start_endcaps" type="string" value="4072" />
-            <parameter name="Yoke_barrel_inner_radius" type="string" value="4391.08984375" />
-            <parameter name="calorimeter_region_rmax" type="string" value="3361.59" />
-            <parameter name="calorimeter_region_zmax" type="string" value="3889" />
+            <parameter name="Yoke_barrel_inner_radius" type="string" value="4424.9599609375" />
+            <parameter name="calorimeter_region_rmax" type="string" value="3395.46" />
+            <parameter name="calorimeter_region_zmax" type="string" value="3937" />
             <parameter name="tracker_region_rmax" type="string" value="1842.9" />
             <parameter name="tracker_region_zmax" type="string" value="2350" />
         </detector>
