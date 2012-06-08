@@ -55,6 +55,16 @@ subdirectories:
  versions:
  ========
 
+ ---------------
+| v01-13-07-p00 |
+ ---------------
+
+    - changed tagging convention to always include -p00 suffix to avoid confusion with ilcsoft version
+    - added new mokka dump: mokka-07-07-p09-dbdump.sql.tgz (2012-06-08 - 20:41:54)
+    - updated GearOutput.xml to ILD_O1_v04
+    - small bugs fixed in scripts to run sim/rec jobs on the grid
+
+
  -----------
 | v01-13-06 |
  -----------
