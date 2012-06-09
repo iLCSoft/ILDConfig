@@ -40,12 +40,13 @@
 /Mokka/init/lcioWriteCompleteHepEvt true
 
 
-#/Mokka/init/lcioDetailedTRKHitMode SITCollection
-#/Mokka/init/lcioDetailedTRKHitMode VXDCollection
-#/Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
-#/Mokka/init/lcioDetailedTRKHitMode FTD_STRIPCollection
-#/Mokka/init/lcioDetailedTRKHitMode TPCCollection
-#/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
+/Mokka/init/lcioDetailedTRKHitMode SETCollection
+/Mokka/init/lcioDetailedTRKHitMode SITCollection
+/Mokka/init/lcioDetailedTRKHitMode VXDCollection
+/Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
+/Mokka/init/lcioDetailedTRKHitMode FTD_STRIPCollection
+/Mokka/init/lcioDetailedTRKHitMode TPCCollection
+/Mokka/init/lcioDetailedTRKHitMode TPCSpacePointCollection
 
 /Mokka/init/rangeCut 0.1 mm
 

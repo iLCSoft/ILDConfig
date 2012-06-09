@@ -31,6 +31,7 @@
 /Mokka/init/lcioDetailedShowerMode false
 /Mokka/init/lcioWriteCompleteHepEvt true
 
+/Mokka/init/lcioDetailedTRKHitMode SETCollection
 /Mokka/init/lcioDetailedTRKHitMode SITCollection
 /Mokka/init/lcioDetailedTRKHitMode VXDCollection
 /Mokka/init/lcioDetailedTRKHitMode FTD_PIXELCollection
