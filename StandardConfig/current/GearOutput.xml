@@ -54,13 +54,14 @@
         </detector>
         <detector name="YokeBarrel" geartype="CalorimeterParameters">
             <layout type="Barrel" symmetry="12" phi0="0.000000000e+00" />
-            <dimensions inner_r="4.424959961e+03" outer_z="4.047000000e+03" />
+            <dimensions inner_r="4.424959961e+03" outer_z="4.072000000e+03" />
+            <layer repeat="1" thickness="4.000000000e+01" absorberThickness="0.000000000e+00" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <layer repeat="10" thickness="1.400000000e+02" absorberThickness="1.000000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <layer repeat="3" thickness="6.000000000e+02" absorberThickness="5.600000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
         </detector>
         <detector name="YokeEndcap" geartype="CalorimeterParameters">
             <layout type="Endcap" symmetry="2" phi0="0.000000000e+00" />
-            <dimensions inner_r="3.000000000e+02" outer_r="7.624959961e+03" inner_z="4.072000000e+03" />
+            <dimensions inner_r="3.000000000e+02" outer_r="7.665959961e+03" inner_z="4.072000000e+03" />
             <layer repeat="10" thickness="1.400000000e+02" absorberThickness="1.000000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <layer repeat="2" thickness="6.000000000e+02" absorberThickness="5.600000000e+02" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
         </detector>
@@ -327,7 +328,7 @@
             <parameter name="Lcal_z_begin" type="string" value="2506.9" />
             <parameter name="Lcal_z_thickness" type="string" value="128.1" />
             <parameter name="MokkaModel" type="string" value="ILD_O1_v04" />
-            <parameter name="MokkaVersion" type="string" value="tag mokka-07-07-p09" />
+            <parameter name="MokkaVersion" type="string" value="tag mokka-07-07-p10" />
             <parameter name="SIT1_Half_Length_Z" type="string" value="368" />
             <parameter name="SIT1_Radius" type="string" value="152.9" />
             <parameter name="SIT2_Half_Length_Z" type="string" value="644" />
