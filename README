@@ -56,6 +56,15 @@ subdirectories:
  ========
 
  ---------------
+| v01-13-07-p01 |
+ ---------------
+
+    - added new mokka dump: mokka-07-07-p10-dbdump.sql.tgz (2012-06-12 - 16:32:57)
+    - updated GearOutput.xml to ILD_O1_v04 (mokka-07-07-p10)
+    - added mokka steering parameter /Mokka/init/lcioDetailedTRKHitMode SETCollection
+
+
+ ---------------
 | v01-13-07-p00 |
  ---------------
 
