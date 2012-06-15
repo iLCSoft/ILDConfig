@@ -56,6 +56,14 @@ subdirectories:
  ========
 
  ---------------
+| v01-13-07-p02 |
+ ---------------
+
+    - added new mokka dump: mokka-07-07-p11-dbdump.sql.tgz (2012-06-15 - 11:51:54)
+    - updated GearOutput.xml for mokka-07-07-p11
+
+
+ ---------------
 | v01-13-07-p01 |
  ---------------
 
