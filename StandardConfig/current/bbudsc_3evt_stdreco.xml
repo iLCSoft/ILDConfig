@@ -31,14 +31,17 @@
      
      <processor name="MyClupatraProcessor" />
       
-     <processor name="MySiliconTracking_MarlinTrk"/>  
-     <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
-     <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
-     <processor name="MyFullLDCTracking_MarlinTrk"/>  
-      
+     <if condition="0">
+       <processor name="MySiliconTracking_MarlinTrk"/>  
+       <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
+       <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
+       <processor name="MyFullLDCTracking_MarlinTrk"/>  
+     </if>
      <!-- ========== the track cheater   ================= -->
-     <!--processor name="MyTruthTracker"/-->
-     
+     <if condition="1">
+      <processor name="MyTruthTracker"/>
+     </if>
+    
      <processor name="MyV0Finder"/>                
      <processor name="MyKinkFinder"/>         
      
@@ -731,7 +734,8 @@
   <!--Use MultipleScattering in Fit-->
   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
   <!--Name of the output track collection-->
-  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">TruthTracks </parameter>
+  <!-- FIXME: for testing write out 'cheated' MArlinTrkTracks -->
+  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">MarlinTrkTracks </parameter>
   <!--Name of the MCParticle-Track Relations collection for output tracks-->
   <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation">TruthTracksMCP </parameter>
   <!--Smooth All Mesurement Sites in Fit-->
