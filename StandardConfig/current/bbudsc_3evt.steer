@@ -47,6 +47,7 @@
 #/Mokka/init/TPCLowPtStoreMCPForHits true
 
 /Mokka/init/randomSeed 1240
+/Mokka/init/mcRunNumber 42
 
 
 # no user interaction
