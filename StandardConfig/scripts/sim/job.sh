@@ -462,7 +462,7 @@ fi
 # ------- generate mokka steering file ---------------------------------------
 if [ ! -e "mokka.steer" ] ; then
     msg INFO "generate Mokka steering file from template..."
-    mokka-steer-gen.py \
+    ./mokka-steer-gen.py \
         --mokka-input-file $INPUT_FILE_NAME \
         --mokka-run-number $RUN_NUMBER \
         --mokka-start-event $START_EVENT \
