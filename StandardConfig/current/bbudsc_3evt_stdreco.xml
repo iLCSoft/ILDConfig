@@ -31,17 +31,22 @@
      
      <processor name="MyClupatraProcessor" />
       
-     <if condition="false">
+     <if condition="false">  <!-- DEBUG: run TruthTracker for now until new tracking is finalized -->
+
        <processor name="MySiliconTracking_MarlinTrk"/>  
        <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
        <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
        <processor name="MyFullLDCTracking_MarlinTrk"/>  
+
      </if>
-     <!-- ========== the track cheater   ================= -->
-     <if condition="true">
-      <processor name="MyTruthTracker"/>
+     <if condition="true"> 
+
+       <!-- ========== the track cheater   ================= -->
+       <processor name="MyTruthTracker"/>
      </if>
     
+
+
      <processor name="MyV0Finder"/>                
      <processor name="MyKinkFinder"/>         
      
@@ -734,8 +739,10 @@
   <!--Use MultipleScattering in Fit-->
   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
   <!--Name of the output track collection-->
-  <!-- FIXME: for testing write out 'cheated' MArlinTrkTracks -->
+
+  <!-- FIXME: for testing write out 'cheated' MarlinTrkTracks -->
   <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">MarlinTrkTracks </parameter>
+
   <!--Name of the MCParticle-Track Relations collection for output tracks-->
   <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation">TruthTracksMCP </parameter>
   <!--Smooth All Mesurement Sites in Fit-->
@@ -771,9 +778,9 @@
  <processor name="MyNewLDCCaloDigi" type="NewLDCCaloDigi">
  <!--LDC digitizer...-->
   <!--Calibration coefficients for ECAL-->
-  <parameter name="CalibrECAL" type="FloatVec">40.91 81.81  </parameter>
+  <parameter name="CalibrECAL" type="FloatVec">42.91 85.82  </parameter> <!-- was 40.91 81.81 -->
   <!--Calibration coefficients for HCAL-->
-  <parameter name="CalibrHCAL" type="FloatVec">34.8  </parameter>
+  <parameter name="CalibrHCAL" type="FloatVec">54.7  </parameter> <!-- was 34.8 -->
   <!--ECAL Collection Names-->
   <parameter name="ECALCollections" type="StringVec">EcalBarrelSiliconCollection EcalEndcapSiliconCollection  EcalEndcapRingCollection </parameter>
   <!--Index of ECal Layers-->
@@ -860,7 +867,9 @@
  <processor name="MySimpleMuonDigi" type="SimpleMuonDigi">
  <!--Performs simple digitization of sim calo hits...-->
   <!--Calibration coefficients for MUON-->
-  <parameter name="CalibrMUON" type="FloatVec">10000</parameter>
+  <parameter name="CalibrMUON" type="FloatVec">56.7</parameter>
+  <!-- maximum hit energy for a MUON hit -->
+  <parameter name="MaxHitEnergyMUON" type="float">2.0</parameter>
   <!--MUON Collection Names-->
   <parameter name="MUONCollections" type="StringVec">
    MuonBarrelCollection MuonEndCapCollection</parameter>
@@ -875,7 +884,7 @@
 <!--########## MarlinPandora ###################################### -->
 
 <processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
-  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettings.xml </parameter>
+  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsMuon.xml </parameter>
   <!-- Collection names -->
   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
   <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
@@ -897,14 +906,16 @@
   <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
   <parameter name="ECalMipThreshold" type="float">0.5</parameter>
   <parameter name="HCalMipThreshold" type="float">0.3</parameter>
-  <parameter name="ECalToEMGeVCalibration" type="float">1.0</parameter>
-  <parameter name="HCalToEMGeVCalibration" type="float">1.0</parameter>
-  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.16</parameter>
-  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.16</parameter>
-  <parameter name="HCalToHadGeVCalibration" type="float">1.0</parameter>
-  <parameter name="MuonToMipCalibration" type="float">5.0</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.12</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.12</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.07</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
+
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
 
   <!-- FIXME: for now use old track states -->
   <parameter name="m_useOldTrackStateCalculation" type="int">1 </parameter>
