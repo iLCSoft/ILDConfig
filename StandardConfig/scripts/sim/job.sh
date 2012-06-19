@@ -134,7 +134,7 @@ cleanup(){
     mkdir -v $LOG_FILE_DIR
 
     # job specific stuff
-    cp -vf *.{sh,log,tgz,xml,steer,g4macro} $LOG_FILE_DIR
+    cp -vf *.{sh,py,log,tgz,xml,steer,g4macro} $LOG_FILE_DIR
 
     # no need to copy job-wrapper.sh and MokkaDBConfig.tgz
     rm -vf $LOG_FILE_DIR/job-wrapper.sh
