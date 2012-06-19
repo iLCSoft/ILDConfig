@@ -61,7 +61,8 @@ subdirectories:
 
     - added new mokka dump: mokka-08-00-dbdump.sql.tgz (2012-06-19 - 16:38:53)
     - updated GearOutput.xml for ILD_o1_v05 and mokka-08-00
-    - added /Mokka/init/mcRunNumber to steering file
+    - added /Mokka/init/mcRunNumber and 
+      /Mokka/init/primaryVertexSpreadZ 0.300 mm to Mokka steering file
     - adapted grid job.sh script to use mcRunNumber
 
     - updated standard reconstruction (bbudsc_3evt_stdreco.xml):
@@ -72,7 +73,7 @@ subdirectories:
         (toggle with booleans in condition tag <if/> )
       - switched Pandora to not use TrackState @ Calorimeter for now
        ( UseOldTrackStateCalculation == 1 ) 
-
+      - keep BuildUpVertex_RP and PrimaryVertex_RP collections on DST
 
 ------------------------------------------------------------------------
 r3702 | gaede | 2012-06-19 13:24:13 +0200 (Tue, 19 Jun 2012) | 4 lines
