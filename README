@@ -55,6 +55,16 @@ subdirectories:
  versions:
  ========
 
+ ------------
+| v01-14-p00 |
+ ------------
+
+    - added new mokka dump: mokka-08-00-dbdump.sql.tgz (2012-06-19 - 16:38:53)
+    - updated GearOutput.xml for ILD_o1_v05 and mokka-08-00
+    - added /Mokka/init/mcRunNumber to steering file
+    - adapted grid job.sh script to use mcRunNumber
+
+
  ---------------
 | v01-13-07-p02 |
  ---------------
