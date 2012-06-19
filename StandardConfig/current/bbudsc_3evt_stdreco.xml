@@ -901,6 +901,10 @@
   <parameter name="MuonToMipCalibration" type="float">5.0</parameter>
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
+
+  <!-- FIXME: for now use old track states -->
+  <parameter name="m_useOldTrackStateCalculation" type="int">1 </parameter>
+
   <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
   <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
 </processor>
