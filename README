@@ -72,7 +72,7 @@ subdirectories:
         (toggle with booleans in condition tag <if/> )
       - switched Pandora to not use TrackState @ Calorimeter for now
        ( UseOldTrackStateCalculation == 1 ) 
-
+      - keep BuildUpVertex_RP and PrimaryVertex_RP collections on DST
 
 ------------------------------------------------------------------------
 r3702 | gaede | 2012-06-19 13:24:13 +0200 (Tue, 19 Jun 2012) | 4 lines
