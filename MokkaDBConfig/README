@@ -8,9 +8,9 @@
 
 --- how to update the Mokka DB dump in this package ---------
 
-# 1. check which is the most up to date Mokka tag (e.g. mokka-07-07-p05)
-export newmokkaver=mokka-07-07-p11
-export oldmokkaver=mokka-07-07-p10
+# 1. check which is the most up to date Mokka tag (e.g. mokka-08-00)
+export newmokkaver=mokka-08-00
+export oldmokkaver=mokka-07-07-p11
 # 2. run ./scripts/mokkadump.sh
 test -e $newmokkaver-dbdump.sql || ./scripts/mokkadump.sh $newmokkaver-dbdump.sql
 # 3. compress sql file
