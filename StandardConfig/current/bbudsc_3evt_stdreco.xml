@@ -33,16 +33,14 @@
       
      <processor name="MySiliconTracking_MarlinTrk"/>  
      <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
-     
      <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
-     
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
       
      <!-- ========== the track cheater   ================= -->
      <!--processor name="MyTruthTracker"/-->
      
-     <processor name="MyV0Finder"/>               
-     <XXXXprocessor name="MyKinkFinder"/>         
+     <processor name="MyV0Finder"/>                
+     <processor name="MyKinkFinder"/>         
      
      <!-- ========== calorimeter digitization and PFA ======= -->
      <processor name="MyNewLDCCaloDigi"/>    
@@ -330,7 +328,7 @@
   <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">TPCTrackerHitRelations </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+  <!--parameter name="Verbosity" type="string"> MESSAGE </parameter-->
 </processor>
 
 
@@ -390,7 +388,7 @@
    <parameter name="TrackStartsInnerDist" type="float">25 </parameter>
 
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter>
+   <!--parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter-->
   </processor>
 
 
@@ -447,8 +445,6 @@
     4 3 1  4 3 0  4 2 1  4 2 0    
   </parameter>
   <!--Combinations of Hits in FTD-->
-  <parameter name="LayerCombinationsFTD" type="IntVec">6 5 4 6 5 3 5 4 3 5 4 2 5 4 1 5 3 2 5 3 1 5 2 1 4 3 2 4 3 1 4 3 0 4 2 1 4 2 0 4 1 0 3 2 1 3 2 0 3 1 0 2 1 0  </parameter>
-  <!--parameter name="LayerCombinationsFTD" type="IntVec">6 5 4 6 5 3 5 4 3 5 4 2 5 4 1 5 3 2 5 3 1 5 2 1 4 3 2 4 3 1 4 3 0 4 2 1 4 2 0 4 1 0 3 2 1 3 2 0 3 1 0 2 1 0  </parameter-->
   <parameter name="LayerCombinationsFTD" type="IntVec"> 
   13 11  9    13 11 8    13 10 9    13 10 8
   12 11  9    12 11 8    12 10 9    12 10 8
@@ -906,7 +902,7 @@
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
   <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
-  <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter>
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
 </processor>
 
 <!--################################################ -->
@@ -999,7 +995,7 @@
   <!--Whether MCParticle collection is imported or not-->
   <parameter name="UseMCP" type="int">0 </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <parameter name="Verbosity" type="string">MESSAGE DEBUG </parameter>
+  <!--parameter name="Verbosity" type="string">MESSAGE DEBUG </parameter-->
   <!--Loading LCIO vertices automatically-->
   <parameter name="VertexAutoLoad" type="int">1 </parameter>
 </processor>
