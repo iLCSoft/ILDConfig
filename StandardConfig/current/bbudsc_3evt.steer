@@ -16,7 +16,6 @@
 #/Mokka/init/registerPlugin TrackingOnlyPlugin 
 
 
-/Mokka/init/initialMacroFile bbudsc_3evt.g4macro
 #-------- don't specify the mysql host when running with the mokka-wrapper.sh
 #         that starts a local DB 
 #/Mokka/init/dbHost polui01.in2p3.fr
@@ -55,6 +54,7 @@
 /Mokka/init/randomSeed 1240
 /Mokka/init/mcRunNumber 42
 
+/Mokka/init/initialMacroFile bbudsc_3evt.g4macro
 
 # no user interaction
 /Mokka/init/visumode false

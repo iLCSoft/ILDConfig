@@ -6,13 +6,13 @@
 #      -> to be fixed
 #
 #/Mokka/init/detectorModel ILD_01_dev
-#  -> use -M ILD_Ox_v01 , x=1,2,3 
+#  -> use -M ILD_ox_v05 , x=1,2,3 
 ####################################
 
 
-/Mokka/init/startEventNumber %(start_event)s
 /Mokka/init/detectorModel %(detector_model)s
 /Mokka/init/physicsListName %(physics_list)s
+/Mokka/init/startEventNumber %(start_event)s
 /Mokka/init/randomSeed %(random_seed)s
 /Mokka/init/mcRunNumber %(run_number)s
 /Mokka/init/lcioFilename %(lcio_filename)s
@@ -34,12 +34,17 @@
 
 /Mokka/init/lcioWriteMode WRITE_NEW
 /Mokka/init/lorentzTransformationAngle 7 mrad
+
+# -----FIXME: need to get the correct number for the vertex spread 
+#             300 mu is the bunch length...
+#             so assume convolution of two gaussians
+/Mokka/init/primaryVertexSpreadZ 0.424264 mm
+
 /Mokka/init/BFactor 1.0
 /Mokka/init/userDeltaIntersection 1e-5 mm
 /Mokka/init/userDeltaOneStep 1e-4 mm
 /Mokka/init/lcioDetailedShowerMode false
 /Mokka/init/lcioWriteCompleteHepEvt true
-
 
 /Mokka/init/lcioDetailedTRKHitMode SETCollection
 /Mokka/init/lcioDetailedTRKHitMode SITCollection
@@ -57,6 +62,7 @@
 
 /Mokka/init/initialMacroFile mokka.g4macro
 
+# no user interaction
 /Mokka/init/visumode false
 /Mokka/init/BatchMode true
 
