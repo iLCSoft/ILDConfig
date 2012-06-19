@@ -76,6 +76,7 @@ usage(){
             JOB_PREFIX            # prefix for naming the job output files
             SW_VER                # the ILCSoft version to use
             CFG_VER               # the ILDConfig version to use
+            RUN_NUMBER            # the mc run number
             START_EVENT           # the start event number
             TOTAL_EVENTS          # total number of events to be reconstructed
             PROCESS               # process string
@@ -193,7 +194,7 @@ trap cleanup EXIT
 # check script syntax
 # ----------------------------------------------------------------------------
 
-if [ $# -ne 1 -a $# -ne 18 ]; then
+if [ $# -ne 1 -a $# -ne 19 ]; then
     exit 2
 fi
 
@@ -281,6 +282,7 @@ if [ $# -eq 1 ]; then
     JOB_PREFIX=$(sql_query sjob JOB_PREFIX)
     SW_VER=$(sql_query sjob SW_VER)
     CFG_VER=$(sql_query sjob CFG_VER)
+    RUN_NUMBER=$(sql_query sjob RUN_NUMBER)
     START_EVENT=$(sql_query sjob START_EVENT)
     TOTAL_EVENTS=$(sql_query sjob TOTAL_EVENTS)
     PROCESS=$(sql_query sjob PROCESS)
@@ -305,6 +307,8 @@ else
     SW_VER=$1
     shift
     CFG_VER=$1
+    shift
+    RUN_NUMBER=$1
     shift
     START_EVENT=$1
     shift
@@ -460,6 +464,7 @@ if [ ! -e "mokka.steer" ] ; then
     msg INFO "generate Mokka steering file from template..."
     mokka-steer-gen.py \
         --mokka-input-file $INPUT_FILE_NAME \
+        --mokka-run-number $RUN_NUMBER \
         --mokka-start-event $START_EVENT \
         --mokka-total-events $TOTAL_EVENTS \
         --mokka-detector-model $DETECTOR_MODEL \
