@@ -31,14 +31,14 @@
      
      <processor name="MyClupatraProcessor" />
       
-     <if condition="0">
+     <if condition="false">
        <processor name="MySiliconTracking_MarlinTrk"/>  
        <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
        <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
        <processor name="MyFullLDCTracking_MarlinTrk"/>  
      </if>
      <!-- ========== the track cheater   ================= -->
-     <if condition="1">
+     <if condition="true">
       <processor name="MyTruthTracker"/>
      </if>
     
