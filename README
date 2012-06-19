@@ -9,13 +9,13 @@
 ############################################################
 
 This new package just combines the old packages StandardConfig and MokkaDBConfig,
-which will be obsolete form now on (iLCSoft release v01-13-03).
+which will be obsolete form  release v01-13-03.
 
 
 The configuration files in this release should work with the following Mokka models:
-  ILD_O1_v03
-  ILD_O2_v03
-  ILD_O3_v03
+  ILD_o1_v05
+  ILD_o2_v05
+  ILD_o3_v05
 
 
 
@@ -63,6 +63,24 @@ subdirectories:
     - updated GearOutput.xml for ILD_o1_v05 and mokka-08-00
     - added /Mokka/init/mcRunNumber to steering file
     - adapted grid job.sh script to use mcRunNumber
+
+    - updated standard reconstruction (bbudsc_3evt_stdreco.xml):
+      - turn on UseIterativeFitting for TruthTracker
+      - merged in new calibration constants form J.Marshall (branch ucam_2012)
+      - added new pandora settings: PandoraSettingsMuon.xml
+      - use TruthTracker instead of SiliconTracking/FullLDCTracking for now
+        (toggle with booleans in condition tag <if/> )
+      - switched Pandora to not use TrackState @ Calorimeter for now
+       ( UseOldTrackStateCalculation == 1 ) 
+
+
+------------------------------------------------------------------------
+r3702 | gaede | 2012-06-19 13:24:13 +0200 (Tue, 19 Jun 2012) | 4 lines
+Changed paths:
+   M /ILDConfig/trunk/StandardConfig/current/bbudsc_3evt_stdreco.xml
+
+ - enabled KinkFinder
+ - removed local Verbosity parameters
 
 
  ---------------
