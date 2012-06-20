@@ -1,5 +1,5 @@
 <gear>
-    <global detectorName="ILD_O1_v04" />
+    <global detectorName="ILD_o1_v05" />
     <!--Gear XML file automatically created with GearXML::createXMLFile ....-->
     <BField type="ConstantBField" x="0.000000000e+00" y="0.000000000e+00" z="3.500000000e+00" />
     <detectors>
@@ -327,8 +327,8 @@
             <parameter name="LHcal_zend" type="string" value="3205" />
             <parameter name="Lcal_z_begin" type="string" value="2506.9" />
             <parameter name="Lcal_z_thickness" type="string" value="128.1" />
-            <parameter name="MokkaModel" type="string" value="ILD_O1_v04" />
-            <parameter name="MokkaVersion" type="string" value="tag mokka-07-07-p11" />
+            <parameter name="MokkaModel" type="string" value="ILD_o1_v05" />
+            <parameter name="MokkaVersion" type="string" value="tag mokka-08-00" />
             <parameter name="SIT1_Half_Length_Z" type="string" value="368" />
             <parameter name="SIT1_Radius" type="string" value="152.9" />
             <parameter name="SIT2_Half_Length_Z" type="string" value="644" />
