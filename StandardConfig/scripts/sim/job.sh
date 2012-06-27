@@ -464,25 +464,23 @@ fi
 
 
 # ------- generate mokka steering file ---------------------------------------
-if [ ! -e "mokka.steer" ] ; then
-    msg INFO "generate Mokka steering file from template..."
-    ./mokka-steer-gen.py \
-        --mokka-input-file $INPUT_FILE_NAME \
-        --mokka-run-number $RUN_NUMBER \
-        --mokka-start-event $START_EVENT \
-        --mokka-total-events $TOTAL_EVENTS \
-        --mokka-detector-model $DETECTOR_MODEL \
-        --mokka-physics-list $PHYSICS_LIST \
-        --mokka-random-seed $RANDOM_SEED \
-        --mokka-lcio-filename $OUTPUT_FILE_NAME \
-        --mokka-process $PROCESS \
-        --mokka-energy $ENERGY \
-        --mokka-pol-ep $POL_EP \
-        --mokka-pol-em $POL_EM \
-        --mokka-cross-section $CROSS_SECTION \
-        mokka.steer.in
-    test $? -eq 0 || msg CRITICAL 74 "failed to generate Mokka steering file"
-fi
+msg INFO "generate Mokka steering file from template..."
+./mokka-steer-gen.py \
+    --mokka-input-file $INPUT_FILE_NAME \
+    --mokka-run-number $RUN_NUMBER \
+    --mokka-start-event $START_EVENT \
+    --mokka-total-events $TOTAL_EVENTS \
+    --mokka-detector-model $DETECTOR_MODEL \
+    --mokka-physics-list $PHYSICS_LIST \
+    --mokka-random-seed $RANDOM_SEED \
+    --mokka-lcio-filename $OUTPUT_FILE_NAME \
+    --mokka-process $PROCESS \
+    --mokka-energy $ENERGY \
+    --mokka-pol-ep $POL_EP \
+    --mokka-pol-em $POL_EM \
+    --mokka-cross-section $CROSS_SECTION \
+    mokka.steer.in
+test $? -eq 0 || msg CRITICAL 74 "failed to generate Mokka steering file"
 # ----------------------------------------------------------------------------
 
 
