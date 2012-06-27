@@ -327,10 +327,15 @@ ILCSOFT="$VO_ILC_SW_DIR/ilcsoft/$ARCH"
 # check if required ilcsoft version is available on the grid
 if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
 
-    # download an ilcsoft version not yet installed on the grid
-    tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
-    if [ ! -d ilcsoft ] ; then
-        url="http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+    export ILCSOFT="$PWD/ilcsoft/$ARCH"
+
+    if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
+
+        # download an ilcsoft version not yet installed on the grid
+        tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
+
+        #url="http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+        url="/grid/ilc/ilcsoft/$tarball"
         msg INFO "downloading ilcsoft tarball..."
 
         resource_share_url_download "$url"
@@ -346,7 +351,6 @@ if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
     #wget --no-verbose -c "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
     #test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft patch"
 
-    export ILCSOFT="$PWD/ilcsoft/$ARCH"
 fi
 
 msg INFO "initialize ilcsoft..."
@@ -423,7 +427,7 @@ timeout=$(( ($RANDOM + $RANDOM_SEED) % 600 ))
 test "$GRID_JOB" = "1" && { echo "sleep $timeout seconds..." ; sleep $timeout ; }
 for file in $INPUT_FILES ; do
     msg INFO "copy [ $file ]"
-    c="grid-dl-file.py --timeout 3600 $file ."
+    c="grid-dl-file.py -o ignore --timeout 3600 $file ."
     msg DEBUG "> $c"
     eval $c >> $MSG_LOG_FILE
     test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"

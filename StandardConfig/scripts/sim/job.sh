@@ -134,7 +134,7 @@ cleanup(){
     mkdir -v $LOG_FILE_DIR
 
     # job specific stuff
-    cp -vf *.{sh,py,log,tgz,xml,steer,g4macro} $LOG_FILE_DIR
+    cp -vf *.{sh,py,log,tgz,xml,tbl,steer,g4macro,in} $LOG_FILE_DIR
 
     # no need to copy job-wrapper.sh and MokkaDBConfig.tgz
     rm -vf $LOG_FILE_DIR/job-wrapper.sh
@@ -375,10 +375,15 @@ ILCSOFT="$VO_ILC_SW_DIR/ilcsoft/$ARCH"
 # check if required ilcsoft version is available on the grid
 if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
 
-    # download an ilcsoft version not yet installed on the grid
-    tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
-    if [ ! -d ilcsoft ] ; then
-        url="http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+    export ILCSOFT="$PWD/ilcsoft/$ARCH"
+
+    if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
+
+        # download an ilcsoft version not yet installed on the grid
+        tarball=ilcsoft-$SW_VER-$ARCH-full.tar.gz
+
+        #url="http://ilcsoft.desy.de/ilcsoft-bin-releases/$tarball"
+        url="/grid/ilc/ilcsoft/$tarball"
         msg INFO "downloading ilcsoft tarball..."
 
         resource_share_url_download "$url" 
@@ -394,7 +399,6 @@ if [ ! -r "$ILCSOFT/$SW_VER" ] ; then
     #wget --no-verbose -c "http://ilcsoft.desy.de/data/production/patches/$tarball" && tar -xzvf $tarball && rm -f $tarball
     #test $? -eq 0 || msg CRITICAL 71 "failed to download ilcsoft patch"
 
-    export ILCSOFT="$PWD/ilcsoft/$ARCH"
 fi
 
 msg INFO "initialize ilcsoft..."
@@ -460,25 +464,23 @@ fi
 
 
 # ------- generate mokka steering file ---------------------------------------
-if [ ! -e "mokka.steer" ] ; then
-    msg INFO "generate Mokka steering file from template..."
-    ./mokka-steer-gen.py \
-        --mokka-input-file $INPUT_FILE_NAME \
-        --mokka-run-number $RUN_NUMBER \
-        --mokka-start-event $START_EVENT \
-        --mokka-total-events $TOTAL_EVENTS \
-        --mokka-detector-model $DETECTOR_MODEL \
-        --mokka-physics-list $PHYSICS_LIST \
-        --mokka-random-seed $RANDOM_SEED \
-        --mokka-lcio-filename $OUTPUT_FILE_NAME \
-        --mokka-process $PROCESS \
-        --mokka-energy $ENERGY \
-        --mokka-pol-ep $POL_EP \
-        --mokka-pol-em $POL_EM \
-        --mokka-cross-section $CROSS_SECTION \
-        mokka.steer.in
-    test $? -eq 0 || msg CRITICAL 74 "failed to generate Mokka steering file"
-fi
+msg INFO "generate Mokka steering file from template..."
+./mokka-steer-gen.py \
+    --mokka-input-file $INPUT_FILE_NAME \
+    --mokka-run-number $RUN_NUMBER \
+    --mokka-start-event $START_EVENT \
+    --mokka-total-events $TOTAL_EVENTS \
+    --mokka-detector-model $DETECTOR_MODEL \
+    --mokka-physics-list $PHYSICS_LIST \
+    --mokka-random-seed $RANDOM_SEED \
+    --mokka-lcio-filename $OUTPUT_FILE_NAME \
+    --mokka-process $PROCESS \
+    --mokka-energy $ENERGY \
+    --mokka-pol-ep $POL_EP \
+    --mokka-pol-em $POL_EM \
+    --mokka-cross-section $CROSS_SECTION \
+    mokka.steer.in
+test $? -eq 0 || msg CRITICAL 74 "failed to generate Mokka steering file"
 # ----------------------------------------------------------------------------
 
 
