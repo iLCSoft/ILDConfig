@@ -31,7 +31,7 @@
      
      <processor name="MyClupatraProcessor" />
       
-     <if condition="false">  <!-- DEBUG: run TruthTracker for now until new tracking is finalized -->
+     <if condition="true">  <!-- DEBUG: run TruthTracker for now until new tracking is finalized -->
 
        <processor name="MySiliconTracking_MarlinTrk"/>  
        <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
@@ -39,7 +39,7 @@
        <processor name="MyFullLDCTracking_MarlinTrk"/>  
 
      </if>
-     <if condition="true"> 
+     <if condition="false"> 
 
        <!-- ========== the track cheater   ================= -->
        <processor name="MyTruthTracker"/>
