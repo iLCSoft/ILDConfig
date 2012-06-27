@@ -427,7 +427,7 @@ timeout=$(( ($RANDOM + $RANDOM_SEED) % 600 ))
 test "$GRID_JOB" = "1" && { echo "sleep $timeout seconds..." ; sleep $timeout ; }
 for file in $INPUT_FILES ; do
     msg INFO "copy [ $file ]"
-    c="grid-dl-file.py --timeout 3600 $file ."
+    c="grid-dl-file.py -o ignore --timeout 3600 $file ."
     msg DEBUG "> $c"
     eval $c >> $MSG_LOG_FILE
     test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"
