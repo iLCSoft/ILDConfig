@@ -424,6 +424,7 @@ if [ ! -r "$ILDCONFIG/$CFG_VER" ] ; then
     export ILDCONFIG=$PWD
 fi
 # currently only MokkaDBConfig is needed...
+msg INFO "initialize MokkaDBConfig"
 . $ILDCONFIG/MokkaDBConfig/init.sh
 test $? -eq 0 || { echo "failed to initialize MokkaDBConfig" ; exit 72 ; }
 # ----------------------------------------------------------------------------
