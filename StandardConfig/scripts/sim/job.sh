@@ -410,8 +410,8 @@ test $? -eq 0 || msg CRITICAL 71 "failed to initialize ilcsoft"
 
 
 # ----- setup ildconfig ------------------------------------------------------
-ILDCONFIG="$VO_ILC_SW_DIR/ilcsoft/ILDConfig"
-if [ ! -r "$ILDCONFIG/$CFG_VER" ] ; then
+ILDCONFIG="$VO_ILC_SW_DIR/ilcsoft/ILDConfig/$CFG_VER"
+if [ ! -r "$ILDCONFIG" ] ; then
     # svn is not available on the grid.. we need to use wget
     if [ ! -r MokkaDBConfig ] ; then
         # need to use websvn due to broken symlinks when using viewvc (affects MokkaDBConfig)
@@ -424,6 +424,7 @@ if [ ! -r "$ILDCONFIG/$CFG_VER" ] ; then
     export ILDCONFIG=$PWD
 fi
 # currently only MokkaDBConfig is needed...
+msg INFO "initialize MokkaDBConfig"
 . $ILDCONFIG/MokkaDBConfig/init.sh
 test $? -eq 0 || { echo "failed to initialize MokkaDBConfig" ; exit 72 ; }
 # ----------------------------------------------------------------------------
