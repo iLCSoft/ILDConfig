@@ -123,6 +123,9 @@ cleanup(){
     # job specific stuff
     cp -vf *.{sh,log,tgz,xml,root,txt} $LOG_FILE_DIR
 
+    # copy stdout and stderr
+    cp -vf $JOB_STARTDIR/std{out,err} $LOG_FILE_DIR
+
     # no need to copy job-wrapper.sh
     rm -vf $LOG_FILE_DIR/job-wrapper.sh
 
