@@ -887,7 +887,7 @@
 <!--########## MarlinPandora ###################################### -->
 
 <processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
-  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsMuon.xml </parameter>
+  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
   <!-- Collection names -->
   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
   <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
