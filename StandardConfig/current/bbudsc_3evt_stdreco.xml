@@ -993,7 +993,7 @@
   <!--If Using Particle Gun Ignore Gen Stat-->
   <parameter name="UsingParticleGun" type="bool">false </parameter>
   <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. -->
-  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITTrackerHitRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETTrackerHitRelations  </parameter>
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETTrackerHitRelations  </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string"> DEBUG </parameter-->
   </processor>
