@@ -55,6 +55,13 @@ subdirectories:
  versions:
  ========
 
+ ---------------
+| v01-14-01-p00 |
+ ---------------
+
+    - this tag is an exact copy of v01-14-p00 except for the updated mokka version in GearOutput.xml (mokka-08-00-03)
+
+
  ------------
 | v01-14-p00 |
  ------------
