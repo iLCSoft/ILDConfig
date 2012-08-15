@@ -160,7 +160,7 @@ cleanup(){
             echo "uploading log tarball to the grid"
 
             lfc-mkdir -p $LOG_OUTPUT_DIR
-            grid-ul-file.py --timeout 3600 --overwrite=$LOG_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $LOG_FILE_NAME $LOG_FILE
+            grid-ul-file.py --timeout 9000 --overwrite=$LOG_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $LOG_FILE_NAME $LOG_FILE
             test $? -ne 0 && { echo "ERROR: failed to upload log tarball, setting exit code from $exit_code to 87 !!" >&2 ; exit_code=87 ; }
 
         else
@@ -494,7 +494,7 @@ test $? -eq 0 || msg CRITICAL 74 "failed to generate Mokka steering file"
 msg INFO "copy input file [ $INPUT_FILE ] ..."
 timeout=$(( ($RANDOM + $RANDOM_SEED) % 600 ))
 test -n "$GRID_JOB" && { echo "sleep $timeout seconds..." ; sleep $timeout ; }
-#c="grid-dl-file.py -o ignore --timeout 3600 $INPUT_FILE ."
+#c="grid-dl-file.py -o ignore --timeout 9000 $INPUT_FILE ."
 #msg DEBUG "> $c"
 #eval $c >> $MSG_LOG_FILE
 resource_share_url_download $INPUT_FILE $PWD/$INPUT_FILE_NAME
@@ -613,7 +613,7 @@ if [ -n "$GRID_JOB" ] ; then
 
     lfc-mkdir -p $OUTPUT_DIR
 
-    grid-ul-file.py --timeout 3600 --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $OUTPUT_FILE_NAME $OUTPUT_FILE
+    grid-ul-file.py --timeout 9000 --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $OUTPUT_FILE_NAME $OUTPUT_FILE
     test $? -eq 0 || msg CRITICAL 86 "failed to copy output file"
 
     #msg INFO "remove output file"
