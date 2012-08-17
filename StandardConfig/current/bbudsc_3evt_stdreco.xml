@@ -544,7 +544,7 @@
   <!--Assign left over SIT hits-->
   <parameter name="AssignSITHits" type="int">1 </parameter>
   <!--Assign left over TPC hits-->
-  <parameter name="AssignTPCHits" type="int">1 </parameter>
+  <parameter name="AssignTPCHits" type="int">0 </parameter>
   <!--Assign left over VTX hits-->
   <parameter name="AssignVTXHits" type="int">1 </parameter>
   <!--Cut on fit Chi2-->
