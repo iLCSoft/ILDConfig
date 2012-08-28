@@ -433,9 +433,9 @@
   <!--Use Energy Loss in Fit-->
   <parameter name="EnergyLossOn" type="bool"> true </parameter>
   <!--FTD Pixel Hit Collection Name-->
-  <parameter name="_FTDPixelHitCollectionName" type="string" lcioInType="TrackerHitPlane"> FTDPixelTrackerHits </parameter>
+  <parameter name="FTDPixelHitCollectionName" type="string" lcioInType="TrackerHitPlane"> FTDPixelTrackerHits </parameter>
   <!--FTD FTDSpacePoint Collection Name-->
-  <parameter name="_FTDSpacePointCollection" type="string" lcioInType="TrackerHit"> FTDSpacePoints </parameter>
+  <parameter name="FTDSpacePointCollection" type="string" lcioInType="TrackerHit"> FTDSpacePoints </parameter>
   <!--Fast attachment-->
   <parameter name="FastAttachment" type="int">0 </parameter>
   <!--Value used for the initial d0 variance of the trackfit-->
@@ -572,9 +572,9 @@
   <!--Cut on distance between track and FTD hits-->
   <parameter name="FTDHitToTrackDistance" type="float">2 </parameter>
  <!--FTD Pixel Hit Collection Name-->
-  <parameter name="_FTDPixelHitCollectionName" type="string" lcioInType="TrackerHitPlane"> FTDPixelTrackerHits </parameter>
+  <parameter name="FTDPixelHitCollectionName" type="string" lcioInType="TrackerHitPlane"> FTDPixelTrackerHits </parameter>
   <!--FTD FTDSpacePoint Collection Name-->
-  <parameter name="_FTDSpacePointCollection" type="string" lcioInType="TrackerHit"> FTDSpacePoints </parameter>
+  <parameter name="FTDSpacePointCollection" type="string" lcioInType="TrackerHit"> FTDSpacePoints </parameter>
   <!--Forbid overlap in Z for combining TPC segments with tracks having Si hits-->
   <parameter name="ForbidOverlapInZComb" type="int">0 </parameter>
   <!--Forbid overlap in Z for the merged TPC segments-->
