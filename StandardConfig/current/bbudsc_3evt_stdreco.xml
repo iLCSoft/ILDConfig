@@ -620,7 +620,7 @@
   <!--Si Track Collection-->
   <parameter name="SiTracks" type="string" lcioInType="Track">SubsetTracks </parameter>
   <!--Si Track to Collection-->
-  <parameter name="SiTracksMCPRelColl" type="string" lcioInType="LCRelation">SiTracksMCP </parameter>
+  <parameter name="SiTracksMCPRelColl" type="string" lcioInType="LCRelation">SubsetTracksMCTruthLink </parameter>
  <!--Smooth All Mesurement Sites in Fit-->
   <parameter name="SmoothOn" type="bool">true </parameter>
   <!--TPC Hit Collection Name-->
@@ -630,7 +630,7 @@
   <!--TPC Track Collection-->
   <parameter name="TPCTracks" type="string" lcioInType="Track">ClupatraTracks </parameter>
   <!--TPC Track to MCP Relation Collection Name-->
-  <parameter name="TPCTracksMCPRelColl" type="string" lcioInType="LCRelation">XTPCTracksMCP </parameter>
+  <parameter name="TPCTracksMCPRelColl" type="string" lcioInType="LCRelation">TPCTracksMCTruthLink </parameter>
   <!--VTX Hit Collection Name-->
   <parameter name="VTXHitCollection" type="string" lcioInType="TrackerHit">VXDTrackerHits </parameter>
   <!--Cut on distance between track and VTX hits-->
