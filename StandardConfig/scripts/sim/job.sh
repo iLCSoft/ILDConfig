@@ -517,7 +517,7 @@ test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"
 
 msg INFO "Mokka started on ($(date))"
 #mokka-wrapper.sh mokka.steer 2>&1 > mokka.log
-mokka-wrapper.sh -e ./particle.tbl mokka.steer 2>&1 > mokka.log
+mokka-wrapper.sh -U -e ./particle.tbl mokka.steer 2>&1 > mokka.log
 mokka_exit_code=$?
 if [ $mokka_exit_code -ne 0 ] ; then
     msg ERROR "************* MOKKA ERROR **********************"
