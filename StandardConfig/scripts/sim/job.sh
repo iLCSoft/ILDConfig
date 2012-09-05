@@ -467,6 +467,25 @@ fi
 
 
 
+# ------- fix polarisation values --------------------------------------------
+# POL_EP
+pol=$POL_EP
+echo $pol | grep -qE 'R|L'
+# one liner bash script for converting polarisation values (M. Berggren)
+test $? -eq 0 && pol=$(echo "scale=3 ;$([[ $pol =~ L$|R$ ]] && pol=${pol}100 ; echo $pol | tr "LR" "- " ) / 100.0" | bc)
+POL_EP=$pol
+
+# POL_EM
+pol=$POL_EM
+echo $pol | grep -qE 'R|L'
+# one liner bash script for converting polarisation values (M. Berggren)
+test $? -eq 0 && pol=$(echo "scale=3 ;$([[ $pol =~ L$|R$ ]] && pol=${pol}100 ; echo $pol | tr "LR" "- " ) / 100.0" | bc)
+POL_EM=$pol
+# ----------------------------------------------------------------------------
+
+
+
+
 # ------- generate mokka steering file ---------------------------------------
 msg INFO "generate Mokka steering file from template..."
 ./mokka-steer-gen.py \
