@@ -164,9 +164,9 @@
    <!--whether hits are 1D strip hits-->
    <parameter name="IsStrip" type="bool">false </parameter>
    <!--resolution in direction of u-->
-   <parameter name="ResolutionU" type="float">0.003 </parameter>
+   <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004 </parameter>
    <!--resolution in direction of v-->
-   <parameter name="ResolutionV" type="float">0.003 </parameter>
+   <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004  </parameter>
    <!--Name of the Input SimTrackerHit collection-->
    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
    <!--Name of TrackerHit SimTrackHit relation collection-->
