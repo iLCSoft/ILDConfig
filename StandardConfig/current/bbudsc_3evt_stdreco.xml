@@ -120,6 +120,7 @@
       MarlinTrkTracks 
       PandoraPFOs
       BuildUpVertex_RP
+			BuildUpVertex_V0_RP
       PrimaryVertex_RP
       BCALParticles
     </parameter>
