@@ -13,16 +13,16 @@
      
      <!-- ========== track digitization and tracking  === -->
 
-     <XXXXprocessor name="VXDSimplePlanarDigiProcessor"/> <!-- Use SimplePlanarTestDigiProcessor until functionality is ported over -->
-     <processor name="VXDSimplePlanarTestDigiProcessor"/>
+     <XXXXprocessor name="VXDSimplePlanarDigiProcessor"/> <!-- Use PlanarDigiProcessor until functionality is ported over -->
+     <processor name="VXDPlanarDigiProcessor"/>
 
-     <XXXXprocessor name="SITSimplePlanarDigiProcessor"/> <!-- Use SimplePlanarTestDigiProcessor until functionality is ported over -->
-     <processor name="SITSimplePlanarTestDigiProcessor"/>
+     <XXXXprocessor name="SITSimplePlanarDigiProcessor"/> <!-- Use PlanarDigiProcessor until functionality is ported over -->
+     <processor name="SITPlanarDigiProcessor"/>
      <processor name="SITSpacePointBuilder" />
 
-     <XXXXprocessor name="FTDSimpleDiscDigiProcessor"/> <!-- Use SimplePlanarTestDigiProcessor until functionality is ported over -->
-     <processor name="FTDPixelSimplePlanarTestDigiProcessor"/>
-     <processor name="FTDStripSimplePlanarTestDigiProcessor"/>
+     <XXXXprocessor name="FTDSimpleDiscDigiProcessor"/> <!-- Use PlanarDigiProcessor until functionality is ported over -->
+     <processor name="FTDPixelPlanarDigiProcessor"/>
+     <processor name="FTDStripPlanarDigiProcessor"/>
      <processor name="FTDSpacePointBuilder"/>
 
      <processor name="MyTPCDigiProcessor"/>
@@ -160,8 +160,8 @@
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>    
 
- <processor name="VXDSimplePlanarTestDigiProcessor" type="SimplePlanarTestDigiProcessor">
-   <!--SimplePlanarTestDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+ <processor name="VXDPlanarDigiProcessor" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
    <parameter name="IsStrip" type="bool">false </parameter>
    <!--resolution in direction of u-->
@@ -199,8 +199,8 @@
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>    
 
- <processor name="SITSimplePlanarTestDigiProcessor" type="SimplePlanarTestDigiProcessor">
-   <!--SimplePlanarTestDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+ <processor name="SITPlanarDigiProcessor" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
    <parameter name="IsStrip" type="bool">true </parameter>
    <!--resolution in direction of u-->
@@ -251,8 +251,8 @@
 </processor>
 
 
- <processor name="FTDStripSimplePlanarTestDigiProcessor" type="SimplePlanarTestDigiProcessor">
-   <!--SimplePlanarTestDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+ <processor name="FTDStripPlanarDigiProcessor" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
    <parameter name="IsStrip" type="bool">true </parameter>
    <!--resolution in direction of u-->
@@ -269,8 +269,8 @@
    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
  </processor>
  
- <processor name="FTDPixelSimplePlanarTestDigiProcessor" type="SimplePlanarTestDigiProcessor">
-   <!--SimplePlanarTestDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+ <processor name="FTDPixelPlanarDigiProcessor" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
    <parameter name="IsStrip" type="bool">false </parameter>
    <!--resolution in direction of u-->
