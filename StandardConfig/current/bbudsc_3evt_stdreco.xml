@@ -12,18 +12,17 @@
      <processor name="MyAIDAProcessor"/>
      
      <!-- ========== track digitization and tracking  === -->
-
-     <XXXXprocessor name="VXDSimplePlanarDigiProcessor"/> <!-- Use PlanarDigiProcessor until functionality is ported over -->
      <processor name="VXDPlanarDigiProcessor"/>
 
-     <XXXXprocessor name="SITSimplePlanarDigiProcessor"/> <!-- Use PlanarDigiProcessor until functionality is ported over -->
      <processor name="SITPlanarDigiProcessor"/>
      <processor name="SITSpacePointBuilder" />
 
-     <XXXXprocessor name="FTDSimpleDiscDigiProcessor"/> <!-- Use PlanarDigiProcessor until functionality is ported over -->
      <processor name="FTDPixelPlanarDigiProcessor"/>
      <processor name="FTDStripPlanarDigiProcessor"/>
      <processor name="FTDSpacePointBuilder"/>
+
+     <processor name="SETPlanarDigiProcessor"/>
+     <processor name="SETSpacePointBuilder" />
 
      <processor name="MyTPCDigiProcessor"/>
      
@@ -31,21 +30,15 @@
      
      <processor name="MyClupatraProcessor" />
       
-     <if condition="true">  <!-- DEBUG: run TruthTracker for now until new tracking is finalized -->
+     <processor name="MySiliconTracking_MarlinTrk"/>  
+     <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
+     <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
+     <processor name="MyFullLDCTracking_MarlinTrk"/>  
 
-       <processor name="MySiliconTracking_MarlinTrk"/>  
-       <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
-       <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
-       <processor name="MyFullLDCTracking_MarlinTrk"/>  
+     <!-- ========== the track cheater   ================= -->
+     <!-- XXXprocessor name="MyTruthTracker"/ -->    
 
-     </if>
-     <if condition="false"> 
-
-       <!-- ========== the track cheater   ================= -->
-       <processor name="MyTruthTracker"/>
-     </if>
-    
-
+     <!-- ========== the post tracking patrec   ================= -->
 
      <processor name="MyV0Finder"/>                
      <processor name="MyKinkFinder"/>         
@@ -138,27 +131,6 @@
   <parameter name="FileType" type="string" value="root "/>
 </processor>
 
-<processor name="VXDSimplePlanarDigiProcessor" type="SimplePlanarDigiProcessor">                                   
-  <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or SET described using ZPlannarLayout-->
-  <!--whether hits are 1D strip hits-->
-  <parameter name="IsStrip" type="bool">false </parameter>
-  <!--Mokka has encoded the ladder number in the cellID-->
-  <parameter name="Ladder_Number_encoded_in_cellID" type="bool">true </parameter>
-  <!--U Resolution-->
-  <parameter name="PointResolutionU" type="float">0.003 </parameter>
-  <!--V Resolution-->
-  <parameter name="PointResolutionV" type="float">0.003 </parameter>
-  <!--Name of the Input SimTrackerHit collection-->
-  <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
-  <!--Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
-  <!--ID of Sub-Detector from UTIL/ILDConf.h from lcio. Either for VXD, SIT or SET. Only used if Ladder_Number_encoded_in_cellID == false-->
-  <parameter name="Sub_Detector_ID" type="int">1 </parameter>
-  <!--Name of the TrackerHit output collection-->
-  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane"> VXDTrackerHits</parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-</processor>    
 
  <processor name="VXDPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
@@ -179,26 +151,6 @@
  </processor>
  
 
-<processor name="SITSimplePlanarDigiProcessor" type="SimplePlanarDigiProcessor">
-  <!--SimplePlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters. The plannar geometry should be either VXD, SIT or SET described using ZPlannarLayout-->
-  <!--whether hits are 1D strip hits-->
-  <parameter name="IsStrip" type="bool"> true </parameter>
-  <!--Mokka has encoded the ladder number in the cellID-->
-  <parameter name="Ladder_Number_encoded_in_cellID" type="bool">true </parameter>
-  <!--U Resolution-->
-  <parameter name="PointResolutionU" type="float">0.007 </parameter>
-  <!--Name of the Input SimTrackerHit collection-->
-  <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
-  <!--Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SITTrackerHitRelations </parameter>
-  <!--ID of Sub-Detector from UTIL/ILDConf.h from lcio. Either for VXD, SIT or SET. Only used if Ladder_Number_encoded_in_cellID == false-->
-  <parameter name="Sub_Detector_ID" type="int">2 </parameter>
-  <!--Name of the TrackerHit output collection-->
-  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane"> SITTrackerHits</parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-</processor>    
-
  <processor name="SITPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
@@ -217,6 +169,7 @@
    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
  </processor>
 
+
  <processor name="SITSpacePointBuilder" type="SpacePointBuilder">
    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
    <!--Name of the SpacePoint SimTrackerHit relation collection-->
@@ -232,23 +185,23 @@
 </processor>
 
 
- <processor name="FTDSimpleDiscDigiProcessor" type="SimpleDiscDigiProcessor">
- <!--SimpleDiscDigiProcessor creates FTD TrackerHits from SimTrackerHits-->
-  <!--Name of the SimTrackerHit collection-->
-  <parameter name="CollectionName" type="string" lcioInType="SimTrackerHit"> FTD_PIXELCollection </parameter>
-  <!--Name of the TrackerHit output collection-->
-  <parameter name="OutputCollectionName" type="string" lcioOutType="TrackerHit">FTDPixelTrackerHits </parameter>
-  <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
-  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDPixelTrackerHitRelations </parameter>
-  <!--Point Resolution-->
-  <parameter name="PointResolution" type="float">0.01 </parameter>
-  <!--ID of Sub-Detector using UTIL/ILDConf.h from lcio.-->
-  <parameter name="Sub_Detector_ID" type="int">3 </parameter>
-  <!-- Mokka has encoded the hits with the cellID as specified in UTIL/ILDConf.h from lcio -->
-  <parameter name="SimHits_encoded_with_cellID" type="bool"> true </parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string"> DEBUG </parameter-->
-</processor>
+ <processor name="FTDPixelPlanarDigiProcessor" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+   <!--whether hits are 1D strip hits-->
+   <parameter name="IsStrip" type="bool">false </parameter>
+   <!--resolution in direction of u-->
+   <parameter name="ResolutionU" type="float">0.01 </parameter>
+   <!--resolution in direction of v-->
+   <parameter name="ResolutionV" type="float">0.01 </parameter>
+   <!--Name of the Input SimTrackerHit collection-->
+   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">FTD_PIXELCollection </parameter>
+   <!--Name of TrackerHit SimTrackHit relation collection-->
+   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDPixelTrackerHitRelations </parameter>
+   <!--Name of the TrackerHit output collection-->
+   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">FTDPixelTrackerHits </parameter>
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+ </processor>
 
 
  <processor name="FTDStripPlanarDigiProcessor" type="PlanarDigiProcessor">
@@ -268,25 +221,42 @@
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
  </processor>
+
  
- <processor name="FTDPixelPlanarDigiProcessor" type="PlanarDigiProcessor">
+ <processor name="SETPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
-   <parameter name="IsStrip" type="bool">false </parameter>
+   <parameter name="IsStrip" type="bool">true </parameter>
    <!--resolution in direction of u-->
-   <parameter name="ResolutionU" type="float">0.01 </parameter>
+   <parameter name="ResolutionU" type="float">0.007 </parameter>
    <!--resolution in direction of v-->
-   <parameter name="ResolutionV" type="float">0.01 </parameter>
+   <parameter name="ResolutionV" type="float">0 </parameter>
    <!--Name of the Input SimTrackerHit collection-->
-   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">FTD_PIXELCollection </parameter>
+   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SETCollection </parameter>
    <!--Name of TrackerHit SimTrackHit relation collection-->
-   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDPixelTrackerHitRelations </parameter>
+   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SETTrackerHitRelations </parameter>
    <!--Name of the TrackerHit output collection-->
-   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">FTDPixelTrackerHits </parameter>
+   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">SETTrackerHits </parameter>
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
  </processor>
- 
+
+
+ <processor name="SETSpacePointBuilder" type="SpacePointBuilder">
+   <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+   <!--Name of the SpacePoint SimTrackerHit relation collection-->
+   <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SETSpacePointRelations </parameter>
+   <!--SpacePointsCollection-->
+   <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SETSpacePoints </parameter>
+  <!--TrackerHitCollection-->  
+  <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SETTrackerHits </parameter>
+  <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+  <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SETTrackerHitRelations </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
  <processor name="FTDSpacePointBuilder" type="SpacePointBuilder">
    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
    <!--Name of the SpacePoint SimTrackerHit relation collection-->
@@ -611,7 +581,7 @@
   <!--Run MarlinTrk Diagnostics. MarlinTrk must be compiled with MARLINTRK_DIAGNOSTICS_ON defined-->
   <parameter name="RunMarlinTrkDiagnostics" type="bool">false </parameter>
   <!--SET Hit Collection Name-->
-  <parameter name="SETHitCollection" type="string" lcioInType="TrackerHit">SETTrackerHits </parameter>
+  <parameter name="SETHitCollection" type="string" lcioInType="TrackerHit">SETSpacePoints </parameter>
   <!--Cut on distance between track and SET hits-->
   <parameter name="SETHitToTrackDistance" type="float">2 </parameter>
   <!--SIT Hit Collection Name-->
@@ -743,16 +713,16 @@
   <!--Name of the output track collection-->
 
   <!-- FIXME: for testing write out 'cheated' MarlinTrkTracks -->
-  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">MarlinTrkTracks </parameter>
+  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track"> TruthTracks </parameter>
 
   <!--Name of the MCParticle-Track Relations collection for output tracks-->
   <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation">TruthTracksMCP </parameter>
   <!--Smooth All Mesurement Sites in Fit-->
-  <parameter name="SmoothOn" type="bool">false </parameter>
+  <parameter name="SmoothOn" type="bool"> true </parameter>
   <!--Name of the tracker hit input collections-->
-  <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITSpacePoints FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETTrackerHits  </parameter>
+  <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITSpacePoints FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETSpacePoints  </parameter>
   <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. Have to be in same order as TrackerHitsInputCollections!!!-->
-  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETTrackerHitRelations  </parameter>
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
   <!--Fit the Tracks with MarlinTrk using iterative approach. If 3 consecutive hits fail to be included then the  current fit is written out and a new fit started. Use instead of FitTracksWithMarlinTrk.-->
   <parameter name="UseIterativeFitting" type="bool">  true </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
@@ -996,7 +966,7 @@
   <!--Names of the SimTrackerHits input collection-->
   <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">VXDCollection SITCollection FTD_PIXELCollection FTD_STRIPCollection TPCCollection SETCollection  </parameter>
   <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. -->
-  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETTrackerHitRelations  </parameter>
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string"> DEBUG </parameter-->
   </processor>
