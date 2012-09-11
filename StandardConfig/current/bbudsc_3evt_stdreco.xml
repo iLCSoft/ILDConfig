@@ -1,8 +1,9 @@
 <!--
       Example steering file to run a standard reconstruction on the 3 ttbar events 
       simulated with Mokka in this example dierectory.
-      Requires ilcsoft v01-10 (development release)
+      Works with ilcsoft v01-15 (development release)
 
+      Defines the standard reconstruction for ILD.
 -->
 
 
@@ -11,6 +12,10 @@
    <execute>
      <processor name="MyAIDAProcessor"/>
      
+     <!-- =========  overlay gamma gamma background  === -->
+     <!-- activate for production -->
+     <!-- processor name="BgOverlay" /-->
+
      <!-- ========== track digitization and tracking  === -->
      <processor name="VXDPlanarDigiProcessor"/>
 
@@ -129,6 +134,55 @@
   <parameter name="FileName" type="string" value="bbudsc_3evt_stdreco"/>
   <!-- type of output file xml (default) or root ( only OpenScientist)-->
   <parameter name="FileType" type="string" value="root "/>
+</processor>
+
+
+ <processor name="BgOverlay" type="Overlay">
+  <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+  <!--Pairs of collection to be merged-->
+  <parameter name="CollectionMap" type="StringVec">
+    BeamCalCollection                     BeamCalCollection                     
+    COILCollection                        COILCollection                        
+    EcalBarrelSiliconCollection           EcalBarrelSiliconCollection           
+    EcalBarrelSiliconPreShowerCollection  EcalBarrelSiliconPreShowerCollection  
+    EcalEndcapRingCollection              EcalEndcapRingCollection              
+    EcalEndcapRingPreShowerCollection     EcalEndcapRingPreShowerCollection     
+    EcalEndcapSiliconCollection           EcalEndcapSiliconCollection           
+    EcalEndcapSiliconPreShowerCollection  EcalEndcapSiliconPreShowerCollection  
+    FTD_PIXELCollection                   FTD_PIXELCollection                   
+    FTD_STRIPCollection                   FTD_STRIPCollection                   
+    HcalBarrelRegCollection               HcalBarrelRegCollection               
+    HcalEndCapRingsCollection             HcalEndCapRingsCollection             
+    HcalEndCapsCollection                 HcalEndCapsCollection                 
+    LumiCalCollection                     LumiCalCollection  
+    LHcalCollection                       LHcalCollection
+    MCParticle                            MCParticle                            
+    MuonBarrelCollection                  MuonBarrelCollection                  
+    MuonEndCapCollection                  MuonEndCapCollection                  
+    SETCollection                         SETCollection                         
+    SITCollection                         SITCollection                         
+    TPCCollection                         TPCCollection                         
+    TPCSpacePointCollection               TPCSpacePointCollection               
+    VXDCollection                         VXDCollection                         
+  </parameter>
+  <!--Name of the lcio input file(s)-->
+  <parameter name="InputFileNames" type="StringVec"> 
+      /data/ilcsoft/data/sv01-14-01-p00.mILD_o1_v05.E1000-B1b_ws.Paa_lowpt.I106472.eR80.pL20-00001.slcio
+  </parameter>
+  <!--Overlay each event with this number of background events. (default 0)-->
+  <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
+
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string"> DEBUG5 </parameter-->
+
+  <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+  <parameter name="expBG" type="double">4.1 </parameter>
+  <!--Overlay each event with the content of one run.-->
+  <parameter name="runOverlay" type="bool">false </parameter>
+
+  <!--Maximum number of events to skip between overlayd events (choosen from flat intervall [0,NSkipEventsRandom] )-->
+  <parameter name="NSkipEventsRandom" type="int">0</parameter>
+
 </processor>
 
 
