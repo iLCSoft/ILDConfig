@@ -479,6 +479,7 @@ c="Marlin "
 #test -z "$GRID_JOB" && { export TOTAL_EVENTS=3 ; c+=" --global.MaxRecordNumber=$TOTAL_EVENTS " ; }
 test -z "$GRID_JOB" && { c+="--global.SkipNEvents=$(( $TOTAL_EVENTS - 3 )) " ; export TOTAL_EVENTS=3 ; }
 c+="--global.LCIOInputFiles=\"$INPUT_FILES_BASENAMES\" \
+    --global.RandomSeed=$RANDOM_SEED \
     --MyLCIOOutputProcessor.LCIOOutputFile=$JOB_PREFIX-REC.slcio  \
     --DSTOutput.LCIOOutputFile=$JOB_PREFIX-DST.slcio  \
     --MyAIDAProcessor.FileName=$JOB_PREFIX \
