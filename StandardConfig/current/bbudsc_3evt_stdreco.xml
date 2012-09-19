@@ -637,7 +637,7 @@
   <!--SET Hit Collection Name-->
   <parameter name="SETHitCollection" type="string" lcioInType="TrackerHit">SETSpacePoints </parameter>
   <!--Cut on distance between track and SET hits-->
-  <parameter name="SETHitToTrackDistance" type="float">2 </parameter>
+  <parameter name="SETHitToTrackDistance" type="float">50 </parameter>
   <!--SIT Hit Collection Name-->
   <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit">SITSpacePoints </parameter>
   <!--Cut on distance between track and SIT hits-->
