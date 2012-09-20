@@ -26,8 +26,8 @@
      <processor name="FTDStripPlanarDigiProcessor"/>
      <processor name="FTDSpacePointBuilder"/>
 
-     <processor name="SETPlanarDigiProcessor"/>
-     <processor name="SETSpacePointBuilder" />
+     <XXXprocessor name="SETPlanarDigiProcessor"/>
+     <XXXprocessor name="SETSpacePointBuilder" />
 
      <processor name="MyTPCDigiProcessor"/>
      
@@ -565,7 +565,7 @@
   <!--Assign left over FTD hits-->
   <parameter name="AssignFTDHits" type="int">1 </parameter>
   <!--Assign SET Hits-->
-  <parameter name="AssignSETHits" type="int">1 </parameter>
+  <parameter name="AssignSETHits" type="int"> 0 </parameter>
   <!--Assign left over SIT hits-->
   <parameter name="AssignSITHits" type="int">1 </parameter>
   <!--Assign left over TPC hits-->
