@@ -1,12 +1,7 @@
 ##########################
+#  DBD default steering for
+#   ILD_ox_v05 , x=1,2,3 
 #
-#
-# fg:  for now this only works with this development detector model 
-#      with simplified SIT, SET, FTD and ETD removed
-#      -> to be fixed
-#
-#/Mokka/init/detectorModel ILD_01_dev
-#  -> use -M ILD_ox_v05 , x=1,2,3 
 ####################################
 
 
@@ -26,11 +21,11 @@
 /Mokka/init/lorentzTransformationAngle 7 mrad
 
 # -----the z vertex spread 
-#             225 mu is the bunch length
-#             225/sqrt(2) is the lumi-spread in z
-#             225/sqrt(2)*sqrt(2) = 225 mu is difference of z-vtx for two
+#             300 mu is the bunch length  @ 500 GeV
+#             300/sqrt(2) is the lumi-spread in z
+#             300/sqrt(2)*sqrt(2) = 300 mu is difference of z-vtx for two
 #             independent events (ee and gg)
-/Mokka/init/primaryVertexSpreadZ 0.225 mm
+/Mokka/init/primaryVertexSpreadZ 0.300 mm
 
 /Mokka/init/BFactor 1.0
 /Mokka/init/userDeltaIntersection 1e-5 mm
