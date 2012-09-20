@@ -607,7 +607,7 @@
   <!--Force merging of Si and TPC segments?-->
   <parameter name="ForceSiTPCMerging" type="int">0 </parameter>
   <!--Force merging of TPC Segments?-->
-  <parameter name="ForceTPCSegmentsMerging" type="int">1 </parameter>
+  <parameter name="ForceTPCSegmentsMerging" type="int"> 0 </parameter>
   <!--Value used for the initial d0 variance of the trackfit-->
   <parameter name="InitialTrackErrorD0" type="float">1e+06 </parameter>
   <!--Value used for the initial omega variance of the trackfit-->
