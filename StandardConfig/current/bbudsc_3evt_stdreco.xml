@@ -26,8 +26,8 @@
      <processor name="FTDStripPlanarDigiProcessor"/>
      <processor name="FTDSpacePointBuilder"/>
 
-     <XXXprocessor name="SETPlanarDigiProcessor"/>
-     <XXXprocessor name="SETSpacePointBuilder" />
+     <processor name="SETPlanarDigiProcessor"/>
+     <processor name="SETSpacePointBuilder" />
 
      <processor name="MyTPCDigiProcessor"/>
      
@@ -565,7 +565,7 @@
   <!--Assign left over FTD hits-->
   <parameter name="AssignFTDHits" type="int">1 </parameter>
   <!--Assign SET Hits-->
-  <parameter name="AssignSETHits" type="int"> 0 </parameter>
+  <parameter name="AssignSETHits" type="int"> 1 </parameter>
   <!--Assign left over SIT hits-->
   <parameter name="AssignSITHits" type="int">1 </parameter>
   <!--Assign left over TPC hits-->
@@ -607,7 +607,7 @@
   <!--Force merging of Si and TPC segments?-->
   <parameter name="ForceSiTPCMerging" type="int">0 </parameter>
   <!--Force merging of TPC Segments?-->
-  <parameter name="ForceTPCSegmentsMerging" type="int"> 1 </parameter>
+  <parameter name="ForceTPCSegmentsMerging" type="int"> 0 </parameter>
   <!--Value used for the initial d0 variance of the trackfit-->
   <parameter name="InitialTrackErrorD0" type="float">1e+06 </parameter>
   <!--Value used for the initial omega variance of the trackfit-->
