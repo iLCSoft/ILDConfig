@@ -1,6 +1,7 @@
 <!--
       Example steering file to run a standard reconstruction on the 3 ttbar events 
       simulated with Mokka in this example dierectory.
+
       Works with ilcsoft v01-15 (development release)
 
       Defines the standard reconstruction for ILD.
@@ -78,7 +79,7 @@
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
       <parameter name="MaxRecordNumber" value="0"/>
       <parameter name="SkipNEvents" value="0"/>
-      <parameter name="SupressCheck" value="true"/>
+      <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
       <parameter name="RandomSeed" value="1234567890" />
    </global>
