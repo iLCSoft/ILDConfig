@@ -78,6 +78,7 @@ usage(){
             LOG_OUTPUT_DIR        # directory for storing log files
             STORAGE_ELEMENT       # storage element for storing output files
             INPUT_FILES           # comma separated list of input files (NO SPACES)
+            BG_OVERLAY_FILE       # optional background overlay file
 EOT
 }
 
@@ -272,6 +273,7 @@ if [ $# -eq 1 ]; then
     STORAGE_ELEMENT=$(sql_query rjob STORAGE_ELEMENT)
     INPUT_FILES=$(sql_query rjob INPUT_FILES)
     INPUT_FILES=${INPUT_FILES//,/ } # replace commas with spaces
+    BG_OVERLAY_FILE=$(sql_query rjob BG_OVERLAY_FILE)
 
 else
 
@@ -296,6 +298,8 @@ else
     STORAGE_ELEMENT=$1
     shift
     INPUT_FILES=${1//,/ } # replace commas with spaces
+    shift
+    BG_OVERLAY_FILE=$1
     shift
 
 fi
