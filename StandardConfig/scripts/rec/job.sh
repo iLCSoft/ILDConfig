@@ -78,6 +78,7 @@ usage(){
             LOG_OUTPUT_DIR        # directory for storing log files
             STORAGE_ELEMENT       # storage element for storing output files
             INPUT_FILES           # comma separated list of input files (NO SPACES)
+            BG_OVERLAY_FILE       # optional background overlay file
 EOT
 }
 
@@ -182,7 +183,7 @@ trap cleanup EXIT
 # check script syntax
 # -----------------------------------------------------------------------------
 
-if [ $# -ne 1 -a $# -ne 11 ]; then
+if [ $# -ne 1 -a $# -lt 11 ]; then
     exit 2
 fi
 
@@ -272,6 +273,7 @@ if [ $# -eq 1 ]; then
     STORAGE_ELEMENT=$(sql_query rjob STORAGE_ELEMENT)
     INPUT_FILES=$(sql_query rjob INPUT_FILES)
     INPUT_FILES=${INPUT_FILES//,/ } # replace commas with spaces
+    BG_OVERLAY_FILE=$(sql_query rjob BG_OVERLAY_FILE)
 
 else
 
@@ -296,6 +298,8 @@ else
     STORAGE_ELEMENT=$1
     shift
     INPUT_FILES=${1//,/ } # replace commas with spaces
+    shift
+    BG_OVERLAY_FILE=$1
     shift
 
 fi
@@ -460,6 +464,20 @@ fi
 
 
 
+# ------- background overlay input file --------------------------------------
+if [ -n "$BG_OVERLAY_FILE" ] ; then
+    BG_OVERLAY_FILENAME=$(basename $BG_OVERLAY_FILE)
+    msg INFO "copy background overlay input file [$BG_OVERLAY_FILE]"
+    c="grid-dl-file.py -o ignore --timeout 9000 $BG_OVERLAY_FILE ."
+    msg DEBUG "> $c"
+    eval $c >> $MSG_LOG_FILE
+    test $? -ne 0 && msg CRITICAL 90 "failed to copy background overlay input file"
+fi
+# ----------------------------------------------------------------------------
+
+
+
+
 # -----------------------------------------------------------------------------
 # run Marlin
 # -----------------------------------------------------------------------------
@@ -480,10 +498,11 @@ c="Marlin "
 test -z "$GRID_JOB" && { c+="--global.SkipNEvents=$(( $TOTAL_EVENTS - 3 )) " ; export TOTAL_EVENTS=3 ; }
 c+="--global.LCIOInputFiles=\"$INPUT_FILES_BASENAMES\" \
     --global.RandomSeed=$RANDOM_SEED \
-    --MyLCIOOutputProcessor.LCIOOutputFile=$JOB_PREFIX-REC.slcio  \
-    --DSTOutput.LCIOOutputFile=$JOB_PREFIX-DST.slcio  \
-    --MyAIDAProcessor.FileName=$JOB_PREFIX \
-    stdreco.xml > marlin.log 2>&1"
+    --MyLCIOOutputProcessor.LCIOOutputFile=$JOB_PREFIX-REC.slcio \
+    --DSTOutput.LCIOOutputFile=$JOB_PREFIX-DST.slcio \
+    --MyAIDAProcessor.FileName=$JOB_PREFIX "
+test -n "$BG_OVERLAY_FILE" && c+="--BgOverlay.InputFileNames=\"$BG_OVERLAY_FILENAME\" "
+c+="stdreco.xml > marlin.log 2>&1"
 msg DEBUG "> $c"
 eval $c
 marlin_exit_code=$?
