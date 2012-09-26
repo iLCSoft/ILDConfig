@@ -500,9 +500,9 @@ c+="--global.LCIOInputFiles=\"$INPUT_FILES_BASENAMES\" \
     --global.RandomSeed=$RANDOM_SEED \
     --MyLCIOOutputProcessor.LCIOOutputFile=$JOB_PREFIX-REC.slcio \
     --DSTOutput.LCIOOutputFile=$JOB_PREFIX-DST.slcio \
-    --MyAIDAProcessor.FileName=$JOB_PREFIX \ "
-test -n "$BG_OVERLAY_FILE" && c+="--BgOverlay.InputFileNames=\"$BG_OVERLAY_FILENAME\" \ "
-c+=" stdreco.xml > marlin.log 2>&1"
+    --MyAIDAProcessor.FileName=$JOB_PREFIX "
+test -n "$BG_OVERLAY_FILE" && c+="--BgOverlay.InputFileNames=\"$BG_OVERLAY_FILENAME\" "
+c+="stdreco.xml > marlin.log 2>&1"
 msg DEBUG "> $c"
 eval $c
 marlin_exit_code=$?
