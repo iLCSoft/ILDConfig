@@ -698,7 +698,7 @@
    <!--Smooth All Measurement Sites in Fit-->
    <parameter name="SmoothOn" type="bool">false </parameter>
    <!--The chi2 probability value below which tracks will be cut-->
-   <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+   <parameter name="Chi2ProbCut" type="double">0.0 </parameter>
    <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
    <parameter name="HelixFitMax" type="double">500 </parameter>
    <!--The maximum distance of overlapping hits-->
