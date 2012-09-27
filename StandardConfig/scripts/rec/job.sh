@@ -147,7 +147,7 @@ cleanup(){
             echo "uploading log tarball to the grid"
 
             lfc-mkdir -p $LOG_OUTPUT_DIR
-            grid-ul-file.py --timeout 9000 --overwrite=$LOG_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $LOG_FILE_NAME $LOG_FILE
+            grid-ul-file.py --overwrite=$LOG_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $LOG_FILE_NAME $LOG_FILE
             test $? -ne 0 && { echo "ERROR: failed to upload log tarball, setting exit code from $exit_code to 87 !!" >&2 ; exit_code=87 ; }
 
         else
@@ -383,7 +383,7 @@ else
             #msg CRITICAL 81 "job output files from [ $JOB_PREFIX ] already exist in [ $OUTPUT_DIR ]"
             # FIXME should output files be erased here?
             # for OUTPUT_FILE in $(lfc-ls ...)
-            #grid-rm-file.py --timeout 9000 $OUTPUT_FILE
+            #grid-rm-file.py $OUTPUT_FILE
             #test $? -eq 0 || msg CRITICAL "failed to erase job output file"
             #msg INFO "$OUTPUT_FILE erased successfully"
         fi
@@ -434,7 +434,7 @@ timeout=$(( ($RANDOM + $RANDOM_SEED) % 600 ))
 test "$GRID_JOB" = "1" && { echo "sleep $timeout seconds..." ; sleep $timeout ; }
 for file in $INPUT_FILES ; do
     msg INFO "copy [ $file ]"
-    c="grid-dl-file.py -o ignore --timeout 9000 $file ."
+    c="grid-dl-file.py -o ignore $file ."
     msg DEBUG "> $c"
     eval $c >> $MSG_LOG_FILE
     test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"
@@ -468,7 +468,7 @@ fi
 if [ -n "$BG_OVERLAY_FILE" ] ; then
     BG_OVERLAY_FILENAME=$(basename $BG_OVERLAY_FILE)
     msg INFO "copy background overlay input file [$BG_OVERLAY_FILE]"
-    c="grid-dl-file.py -o ignore --timeout 9000 $BG_OVERLAY_FILE ."
+    c="grid-dl-file.py -o ignore $BG_OVERLAY_FILE ."
     msg DEBUG "> $c"
     eval $c >> $MSG_LOG_FILE
     test $? -ne 0 && msg CRITICAL 90 "failed to copy background overlay input file"
@@ -635,7 +635,7 @@ if [ -n "$GRID_JOB" ] ; then
     for i in *{REC,DST}*.slcio ; do
         msg INFO "copy [ $i ]"
         
-        grid-ul-file.py --timeout 9000 --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $i ${OUTPUT_DIR}/
+        grid-ul-file.py --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $i ${OUTPUT_DIR}/
         test $? -ne 0 && msg CRITICAL 86 "failed to copy output file"
 
         #msg INFO "remove output file"
