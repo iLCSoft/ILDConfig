@@ -15,7 +15,7 @@
      
      <!-- =========  overlay gamma gamma background  === -->
      <!-- activate for production -->
-     <processor name="BgOverlay" />
+     <!--processor name="BgOverlay" /-->
 
      <!-- ========== track digitization and tracking  === -->
      <processor name="VXDPlanarDigiProcessor"/>
