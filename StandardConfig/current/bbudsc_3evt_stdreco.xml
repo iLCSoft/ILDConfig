@@ -2,7 +2,7 @@
       Example steering file to run a standard reconstruction on the 3 ttbar events 
       simulated with Mokka in this example dierectory.
 
-      Works with ilcsoft v01-15 (development release)
+      Works with ilcsoft v01-16 (DBD production release)
 
       Defines the standard reconstruction for ILD.
 -->
@@ -15,7 +15,7 @@
      
      <!-- =========  overlay gamma gamma background  === -->
      <!-- activate for production -->
-     <!-- processor name="BgOverlay" /-->
+     <processor name="BgOverlay" />
 
      <!-- ========== track digitization and tracking  === -->
      <processor name="VXDPlanarDigiProcessor"/>
@@ -95,33 +95,28 @@
 
  <processor name="DSTOutput" type="LCIOOutputProcessor">
    <!--   
-     DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters and  ReconstructedParticles 
-     TO DO:  add LCFI flavour tag stuff
+     DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
    -->
    <parameter name="LCIOOutputFile" type="string" >
        ./bbudsc_3evt_DST.slcio 
    </parameter>
    <parameter name="DropCollectionTypes" type="StringVec"> 
        MCParticle 
-       LCRelation 
        SimTrackerHit 
        SimCalorimeterHit
        TrackerHit 
+       TrackerHitPlane 
        CalorimeterHit 
+       LCRelation
        Track 
-       ReconstructedParticle
        LCFloatVec      
     </parameter>
     <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
     <parameter name="KeepCollectionNames" type="StringVec"> 
       MCParticlesSkimmed 
-      RecoMCTruthLink
-      MarlinTrkTracks 
-      PandoraPFOs
-      PrimaryVertex_RP
-      BuildUpVertex_RP
-      BuildUpVertex_V0_RP
-      BCALParticles
+      MarlinTrkTracks
+      MCTruthMarlinTrkTracksLink
+      MarlinTrkTracksMCTruthLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -1037,48 +1032,28 @@
     <parameter name="Algorithms" type="stringVec"> PrimaryVertexFinder BuildUpVertex </parameter>
     <parameter name="ReadSubdetectorEnergies" type="int" value="1"/> <!-- true for ILD -->
     <parameter name="UpdateVertexRPDaughters" type="int" value="1"/> <!-- false for non-updative PandoraPFOs -->
+    <parameter name="TrackHitOrdering" type="int" value="1"/> <!-- Track hit ordering: 0=ILD-LOI,SID-DBD, 1=ILD-DBD -->
     <parameter name="PrintEventNumber" type="int" value="0"/> <!-- 0 for not printing event number, n for printing every n events -->
-    
-    
-    <!--Loading LCIO jets automatically-->
-    <parameter name="JetAutoLoad" type="int">1 </parameter>
-    <!--MC particle collection-->
-    
+
     <!-- specify input collection names -->
-    <parameter name="MCPCollection" type="string" lcioInType="MCParticle">MCParticlesSkimmed </parameter>
-    <!--Relation between MC and PFO particles-->
-    <parameter name="MCPFORelation" type="string" lcioInType="LCRelation">RecoMCTruthLink </parameter>
-    <!--Particle flow output collection-->
-    <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
-    
-    <!--Whether MCParticle collection is imported or not-->
-    <parameter name="UseMCP" type="int">0 </parameter>
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <!--parameter name="Verbosity" type="string">MESSAGE DEBUG </parameter-->
-    <!--Loading LCIO vertices automatically-->
-    <parameter name="VertexAutoLoad" type="int">1 </parameter>
-    
+    <parameter name="PFOCollection" type="string" value="PandoraPFOs" />
     <parameter name="PrimaryVertexCollectionName" type="string" value="PrimaryVertex" />
     <parameter name="BuildUpVertexCollectionName" type="string" value="BuildUpVertex" />
     <parameter name="BuildUpVertex.V0VertexCollectionName" type="string" value="BuildUpVertex_V0" />
-    
+
     <!-- parameters for primary vertex finder -->
     <parameter name="PrimaryVertexFinder.TrackMaxD0" type="double" value="20." />
     <parameter name="PrimaryVertexFinder.TrackMaxZ0" type="double" value="20." />
-    <parameter name="PrimaryVertexFinder.TrackMaxInnermostHitRadius" type="double" value="20." />
-    <parameter name="PrimaryVertexFinder.TrackMinVtxFtdHits" type="int" value="5" />
+    <parameter name="PrimaryVertexFinder.TrackMinVtxFtdHits" type="int" value="1" />
     <parameter name="PrimaryVertexFinder.Chi2Threshold" type="double" value="25." />
-    
+
     <!-- parameters for secondary vertex finder -->
     <parameter name="BuildUpVertex.TrackMaxD0" type="double" value="10." />
     <parameter name="BuildUpVertex.TrackMaxZ0" type="double" value="20." />
     <parameter name="BuildUpVertex.TrackMinPt" type="double" value="0.1" />
     <parameter name="BuildUpVertex.TrackMaxD0Err" type="double" value="0.1" />
     <parameter name="BuildUpVertex.TrackMaxZ0Err" type="double" value="0.1" />
-    <parameter name="BuildUpVertex.TrackMinTpcHits" type="int" value="20" />
-    <parameter name="BuildUpVertex.TrackMinFtdHits" type="int" value="3" />
-    <parameter name="BuildUpVertex.TrackMinVxdHits" type="int" value="3" />
-    <parameter name="BuildUpVertex.TrackMinVxdFtdHits" type="int" value="0" />
+    <parameter name="BuildUpVertex.TrackMinVxdFtdHits" type="int" value="1" />
     <parameter name="BuildUpVertex.PrimaryChi2Threshold" type="double" value="25." />
     <parameter name="BuildUpVertex.SecondaryChi2Threshold" type="double" value="9." />
     <parameter name="BuildUpVertex.MassThreshold" type="double" value="10." />
@@ -1088,7 +1063,7 @@
     <parameter name="BuildUpVertex.AssocIPTracksMinDist" type="double" value="0." />
     <parameter name="BuildUpVertex.AssocIPTracksChi2RatioSecToPri" type="double" value="2.0" />
     <parameter name="BuildUpVertex.UseV0Selection" type="int" value="1" />
-    
+
   </processor>
   
 </marlin>
