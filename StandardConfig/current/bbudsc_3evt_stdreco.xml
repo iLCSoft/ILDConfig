@@ -172,7 +172,7 @@
   <!--parameter name="Verbosity" type="string"> DEBUG5 </parameter-->
 
   <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-  <parameter name="expBG" type="double">4.1 </parameter>
+  <parameter name="expBG" type="double">1.7 </parameter>
   <!--Overlay each event with the content of one run.-->
   <parameter name="runOverlay" type="bool">false </parameter>
 
@@ -956,7 +956,7 @@
   <parameter name="BCALMCTruthLinkName" type="string" lcioOutType="LCRelation">BCALMCTruthLink </parameter>
   <!-- Name of input file for background energy density-->
   <parameter name="BackgroundFilename" type="string">
-      bg_aver.sv01-14-p00.mILD_o1_v05.E1000-B1b_ws.PBeamstr-pairs.I210000.root
+      bg_aver.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.PBeamstr-pairs.I230000.root
   </parameter>
   <!--Collection of SimCalorimeterHits in BeamCal-->
   <parameter name="BeamCalHitCol" type="string">BCAL </parameter>
