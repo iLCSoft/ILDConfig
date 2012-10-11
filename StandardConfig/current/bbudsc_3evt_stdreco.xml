@@ -117,6 +117,7 @@
       MarlinTrkTracks
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
+      RecoMCTruthLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
