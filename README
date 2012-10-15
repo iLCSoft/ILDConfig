@@ -50,6 +50,21 @@ subdirectories:
     scripts for related to running Mokka or the Mokka DB 
 
 
+ LCFIPlusConfig/
+ ---------------
+    input files for flavor tagging
+
+    steer
+    -----
+    example steering files
+
+    vtxprob
+    -------
+    input histograms used for flavor tagging
+
+    lcfiweights
+    -----------
+    TMVA weight files
 
 
  versions:
