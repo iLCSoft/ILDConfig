@@ -41,8 +41,6 @@
 	<parameter name="BuildUpVertex.TrackMinPt" type="double" value="0.1" />
 	<parameter name="BuildUpVertex.TrackMaxD0Err" type="double" value="0.1" />
 	<parameter name="BuildUpVertex.TrackMaxZ0Err" type="double" value="0.1" />
-	<parameter name="BuildUpVertex.TrackMaxD0Err" type="double" value="0.1" />
-	<parameter name="BuildUpVertex.TrackMaxZ0Err" type="double" value="0.1" />
 	<parameter name="BuildUpVertex.TrackMinTpcHits" type="int" value="10000" />
 	<parameter name="BuildUpVertex.TrackMinFtdHits" type="int" value="10000" />
 	<parameter name="BuildUpVertex.TrackMinVxdHits" type="int" value="10000" />
