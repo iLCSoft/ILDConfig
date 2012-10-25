@@ -114,6 +114,8 @@
 		<parameter name="FlavorTag.WeightsPrefix" type="string" value="qq91_v01" />
 		<parameter name="FlavorTag.BookName" type="string" value="bdt" />
 		<parameter name="FlavorTag.PIDAlgo" type="string" value="lcfiplus" />
+		<parameter name="FlavorTag.D0ProbFileName" type="string" value="vtxprob/d0prob_zpole.root"/>
+		<parameter name="FlavorTag.Z0ProbFileName" type="string" value="vtxprob/z0prob_zpole.root"/>
 		
 		<parameter name="FlavorTag.CategoryDefinition1" type="string">nvtx==0</parameter>
 		<parameter name="FlavorTag.CategoryPreselection1" type="string">trk1d0sig!=0</parameter>
