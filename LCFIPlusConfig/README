@@ -79,7 +79,7 @@
       <parameter name="BuildUpVertex.TrackMinVtxFtdHits" type="int" value="1" />
 
 
- Acknowledgements
+ Acknowledgments
  ----------------
     Thanks to Junping Tian for generating the 6q500 and 6q1000 samples.
 
