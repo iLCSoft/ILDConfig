@@ -164,7 +164,7 @@
   </parameter>
   <!--Name of the lcio input file(s)-->
   <parameter name="InputFileNames" type="StringVec"> 
-      /data/ilcsoft/data/sv01-14-01-p00.mILD_o1_v05.E1000-B1b_ws.Paa_lowpt.I106472.eR80.pL20-00001.slcio
+      /afs/desy.de/project/ilcsoft/www/html/data/ilctest/sv01-14-01-p00.mILD_o1_v05.E1000-B1b_ws.Paa_lowpt.I106472.eR80.pL20-00001.slcio
   </parameter>
   <!--Overlay each event with this number of background events. (default 0)-->
   <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
