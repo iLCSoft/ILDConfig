@@ -46,6 +46,7 @@
 
 /Mokka/init/physicsListName QGSP_BERT
 /Mokka/init/rangeCut 0.1 mm
+/Mokka/init/globalModelParameter FieldPropagator_LargestAcceptableStep 10
 
 #/Mokka/init/TPCLowPtStepLimit true
 #/Mokka/init/TPCLowPtCut 10 MeV
