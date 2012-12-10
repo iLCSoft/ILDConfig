@@ -77,7 +77,7 @@
       <parameter name="LCIOInputFiles">
         ./bbudsc_3evt.slcio
       </parameter>
-      <parameter name="GearXMLFile" value="GearOutput.xml"/>
+      <parameter name="GearXMLFile" value="GearOutput_ILD_o2_v05.xml"/>
       <parameter name="MaxRecordNumber" value="0"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
