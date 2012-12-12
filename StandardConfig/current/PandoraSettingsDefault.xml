@@ -6,7 +6,7 @@
     <ShouldDisplayAlgorithmInfo> false </ShouldDisplayAlgorithmInfo>
 
     <!-- Plugin helper functions -->
-    <HadronicEnergyCorrectionFunctions> CleanClusters ScaleHotHadrons </HadronicEnergyCorrectionFunctions>
+    <HadronicEnergyCorrectionFunctions> CleanClusters </HadronicEnergyCorrectionFunctions>
     <EmShowerFastFunction> FineGranularityEmShowerId </EmShowerFastFunction>
     <PhotonFastFunction> FineGranularityPhotonId </PhotonFastFunction>
     <ElectronFastFunction> FineGranularityElectronId </ElectronFastFunction>

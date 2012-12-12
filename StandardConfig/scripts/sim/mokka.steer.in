@@ -43,7 +43,7 @@
 /Mokka/init/BFactor 1.0
 /Mokka/init/userDeltaIntersection 1e-5 mm
 /Mokka/init/userDeltaOneStep 1e-4 mm
-/Mokka/init/lcioDetailedShowerMode false
+/Mokka/init/lcioDetailedShowerMode true
 /Mokka/init/lcioWriteCompleteHepEvt true
 
 /Mokka/init/lcioDetailedTRKHitMode SETCollection
