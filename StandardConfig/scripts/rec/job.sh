@@ -78,6 +78,7 @@ usage(){
             LOG_OUTPUT_DIR        # directory for storing log files
             STORAGE_ELEMENT       # storage element for storing output files
             INPUT_FILES           # comma separated list of input files (NO SPACES)
+            BG_OVERLAY_FILE       # optional background overlay file
 EOT
 }
 
@@ -146,7 +147,7 @@ cleanup(){
             echo "uploading log tarball to the grid"
 
             lfc-mkdir -p $LOG_OUTPUT_DIR
-            grid-ul-file.py --timeout 3600 --overwrite=$LOG_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $LOG_FILE_NAME $LOG_FILE
+            grid-ul-file.py --overwrite=$LOG_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $LOG_FILE_NAME $LOG_FILE
             test $? -ne 0 && { echo "ERROR: failed to upload log tarball, setting exit code from $exit_code to 87 !!" >&2 ; exit_code=87 ; }
 
         else
@@ -182,7 +183,7 @@ trap cleanup EXIT
 # check script syntax
 # -----------------------------------------------------------------------------
 
-if [ $# -ne 1 -a $# -ne 11 ]; then
+if [ $# -ne 1 -a $# -lt 11 ]; then
     exit 2
 fi
 
@@ -272,6 +273,7 @@ if [ $# -eq 1 ]; then
     STORAGE_ELEMENT=$(sql_query rjob STORAGE_ELEMENT)
     INPUT_FILES=$(sql_query rjob INPUT_FILES)
     INPUT_FILES=${INPUT_FILES//,/ } # replace commas with spaces
+    BG_OVERLAY_FILE=$(sql_query rjob BG_OVERLAY_FILE)
 
 else
 
@@ -296,6 +298,8 @@ else
     STORAGE_ELEMENT=$1
     shift
     INPUT_FILES=${1//,/ } # replace commas with spaces
+    shift
+    BG_OVERLAY_FILE=$1
     shift
 
 fi
@@ -379,7 +383,7 @@ else
             #msg CRITICAL 81 "job output files from [ $JOB_PREFIX ] already exist in [ $OUTPUT_DIR ]"
             # FIXME should output files be erased here?
             # for OUTPUT_FILE in $(lfc-ls ...)
-            #grid-rm-file.py --timeout 600 $OUTPUT_FILE
+            #grid-rm-file.py $OUTPUT_FILE
             #test $? -eq 0 || msg CRITICAL "failed to erase job output file"
             #msg INFO "$OUTPUT_FILE erased successfully"
         fi
@@ -430,7 +434,7 @@ timeout=$(( ($RANDOM + $RANDOM_SEED) % 600 ))
 test "$GRID_JOB" = "1" && { echo "sleep $timeout seconds..." ; sleep $timeout ; }
 for file in $INPUT_FILES ; do
     msg INFO "copy [ $file ]"
-    c="grid-dl-file.py -o ignore --timeout 3600 $file ."
+    c="grid-dl-file.py -o ignore $file ."
     msg DEBUG "> $c"
     eval $c >> $MSG_LOG_FILE
     test $? -ne 0 && msg CRITICAL 90 "failed to copy input file"
@@ -460,6 +464,20 @@ fi
 
 
 
+# ------- background overlay input file --------------------------------------
+if [ -n "$BG_OVERLAY_FILE" ] ; then
+    BG_OVERLAY_FILENAME=$(basename $BG_OVERLAY_FILE)
+    msg INFO "copy background overlay input file [$BG_OVERLAY_FILE]"
+    c="grid-dl-file.py -o ignore $BG_OVERLAY_FILE ."
+    msg DEBUG "> $c"
+    eval $c >> $MSG_LOG_FILE
+    test $? -ne 0 && msg CRITICAL 90 "failed to copy background overlay input file"
+fi
+# ----------------------------------------------------------------------------
+
+
+
+
 # -----------------------------------------------------------------------------
 # run Marlin
 # -----------------------------------------------------------------------------
@@ -479,10 +497,12 @@ c="Marlin "
 #test -z "$GRID_JOB" && { export TOTAL_EVENTS=3 ; c+=" --global.MaxRecordNumber=$TOTAL_EVENTS " ; }
 test -z "$GRID_JOB" && { c+="--global.SkipNEvents=$(( $TOTAL_EVENTS - 3 )) " ; export TOTAL_EVENTS=3 ; }
 c+="--global.LCIOInputFiles=\"$INPUT_FILES_BASENAMES\" \
-    --MyLCIOOutputProcessor.LCIOOutputFile=$JOB_PREFIX-REC.slcio  \
-    --DSTOutput.LCIOOutputFile=$JOB_PREFIX-DST.slcio  \
-    --MyAIDAProcessor.FileName=$JOB_PREFIX \
-    stdreco.xml > marlin.log 2>&1"
+    --global.RandomSeed=$RANDOM_SEED \
+    --MyLCIOOutputProcessor.LCIOOutputFile=$JOB_PREFIX-REC.slcio \
+    --DSTOutput.LCIOOutputFile=$JOB_PREFIX-DST.slcio \
+    --MyAIDAProcessor.FileName=$JOB_PREFIX "
+test -n "$BG_OVERLAY_FILE" && c+="--BgOverlay.InputFileNames=\"$BG_OVERLAY_FILENAME\" "
+c+="stdreco.xml > marlin.log 2>&1"
 msg DEBUG "> $c"
 eval $c
 marlin_exit_code=$?
@@ -610,17 +630,27 @@ fi
 if [ -n "$GRID_JOB" ] ; then
     msg INFO "copy output files to SE..."
 
-    lfc-mkdir -p $OUTPUT_DIR
+    # FIXME due to DST files being too small to be stored on tape the OUTPUT_DIR
+    # for rec files needs to be different than the one for dst files
+    # this should be done with job arguments (REC_OUTPUT_DIR and DST_OUTPUT_DIR)
+    REC_OUTPUT_DIR=$OUTPUT_DIR
+    DST_OUTPUT_DIR=$(sed 's|/rec/|/dst/|' <<< "$OUTPUT_DIR")
+
+    lfc-mkdir -p $REC_OUTPUT_DIR
+    test "$REC_OUTPUT_DIR" != "$DST_OUTPUT_DIR" && lfc-mkdir -p $DST_OUTPUT_DIR
 
     for i in *{REC,DST}*.slcio ; do
         msg INFO "copy [ $i ]"
         
-        grid-ul-file.py --timeout 3600 --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $i ${OUTPUT_DIR}/
+        grep -q 'DST' <<< "$i" && OUTPUT_DIR="$DST_OUTPUT_DIR" || OUTPUT_DIR="$REC_OUTPUT_DIR"
+
+        grid-ul-file.py --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $i ${OUTPUT_DIR}/
         test $? -ne 0 && msg CRITICAL 86 "failed to copy output file"
 
         #msg INFO "remove output file"
         #rm -vf $i
     done
+
 fi
 
 msg INFO "job ended successfully :)"
