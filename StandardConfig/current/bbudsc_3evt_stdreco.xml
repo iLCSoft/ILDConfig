@@ -77,7 +77,7 @@
       <parameter name="LCIOInputFiles">
         ./bbudsc_3evt.slcio
       </parameter>
-      <parameter name="GearXMLFile" value="GearOutput_ILD_o2_v05.xml"/>
+      <parameter name="GearXMLFile" value="GearOutput.xml"/>
       <parameter name="MaxRecordNumber" value="0"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
@@ -1014,7 +1014,7 @@
 <!--########## MarlinPandora ###################################### -->
 
 <processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
-  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault_sdhcal.xml </parameter>
+  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
   <!-- Collection names -->
   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
   <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
