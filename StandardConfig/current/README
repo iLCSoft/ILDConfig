@@ -31,20 +31,20 @@
   # init MokkaDBConfig (this sets MOKKA_DUMP_FILE and adds mokka-wrapper.sh to your PATH)
   . ../../MokkaDBConfig/init.sh
 
-  mokka-wrapper.sh -M ILD_o1_v05 bbudsc_3evt.steer
+  mokka-wrapper.sh -U -M ILD_o1_v05 bbudsc_3evt.steer
 
 # b)
 #  the above starts a MySQL server and populates it with a dump of the Mokka central DB
 #  you can also run Mokka directly (using the central DB):
 
-  Mokka -M ILD_o1_v05 bbudsc_3evt.steer
+  Mokka -U -M ILD_o1_v05 bbudsc_3evt.steer
   
 # c) 
 #  to make sure that the extra partice tables (for SUSY etc) is loaded: 
  
-  Mokka -M ILD_o1_v05 -e ./particle.tbl bbudsc_3evt.steer
+  Mokka -U -M ILD_o1_v05 -e ./particle.tbl bbudsc_3evt.steer
   # OR:
-  mokka-wrapper.sh -M ILD_o1_v05 -e ./particle.tbl bbudsc_3evt.steer
+  mokka-wrapper.sh -U -M ILD_o1_v05 -e ./particle.tbl bbudsc_3evt.steer
 
 
 #--   this creates the file:    bbudsc_3evt.slcio
