@@ -117,6 +117,7 @@
       MarlinTrkTracks
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
+      RecoMCTruthLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -163,7 +164,7 @@
   </parameter>
   <!--Name of the lcio input file(s)-->
   <parameter name="InputFileNames" type="StringVec"> 
-      /data/ilcsoft/data/sv01-14-01-p00.mILD_o1_v05.E1000-B1b_ws.Paa_lowpt.I106472.eR80.pL20-00001.slcio
+      /data/ilcsoft/data/sv01-14-01-p03.mILD_o1_v05.E350-TDR_ws.Paa_lowpt.I106728.eR80.pL30-00001.slcio
   </parameter>
   <!--Overlay each event with this number of background events. (default 0)-->
   <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
@@ -172,7 +173,7 @@
   <!--parameter name="Verbosity" type="string"> DEBUG5 </parameter-->
 
   <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-  <parameter name="expBG" type="double">1.7 </parameter>
+  <parameter name="expBG" type="double">0.33 </parameter>
   <!--Overlay each event with the content of one run.-->
   <parameter name="runOverlay" type="bool">false </parameter>
 
@@ -956,7 +957,7 @@
   <parameter name="BCALMCTruthLinkName" type="string" lcioOutType="LCRelation">BCALMCTruthLink </parameter>
   <!-- Name of input file for background energy density-->
   <parameter name="BackgroundFilename" type="string">
-      bg_aver.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.PBeamstr-pairs.I230000.root
+    bg_aver.sv01-14-01-p00_fieldX02.mILD_o1_v05.E350-TDR_ws.PBeamstr-pairs.I260000.root
   </parameter>
   <!--Collection of SimCalorimeterHits in BeamCal-->
   <parameter name="BeamCalHitCol" type="string">BCAL </parameter>
