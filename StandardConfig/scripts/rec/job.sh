@@ -630,17 +630,27 @@ fi
 if [ -n "$GRID_JOB" ] ; then
     msg INFO "copy output files to SE..."
 
-    lfc-mkdir -p $OUTPUT_DIR
+    # FIXME due to DST files being too small to be stored on tape the OUTPUT_DIR
+    # for rec files needs to be different than the one for dst files
+    # this should be done with job arguments (REC_OUTPUT_DIR and DST_OUTPUT_DIR)
+    REC_OUTPUT_DIR=$OUTPUT_DIR
+    DST_OUTPUT_DIR=$(sed 's|/rec/|/dst/|' <<< "$OUTPUT_DIR")
+
+    lfc-mkdir -p $REC_OUTPUT_DIR
+    test "$REC_OUTPUT_DIR" != "$DST_OUTPUT_DIR" && lfc-mkdir -p $DST_OUTPUT_DIR
 
     for i in *{REC,DST}*.slcio ; do
         msg INFO "copy [ $i ]"
         
+        grep -q 'DST' <<< "$i" && OUTPUT_DIR="$DST_OUTPUT_DIR" || OUTPUT_DIR="$REC_OUTPUT_DIR"
+
         grid-ul-file.py --overwrite=$OUTPUT_FILE_OVERWRITE --storage-element=$STORAGE_ELEMENT $i ${OUTPUT_DIR}/
         test $? -ne 0 && msg CRITICAL 86 "failed to copy output file"
 
         #msg INFO "remove output file"
         #rm -vf $i
     done
+
 fi
 
 msg INFO "job ended successfully :)"
