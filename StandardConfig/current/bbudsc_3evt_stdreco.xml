@@ -149,7 +149,7 @@
     EcalEndcapSiliconPreShowerCollection  EcalEndcapSiliconPreShowerCollection  
     FTD_PIXELCollection                   FTD_PIXELCollection                   
     FTD_STRIPCollection                   FTD_STRIPCollection                   
-    HcalBarrelRegCollection               HcalBarrelRegCollection               
+    HcalBarrelCollection                  HcalBarrelCollection               
     HcalEndCapRingsCollection             HcalEndCapRingsCollection             
     HcalEndCapsCollection                 HcalEndCapsCollection                 
     LumiCalCollection                     LumiCalCollection  
