@@ -38,6 +38,11 @@
 #  you can also run Mokka directly (using the central DB):
 
   Mokka -U -M ILD_o1_v05 bbudsc_3evt.steer
+
+ ## to test a newer model, you have to use Mokka directly to access the database; e.g.:
+  
+  Mokka -U -M ILD_o1_v06 bbudsc_3evt.steer
+
   
 # c) 
 #  to make sure that the extra partice tables (for SUSY etc) is loaded: 
