@@ -30,19 +30,22 @@ These control the cone parameters used in the fine granularity region (i.e. ECAL
 
 A number of sample PandoraSettings.xml files are present in your MarlinPandora/scripts directory:
 
-*PandoraSettingsBasic.xml - This is the core Pandora reconstruction, without photon clustering or standalone muon reconstruction.
+*PandoraSettingsBasic.xml - The core Pandora reconstruction, without photon clustering or standalone muon reconstruction.
+*PandoraSettingsMuon.xml - As the basic file, but includes a standalone muon reconstruction algorithm, which reconstructs muons and removes them from the event before standard algorithms.
+*PandoraSettingsPhoton.xml - As the basic file, but includes the standalone photon reconstruction algorithm, which requires associated Likelihood data.
+*PandoraSettingsDefault.xml - This includes both the muon and photon reconstruction algorithms. Offers the best performance and is recommended for use with ILD_o1_v05/v06.
 
-*PandoraSettingsMuon.xml - This is as the basic file, but includes a standalone muon reconstruction algorithm, which aims to reconstruct muons and remove them from the event before the standard algorithms. This is the file used for the CLIC CDR.
-
-*PandoraSettingsPhoton.xml - This is as the basic file, but includes the standalone photon reconstruction algorithm.
-
-*PandoraSettingsDefault.xml - This includes both the muon and photon reconstruction algorithms. This offers the best performance and is recommended for current use with ILD00, ILD_o1_V05 and CLIC_ILD_CDR.
-
-The PandoraLikelihoodData xml files are used by the standalone photon reconstruction algorithms and links to these files are specified in PandoraSettingsPhoton.xml and PandoraSettingsDefault.xml. The likelihood data has currently only been validated for ILD00, ILD_o1_V05 and CLIC_ILD_CDR. The two xml files contain likelihood PDFs for photon identification (shower profile longitudinal and transverse profile quantities). The difference between the two files is the number of energy-bins for which separate PDFs are created. For PandoraLikelihoodData1EBin, there is only one PDF for signal and background for each likelihood variable. For PandoraLikelihoodData9EBin, there are separate PDFs for each of the following energy ranges (in GeV):
+The PandoraLikelihoodData xml files are used by the standalone photon reconstruction algorithms and links to these files are specified in PandoraSettingsPhoton.xml and PandoraSettingsDefault.xml. The likelihood data has currently only been validated for ILD_o1_v05/v06. The two xml files contain likelihood PDFs for photon identification. The difference between the two files is the number of energy-bins for which separate PDFs are created. For PandoraLikelihoodData1EBin, there is only one PDF for signal and background for each likelihood variable. For PandoraLikelihoodData9EBin, there are separate PDFs for each of the energy ranges shown below (in GeV). PandoraLikelihoodData9EBin offers the best performance.
 0.-0.5, 0.5-1., 1.-1.5, 1.5-2.5, 2.5-5., 5.-10., 10.-20., 20.-50., 50.+
-
-For best performance, use PandoraLikelihoodData9EBin (although the performance difference is rather small).
 
 ---------------------------
 
-The accompanying Marlin steering files are configured for use with Ilcsoft v01-14, with the detector model ILD_o1_v05 and the physics list QGSP_BERT.
+Also available are some PandoraSettings.xml files that use MC information to cheat elements of the pattern recognition:
+
+*PandoraSettingsPerfectPhoton.xml - Cheats the clustering of photons and subsequent tagging of these clusters as photons.
+*PandoraSettingsPerfectPhotonNeutronK0L.xml - Cheats the clustering of photons, neutrons and K_longs, plus the associated particle id.
+*PandoraSettingsPerfectPFA.xml - For each MC target, collects all associated tracks and clusters, thereby cheating all pattern-recognition; uses reconstructed properties to set PFO energies, etc.
+
+---------------------------
+
+The accompanying Marlin steering files are configured for use with Ilcsoft v01-17-05, with the detector model ILD_o1_v06 and the physics list QGSP_BERT.

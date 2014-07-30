@@ -12,12 +12,6 @@
     <ElectronFastFunction> FineGranularityElectronId </ElectronFastFunction>
     <MuonFastFunction> FineGranularityMuonId </MuonFastFunction>
 
-    <!-- CaloHit helper settings -->
-    <CaloHitHelper>
-        <ShouldCalculateDensityWeight>false</ShouldCalculateDensityWeight>
-        <ShouldCalculateSurroundingEnergy>false</ShouldCalculateSurroundingEnergy>
-    </CaloHitHelper>
-
     <!-- PANDORA ALGORITHM SETTINGS -->
 
     <!-- Select tracks and hits to use for clustering -->
@@ -27,8 +21,8 @@
     <algorithm type = "MuonReconstruction">
         <algorithm type = "ConeClustering" description = "MuonClusterFormation">
             <TanConeAngleCoarse>0.3</TanConeAngleCoarse>
-            <ConeApproachMaxSeparation>2000.f</ConeApproachMaxSeparation>
-            <MaxClusterDirProjection>2000.f</MaxClusterDirProjection>
+            <ConeApproachMaxSeparation>2000</ConeApproachMaxSeparation>
+            <MaxClusterDirProjection>2000</MaxClusterDirProjection>
             <ShouldUseIsolatedHits>true</ShouldUseIsolatedHits>
             <LayersToStepBackCoarse>30</LayersToStepBackCoarse>
             <AdditionalPadWidthsCoarse>1</AdditionalPadWidthsCoarse>
@@ -415,4 +409,5 @@
     <algorithm type = "FinalParticleId"/>
     <algorithm type = "V0PfoCreation"/>
     <!--algorithm type = "DumpPfosMonitoring"/-->
+    <!--algorithm type = "VisualMonitoring"/-->
 </pandora>
