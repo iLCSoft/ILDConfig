@@ -17,14 +17,14 @@
                     <enlargeActiveAreaBy value="0.000000000e+00" />
                 </module>
             </modules>
-            <parameter name="TPCGasProperties_RadLen" type="double" value="1.155205461e+05" />
-            <parameter name="TPCGasProperties_dEdx" type="double" value="2.668179899e-07" />
-            <parameter name="TPCInnerWallProperties_RadLen" type="double" value="4.897358990e+03" />
-            <parameter name="TPCInnerWallProperties_dEdx" type="double" value="1.337022999e-05" />
-            <parameter name="TPCOuterWallProperties_RadLen" type="double" value="1.157708759e+04" />
-            <parameter name="TPCOuterWallProperties_dEdx" type="double" value="5.700578061e-06" />
-            <parameter name="TPCWallProperties_RadLen" type="double" value="4.897358990e+03" />
-            <parameter name="TPCWallProperties_dEdx" type="double" value="1.337022999e-05" />
+            <parameter name="TPCGasProperties_RadLen" type="double" value="1.155205492e+05" />
+            <parameter name="TPCGasProperties_dEdx" type="double" value="2.668180847e-07" />
+            <parameter name="TPCInnerWallProperties_RadLen" type="double" value="4.897359048e+03" />
+            <parameter name="TPCInnerWallProperties_dEdx" type="double" value="1.337023009e-05" />
+            <parameter name="TPCOuterWallProperties_RadLen" type="double" value="1.157708765e+04" />
+            <parameter name="TPCOuterWallProperties_dEdx" type="double" value="5.700578080e-06" />
+            <parameter name="TPCWallProperties_RadLen" type="double" value="4.897359048e+03" />
+            <parameter name="TPCWallProperties_dEdx" type="double" value="1.337023009e-05" />
             <parameter name="tpcInnerRadius" type="double" value="3.290000000e+02" />
             <parameter name="tpcInnerWallThickness" type="double" value="2.500000000e+01" />
             <parameter name="tpcOuterRadius" type="double" value="1.808000000e+03" />
@@ -106,7 +106,7 @@
         </detector>
         <detector name="HcalRing" geartype="CalorimeterParameters">
             <layout type="Endcap" symmetry="2" phi0="0.000000000e+00" />
-            <dimensions inner_r="2.138800000e+03" outer_r="3.137000000e+03" inner_z="2.450000000e+03" />
+            <dimensions inner_r="2.138800000e+03" outer_r="3.136995997e+03" inner_z="2.450000000e+03" />
             <layer repeat="6" thickness="2.650000000e+01" absorberThickness="2.220000000e+01" cellSize0="3.000000000e+01" cellSize1="3.000000000e+01" />
             <parameter name="Hcal_Cu_thickness" type="double" value="1.000000000e-01" />
             <parameter name="Hcal_PCB_thickness" type="double" value="7.000000000e-01" />
@@ -144,27 +144,27 @@
             <shell halfLength="1.450000000e+02" gap="0.000000000e+00" innerRadius="6.500000000e+01" outerRadius="6.549392000e+01" radLength="3.527597571e+02" />
             <layers>
                 <layer nLadders="10" phi0="-1.570796327e+00">
-                    <ladder distance="1.600000000e+01" thickness="1.000000000e+00" width="1.150000000e+01" length="6.250000000e+01" offset="-1.874869853e+00" radLength="1.014262421e+03" />
+                    <ladder distance="1.600000000e+01" thickness="1.000000000e+00" width="1.150000000e+01" length="6.250000000e+01" offset="-1.874869853e+00" radLength="1.014262364e+03" />
                     <sensitive distance="1.595000000e+01" thickness="5.000000000e-02" width="1.100000000e+01" length="6.250000000e+01" offset="-1.624869853e+00" radLength="9.366070445e+01" />
                 </layer>
                 <layer nLadders="10" phi0="-1.570796327e+00">
-                    <ladder distance="1.700000000e+01" thickness="1.000000000e+00" width="1.150000000e+01" length="6.250000000e+01" offset="-1.874869853e+00" radLength="1.014262421e+03" />
+                    <ladder distance="1.700000000e+01" thickness="1.000000000e+00" width="1.150000000e+01" length="6.250000000e+01" offset="-1.874869853e+00" radLength="1.014262364e+03" />
                     <sensitive distance="1.800000000e+01" thickness="5.000000000e-02" width="1.100000000e+01" length="6.250000000e+01" offset="-1.624869853e+00" radLength="9.366070445e+01" />
                 </layer>
                 <layer nLadders="11" phi0="-1.570796327e+00">
-                    <ladder distance="3.700000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-1.837940563e+00" radLength="1.014262421e+03" />
+                    <ladder distance="3.700000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-1.837940563e+00" radLength="1.014262364e+03" />
                     <sensitive distance="3.695000000e+01" thickness="5.000000000e-02" width="2.200000000e+01" length="1.250000000e+02" offset="-1.587940563e+00" radLength="9.366070445e+01" />
                 </layer>
                 <layer nLadders="11" phi0="-1.570796327e+00">
-                    <ladder distance="3.800000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-1.837940563e+00" radLength="1.014262421e+03" />
+                    <ladder distance="3.800000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-1.837940563e+00" radLength="1.014262364e+03" />
                     <sensitive distance="3.900000000e+01" thickness="5.000000000e-02" width="2.200000000e+01" length="1.250000000e+02" offset="-1.587940563e+00" radLength="9.366070445e+01" />
                 </layer>
                 <layer nLadders="17" phi0="-1.570796327e+00">
-                    <ladder distance="5.800000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-2.636744400e+00" radLength="1.014262421e+03" />
+                    <ladder distance="5.800000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-2.636744400e+00" radLength="1.014262364e+03" />
                     <sensitive distance="5.795000000e+01" thickness="5.000000000e-02" width="2.200000000e+01" length="1.250000000e+02" offset="-2.386744400e+00" radLength="9.366070445e+01" />
                 </layer>
                 <layer nLadders="17" phi0="-1.570796327e+00">
-                    <ladder distance="5.900000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-2.636744400e+00" radLength="1.014262421e+03" />
+                    <ladder distance="5.900000000e+01" thickness="1.000000000e+00" width="2.250000000e+01" length="1.250000000e+02" offset="-2.636744400e+00" radLength="1.014262364e+03" />
                     <sensitive distance="6.000000000e+01" thickness="5.000000000e-02" width="2.200000000e+01" length="1.250000000e+02" offset="-2.386744400e+00" radLength="9.366070445e+01" />
                 </layer>
             </layers>
@@ -322,13 +322,14 @@
             <parameter name="Ecal_endcap_zmax" type="string" value="2635" />
             <parameter name="Ecal_endcap_zmin" type="string" value="2450" />
             <parameter name="Ecal_outer_radius" type="string" value="2028" />
+            <parameter name="FieldPropagator_LargestAcceptableStep" type="string" value="10" />
             <parameter name="Hcal_R_max" type="string" value="3395.46" />
             <parameter name="Hcal_endcap_zmin" type="string" value="2650" />
             <parameter name="LHcal_zend" type="string" value="3205" />
             <parameter name="Lcal_z_begin" type="string" value="2506.9" />
             <parameter name="Lcal_z_thickness" type="string" value="128.1" />
             <parameter name="MokkaModel" type="string" value="ILD_o1_v05" />
-            <parameter name="MokkaVersion" type="string" value="tag mokka-08-00-03" />
+            <parameter name="MokkaVersion" type="string" value="trunk" />
             <parameter name="SIT1_Half_Length_Z" type="string" value="368" />
             <parameter name="SIT1_Radius" type="string" value="152.9" />
             <parameter name="SIT2_Half_Length_Z" type="string" value="644" />
@@ -348,7 +349,7 @@
             <parameter name="tracker_region_zmax" type="string" value="2350" />
         </detector>
         <detector name="VXDInfra" geartype="GearParameters">
-            <parameter name="ActiveLayerProperties_dEdx" type="double" value="3.870163611e-04" />
+            <parameter name="ActiveLayerProperties_dEdx" type="double" value="3.870163612e-04" />
             <parameter name="BeSupportEndplateThickness" type="double" value="2.000000000e+00" />
             <parameter name="BeSupport_dEdx" type="double" value="2.941795296e-04" />
             <parameter name="CryostatAlHalfZ" type="double" value="1.766000000e+02" />
@@ -362,12 +363,12 @@
             <parameter name="ElectronicEndThickness" type="double" value="1.000000000e-01" />
             <parameter name="StripLineBeamPipeRadius" type="double" value="2.430000000e+01" />
             <parameter name="VXDEndPlateInnerRadius" type="double" value="3.000000000e+01" />
-            <parameter name="VXDSupport_dEdx" type="double" value="4.818634270e-05" />
+            <parameter name="VXDSupport_dEdx" type="double" value="4.818636188e-05" />
             <parameter name="LadderGaps" type="DoubleVec" value="0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00" />
             <parameter name="StripLineFinalZ" type="DoubleVec" value="1.500000000e+02 1.500000000e+02 1.500000000e+02 1.500000000e+02 1.500000000e+02 1.500000000e+02" />
         </detector>
     </detectors>
     <materials>
-        <material name="VXDSupportMaterial" A="2.075865162e+01" Z="1.039383117e+01" density="2.765900000e+02" radLength="1.014262421e+03" intLength="3.341388059e+03" />
+        <material name="VXDSupportMaterial" A="2.075865162e+01" Z="1.039383117e+01" density="2.765900000e+02" radLength="1.014262364e+03" intLength="3.337104607e+03" />
     </materials>
 </gear>
