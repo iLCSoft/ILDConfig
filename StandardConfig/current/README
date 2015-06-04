@@ -73,6 +73,21 @@ or
 #- example: dump the details of the 2nd event in the DST file: 
 
    dumpevent bbudsc_3evt_DST.slcio 2 | less
+
+# 3.1 ---- alternative reconstrunction steering files: ------
+# -- they substitute std silicon tracking with new algorithms --
+# -- Attention! still experimental --
+
+  Marlin FPCCDTracker_stdreco.xml
+# -- Adding Marlin steering file which runs the FPCCD tracking algorithm --
+# -- Experimental - not yet fully validated --
+
+  Marlin minivector_reco.xml
+# -- Adding a reconstruction file which uses a mini-vector algorithm, based on cellular automaton tools, --
+# -- for pattern recognition at the VXD-SIT --
+# -- still experimental - not fully validated --
+# -- According to the examined VXD design, the user should set the proper time resolution for pair bkg overlay --
+# -- and correct accordingly for spatial resolution at the VXDPlanarDigiProcessor --
    
 
 # 4. ---- view the result in the event display
