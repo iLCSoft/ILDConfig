@@ -1,0 +1,24 @@
+<!-- Pandora settings xml file -->
+
+<pandora>
+    <!-- GLOBAL SETTINGS -->
+    <IsMonitoringEnabled>true</IsMonitoringEnabled>
+    <ShouldDisplayAlgorithmInfo>false</ShouldDisplayAlgorithmInfo>
+    <ShouldCollapseMCParticlesToPfoTarget>true</ShouldCollapseMCParticlesToPfoTarget>
+
+    <!-- PLUGIN SETTINGS -->
+    <HadronicEnergyCorrectionPlugins>CleanClusters ScaleHotHadrons</HadronicEnergyCorrectionPlugins>
+    <EmShowerPlugin>LCEmShowerId</EmShowerPlugin>
+    <PhotonPlugin>LCPhotonId</PhotonPlugin>
+    <ElectronPlugin>LCElectronId</ElectronPlugin>
+    <MuonPlugin>LCMuonId</MuonPlugin>
+
+    <!-- ALGORITHM SETTINGS -->
+
+    <algorithm type = "PerfectParticleFlow">
+        <OutputPfoListName>PerfectPfos</OutputPfoListName>
+        <OutputClusterListName>PerfectPfoClusters</OutputClusterListName>
+    </algorithm>
+    <!--algorithm type = "DumpPfosMonitoring"/-->
+    <!--algorithm type = "VisualMonitoring"/-->
+</pandora>
