@@ -1,9 +1,10 @@
 ###################################################
 #
-# HOWTO run Mokka and Marlin examples
+# HOWTO run lcgeo and Marlin examples
 # with standard configuration
 # 
-# F.Gaede, DESY
+# F.Gaede, DESY/CERN
+#   06/2015  F.G:  updated to use lcgeo/ddsim
 #   12/2011: F.G.: updated to new ILD_01_dev model 
 #   06/2012: J.E.: updated to new ILD_o{1,2,3}_v01 models
 ###################################################
@@ -12,57 +13,37 @@
 #  how to run ilcsoft programs and as a mini-test after installation
 #  of a new (complete) ilcsoft release.
 #
-#  Have a look at the scripts (mokka-wrapper.sh) and the
-#  steering files (bbudsc_3evt_stdreco.xml) for more details.
-# 
-
 
 # 1. ----  initialize the current ilcsoft release, e.g.  ------
 
-  source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc41_sl5/v01-17-04/init_ilcsoft.sh
-or
-  source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc44_sl6/v01-17-04/init_ilcsoft.sh
+  source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc44_sl6/v01-17-07/init_ilcsoft.sh
 
-#-- this sets:  
-#   MARLIN_DLL=libMarlinReco.so:libPandoraAnalysis.so:libMarlinPandora.so:libLCFIVertex.so:libCEDViewer.so:libEutelescope.so:libMarlinTPC.so:libOverlay.so
-#-- so these packages need to be present in the release for the standard examples
+  #------ init the lcgeo/DD4hep environment ---------------------
 
-# 2. ---- run a Mokka example  ------
- a)
+  source $lcgeo_DIR/bin/thislcgeo.sh
 
-  # init MokkaDBConfig (this sets MOKKA_DUMP_FILE and adds mokka-wrapper.sh to your PATH)
-  . ../../MokkaDBConfig/init.sh
+# 2. ---- run the lcgeo/ddsim simulation example  ------
 
-  mokka-wrapper.sh -U -M ILD_o1_v05 bbudsc_3evt.steer
+    python ddsim.py $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml
 
-# b)
-#  the above starts a MySQL server and populates it with a dump of the Mokka central DB
-#  you can also run Mokka directly (using the central DB):
-
-  Mokka -U -M ILD_o1_v05 bbudsc_3evt.steer
-
- ## to test a newer model, you have to use Mokka directly to access the database; e.g.:
-  
-  Mokka -U -M ILD_o1_v06 bbudsc_3evt.steer
-
-  
-# c) 
-#  to make sure that the extra partice tables (for SUSY etc) is loaded: 
- 
-  Mokka -U -M ILD_o1_v05 -e ./particle.tbl bbudsc_3evt.steer
-  # OR:
-  mokka-wrapper.sh -U -M ILD_o1_v05 -e ./particle.tbl bbudsc_3evt.steer
-
+    ( modify ddsim.py as needed for other inputfiles/simulations)
 
 #--   this creates the file:    bbudsc_3evt.slcio
 
-#- example: examine the collections in the file:
+  #- example: examine the collections in the file:
 
   anajob bbudsc_3evt.slcio
 
+  
+ 
+# 3. ----- create a gear file for the model ----------------
+
+  convertToGear default $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml gear_ILD_o1_v05_dd4hep.xml
+
+  This creates a gear file for the ILD model. 
 
 
-# 3. ----  reconstruct these events:  ------
+# 4. ----  reconstruct these events:  ------
 
   Marlin bbudsc_3evt_stdreco.xml
 
