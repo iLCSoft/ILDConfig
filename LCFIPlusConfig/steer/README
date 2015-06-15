@@ -3,6 +3,7 @@ Usage of steering files for LCFIPlus
 -- history
 2012/5/7   T.Suehara initial description
 2012/5/15  T.Suehara bugfix in steering file
+2015/6/15  T.Suehara add v3 description
 -- history end
 
 -- algorithms
@@ -14,6 +15,7 @@ Usage of steering files for LCFIPlus
 (6) MakeNtuple           Making root files with FlavorTag variables for training
 (7) TrainMVA             Training MVA with root files
 (8) ReadMVA              Obtaining flavor tag results with training weight files
+(9) TrackNtuple (v3 only) Making root files with track variables for making probability files
 -- algorithms end
 
 -- sample steering files
@@ -26,6 +28,7 @@ Usage of steering files for LCFIPlus
 (g) train.xml             (7), for training using result of (d-f)
 (h) flavortag.xml         (3-5,8), for flavor tagging from DST
 (i) flavortagfrompfo.xml  (1-5,8), vertex finder + (h)
+(j) trackntuple.xml	  (9), for making track probability files
 -- sample steering files end
 
 -- easy usage
@@ -39,4 +42,14 @@ Usage of steering files for LCFIPlus
  (B) Run (g)train.xml with the .root files created in (A)
  (C) Run (h)flavortag.xml with the weight files created in (B)
      (for samples before vertex finding, run (i) instead)
+
+*** making probability files (v3 only)
+ The probability files are provided for ILD_o1_v5 geometry.
+ We recommend to reproduce the files if you run LCFIPlus in other geometries.
+ This should be done before training.
+ (A) Run (j)trackntuple.xml on reference samples for creation of root files
+  with bb/cc/qq samples (~ 10k events are OK. We use 91 GeV, but maybe OK with other energies)
+ (B) Merge all bb, cc, qq root files using hadd etc. respectively. 
+ (C) Run macro/TrackProb.C in LCFIPlus with the merged files to obtain two output for d0 and z0 files.
+ (D) Use those two files for the "FlavorTag.D0(Z0)ProbFileName" in flavor tagging.
 -- easy usage end
