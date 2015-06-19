@@ -41,6 +41,9 @@
      <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
 
+     <!-- ========== dE/dx   ================= -->
+     <processor name="MyCompute_dEdxProcessor"/>  
+
      <!-- ========== the track cheater   ================= -->
      <!-- XXXprocessor name="MyTruthTracker"/ -->    
 
@@ -59,8 +62,12 @@
      <processor name="MyMarlinPandora"/>
      <processor name="MyBCalReco"/>
 
+     <!-- ========== Shower Profiles   ================= -->
+     <processor name="MyComputeShowerShapesProcessor"/>    
+
      <!-- ========== particle ID ============================ -->
      <!--processor name="MyPFOID" /-->
+     <processor name="MyLikelihoodPID" />
 
      <!-- ========== full and DST output ==================== -->
      <processor name="MyRecoMCTruthLinker"/>
@@ -681,6 +688,14 @@
   <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
 </processor>
 
+<!---  dedx calculation processor --->
+<processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
+  <!--Energy Loss Error for TPC-->
+  <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
+  <!--LDC Track collectoin name-->
+  <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+</processor>
+
 <processor name="MyForwardTracking" type="ForwardTracking">
    <!--ForwardTracking reconstructs tracks through the FTDs-->
    <!--Name of the Forward Tracking output collection-->
@@ -971,6 +986,39 @@
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
 <!--################################################ -->
+
+ <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
+  <!--Performs Shower profile extraction-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+  <!--Name of the Cluster collection-->
+  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+  <!-- Radiation Length of Ecal-->
+  <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
+  <!-- Radiation Length of Hcal-->
+  <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
+  <!-- Interaction Length of Ecal-->
+  <parameter name="RadiationLength_Ecal" type="float">9.00 </parameter>
+  <!-- Interaction Length of Hcal-->
+  <parameter name="RadiationLength_Hcal" type="float">17.19 </parameter>
+  </processor>
+
+<!--################################################ -->
+ <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+  <!--Performs particle identification-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Boundaries for energy binning-->
+  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+  <!--Name of files containing pdfs for charged particles-->
+  <parameter name="FilePDFName" type="StringVec">
+    LikelihoodPID_Histogram_v01.root
+  </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+ </processor>
 
  <processor name="MyPFOID" type="PFOID">
   <!--Performs particle identification-->
