@@ -999,10 +999,10 @@
   <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
   <!-- Radiation Length of Hcal-->
   <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
-  <!-- Interaction Length of Ecal-->
-  <parameter name="RadiationLength_Ecal" type="float">9.00 </parameter>
-  <!-- Interaction Length of Hcal-->
-  <parameter name="RadiationLength_Hcal" type="float">17.19 </parameter>
+  <!-- Moliere radius of Ecal-->
+  <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
+  <!-- Moliere radius of Hcal-->
+  <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
   </processor>
 
 <!--################################################ -->
