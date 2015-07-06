@@ -60,6 +60,9 @@
      <processor name="MySimpleMuonDigi"/>    
      
      <processor name="MyMarlinPandora"/>
+     <!-- < uncomment for JER studies /> -->
+     <!-- <processor name="MyPfoAnalysis" /> -->
+
      <processor name="MyBCalReco"/>
 
      <!-- ========== Shower Profiles   ================= -->
@@ -956,11 +959,32 @@
   <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
-  <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
   <!--Whether to calculate track states manually, rather than copy stored fitter values-->
   <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
   <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
   <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+
+<!--################################################ -->
+
+<processor name="MyPfoAnalysis" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PfoAnalysis.root  </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
 
 <!--################################################ -->
