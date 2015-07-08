@@ -42,6 +42,9 @@
      <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
 
+     <!-- ========== dE/dx   ================= -->
+     <processor name="MyCompute_dEdxProcessor"/> 
+
      <!-- ========== the track cheater   ================= -->
      <!-- XXXprocessor name="MyTruthTracker"/ -->    
 
@@ -58,10 +61,16 @@
      <processor name="MySimpleMuonDigi"/>    
      
      <processor name="MyMarlinPandora"/>
+     <!-- < uncomment for JER studies /> -->
+     <!-- <processor name="MyPfoAnalysis" /> -->
      <processor name="MyBCalReco"/>
+
+     <!-- ========== Shower Profiles   ================= -->
+     <processor name="MyComputeShowerShapesProcessor"/>    
 
      <!-- ========== particle ID ============================ -->
      <!--processor name="MyPFOID" /-->
+     <processor name="MyLikelihoodPID" />
 
      <!-- ========== full and DST output ==================== -->
      <processor name="MyRecoMCTruthLinker"/>
@@ -187,12 +196,12 @@
  <processor name="VXDPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
-   <!--Please edit single point resolution values according to the examined VXD design-->
+   <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
    <parameter name="IsStrip" type="bool">false </parameter>
    <!--resolution in direction of u-->
-   <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004 </parameter>
+   <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.01 0.004 0.01 </parameter>
    <!--resolution in direction of v-->
-   <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004  </parameter>
+   <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.01 0.004 0.01  </parameter>
    <!--Name of the Input SimTrackerHit collection-->
    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
    <!--Name of TrackerHit SimTrackHit relation collection-->
@@ -683,6 +692,14 @@
   <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
 </processor>
 
+<!---  dedx calculation processor --->
+<processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
+  <!--Energy Loss Error for TPC-->
+  <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
+  <!--LDC Track collectoin name-->
+  <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+</processor>
+
 <processor name="MyForwardTracking" type="ForwardTracking">
    <!--ForwardTracking reconstructs tracks through the FTDs-->
    <!--Name of the Forward Tracking output collection-->
@@ -993,7 +1010,7 @@
 <!--########## MarlinPandora ###################################### -->
 
 <processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
-  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
+  <parameter name="PandoraSettingsXmlFile" type="String">  PandoraSettingsDefaultNewPhoton.xml PandoraSettingsDefault.xml </parameter>
   <!-- Collection names -->
   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
   <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
@@ -1023,11 +1040,32 @@
   <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
-  <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
   <!--Whether to calculate track states manually, rather than copy stored fitter values-->
   <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
   <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
   <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+
+<!--################################################ -->
+
+<processor name="MyPfoAnalysis" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PfoAnalysis.root  </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
 
 <!--################################################ -->
@@ -1053,6 +1091,39 @@
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
 <!--################################################ -->
+
+ <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
+  <!--Performs Shower profile extraction-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+  <!--Name of the Cluster collection-->
+  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+  <!-- Radiation Length of Ecal-->
+  <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
+  <!-- Radiation Length of Hcal-->
+  <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
+  <!-- Moliere radius of Ecal-->
+  <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
+  <!-- Moliere radius of Hcal-->
+  <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
+  </processor>
+
+<!--################################################ -->
+ <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+  <!--Performs particle identification-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Boundaries for energy binning-->
+  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+  <!--Name of files containing pdfs for charged particles-->
+  <parameter name="FilePDFName" type="StringVec">
+    LikelihoodPID_Histogram_v01.root
+  </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+ </processor>
 
  <processor name="MyPFOID" type="PFOID">
   <!--Performs particle identification-->
