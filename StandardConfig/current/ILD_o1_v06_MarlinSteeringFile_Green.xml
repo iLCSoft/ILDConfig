@@ -1,8 +1,8 @@
 <!--
       Example steering file to run a standard reconstruction on the 3 ttbar events 
-      simulated with Mokka in this example directory.
+      simulated with Mokka in this example dierectory.
 
-      Works with ilcsoft v01-17-07 
+      Works with ilcsoft v01-16 (DBD production release)
 
       Defines the standard reconstruction for ILD.
 -->
@@ -13,18 +13,8 @@
    <execute>
      <processor name="MyAIDAProcessor"/>
      
-     <!-- =========  overlay gamma gamma background  === -->
-     <!-- activate for production -->
-     <!--processor name="BgOverlay" /-->
-
      <!-- ========== track digitization and tracking  === -->
-<!-- concerning the VXD digitisation, one can use one of the following VXD models-->
-<!-- DBD VXD, conservative CMOS design and ambitious CMOS design, cf  -->
-<!-- please not forget to consider the corresponding time resolutions when overlaying beam(pair)bkg!-->
-     <!--processor name="VXDPlanarDigiProcessor_DBDVXD"/-->
-     <processor name="VXDPlanarDigiProcessor_CMOSVXD1"/>
-     <!--processor name="VXDPlanarDigiProcessor_CMOSVXD5"/-->
-
+     <processor name="VXDPlanarDigiProcessor"/>
 
      <processor name="SITPlanarDigiProcessor"/>
      <processor name="SITSpacePointBuilder" />
@@ -39,23 +29,13 @@
      <processor name="MyTPCDigiProcessor"/>
      
      <!-- ========== the new C++ tracking =============== -->
-     <!-- ========== TPC patrec =============== -->
+     
      <processor name="MyClupatraProcessor" />
       
-     <!-- ========== central silicon tracking =============== -->
-     <!-- ========== standard DBD version =============== -->
      <processor name="MySiliconTracking_MarlinTrk"/>  
-     <!-- ========== mini-vectors - make sure you use matching digitizer! =============== -->
-     <!--processor name="MyCellsAutomatonMV"/-->
-     <!-- ========== FPCCD - make sure you use matching digitizer! =============== -->
-     <!--processor name="MyFPCCDSiliconTracking_MarlinTrk"/-->  
-     
      <processor name="MyForwardTracking"/><!--create fwd tracks in parallel -->
      <processor name="MyTrackSubsetProcessor" /><!-- combine Silicon and Forward Tracking -->     
      <processor name="MyFullLDCTracking_MarlinTrk"/>  
-
-     <!-- ========== dE/dx   ================= -->
-     <processor name="MyCompute_dEdxProcessor"/>  
 
      <!-- ========== the track cheater   ================= -->
      <!-- XXXprocessor name="MyTruthTracker"/ -->    
@@ -65,52 +45,36 @@
      <processor name="MyV0Finder"/>                
      <processor name="MyKinkFinder"/>         
      
-     <!-- ========== calorimeter digitization ======= -->
+     <!-- ========== calorimeter digitization and PFA ======= -->
      <processor name="MyNewLDCCaloDigi"/>    
      <processor name="MySimpleBCalDigi"/>    
      <processor name="MySimpleLCalDigi"/>    
      <processor name="MySimpleLHCalDigi"/>   
      <processor name="MySimpleMuonDigi"/>    
      
-     <!-- ========== optionally: GARLIC ======= -->
-     <!--processor name="MyECALPreClustering"/> 
-     <processor name="MyGarlicProcessor"/-->  
-     
-     <!-- ========== PFA ======= -->
-     <!-- options to chose in processor steering: -->
-     <!-- "normal" , improved photons, Garlic -->
-     <processor name="MyMarlinPandora"/>
-     <!-- < uncomment for JER studies /> -->
-     <!-- <processor name="MyPfoAnalysis" /> -->
-
-     <!--processor name="MyBCalReco"/-->
-
-     <!-- ========== Shower Profiles   ================= -->
-     <processor name="MyComputeShowerShapesProcessor"/>    
-
-     <!-- ========== particle ID ============================ -->
-     <!-- this at the moment works only with MarlinReco as of v01-17-07, not with the head version -->
-     <!--processor name="MyLikelihoodPID" /-->
-
-     <!-- ========== tau finding ============================ -->
-     <processor name="MyTauFinder" />
-
-     <!-- ========== full and DST output ==================== -->
      <processor name="MyRecoMCTruthLinker"/>
      
-     <!-- ========== vertex finder ========================== -->
-     <processor name="VertexFinder"/>
+     <processor name="MyMarlinPandoraMuon"/>
+     <processor name="MyPfoAnalysisMuon"/>
+     <processor name="MyMarlinPandoraDefault"/>
+     <processor name="MyPfoAnalysisDefault"/>
+     <processor name="MyMarlinPandoraPerfectPhoton"/>
+     <processor name="MyPfoAnalysisPerfectPhoton"/>
+     <processor name="MyMarlinPandoraPerfectPhotonNK0L"/>
+     <processor name="MyPfoAnalysisPerfectPhotonNK0L"/>
+     <processor name="MyMarlinPandoraPerfectPFA"/>
+     <processor name="MyPfoAnalysisPerfectPFA"/>
      
-     <processor name="MyLCIOOutputProcessor"/>
-     <processor name="DSTOutput"/>
+     <!--processor name="MyLCIOOutputProcessor"/-->
+     <!--processor name="DSTOutput"/-->
    </execute>
 
    <global>
       <parameter name="LCIOInputFiles">
-         ./bbudsc_3evt.slcio
+            LCIO_INPUT_FILE
       </parameter>
-      <parameter name="GearXMLFile" value="GearOutput.xml"/>
-      <parameter name="MaxRecordNumber" value="2"/>
+      <parameter name="GearXMLFile" value="GEAR_FILE"/>
+      <parameter name="MaxRecordNumber" value="-1"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
@@ -120,41 +84,13 @@
  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
   <!--   standard output: full reconstruction keep all collections -->
   <parameter name="LCIOOutputFile" type="string" >
-      ./bbudsc_3evt_REC.slcio  
   </parameter>
+  <parameter name="DropCollectionTypes" type="StringVec">SimTrackerHit SimCalorimeterHit TrackerHit</parameter>
+  <parameter name="DropCollectionNames" type="StringVec">RelationCaloHit SiTracksMCP TPCTracksMCP LDCTracksMCP SiTracks TPCTracks</parameter>
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
  </processor>
 
- <processor name="DSTOutput" type="LCIOOutputProcessor">
-   <!--   
-     DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
-   -->
-   <parameter name="LCIOOutputFile" type="string" >
-       ./bbudsc_3evt_DST.slcio 
-   </parameter>
-   <parameter name="DropCollectionTypes" type="StringVec"> 
-       MCParticle 
-       SimTrackerHit 
-       SimCalorimeterHit
-       TrackerHit 
-       TrackerHitPlane 
-       CalorimeterHit 
-       LCRelation
-       Track 
-       LCFloatVec      
-    </parameter>
-    <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
-    <parameter name="KeepCollectionNames" type="StringVec"> 
-      MCParticlesSkimmed 
-      MarlinTrkTracks
-      MCTruthMarlinTrkTracksLink
-      MarlinTrkTracksMCTruthLink
-      RecoMCTruthLink
-    </parameter>
-    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
-    <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
- </processor>
  
  <processor name="MyAIDAProcessor" type="AIDAProcessor">
  <!--Processor that handles AIDA files. Creates on directory per processor.  Processors only need to create and fill the histograms, clouds and tuples. Needs to be the first ActiveProcessor-->
@@ -167,59 +103,9 @@
 </processor>
 
 
- <processor name="BgOverlay" type="Overlay">
-  <!--Opens a second (chain of) lcio file(s) and overlays events...-->
-  <!--Pairs of collection to be merged-->
-  <parameter name="CollectionMap" type="StringVec">
-    BeamCalCollection                     BeamCalCollection                     
-    COILCollection                        COILCollection                        
-    EcalBarrelSiliconCollection           EcalBarrelSiliconCollection           
-    EcalBarrelSiliconPreShowerCollection  EcalBarrelSiliconPreShowerCollection  
-    EcalEndcapRingCollection              EcalEndcapRingCollection              
-    EcalEndcapRingPreShowerCollection     EcalEndcapRingPreShowerCollection     
-    EcalEndcapSiliconCollection           EcalEndcapSiliconCollection           
-    EcalEndcapSiliconPreShowerCollection  EcalEndcapSiliconPreShowerCollection  
-    FTD_PIXELCollection                   FTD_PIXELCollection                   
-    FTD_STRIPCollection                   FTD_STRIPCollection                   
-    HcalBarrelRegCollection               HcalBarrelRegCollection               
-    HcalEndCapRingsCollection             HcalEndCapRingsCollection             
-    HcalEndCapsCollection                 HcalEndCapsCollection                 
-    LumiCalCollection                     LumiCalCollection  
-    LHcalCollection                       LHcalCollection
-    MCParticle                            MCParticle                            
-    MuonBarrelCollection                  MuonBarrelCollection                  
-    MuonEndCapCollection                  MuonEndCapCollection                  
-    SETCollection                         SETCollection                         
-    SITCollection                         SITCollection                         
-    TPCCollection                         TPCCollection                         
-    TPCSpacePointCollection               TPCSpacePointCollection               
-    VXDCollection                         VXDCollection                         
-  </parameter>
-  <!--Name of the lcio input file(s)-->
-  <parameter name="InputFileNames" type="StringVec"> 
-      /afs/desy.de/project/ilcsoft/www/html/data/ilctest/sv01-14-01-p00.mILD_o1_v05.E1000-B1b_ws.Paa_lowpt.I106472.eR80.pL20-00001.slcio
-  </parameter>
-  <!--Overlay each event with this number of background events. (default 0)-->
-  <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
-
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string"> DEBUG5 </parameter-->
-
-  <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-  <parameter name="expBG" type="double">4.1 </parameter>
-  <!--Overlay each event with the content of one run.-->
-  <parameter name="runOverlay" type="bool">false </parameter>
-
-  <!--Maximum number of events to skip between overlayd events (choosen from flat intervall [0,NSkipEventsRandom] )-->
-  <parameter name="NSkipEventsRandom" type="int">0</parameter>
-
-</processor>
-
-
- <processor name="VXDPlanarDigiProcessor_DBDVXD" type="PlanarDigiProcessor">
+ <processor name="VXDPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
-   <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
    <parameter name="IsStrip" type="bool">false </parameter>
    <!--resolution in direction of u-->
    <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004 </parameter>
@@ -234,45 +120,7 @@
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
  </processor>
-
- <processor name="VXDPlanarDigiProcessor_CMOSVXD1" type="PlanarDigiProcessor">
-   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
-   <!--whether hits are 1D strip hits-->
-   <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
-   <parameter name="IsStrip" type="bool">false </parameter>
-   <!--resolution in direction of u-->
-   <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.01 0.004 0.01 </parameter>
-   <!--resolution in direction of v-->
-   <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.01 0.004 0.01  </parameter>
-   <!--Name of the Input SimTrackerHit collection-->
-   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
-   <!--Name of TrackerHit SimTrackHit relation collection-->
-   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
-   <!--Name of the TrackerHit output collection-->
-   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
- </processor>
-
- <processor name="VXDPlanarDigiProcessor_CMOSVXD5" type="PlanarDigiProcessor">
-   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
-   <!--whether hits are 1D strip hits-->
-   <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
-   <parameter name="IsStrip" type="bool">false </parameter>
-   <!--resolution in direction of u-->
-   <parameter name="ResolutionU" type="float"> 0.003 0.003 0.003 0.003 0.003 0.003 </parameter>
-   <!--resolution in direction of v-->
-   <parameter name="ResolutionV" type="float"> 0.003 0.003 0.003 0.003 0.003 0.003  </parameter>
-   <!--Name of the Input SimTrackerHit collection-->
-   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
-   <!--Name of TrackerHit SimTrackHit relation collection-->
-   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
-   <!--Name of the TrackerHit output collection-->
-   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
- </processor> 
-
+ 
 
  <processor name="SITPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
@@ -495,8 +343,6 @@
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
    <!--parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter-->
   </processor>
-  
-<!--###########  standard silicon tracking #################################    -->
 
  <processor name="MySiliconTracking_MarlinTrk" type="SiliconTracking_MarlinTrk">
  <!--Pattern recognition in silicon trackers-->
@@ -605,120 +451,6 @@
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
-
-<!--###########  mini-vector tracking #################################    -->
-
-<processor name="MyCellsAutomatonMV" type="CellsAutomatonMV">
-   <!--ForwardTracking reconstructs tracks through the FTDs-->
-   <!--Name of the Cellular Automaton Tracking output collection-->
-   <parameter name="CATrackCollection" type="string" lcioOutType="Track"> SiTracks </parameter>
-   <!--Use Energy Loss in Fit-->
-   <parameter name="EnergyLossOn" type="bool">true </parameter>
-   <!--Number of divisions in Phi-->
-   <parameter name="NDivisionsInPhi" type="int"> 160 </parameter>
-   <!--Number of divisions in Theta-->
-   <parameter name="NDivisionsInTheta" type="int"> 80 </parameter>
-   <!--Number of divisions in Phi in  order to create mini-vectors-->
-   <parameter name="NDivisionsInPhiMV" type="int"> 80 </parameter>
-   <!--Number of divisions in Theta  in  order to create mini-vectors-->
-   <parameter name="NDivisionsInThetaMV" type="int"> 80 </parameter>
-   <!--VXD Hit Collections-->
-   <parameter name="VTXHitCollectionName" type="StringVec"> VXDTrackerHits </parameter>
-   <!--SIT Hit Collections-->
-   <parameter name="SITHitCollectionName" type="StringVec"> SITSpacePoints </parameter>
-   <!--Use MultipleScattering in Fit-->
-   <parameter name="MultipleScatteringOn" type="bool">true </parameter>
-   <!--Smooth All Measurement Sites in Fit-->
-   <parameter name="SmoothOn" type="bool">false </parameter>
-   <!--Cut on minimum PT-->
-   <parameter name="PTCut" type="double"> 0.0 </parameter>
-   <!--Use SIT-->
-   <parameter name="UseSIT" type="int"> 1 </parameter>
-   <!--The chi2 probability value below which tracks will be cut-->
-   <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
-   <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
-   <parameter name="HelixFitMax" type="double"> 100 </parameter>
-   <!--the maximum chi2/Ndf that is allowed as result of a Kalman fit-->
-   <parameter name="kalFitMax" type="double"> 10 </parameter>
-   <!--The minimum number of hits to create a track-->
-   <parameter name="HitsPerTrackMin" type="int"> 2 </parameter>
-   <!--Maximal number of hits for which a track with n hits is better than one with n-1hits-->
-   <parameter name="NHitsChi2" type="int"> 6 </parameter>
-   <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
-   <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
-   <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
-   <!--parameter name="TakeBestVersionOfTrack" type="bool">true </parameter-->
-   <!--If the automaton has more connections than this it will be redone with the next parameters-->
-   <parameter name="MaxConnectionsAutomaton" type="int"> 10000000 </parameter>
-   <!--Maximal number of hits allowed on a sector-->
-   <parameter name="MaxHitsPerSector" type="int">1000 </parameter>
-   <!--The maximum distance between two hits in adjacent layers in order to form a minivector-->
-   <parameter name="MaxDistance" type="double"> 5.0 </parameter>
-   <!--The difference in polar angle (in degrees)  between two hits in adjacent layers in order to form a minivector-->
-   <parameter name="MVHitsThetaDifference" type="double"> 0.1 </parameter>
-   <!--The difference in polar angle (in degrees)  between two hits in the INNER layer in order to form a minivector-->
-   <parameter name="MVHitsThetaDifferenceInner" type="double"> 0.1 </parameter>
-   <!--The maximum step between layers-->
-   <parameter name="StepMax" type="int"> 4 </parameter>
-   <!--The last layer that can be connected directly with the IP-->
-   <parameter name="LastLayerToIP" type="int"> 4 </parameter>
-   
-   <parameter name="Crit2_3DAngle_MV_min" type="float"> 0.0 </parameter>
-   <parameter name="Crit2_3DAngle_MV_max" type="float"> 15.0 </parameter>
-   <parameter name="Crit2_DeltaPhi_MV_min" type="float"> 0.0 </parameter>
-   <parameter name="Crit2_DeltaPhi_MV_max" type="float"> 15.0 </parameter>
-   <parameter name="Crit2_DeltaPhi_MV_InnLayer_min" type="float"> 0.0 </parameter>
-   <parameter name="Crit2_DeltaPhi_MV_InnLayer_max" type="float"> 5.0 </parameter>
-   <parameter name="Crit2_DeltaTheta_MV_min" type="float"> 0.0 </parameter>
-   <parameter name="Crit2_DeltaTheta_MV_max" type="float"> 1.5 </parameter>
-   <parameter name="Crit3_NoZigZag_MV_min" type="float"> -1.0 </parameter>
-   <parameter name="Crit3_NoZigZag_MV_max" type="float"> 1.0 </parameter>
-   <parameter name="Crit3_PT_MV_min" type="float"> 0.35 </parameter>
-   <parameter name="Crit3_PT_MV_max" type="float"> 999999 </parameter>   
-   <parameter name="Criteria" type="StringVec">
-      Crit2_DeltaPhi_MV
-      Crit2_DeltaTheta_MV
-      Crit3_NoZigZag_MV
-   </parameter>
-   
-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <parameter name="Verbosity" type="string"> MESSAGE </parameter>
-   
-</processor> 
-
-<!--###########  FPCCD tracking #################################    -->
-
-<processor name="MyFPCCDSiliconTracking_MarlinTrk" type="FPCCDSiliconTracking_MarlinTrk">
-   <!--Each ladder's FPCCD Pixel size(unit:mm)-->
-   <parameter name="PixelSizeVec" type="float"> 0.016 0.064 0.040 0.040 0.040 </parameter>
-   <!--AttachRemainingHitsForVXD-->
-   <parameter name="AttachRemainingHitsForVXD" type="int"> 2 </parameter>
-  <!--parameter name="LayerCombinations" type="IntVec"> 
-    5 3 1  5 3 0  5 2 1  5 2 0
-    4 3 1  4 3 0  4 2 1  4 2 0    
-  </parameter-->
-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <parameter name="Verbosity" type="string"> MESSAGE </parameter>
-</processor>
-
-<!--###########  FULL LDC tracking #################################    -->
-
-  <processor name="MyFPCCDFullLDCTracking_MarlinTrk" type="FPCCDFullLDCTracking_MarlinTrk">
-   <!--VTX Hit Collection Name-->
-   <parameter name="VTXHitCollection" type="string" lcioInType="TrackerHitPlane"> VXDTrackerHits </parameter>
-   <!--SIT Hit Collection Name-->
-   <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit"> SITSpacePoints </parameter>
-   <!--SET Hit Collection Name-->
-   <parameter name="SETHitCollection" type="string" lcioInType="TrackerHit"> SETSpacePoints </parameter>
-   <!--TPC Track Collection-->
-   <parameter name="TPCTracks" type="string" lcioInType="Track"> ClupatraTracks </parameter>
-   <!--TPC Track to MCP Relation Collection Name-->
-   <parameter name="TPCTracksMCPRelColl" type="string" lcioInType="LCRelation">  </parameter>
-   <!--LDC track collection name-->
-   <parameter name="LDCTrackCollection" type="string" lcioOutType="Track"> MarlinTrkTracks </parameter>
-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <parameter name="Verbosity" type="string"> MESSAGE </parameter>
-  </processor>
 
 
 <processor name="MyTrackSubsetProcessor" type="TrackSubsetProcessor">
@@ -869,14 +601,6 @@
   <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
 </processor>
 
-<!---  dedx calculation processor --->
-<processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
-  <!--Energy Loss Error for TPC-->
-  <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
-  <!--LDC Track collectoin name-->
-  <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
-</processor>
-
 <processor name="MyForwardTracking" type="ForwardTracking">
    <!--ForwardTracking reconstructs tracks through the FTDs-->
    <!--Name of the Forward Tracking output collection-->
@@ -977,9 +701,6 @@
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
-
- 
-
  
 
 <!--########## KinkFinder ###################################### -->
@@ -1107,202 +828,6 @@
   <parameter name="RelationOutputCollection" type="string">RelationMuonHit </parameter>
 </processor>
 
-<!--########## GARLIC ###################################### -->
-
- <processor name="MyECALPreClustering" type="ECALPreClustering">
- <!--Preclusters ECAL hits to define ROIs for Garlic-->
-  <!--Debugging level 0-3-->
-  <parameter name="Debug" type="int">0 </parameter>
-  <!--Maximum distance of two hits grouped to the same PreCluster-->
-  <parameter name="DistanceCut" type="float">40 </parameter>
-  <!--names of ECAL hit collections-->
-  <parameter name="EcalHitCollections" type="StringVec">ECALEndcap ECALBarrel ECALOther  </parameter>
-  <!--Collecion name of the ECAL preClusrters-->
-  <parameter name="EcalPreClusterCollection" type="string">ECAL_PreClusters </parameter>
-  <!--Minimum number of hits to accept a PreCluster-->
-  <parameter name="MinimumHits" type="int">5 </parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-</processor>
-
-
-
-
- <processor name="MyGarlicProcessor" type="GarlicProcessor">
- <!--Clustering and photon recognition-->
-
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-
-  <!--Talk a lot? (0-3)-->
-  <parameter name="DebugMode" type="int">0 </parameter>
-
-<!-- input collections -->
-
-  <!--Name of PreCluster collection-->
-  <parameter name="EcalPreClusterCollection" type="string" lcioInType="Cluster">ECAL_PreClusters </parameter>
-  <!--Name of the MCParticle input collection-->
-  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
-  <!--TPC track collection name-->
-  <parameter name="TPCTrackCollection" type="string" lcioInType="Track">ClupatraTracks </parameter>
-  <!--track collection name-->
-  <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
-  <!--name of sim->calo hit relation collection-->
-  <parameter name="simHitCaloHitRelations" type="string" lcioInType="LCRelation">RelationCaloHit </parameter>
-
-<!-- output collections -->
-
-  <!--write out debug info collections to lcio file?-->
-  <parameter name="GarlicDebugCollections" type="bool">false </parameter>
-
-  <!--Name of garlic cluster collection-->
-  <parameter name="ClusterCollName" type="string" lcioOutType="Cluster">GARLICPhotonClusters </parameter>
-  <!--Name of cluster to parameter relations-->
-  <parameter name="ClusterParLinksCollName" type="string" lcioOutType="LCRelation">GARLICClusterParameterLinks </parameter>
-  <!--Name of garlic cluster parameters collection-->
-  <parameter name="ClusterParametersCollName" type="string" lcioOutType="LCGenericObject">GARLICClusterParameters </parameter>
-  <!--Name of garlic core collection-->
-  <parameter name="CoreCollName" type="string" lcioOutType="Cluster">GARLICCores </parameter>
-  <!--Name of electron cluster collection-->
-  <parameter name="ElectronClusterCollName" type="string" lcioOutType="Cluster">GARLICElectronClusters </parameter>
-  <!--collection of identified conversions-->
-  <parameter name="GarlicConversionsPFOColName" type="string" lcioOutType="ReconstructedParticle">GARLICConversionPFOs </parameter>
-  <!--collection of identified electrons-->
-  <parameter name="GarlicElectronsPFOColName" type="string" lcioOutType="ReconstructedParticle">GARLICElectronPFOs </parameter>
-  <!--collection of photon PFOs-->
-  <parameter name="GarlicPhotonsPFOColName" type="string" lcioOutType="ReconstructedParticle">GARLICPhotonPFOs </parameter>
-  <!--collection name of removed hits (near tracks)-->
-  <parameter name="RemovedHitsCollection" type="string" lcioOutType="CalorimeterHit">GARLICRemovedHits </parameter>
-  <!--Name of seed to cluster relations-->
-  <parameter name="SeedClusterLinksCollName" type="string" lcioOutType="LCRelation">GARLICSeedClusterLinks </parameter>
-  <!--Name of garlic seed collection-->
-  <parameter name="SeedCollName" type="string" lcioOutType="CalorimeterHit">GARLICSeeds </parameter>
-  <!--Name of seed to core relations-->
-  <parameter name="SeedCoreLinksCollName" type="string" lcioOutType="LCRelation">GARLICSeedCoreLinks </parameter>
-  <!--Name of track extrapolation collection-->
-  <parameter name="TrackExtrapolationCollName" type="string" lcioOutType="CalorimeterHit">GARLICTrackExtrapolations </parameter>
-
-  <!--name of file in which to save clustering histograms-->
-  <parameter name="clusterCheckHistoFile" type="string"> </parameter>
-
-<!-- parameters -->
-
-  <!--factor to convert between ECAL hit energy and MIP scale, for first layer-->
-  <parameter name="EcalEnergyMipConversion" type="float">140 </parameter>
-  <!--Tracks with polar angle below this have less stringent cuts for electron finding (rad)-->
-  <parameter name="ForwardTrackAngle" type="float">0.15 </parameter>
-
-  <!--assumed constant term of energy resolution-->
-  <parameter name="constantTerm" type="float">0.01 </parameter>
-  <!--assumed stochastic term of energy resolution-->
-  <parameter name="stochasticTerm" type="float">0.17 </parameter>
-  <!--assumed Moliere radius of ECAL (mm)-->
-  <parameter name="MoliereRadius" type="float">20 </parameter>
-
-  <!--file containing the photon selection cuts-->
-  <parameter name="PhotonCutFile" type="string"> garlicCuts_v1.txt </parameter>
-
-  <!--take MC info for tracks?-->
-  <parameter name="TrackCheat" type="bool">false </parameter>
-
-  <!--Should remove Hits near extrapolated tracks to reject pions?-->
-  <parameter name="TrackRemoveNearbyHits" type="bool">true </parameter>
-  <!--window around track in which to remove hits (mm)-->
-  <parameter name="TrackVetoWindow" type="float">10 </parameter>
-
-  <!--radius of seed cylinder (in terms of cell size)-->
-  <parameter name="SeedMaxDistance" type="float">1.5 </parameter>
-  <!--reject seeds below this energy (in MIPs)-->
-  <parameter name="SeedMinEnergy" type="float">5 </parameter>
-  <!--consider only hits above this threshold (in MIPs) in the seeding-->
-  <parameter name="SeedMinHitEnergy" type="float">2.5 </parameter>
-  <!--Minimum number of hits to accept a seed.-->
-  <parameter name="SeedMinHits" type="int">2 </parameter>
-  <!--Number of ECAL pseudo layers used for projecting to obtain a seed, typically equivalent to 5 X0.-->
-  <parameter name="SeedNLayers" type="int">12 </parameter>
-
-  <!--max transverse distance for adding hits to core (in terms of cell size)-->
-  <parameter name="CoreMaxDistance" type="float">1.5 </parameter>
-  <!--max hole in core building for section 1-->
-  <parameter name="CoreMaxHoleSection1" type="int">3 </parameter>
-  <!--max hole in core building for section 2-->
-  <parameter name="CoreMaxHoleSection2" type="int">2 </parameter>
-  <!--first calo section definition for core building-->
-  <parameter name="CoreNlayersSection1" type="int">16 </parameter>
-
-  <!--Maximum distance from core to added hits (in Moliere Radii)-->
-  <parameter name="ClusterMaxDist" type="float">2 </parameter>
-  <!--maximum distance between 2 cluster COGs to consider merging them (int terms of Moliere Radii)-->
-  <parameter name="MaxMergeDist" type="float">2 </parameter>
-
-</processor>
-
-<!--########## MarlinPandora ###################################### -->
-
-<processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
-  <!--============= default Pandora ===================== -->
-  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter-->
-  <!--============= with improved photon finding by Bono ===================== -->
-  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter>
-  <!--============= with photons from Garlic  -- this does not work yet! ===================== -->
-  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettings_ILD_o1_v05_SiW_5x5_Garlic.xml </parameter-->
-  <!-- Collection names -->
-  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
-  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
-  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
-  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
-  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
-  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
-  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
-  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
-  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCP</parameter>
-  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
-  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
-  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
-  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
-  <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
-  <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
-  <!-- Calibration constants -->
-  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
-  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
-  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
-  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
-  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
-  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
-  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
-  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
-  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
-  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
-  <parameter name="DigitalMuonHits" type="int">0</parameter>
-  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
-  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
-  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
-  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
-  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
-  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
-  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
-  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
-  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
-  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
-  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
-</processor>
-
-<!--################################################ -->
-
-<processor name="MyPfoAnalysis" type="PfoAnalysis">
-  <!--PfoAnalysis analyses output of PandoraPFANew-->
-  <!--Names of input pfo collection-->
-  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
-  <!--Names of mc particle collection-->
-  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
-  <!--Set the debug print level-->
-  <parameter name="Printing" type="int">0 </parameter>
-  <!--Name of the output root file-->
-  <parameter name="RootFile" type="string"> PfoAnalysis.root  </parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-</processor>
-
 <!--################################################ -->
 <processor name="MyBCalReco" type="BCalReco">
  <!--Filling Histograms with deposited energy from beamstrahlung pairs in BeamCal-->
@@ -1312,7 +837,7 @@
   <parameter name="BCALMCTruthLinkName" type="string" lcioOutType="LCRelation">BCALMCTruthLink </parameter>
   <!-- Name of input file for background energy density-->
   <parameter name="BackgroundFilename" type="string">
-      bg_aver.sv01-14-p00.mILD_o1_v05.E1000-B1b_ws.PBeamstr-pairs.I210000.root
+      bg_aver.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.PBeamstr-pairs.I230000.root
   </parameter>
   <!--Collection of SimCalorimeterHits in BeamCal-->
   <parameter name="BeamCalHitCol" type="string">BCAL </parameter>
@@ -1327,79 +852,23 @@
 </processor>
 <!--################################################ -->
 
- <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
-  <!--Performs Shower profile extraction-->
-  <!--Debugging?-->
-  <parameter name="Debug" type="int">0 </parameter>
-  <!--Name of the PFO collection-->
-  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
-  <!--Name of the Cluster collection-->
-  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
-  <!-- Radiation Length of Ecal-->
-  <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
-  <!-- Radiation Length of Hcal-->
-  <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
-  <!-- Moliere radius of Ecal-->
-  <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
-  <!-- Moliere radius of Hcal-->
-  <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
-  </processor>
-
-<!--################################################ -->
- <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+ <processor name="MyPFOID" type="PFOID">
   <!--Performs particle identification-->
   <!--Debugging?-->
-  <parameter name="Debug" type="int">1 </parameter>
+  <parameter name="Debug" type="int">0 </parameter>
   <!--Boundaries for energy binning-->
-  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+  <parameter name="EnergyBoundaries" type="FloatVec">0 10 1e+07  </parameter>
   <!--Name of files containing pdfs for charged particles-->
   <parameter name="FilePDFName" type="StringVec">
-    LikelihoodPID_Histogram_v01.root
+    pdf_charged_lt10.txt pdf_charged_ge10.txt
   </parameter>
   <!--Name of the PFO collection-->
   <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+  <!--Name of files containing pdfs for neutral particles-->
+  <parameter name="neutralFilePDFName" type="StringVec">
+      pdf_neutral_lt10.txt pdf_neutral_ge10.txt
+  </parameter>
  </processor>
-
-<!--################################################ -->
- <processor name="MyTauFinder" type="TaJetClustering">
-  <!--Performs tau jet finding>
-  <!--  0. Collections -->
-  <!--Input PFO collection-->
-  <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
-  <!--Tau output collection-->
-  <parameter name="OutputTauCollection" type="string" lcioOutType="ReconstructedParticle">TaJets </parameter>
-  <!--Remained PFO collection not clustered-->
-  <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">RemainPFOs </parameter>
-  <!--  1. Clustering -->
-  <!--Tau mass for tau clustering [GeV]-->
-  <parameter name="TauMass" type="double">2 </parameter>
-  <!--Allowed cosine angle to be clustered-->
-  <parameter name="TauCosAngle" type="double">0.98 </parameter>
-  <!--  2. Primary cut -->
-  <!-- Skip ANY Primary and Cone cuts if true: should be only used in lepton-only final states! -->
-  <parameter name="NoSelection" type="int">0 </parameter>
-
-  <!--Primary cut include IMPLICIT selection of accepting only 1 or 3 tracks in jets:
-              this loosen the counting of low energy tracks-->
-  <parameter name="AcceptFlexibleLowEnergyTrack" type="int">1 </parameter>
-  <!--Minimum jet energy to be accepted as taus-->
-  <parameter name="MinimumJetEnergy" type="double">3 </parameter>
-  <!--Minimum track energy to be accepted as taus-->
-  <parameter name="MinimumTrackEnergy" type="double">2 </parameter>
-  <!--Minimum track energy to be counted-->
-  <parameter name="MinimumTrackEnergyAssoc" type="double">2 </parameter>
-  <!--  3. Cone cut: currently simple 1D cut -->
-  <!-- No cone selection if true -->
-  <parameter name="NoSelection" type="int">0 </parameter>
-
-  <!--Minimum cosine angle for cone-->
-  <parameter name="ConeMinCosAngle" type="double">0.9 </parameter>
-  <!--Maximum cosine angle for cone-->
-  <parameter name="ConeMaxCosAngle" type="double">1 </parameter>
-  <!--Energy fraction of cone compared to central-->
-  <parameter name="ConeMaxEnergyFrac" type="double">0.1 </parameter>
- </processor>
-
 
 <!--################################################ -->
 
@@ -1438,47 +907,286 @@
   </processor>
 
 
-  <processor name="VertexFinder" type="LcfiplusProcessor">
+<!--########## MarlinPandora ###################################### -->
 
-    <!-- run primary and secondary vertex finders -->
-    <parameter name="Algorithms" type="stringVec"> PrimaryVertexFinder BuildUpVertex </parameter>
-    <parameter name="ReadSubdetectorEnergies" type="int" value="1"/> <!-- true for ILD -->
-    <parameter name="UpdateVertexRPDaughters" type="int" value="1"/> <!-- false for non-updative PandoraPFOs -->
-    <parameter name="TrackHitOrdering" type="int" value="1"/> <!-- Track hit ordering: 0=ILD-LOI,SID-DBD, 1=ILD-DBD -->
-    <parameter name="PrintEventNumber" type="int" value="0"/> <!-- 0 for not printing event number, n for printing every n events -->
+<processor name="MyMarlinPandoraMuon" type="PandoraPFANewProcessor">
+  <parameter name="PandoraSettingsXmlFile" type="String"> PANDORA_SETTINGS_MUON_FILE </parameter>
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="ClusterCollectionName" type="String">PandoraClustersMuon</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFOsMuon</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
+  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
+  <parameter name="DigitalMuonHits" type="int">0</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
+  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+<processor name="MyPfoAnalysisMuon" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsMuon </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PANDORA_SETTINGS_MUON_ROOT_FILE </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
 
-    <!-- specify input collection names -->
-    <parameter name="PFOCollection" type="string" value="PandoraPFOs" />
-    <parameter name="PrimaryVertexCollectionName" type="string" value="PrimaryVertex" />
-    <parameter name="BuildUpVertexCollectionName" type="string" value="BuildUpVertex" />
-    <parameter name="BuildUpVertex.V0VertexCollectionName" type="string" value="BuildUpVertex_V0" />
+<processor name="MyMarlinPandoraDefault" type="PandoraPFANewProcessor">
+  <parameter name="PandoraSettingsXmlFile" type="String"> PANDORA_SETTINGS_DEFAULT_FILE </parameter>
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="ClusterCollectionName" type="String">PandoraClustersDefault</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFOsDefault</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
+  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
+  <parameter name="DigitalMuonHits" type="int">0</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
+  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+<processor name="MyPfoAnalysisDefault" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsDefault </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PANDORA_SETTINGS_DEFAULT_ROOT_FILE </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
 
-    <!-- parameters for primary vertex finder -->
-    <parameter name="PrimaryVertexFinder.TrackMaxD0" type="double" value="20." />
-    <parameter name="PrimaryVertexFinder.TrackMaxZ0" type="double" value="20." />
-    <parameter name="PrimaryVertexFinder.TrackMinVtxFtdHits" type="int" value="1" />
-    <parameter name="PrimaryVertexFinder.Chi2Threshold" type="double" value="25." />
+<processor name="MyMarlinPandoraPerfectPhoton" type="PandoraPFANewProcessor">
+  <parameter name="PandoraSettingsXmlFile" type="String"> PANDORA_SETTINGS_PERFECT_PHOTON_FILE </parameter>
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="ClusterCollectionName" type="String">PandoraClustersPerfectPhoton</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFOsPerfectPhoton</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
+  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
+  <parameter name="DigitalMuonHits" type="int">0</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter>
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
+  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+<processor name="MyPfoAnalysisPerfectPhoton" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsPerfectPhoton </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PANDORA_SETTINGS_PERFECT_PHOTON_ROOT_FILE </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
 
-    <!-- parameters for secondary vertex finder -->
-    <parameter name="BuildUpVertex.TrackMaxD0" type="double" value="10." />
-    <parameter name="BuildUpVertex.TrackMaxZ0" type="double" value="20." />
-    <parameter name="BuildUpVertex.TrackMinPt" type="double" value="0.1" />
-    <parameter name="BuildUpVertex.TrackMaxD0Err" type="double" value="0.1" />
-    <parameter name="BuildUpVertex.TrackMaxZ0Err" type="double" value="0.1" />
-    <parameter name="BuildUpVertex.TrackMinTpcHits" type="int" value="10000" />
-    <parameter name="BuildUpVertex.TrackMinFtdHits" type="int" value="10000" />
-    <parameter name="BuildUpVertex.TrackMinVxdHits" type="int" value="10000" />
-    <parameter name="BuildUpVertex.TrackMinVxdFtdHits" type="int" value="0" />
-    <parameter name="BuildUpVertex.PrimaryChi2Threshold" type="double" value="25." />
-    <parameter name="BuildUpVertex.SecondaryChi2Threshold" type="double" value="9." />
-    <parameter name="BuildUpVertex.MassThreshold" type="double" value="10." />
-    <parameter name="BuildUpVertex.MinDistFromIP" type="double" value="0.3" />
-    <parameter name="BuildUpVertex.MaxChi2ForDistOrder" type="double" value="1.0" />
-    <parameter name="BuildUpVertex.AssocIPTracks" type="int" value="1" />
-    <parameter name="BuildUpVertex.AssocIPTracksMinDist" type="double" value="0." />
-    <parameter name="BuildUpVertex.AssocIPTracksChi2RatioSecToPri" type="double" value="2.0" />
-    <parameter name="BuildUpVertex.UseV0Selection" type="int" value="1" />
+<processor name="MyMarlinPandoraPerfectPhotonNK0L" type="PandoraPFANewProcessor">
+  <parameter name="PandoraSettingsXmlFile" type="String"> PANDORA_SETTINGS_PERFECT_PHOTON_NEUTRON_K0L_FILE </parameter>
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="ClusterCollectionName" type="String">PandoraClustersPerfectPhotonNK0L</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFOsPerfectPhotonNK0L</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
+  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
+  <parameter name="DigitalMuonHits" type="int">0</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter>
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
+  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+<processor name="MyPfoAnalysisPerfectPhotonNK0L" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsPerfectPhotonNK0L </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PANDORA_SETTINGS_PERFECT_PHOTON_NEUTRON_K0L_ROOT_FILE </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
 
+<processor name="MyMarlinPandoraPerfectPFA" type="PandoraPFANewProcessor">
+  <parameter name="PandoraSettingsXmlFile" type="String"> PANDORA_SETTINGS_PERFECT_PFA_FILE </parameter>
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="ClusterCollectionName" type="String">PandoraClustersPerfectPFA</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFOsPerfectPFA</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
+  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
+  <parameter name="DigitalMuonHits" type="int">0</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter>
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
+  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+<processor name="MyPfoAnalysisPerfectPFA" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsPerfectPFA </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PANDORA_SETTINGS_PERFECT_PFA_ROOT_FILE </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
   </processor>
   
 </marlin>
