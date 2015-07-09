@@ -86,9 +86,8 @@ or
 # -- Adding a reconstruction file which uses a mini-vector algorithm, based on cellular automaton tools, --
 # -- for pattern recognition at the VXD-SIT --
 # -- still experimental - not fully validated --
-# -- According to the examined VXD design, the user should set the proper time resolution for pair bkg overlay --
-# -- and correct accordingly for spatial resolution at the VXDPlanarDigiProcessor --
-   
+# -- According to the examined VXD design, the user should set the proper time resolution for pair bkg overlay in overlayBX.xml --
+# -- and correct accordingly for spatial resolution at the VXDPlanarDigiProcessor --   
 
 # 4. ---- view the result in the event display
  
