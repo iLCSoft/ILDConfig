@@ -21,9 +21,9 @@
 <!-- concerning the VXD digitisation, one can use one of the following VXD models-->
 <!-- DBD VXD, conservative CMOS design and ambitious CMOS design-->
 <!-- please not forget to consider the corresponding time resolutions when overlaying beam(pair)bkg!-->
-     <processor name="VXDPlanarDigiProcessor_DBDVXD"/>
+     <Xprocessor name="VXDPlanarDigiProcessor_DBDVXD"/>
      <processor name="VXDPlanarDigiProcessor_CMOSVXD1"/>
-     <processor name="VXDPlanarDigiProcessor_CMOSVXD5"/>
+     <Xprocessor name="VXDPlanarDigiProcessor_CMOSVXD5"/>
 
      <processor name="SITPlanarDigiProcessor"/>
      <processor name="SITSpacePointBuilder" />
