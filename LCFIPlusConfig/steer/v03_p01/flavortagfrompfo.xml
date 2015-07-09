@@ -77,16 +77,25 @@
 		<parameter name="JetClustering.InputVertexCollectionName" type="string" value="BuildUpVertex" /> <!-- vertex collections to be used in JC -->
 		<parameter name="JetClustering.OutputJetCollectionName" type="stringVec" value="VertexJets" /> <!-- output collection name, may be multiple -->
 		<parameter name="JetClustering.NJetsRequested" type="intVec" value="2" /> <!-- Multiple NJets can be specified -->
-		
 		<parameter name="JetClustering.YCut" type="doubleVec" value="0." /> <!-- specify 0 if not used -->
+
+		<parameter name="JetClustering.JetAlgorithm" type="string" value="DurhamVertex" /> <!-- jet algorithm -->
+		<parameter name="JetClustering.UseBeamJets" type="int" value="0" /> <!-- beam jet rejection -->
+
 		<parameter name="JetClustering.UseMuonID" type="int" value="1" /> <!-- jet-muon ID for jet clustering -->
+		<parameter name="JetClustering.MuonIDExternal" type="int" value="0" /> <!-- true to use LikelihoodPID, false for good-old simple one -->
+		<parameter name="JetClustering.MuonIDMinimumD0Significance" type="double" value="5." /> <!-- min D0 significance -->
+		<parameter name="JetClustering.MuonIDMinimumZ0Significance" type="double" value="5." /> <!-- min Z0 significance -->
+		<parameter name="JetClustering.MuonIDMaximum3DImpactParameter" type="double" value="5." /> <!-- max 3D significance -->
+		<parameter name="JetClustering.MuonIDMinimumProbability" type="double" value="0.5" /> <!-- min PID probability, only for external -->
+
 		<parameter name="JetClustering.VertexSelectionMinimumDistance" type="double" value="0.3" /> <!-- in mm -->
 		<parameter name="JetClustering.VertexSelectionMaximumDistance" type="double" value="30." /> <!-- in mm -->
 		<parameter name="JetClustering.VertexSelectionK0MassWidth" type="double" value="0.02" /> <!-- in GeV -->
 		<parameter name="JetClustering.YAddedForJetVertexVertex" type="double" value="100"/> <!-- add penalty for combining vertices -->
 		<parameter name="JetClustering.YAddedForJetLeptonVertex" type="double" value="100"/> <!-- add penalty for combining lepton and vertex -->
 		<parameter name="JetClustering.YAddedForJetLeptonLepton" type="double" value="100"/> <!-- add penalty for combining leptons -->
-		
+	
 		<!-- vertex refiner parameters -->
 		<parameter name="JetVertexRefiner.InputJetCollectionName" type="string" value="VertexJets" />
 		<parameter name="JetVertexRefiner.OutputJetCollectionName" type="string" value="RefinedJets" />

@@ -36,10 +36,11 @@
 	<parameter name="JetClustering.YCut" type="doubleVec" value="0." /> <!-- specify 0 if not used -->
 
 	<parameter name="JetClustering.JetAlgorithm" type="string" value="DurhamVertex" /> <!-- jet algorithm -->
-	<parameter name="JetClustering.UseBeamJets" type="int" value="0" /> <!-- beam jet rejection -->
+	<parameter name="JetClustering.UseBeamJets" type="int" value="1" /> <!-- beam jet rejection -->
+	<parameter name="JetClustering.AlphaParameter" type="double" value="1.3" /> <!-- Coefficient of beam rejection, smaller is stronger rejection  -->
 
 	<parameter name="JetClustering.UseMuonID" type="int" value="1" /> <!-- jet-muon ID for jet clustering -->
-	<parameter name="JetClustering.MuonIDExternal" type="int" value="0" /> <!-- true to use LikelihoodPID, false for good-old simple one -->
+	<parameter name="JetClustering.MuonIDExternal" type="int" value="1" /> <!-- true to use LikelihoodPID, false for good-old simple one -->
 	<parameter name="JetClustering.MuonIDMinimumD0Significance" type="double" value="5." /> <!-- min D0 significance -->
 	<parameter name="JetClustering.MuonIDMinimumZ0Significance" type="double" value="5." /> <!-- min Z0 significance -->
 	<parameter name="JetClustering.MuonIDMaximum3DImpactParameter" type="double" value="5." /> <!-- max 3D significance -->

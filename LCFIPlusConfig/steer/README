@@ -4,6 +4,7 @@ Usage of steering files for LCFIPlus
 2012/5/7   T.Suehara initial description
 2012/5/15  T.Suehara bugfix in steering file
 2015/6/15  T.Suehara add v3 description
+2015/7/9   T.Suehara add beam rejection steer files in v3
 -- history end
 
 -- algorithms
