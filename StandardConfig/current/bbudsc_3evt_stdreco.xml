@@ -73,8 +73,8 @@
      <processor name="MySimpleMuonDigi"/>    
      
      <!-- ========== optionally: GARLIC ======= -->
-     <!--processor name="MyECALPreClustering"/> 
-     <processor name="MyGarlicProcessor"/-->  
+     <!--processor name="MyECALPreClustering"/--> 
+     <!--processor name="MyGarlicProcessor"/-->  
      
      <!-- ========== PFA ======= -->
      <!-- options to chose in processor steering: -->
@@ -82,6 +82,10 @@
      <processor name="MyMarlinPandora"/>
      <!-- < uncomment for JER studies /> -->
      <!-- <processor name="MyPfoAnalysis" /> -->
+
+     <!-- ========== covanriance matrix for charged PFOs  ======= -->
+     <!-- ========== should be done by MarlinPandora eventually ======= -->
+     <processor name="MyAdd4MomCovMatrixCharged"/>
 
      <!--processor name="MyBCalReco"/-->
 
@@ -1303,6 +1307,16 @@
   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
 </processor>
 
+<!--########## Add4MomCovMatrixCharged ###################################### -->
+<!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
+<processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+  <!--Name of the PandoraPFOs collection-->
+  <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
+  <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
+  <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
+</processor>
+
+
 <!--################################################ -->
 <processor name="MyBCalReco" type="BCalReco">
  <!--Filling Histograms with deposited energy from beamstrahlung pairs in BeamCal-->
@@ -1369,7 +1383,7 @@
   <!--Tau output collection-->
   <parameter name="OutputTauCollection" type="string" lcioOutType="ReconstructedParticle">TaJets </parameter>
   <!--Remained PFO collection not clustered-->
-  <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">RemainPFOs </parameter>
+  <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">TaJetsRemainPFOs </parameter>
   <!--  1. Clustering -->
   <!--Tau mass for tau clustering [GeV]-->
   <parameter name="TauMass" type="double">2 </parameter>
