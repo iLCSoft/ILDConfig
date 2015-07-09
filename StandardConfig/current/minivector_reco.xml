@@ -18,7 +18,12 @@
      <processor name="BgOverlay" />
 
      <!-- ========== track digitization and tracking  === -->
-     <processor name="VXDPlanarDigiProcessor"/>
+<!-- concerning the VXD digitisation, one can use one of the following VXD models-->
+<!-- DBD VXD, conservative CMOS design and ambitious CMOS design-->
+<!-- please not forget to consider the corresponding time resolutions when overlaying beam(pair)bkg!-->
+     <processor name="VXDPlanarDigiProcessor_DBDVXD"/>
+     <processor name="VXDPlanarDigiProcessor_CMOSVXD1"/>
+     <processor name="VXDPlanarDigiProcessor_CMOSVXD5"/>
 
      <processor name="SITPlanarDigiProcessor"/>
      <processor name="SITSpacePointBuilder" />
@@ -84,7 +89,7 @@
 
    <global>
       <parameter name="LCIOInputFiles">
-        ./bbudsc_3evt.slcio
+         ./bbudsc_3evt.slcio
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
       <parameter name="MaxRecordNumber" value="0"/>
@@ -97,7 +102,7 @@
  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
   <!--   standard output: full reconstruction keep all collections -->
   <parameter name="LCIOOutputFile" type="string" >
-       ./bbudsc_3evt_REC.slcio 
+      ./bbudsc_3evt_REC.slcio 
   </parameter>
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -193,7 +198,7 @@
 </processor>
 
 
- <processor name="VXDPlanarDigiProcessor" type="PlanarDigiProcessor">
+ <processor name="VXDPlanarDigiProcessor_CMOSVXD1" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <!--whether hits are 1D strip hits-->
    <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
@@ -211,7 +216,47 @@
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
  </processor>
- 
+
+ <processor name="VXDPlanarDigiProcessor_DBDVXD" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+   <!--whether hits are 1D strip hits-->
+   <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
+   <parameter name="IsStrip" type="bool">false </parameter>
+   <!--resolution in direction of u-->
+   <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004 </parameter>
+   <!--resolution in direction of v-->
+   <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004  </parameter>
+   <!--Name of the Input SimTrackerHit collection-->
+   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+   <!--Name of TrackerHit SimTrackHit relation collection-->
+   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+   <!--Name of the TrackerHit output collection-->
+   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+ </processor>
+
+
+ <processor name="VXDPlanarDigiProcessor_CMOSVXD5" type="PlanarDigiProcessor">
+   <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+   <!--whether hits are 1D strip hits-->
+   <!--Please edit single point resolution values according to the examined VXD design - here we had put an numbers of an example CMOS VXD-->
+   <parameter name="IsStrip" type="bool">false </parameter>
+   <!--resolution in direction of u-->
+   <parameter name="ResolutionU" type="float"> 0.003 0.003 0.003 0.003 0.003 0.003 </parameter>
+   <!--resolution in direction of v-->
+   <parameter name="ResolutionV" type="float"> 0.003 0.003 0.003 0.003 0.003 0.003  </parameter>
+   <!--Name of the Input SimTrackerHit collection-->
+   <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+   <!--Name of TrackerHit SimTrackHit relation collection-->
+   <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+   <!--Name of the TrackerHit output collection-->
+   <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+ </processor> 
+
+
 
  <processor name="SITPlanarDigiProcessor" type="PlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->

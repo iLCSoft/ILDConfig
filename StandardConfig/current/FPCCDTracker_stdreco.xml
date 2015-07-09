@@ -15,7 +15,7 @@
      
      <!-- =========  overlay gamma gamma background  === -->
      <!-- activate for production -->
-     <processor name="BgOverlay" />
+     <Xprocessor name="BgOverlay" />
 
      <!-- ========== track digitization and tracking  === -->
      <processor name="VXDPlanarDigiProcessor"/>
@@ -85,7 +85,7 @@
 
    <global>
       <parameter name="LCIOInputFiles">
-        ./bbudsc_3evt.slcio
+         ./bbudsc_3evt.slcio        
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
       <parameter name="MaxRecordNumber" value="0"/>
@@ -98,7 +98,7 @@
  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
   <!--   standard output: full reconstruction keep all collections -->
   <parameter name="LCIOOutputFile" type="string" >
-       ./bbudsc_3evt_REC.slcio 
+      ./bbudsc_3evt_REC.slcio 
   </parameter>
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -109,7 +109,7 @@
      DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
    -->
    <parameter name="LCIOOutputFile" type="string" >
-       ./bbudsc_3evt_DST.slcio 
+      ./bbudsc_3evt_DST.slcio         
    </parameter>
    <parameter name="DropCollectionTypes" type="StringVec"> 
        MCParticle 
