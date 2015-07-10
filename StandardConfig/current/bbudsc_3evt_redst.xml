@@ -1,0 +1,164 @@
+<!--
+      Example steering file to re-DST the 3 ttbar events 
+      reconstruction with standard DBD reconstruction.
+
+      Works with ilcsoft v01-17-08
+
+-->
+
+
+ <marlin>
+   
+   <execute>
+     <processor name="MyAIDAProcessor"/>
+     
+     <!-- ========== dE/dx   ================= -->
+     <processor name="MyCompute_dEdxProcessor"/>  
+
+     <!-- ========== covanriance matrix for charged PFOs  ======= -->
+     <processor name="MyAdd4MomCovMatrixCharged"/>
+
+     <!-- ========== Shower Profiles   ================= -->
+     <processor name="MyComputeShowerShapesProcessor"/>    
+
+     <!-- ========== particle ID ============================ -->
+     <processor name="MyLikelihoodPID" />
+
+     <processor name="DSTOutput"/>
+   </execute>
+
+   <global>
+      <parameter name="LCIOInputFiles">
+         ./bbudsc_3evt_REC.slcio
+      </parameter>
+      <parameter name="GearXMLFile" value="GearOutput.xml"/>
+      <parameter name="MaxRecordNumber" value="0"/>
+      <parameter name="SkipNEvents" value="0"/>
+      <parameter name="SupressCheck" value="false"/>
+      <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+      <parameter name="RandomSeed" value="1234567890" />
+   </global>
+
+ <processor name="DSTOutput" type="LCIOOutputProcessor">
+   <!--   
+     DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
+   -->
+   <parameter name="LCIOOutputFile" type="string" >
+       ./bbudsc_3evt_reDST.slcio 
+   </parameter>
+   <parameter name="DropCollectionTypes" type="StringVec"> 
+       MCParticle 
+       SimTrackerHit 
+       SimCalorimeterHit
+       TrackerHit 
+       TrackerHitPlane 
+       CalorimeterHit 
+       LCRelation
+       Track 
+       LCFloatVec      
+    </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
+    <parameter name="KeepCollectionNames" type="StringVec"> 
+      MCParticlesSkimmed 
+      MarlinTrkTracks
+      MCTruthMarlinTrkTracksLink
+      MarlinTrkTracksMCTruthLink
+      RecoMCTruthLink
+    </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
+ </processor>
+ 
+ <processor name="MyAIDAProcessor" type="AIDAProcessor">
+ <!--Processor that handles AIDA files. Creates on directory per processor.  Processors only need to create and fill the histograms, clouds and tuples. Needs to be the first ActiveProcessor-->
+  <!-- compression of output file 0: false >0: true (default) -->
+  <parameter name="Compress" type="int" value="1"/>
+  <!-- filename without extension-->
+  <parameter name="FileName" type="string" value="bbudsc_3evt_stdreco"/>
+  <!-- type of output file xml (default) or root ( only OpenScientist)-->
+  <parameter name="FileType" type="string" value="root "/>
+</processor>
+
+
+
+
+<!--- ############ dedx calculation processor ############# --->
+
+<processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
+  <!--Energy Loss Error for TPC-->
+  <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
+  <!--LDC Track collectoin name-->
+  <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+</processor>
+
+
+<!--################   MyPfoAnalysis  ################################ -->
+
+<processor name="MyPfoAnalysis" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticleSkimmed </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PfoAnalysis.root  </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+<!--########## Add4MomCovMatrixCharged ###################################### -->
+
+<!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
+<processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+  <!--Name of the PandoraPFOs collection-->
+  <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
+  <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
+  <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
+</processor>
+
+<!--################################################ -->
+
+
+ <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
+  <!--Performs Shower profile extraction-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+  <!--Name of the Cluster collection-->
+  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+  <!-- Radiation Length of Ecal-->
+  <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
+  <!-- Radiation Length of Hcal-->
+  <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
+  <!-- Moliere radius of Ecal-->
+  <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
+  <!-- Moliere radius of Hcal-->
+  <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
+  </processor>
+
+<!--################################################ -->
+
+ <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+  <!--Performs particle identification-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">1 </parameter>
+  <!--Boundaries for energy binning-->
+  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+  <!--Name of files containing pdfs for charged particles-->
+  <parameter name="FilePDFName" type="StringVec">
+    LikelihoodPID_Histogram_v01.root
+  </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+ </processor>
+
+<!--################################################ -->
+
+
+
+
+  
+</marlin>
