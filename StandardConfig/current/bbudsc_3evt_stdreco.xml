@@ -44,9 +44,9 @@
       
      <!-- ========== central silicon tracking =============== -->
      <!-- ========== standard DBD version =============== -->
-     <processor name="MySiliconTracking_MarlinTrk"/>  
+     <!--processor name="MySiliconTracking_MarlinTrk"/-->  
      <!-- ========== mini-vectors - make sure you use matching digitizer! =============== -->
-     <!--processor name="MyCellsAutomatonMV"/-->
+     <processor name="MyCellsAutomatonMV"/>
      <!-- ========== FPCCD - make sure you use matching digitizer! =============== -->
      <!--processor name="MyFPCCDSiliconTracking_MarlinTrk"/-->  
      
@@ -87,17 +87,17 @@
      <!-- ========== should be done by MarlinPandora eventually ======= -->
      <processor name="MyAdd4MomCovMatrixCharged"/>
 
-     <!--processor name="MyBCalReco"/-->
+     <!-- ========== BeamCal ======= -->
+     <processor name="MyBCalReco"/>
 
      <!-- ========== Shower Profiles   ================= -->
      <processor name="MyComputeShowerShapesProcessor"/>    
 
      <!-- ========== particle ID ============================ -->
-     <!-- this at the moment works only with MarlinReco as of v01-17-07, not with the head version -->
-     <!--processor name="MyLikelihoodPID" /-->
+     <processor name="MyLikelihoodPID" />
 
      <!-- ========== tau finding ============================ -->
-     <processor name="MyTauFinder" />
+     <!--processor name="MyTauFinder" /-->
 
      <!-- ========== full and DST output ==================== -->
      <processor name="MyRecoMCTruthLinker"/>
@@ -1249,7 +1249,7 @@
   <!--============= with improved photon finding by Bono ===================== -->
   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter>
   <!--============= with photons from Garlic  -- this does not work yet! ===================== -->
-  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettings_ILD_o1_v05_SiW_5x5_Garlic.xml </parameter-->
+  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsGarlic.xml </parameter-->
   <!-- Collection names -->
   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
   <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>

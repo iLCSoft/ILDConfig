@@ -1,0 +1,102 @@
+<!--
+      Example steering file to run a standard reconstruction on the 3 ttbar events 
+      simulated with Mokka in this example directory.
+
+      Works with ilcsoft v01-17-07 
+
+      Defines the standard reconstruction for ILD.
+-->
+
+
+ <marlin>
+   
+   <execute>
+     <processor name="MyAIDAProcessor"/>
+     
+
+     <!-- ========== tau finding ============================ -->
+     <processor name="MyTauFinder" />
+
+     <processor name="postDSTOutput"/>
+   </execute>
+
+   <global>
+      <parameter name="LCIOInputFiles">
+         ./bbudsc_3evt_DST.slcio
+      </parameter>
+      <parameter name="GearXMLFile" value="GearOutput.xml"/>
+      <parameter name="MaxRecordNumber" value="0"/>
+      <parameter name="SkipNEvents" value="0"/>
+      <parameter name="SupressCheck" value="false"/>
+      <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+      <parameter name="RandomSeed" value="1234567890" />
+   </global>
+
+ <processor name="postDSTOutput" type="LCIOOutputProcessor">
+  <!--   standard output: full reconstruction keep all collections -->
+  <parameter name="LCIOOutputFile" type="string" >
+      ./bbudsc_3evt_postDST.slcio  
+  </parameter>
+  <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+  <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
+ </processor>
+
+<!--##############   AIDA   ########################## -->
+ 
+ <processor name="MyAIDAProcessor" type="AIDAProcessor">
+ <!--Processor that handles AIDA files. Creates on directory per processor.  Processors only need to create and fill the histograms, clouds and tuples. Needs to be the first ActiveProcessor-->
+  <!-- compression of output file 0: false >0: true (default) -->
+  <parameter name="Compress" type="int" value="1"/>
+  <!-- filename without extension-->
+  <parameter name="FileName" type="string" value="bbudsc_3evt_stdreco"/>
+  <!-- type of output file xml (default) or root ( only OpenScientist)-->
+  <parameter name="FileType" type="string" value="root "/>
+</processor>
+
+
+
+<!--################################################ -->
+
+ <processor name="MyTauFinder" type="TaJetClustering">
+  <!--Performs tau jet finding>
+  <!--  0. Collections -->
+  <!--Input PFO collection-->
+  <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <!--Tau output collection-->
+  <parameter name="OutputTauCollection" type="string" lcioOutType="ReconstructedParticle">TaJets </parameter>
+  <!--Remained PFO collection not clustered-->
+  <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">TaJetsRemainPFOs </parameter>
+  <!--  1. Clustering -->
+  <!--Tau mass for tau clustering [GeV]-->
+  <parameter name="TauMass" type="double">2 </parameter>
+  <!--Allowed cosine angle to be clustered-->
+  <parameter name="TauCosAngle" type="double">0.98 </parameter>
+  <!--  2. Primary cut -->
+  <!-- Skip ANY Primary and Cone cuts if true: should be only used in lepton-only final states! -->
+  <parameter name="NoSelection" type="int">0 </parameter>
+
+  <!--Primary cut include IMPLICIT selection of accepting only 1 or 3 tracks in jets:
+              this loosen the counting of low energy tracks-->
+  <parameter name="AcceptFlexibleLowEnergyTrack" type="int">1 </parameter>
+  <!--Minimum jet energy to be accepted as taus-->
+  <parameter name="MinimumJetEnergy" type="double">3 </parameter>
+  <!--Minimum track energy to be accepted as taus-->
+  <parameter name="MinimumTrackEnergy" type="double">2 </parameter>
+  <!--Minimum track energy to be counted-->
+  <parameter name="MinimumTrackEnergyAssoc" type="double">2 </parameter>
+  <!--  3. Cone cut: currently simple 1D cut -->
+  <!-- No cone selection if true -->
+  <parameter name="NoSelection" type="int">0 </parameter>
+
+  <!--Minimum cosine angle for cone-->
+  <parameter name="ConeMinCosAngle" type="double">0.9 </parameter>
+  <!--Maximum cosine angle for cone-->
+  <parameter name="ConeMaxCosAngle" type="double">1 </parameter>
+  <!--Energy fraction of cone compared to central-->
+  <parameter name="ConeMaxEnergyFrac" type="double">0.1 </parameter>
+ </processor>
+
+
+<!--################################################ -->
+
+</marlin>
