@@ -96,7 +96,7 @@
      <!-- ========== particle ID ============================ -->
      <processor name="MyLikelihoodPID" />
 
-     <!-- ========== tau finding ============================ -->
+     <!-- ========== tau finding (moved to postDST.xml) =========== -->
      <!--processor name="MyTauFinder" /-->
 
      <!-- ========== full and DST output ==================== -->
@@ -1259,7 +1259,7 @@
   <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
   <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
   <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
-  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCP</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
   <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
   <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
   <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>

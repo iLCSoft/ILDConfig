@@ -435,6 +435,7 @@
     <!-- Particle flow object modification algorithms -->
     <algorithm type = "FinalParticleId"/>
     <algorithm type = "V0PfoCreation"/>
+    <!-- for DEBUGGING / MONITORING : NEED TO RUN RecoMCTruthLink BEFORE Pandora! --->
     <!--algorithm type = "DumpPfosMonitoring"/-->
     <!--algorithm type = "VisualMonitoring"/-->
 </pandora>
