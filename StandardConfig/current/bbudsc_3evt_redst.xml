@@ -11,6 +11,15 @@
    
    <execute>
      <processor name="MyAIDAProcessor"/>
+    
+     <!-- ========== Remove BCal clusters and PFOs from Pandora output  ======== -->
+     <!-- Needed to avoid using clusters and PFOs made by Pandora
+     using BCal information. RecoMCTruthLinker will complain
+     a lot about missing true--Seen connection if this is not done -->
+     <processor name="MyNoPandoraBcal"/>
+     
+     <!-- ========== RecoMCTruthLinker   ================= -->
+     <processor name="MyRecoMCTruthLinker"/>
      
      <!-- ========== dE/dx   ================= -->
      <processor name="MyCompute_dEdxProcessor"/>  
@@ -29,14 +38,14 @@
 
    <global>
       <parameter name="LCIOInputFiles">
-         ./bbudsc_3evt_REC.slcio
-      </parameter>
+        /pnfs/desy.de/ilc/prod/ilc/mc-dbd/ild/rec/500-TDR_ws/aa_4f/ILD_o1_v05/v01-16-p05_500/rv01-16-p05_500.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I37417.Paa_xxyy.eW.pW-00001-REC.slcio      </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
-      <parameter name="MaxRecordNumber" value="0"/>
+      <parameter name="MaxRecordNumber" value="2"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
       <parameter name="RandomSeed" value="1234567890" />
+      <parameter name="AllowToModifyEvent" value="true" />
    </global>
 
  <processor name="DSTOutput" type="LCIOOutputProcessor">
@@ -44,7 +53,7 @@
      DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
    -->
    <parameter name="LCIOOutputFile" type="string" >
-       ./bbudsc_3evt_reDST.slcio 
+     example_reDST.slcio
    </parameter>
    <parameter name="DropCollectionTypes" type="StringVec"> 
        MCParticle 
@@ -79,7 +88,156 @@
   <parameter name="FileType" type="string" value="root "/>
 </processor>
 
+<!--################   fix BeamCal duplication  ################################ -->
 
+ <processor name="MyNoPandoraBcal" type="NoPandoraBcal">
+   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
+   <!-- Inputs. These are the defauls -->
+   <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle">
+      PandoraPFOs
+   </parameter>
+   <parameter name="CluCollectionName" type="string" lcioInType="ReconstructedParticle">
+      PandoraClusters
+   </parameter>
+
+   <!-- Outputs. These are the defaults. They are sub-set collections of the inputs,
+     so don't try to write them out to the DST -->
+   <parameter name="NewRecoCollectionName" type="string" lcioInType="ReconstructedParticle">
+      PandoraPFOsnoBcal
+   </parameter>
+   <parameter name="NewCluCollectionName" type="string" lcioInType="ReconstructedParticle">
+      PandoraClustersnoBcal
+   </parameter>
+
+</processor>
+
+<!--- ############ RecoMCTruthLink ############# --->
+ <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
+   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
+
+   <!--  Input collections: mcparticles, pfos, clusters and tracks 
+         PFOs already connect to tracks and clusters, so what we do in this processor is to connect
+         tracks and clusters to mcparticles ... 
+         The values given here are the defaults, so they don't really need to be
+         specified -->
+   <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> 
+         MCParticle 
+   </parameter>
+   <!-- (Default of these two ar PandoraPFOs and PandoraClusters. Use the one below to fix the 
+         BCal problem. Clearly NoPandoraBcal must have been run before for them to exists ! ) -->
+   <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle">
+         PandoraPFOsnoBcal
+   </parameter>
+   <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> 
+         PandoraClustersnoBcal
+   </parameter>
+
+   <parameter name="TrackCollection" type="string" lcioInType="Track"> 
+         MarlinTrkTracks 
+   </parameter>
+
+
+   <!-- Don't change any of these hit related collections if you're not very sure you know what you are doing.
+        In any case, the ones listed here are the defaults, so they can be removed from
+        this steering -->
+   <!--  Simulated tracker hits (has the conection to MCParticles -->
+   <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">
+         VXDCollection 
+         SITCollection 
+         FTD_PIXELCollection 
+         FTD_STRIPCollection 
+         TPCCollection 
+         SETCollection  
+  </parameter>
+  <!--  Connections from tracker hits (connected to tracks) to sim tracker hits (connects to MC particle) -->
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">
+         VXDTrackerHitRelations 
+         SITSpacePointRelations
+         FTDSpacePointRelations
+         FTDPixelTrackerHitRelations 
+         TPCTrackerHitRelations 
+         SETSpacePointRelations 
+</parameter>
+ <!-- same for the calos: Simulated calo hits (has the connection to MCParticles) -->
+ <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
+         BeamCalCollection
+         EcalBarrelSiliconCollection
+         EcalBarrelSiliconPreShowerCollection
+         EcalEndcapRingCollection
+         EcalEndcapRingPreShowerCollection
+         EcalEndcapSiliconCollection
+         EcalEndcapSiliconPreShowerCollection
+         HcalBarrelRegCollection
+         HcalEndCapRingsCollection
+         HcalEndCapsCollection
+         LHcalCollection
+         LumiCalCollection
+         MuonBarrelCollection
+         MuonEndCapCollection
+  </parameter> 
+  <!-- Connections from calo hist (connected to clusters) tp sim calo hits  (connects to MC particle) -->
+  <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
+         RelationCaloHit
+         RelationLHcalHit
+         RelationMuonHit
+         RelationLcalHit
+         <!-- this is missing in DBD
+         RelationBCalHit
+          -->
+  </parameter> 
+
+  <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
+  <parameter name="KeepDaughtersPDG" type="IntVec"> 
+         22 111 310 13 211 321
+  </parameter>
+
+
+  <!--Names of the output collections -->
+
+
+  <!-- reduced MCParticle collection. Default is MCParticlesSkimmed, but that clashes
+       with the name already on the input RECO-file -->
+  <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> 
+         MCParticlesSkimmedNew 
+  </parameter>
+  <!-- links between tracks or clusters and mcparticles. The two sets differ
+       in what the weight means. These four will only be output if the
+       name is given here in the steering -->
+  <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> 
+         MCTruthTrackLink 
+  </parameter>
+  <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> 
+         TrackMCTruthLink 
+  </parameter>
+  <parameter name="ClusterMCTruthLinkName" type="string" lcioOutType="LCRelation"> 
+         ClusterMCTruthLink 
+  </parameter>
+  <parameter name="MCTruthClusterLinkName" type="string" lcioOutType="LCRelation"> 
+         MCTruthClusterLink 
+  </parameter>
+
+  <!-- Link between seen calorimeter hits (connected to clusters) and MCParticles. 
+       Also only output if the name is given here -->
+  <parameter name="CalohitMCTruthLinkName" type="string" lcioOutType="LCRelation"> 
+         CalohitMCTruthLink 
+  </parameter>
+
+  <!-- Links PFO <-> MCParticles. Only RecoMCTruthLink is output by default,
+       to also get the reverse link, MCTruthRecoLinkName must be given here -->
+  <!-- Also here, the default (RecoMCTruthLink) needs to be changed to avoid clashes  with
+       the input -->
+  <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> 
+         RecoMCTruthLinkNew 
+  </parameter>
+  <parameter name="MCTruthRecoLinkName" type="string" lcioOutType="LCRelation"> 
+         MCTruthRecoLink 
+  </parameter>
+  <!-- set to true to get the weights in RecoMCTruthLink to include both weights to
+       tracks and clusters. False implies that only the true particle that
+       gives most contributions to the track of the PFO (charged PFOs), or
+       to the cluster (neutral ones) is linked to the PFO -->
+  <parameter name="FullRecoRelation" type="bool">1</parameter>
+</processor>
 
 
 <!--- ############ dedx calculation processor ############# --->
@@ -97,9 +255,9 @@
 <processor name="MyPfoAnalysis" type="PfoAnalysis">
   <!--PfoAnalysis analyses output of PandoraPFANew-->
   <!--Names of input pfo collection-->
-  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsnoBcal </parameter>
   <!--Names of mc particle collection-->
-  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticleSkimmed </parameter>
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticleSkimmedNew </parameter>
   <!--Set the debug print level-->
   <parameter name="Printing" type="int">0 </parameter>
   <!--Name of the output root file-->
@@ -112,7 +270,8 @@
 
 <!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
 <processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
-  <!--Name of the PandoraPFOs collection-->
+  <!-- Name of the PandoraPFOs collection   --> 
+  <!-- (here it is ok to leave PandoraPFOs, since the "noBCal" is subset of it)  -->
   <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
   <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
@@ -126,9 +285,10 @@
   <!--Debugging?-->
   <parameter name="Debug" type="int">0 </parameter>
   <!--Name of the PFO collection-->
-  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+  <!--  NO BCAL HERE -->
+  <parameter name="PFOCollection" type="string"> PandoraPFOsnoBcal </parameter>
   <!--Name of the Cluster collection-->
-  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+  <parameter name="ClusterCollectionName" type="string"> PandoraClustersnoBcal </parameter>
   <!-- Radiation Length of Ecal-->
   <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
   <!-- Radiation Length of Hcal-->
@@ -173,7 +333,8 @@
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_20GeVP_clusterinfo.weights.xml
   </parameter>
   <!--Name of the PFO collection-->
-  <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+  <!--  NO BCAL HERE -->
+  <parameter name="RecoParticleCollection" type="string">PandoraPFOsnoBcal</parameter>
  </processor>
 
 <!--################################################ -->

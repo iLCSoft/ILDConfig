@@ -1,8 +1,8 @@
 <!--
-      Example steering file to run a standard reconstruction on the 3 ttbar events 
+      Example steering file to run the standard reconstruction on the 3 ttbar events 
       simulated with Mokka in this example directory.
 
-      Works with ilcsoft v01-17-07 
+      Works with ilcsoft v01-17-08
 
       Defines the standard reconstruction for ILD.
 -->
@@ -15,15 +15,15 @@
      
      <!-- =========  overlay gamma gamma background  === -->
      <!-- activate for production -->
-     <!--processor name="BgOverlay" /-->
+     <!-- processor name="BgOverlay" /-->
 
      <!-- ========== track digitization and tracking  === -->
 <!-- concerning the VXD digitisation, one can use one of the following VXD models-->
 <!-- DBD VXD, conservative CMOS design and ambitious CMOS design, cf  -->
 <!-- please not forget to consider the corresponding time resolutions when overlaying beam(pair)bkg!-->
      <!--processor name="VXDPlanarDigiProcessor_DBDVXD"/-->
-     <processor name="VXDPlanarDigiProcessor_CMOSVXD1"/>
-     <!--processor name="VXDPlanarDigiProcessor_CMOSVXD5"/-->
+     <!--processor name="VXDPlanarDigiProcessor_CMOSVXD1"/-->
+     <processor name="VXDPlanarDigiProcessor_CMOSVXD5"/>
 
 
      <processor name="SITPlanarDigiProcessor"/>
@@ -114,7 +114,7 @@
         ./bbudsc_3evt.slcio 
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
-      <parameter name="MaxRecordNumber" value=""/>
+      <parameter name="MaxRecordNumber" value="0"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
@@ -124,7 +124,7 @@
  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
   <!--   standard output: full reconstruction keep all collections -->
   <parameter name="LCIOOutputFile" type="string" >
-      ./bbudsc_3evt_REC.slcio  
+      ./bbudsc_3evt_REC.slcio
   </parameter>
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -154,7 +154,10 @@
       MarlinTrkTracks
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
+      MCTruthClusterLink
+      ClusterMCTruthLink
       RecoMCTruthLink
+      MCTruthRecoLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -207,7 +210,7 @@
   <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
 
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string"> DEBUG5 </parameter-->
+  <parameter name="Verbosity" type="string"> WARNING </parameter>
 
   <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
   <parameter name="expBG" type="double">4.1 </parameter>
@@ -1048,16 +1051,16 @@
 
  <processor name="MySimpleBCalDigi" type="SimpleLCalDigi">
  <!--Performs simple digitization of sim calo hits...-->
-  <!--Calibration coefficients for LCAL-->
-  <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>
-  <!--LCAL Collection Names-->
-  <parameter name="LCALCollections" type="StringVec">BeamCalCollection</parameter>
-  <!--LCAL Collection of real Hits-->
-  <parameter name="LCALOutputCollection" type="string">BCAL</parameter>
-  <!--Threshold for LCAL Hits in GeV-->
-  <parameter name="LCALThreshold" type="float">1e-06 </parameter>
-  <!--MuonHit Relation Collection-->
-  <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
+   <!--Calibration coefficients for LCAL-->
+   <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>
+   <!--LCAL Collection Names-->
+   <parameter name="LCALCollections" type="StringVec">BeamCalCollection</parameter>
+   <!--LCAL Collection of real Hits-->
+   <parameter name="LCALOutputCollection" type="string">BCAL</parameter>
+   <!--Threshold for LCAL Hits in GeV-->
+   <parameter name="LCALThreshold" type="float">1e-06 </parameter>
+   <!--BCalHit Relation Collection-->
+   <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
 </processor>
 
 <!--######  SimpleLCalDigi ##########################################-->
@@ -1080,35 +1083,35 @@
 
  <processor name="MySimpleLHCalDigi" type="SimpleLHCalDigi">
  <!--Performs simple digitization of sim calo hits...-->
-  <!--Calibration coefficients for LHCAL-->
-  <parameter name="CalibrLHCAL" type="FloatVec">150</parameter>
-  <!--LHCAL Collection Names-->
-  <parameter name="LHCALCollections" type="StringVec"> LHcalCollection</parameter>
-  <!--LHCAL Collection of real Hits-->
-  <parameter name="LHCALOutputCollection" type="string">LHCAL </parameter>
-  <!--Threshold for LHCAL Hits in GeV-->
-  <parameter name="LHCALThreshold" type="float">1e-06 </parameter>
-  <!--LHCALHit Relation Collection-->
-  <parameter name="RelationOutputCollection" type="string">RelationLHcalHit </parameter>
+   <!--Calibration coefficients for LHCAL-->
+   <parameter name="CalibrLHCAL" type="FloatVec">150</parameter>
+   <!--LHCAL Collection Names-->
+   <parameter name="LHCALCollections" type="StringVec"> LHcalCollection</parameter>
+   <!--LHCAL Collection of real Hits-->
+   <parameter name="LHCALOutputCollection" type="string">LHCAL </parameter>
+   <!--Threshold for LHCAL Hits in GeV-->
+   <parameter name="LHCALThreshold" type="float">1e-06 </parameter>
+   <!--LHCALHit Relation Collection-->
+   <parameter name="RelationOutputCollection" type="string">RelationLHcalHit </parameter>
 </processor>
 
 <!--######  SimpleMuonDigi ##########################################-->
 
  <processor name="MySimpleMuonDigi" type="SimpleMuonDigi">
  <!--Performs simple digitization of sim calo hits...-->
-  <!--Calibration coefficients for MUON-->
-  <parameter name="CalibrMUON" type="FloatVec">56.7</parameter>
-  <!-- maximum hit energy for a MUON hit -->
-  <parameter name="MaxHitEnergyMUON" type="float">2.0</parameter>
-  <!--MUON Collection Names-->
-  <parameter name="MUONCollections" type="StringVec">
+   <!--Calibration coefficients for MUON-->
+   <parameter name="CalibrMUON" type="FloatVec">56.7</parameter>
+   <!-- maximum hit energy for a MUON hit -->
+   <parameter name="MaxHitEnergyMUON" type="float">2.0</parameter>
+   <!--MUON Collection Names-->
+   <parameter name="MUONCollections" type="StringVec">
    MuonBarrelCollection MuonEndCapCollection</parameter>
-  <!--MUON Collection of real Hits-->
-  <parameter name="MUONOutputCollection" type="string">MUON </parameter>
-  <!--Threshold for MUON Hits in GeV-->
-  <parameter name="MUONThreshold" type="float">1e-06 </parameter>
-  <!--MuonHit Relation Collection-->
-  <parameter name="RelationOutputCollection" type="string">RelationMuonHit </parameter>
+   <!--MUON Collection of real Hits-->
+   <parameter name="MUONOutputCollection" type="string">MUON </parameter>
+   <!--Threshold for MUON Hits in GeV-->
+   <parameter name="MUONThreshold" type="float">1e-06 </parameter>
+   <!--MuonHit Relation Collection-->
+   <parameter name="RelationOutputCollection" type="string">RelationMuonHit </parameter>
 </processor>
 
 <!--########## GARLIC ###################################### -->
@@ -1361,16 +1364,14 @@
 
 <!--################################################ -->
  <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
-  <!--Performs particle identification-->
-  <!--Debugging?-->
-  <parameter name="Debug" type="int">1 </parameter>
-  <!--Boundaries for energy binning-->
-  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
-  <!--Name of files containing pdfs for charged particles-->
-  <parameter name="FilePDFName" type="StringVec">
-    LikelihoodPID_Histogram_v01.root
-  </parameter>
- <parameter name="FileWeightFormupiSeparationName" type="std::vector< std::string >">
+ <!--Performs particle identification-->
+   <!--Debugging?-->
+   <parameter name="Debug" type="int">1 </parameter>
+   <!--Boundaries for energy binning-->
+   <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+   <!--Name of files containing pdfs for charged particles-->
+   <parameter name="FilePDFName" type="StringVec"> LikelihoodPID_Histogram_v01.root </parameter>
+   <parameter name="FileWeightFormupiSeparationName" type="std::vector< std::string >">
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_03GeVP_clusterinfo.weights.xml
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_04GeVP_clusterinfo.weights.xml
@@ -1390,49 +1391,49 @@
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_18GeVP_clusterinfo.weights.xml
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_19GeVP_clusterinfo.weights.xml
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_20GeVP_clusterinfo.weights.xml
-  </parameter>
-  <!--Name of the PFO collection-->
-  <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+   </parameter>
+   <!--Name of the PFO collection-->
+   <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
  </processor>
 
 <!--################################################ -->
  <processor name="MyTauFinder" type="TaJetClustering">
-  <!--Performs tau jet finding>
-  <!--  0. Collections -->
-  <!--Input PFO collection-->
-  <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
-  <!--Tau output collection-->
-  <parameter name="OutputTauCollection" type="string" lcioOutType="ReconstructedParticle">TaJets </parameter>
-  <!--Remained PFO collection not clustered-->
-  <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">TaJetsRemainPFOs </parameter>
-  <!--  1. Clustering -->
-  <!--Tau mass for tau clustering [GeV]-->
-  <parameter name="TauMass" type="double">2 </parameter>
-  <!--Allowed cosine angle to be clustered-->
-  <parameter name="TauCosAngle" type="double">0.98 </parameter>
-  <!--  2. Primary cut -->
-  <!-- Skip ANY Primary and Cone cuts if true: should be only used in lepton-only final states! -->
-  <parameter name="NoSelection" type="int">0 </parameter>
+ <!--Performs tau jet finding>
+   <!--  0. Collections -->
+   <!--Input PFO collection-->
+   <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+   <!--Tau output collection-->
+   <parameter name="OutputTauCollection" type="string" lcioOutType="ReconstructedParticle">TaJets </parameter>
+   <!--Remained PFO collection not clustered-->
+   <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">TaJetsRemainPFOs </parameter>
+   <!--  1. Clustering -->
+   <!--Tau mass for tau clustering [GeV]-->
+   <parameter name="TauMass" type="double">2 </parameter>
+   <!--Allowed cosine angle to be clustered-->
+   <parameter name="TauCosAngle" type="double">0.98 </parameter>
+   <!--  2. Primary cut -->
+   <!-- Skip ANY Primary and Cone cuts if true: should be only used in lepton-only final states! -->
+   <parameter name="NoSelection" type="int">0 </parameter>
 
-  <!--Primary cut include IMPLICIT selection of accepting only 1 or 3 tracks in jets:
+   <!--Primary cut include IMPLICIT selection of accepting only 1 or 3 tracks in jets:
               this loosen the counting of low energy tracks-->
-  <parameter name="AcceptFlexibleLowEnergyTrack" type="int">1 </parameter>
-  <!--Minimum jet energy to be accepted as taus-->
-  <parameter name="MinimumJetEnergy" type="double">3 </parameter>
-  <!--Minimum track energy to be accepted as taus-->
-  <parameter name="MinimumTrackEnergy" type="double">2 </parameter>
-  <!--Minimum track energy to be counted-->
-  <parameter name="MinimumTrackEnergyAssoc" type="double">2 </parameter>
-  <!--  3. Cone cut: currently simple 1D cut -->
-  <!-- No cone selection if true -->
-  <parameter name="NoSelection" type="int">0 </parameter>
+   <parameter name="AcceptFlexibleLowEnergyTrack" type="int">1 </parameter>
+   <!--Minimum jet energy to be accepted as taus-->
+   <parameter name="MinimumJetEnergy" type="double">3 </parameter>
+   <!--Minimum track energy to be accepted as taus-->
+   <parameter name="MinimumTrackEnergy" type="double">2 </parameter>
+   <!--Minimum track energy to be counted-->
+   <parameter name="MinimumTrackEnergyAssoc" type="double">2 </parameter>
+   <!--  3. Cone cut: currently simple 1D cut -->
+   <!-- No cone selection if true -->
+   <parameter name="NoSelection" type="int">0 </parameter>
 
-  <!--Minimum cosine angle for cone-->
-  <parameter name="ConeMinCosAngle" type="double">0.9 </parameter>
-  <!--Maximum cosine angle for cone-->
-  <parameter name="ConeMaxCosAngle" type="double">1 </parameter>
-  <!--Energy fraction of cone compared to central-->
-  <parameter name="ConeMaxEnergyFrac" type="double">0.1 </parameter>
+   <!--Minimum cosine angle for cone-->
+   <parameter name="ConeMinCosAngle" type="double">0.9 </parameter>
+   <!--Maximum cosine angle for cone-->
+   <parameter name="ConeMaxCosAngle" type="double">1 </parameter>
+   <!--Energy fraction of cone compared to central-->
+   <parameter name="ConeMaxEnergyFrac" type="double">0.1 </parameter>
  </processor>
 
 
@@ -1442,37 +1443,107 @@
 
  <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
  <!--links RecontructedParticles to the MCParticle based on number of hits used-->
-  <!--Name of the MCParticle input collection-->
-  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
-  <!--Name of the ReconstructedParticles input collection-->
-  <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
-  <!--Name of the  SimCalorimeterHit - CalorimeterHit relation-->
-  <parameter name="SimCalorimeterHitRelationName" type="string" lcioInType="LCRelation"> RelationCaloHit </parameter>
-  <!--Name of the Tracks input collection-->
-  <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
-  <!--Name of the trackMCTruthLink output collection - not created if empty()-->
-  <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> MarlinTrkTracksMCTruthLink </parameter>
-  <!--Name of the MCParticle to Track relation output collection - not created if empty()-->
-  <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthMarlinTrkTracksLink </parameter>
+   
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
+   
+   <!--  Input collections: mcparticles, pfos, clusters and tracks 
+         PFOs already connect to tracks and clusters, so what we do in this processor is to connect
+         tracks and clusters to mcparticles ... 
+         The values given here are the defaults, so they don't really need to be
+         specified -->
+   <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
+   <!--Name of the ReconstructedParticles input collection-->
+   <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+   <!--Name of the Cluster collection -->
+   <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters </parameter>
+   <!--Name of the Tracks input collection-->
+   <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
+  
+   <!-- Don't change any of these hit related collections if you're not very sure you know what you are doing.
+        In any case, the ones listed here are the defaults, so they can be removed from
+        this steering -->
+   <!--  Simulated tracker hits (has the conection to MCParticles -->
+   <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">
+     VXDCollection 
+     SITCollection 
+     FTD_PIXELCollection 
+     FTD_STRIPCollection 
+     TPCCollection 
+     SETCollection  
+   </parameter>
+   <!--  Connections from tracker hits (connected to tracks) to sim tracker hits (connects to MC particle) -->
+   <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">
+     VXDTrackerHitRelations 
+     SITSpacePointRelations 
+     FTDPixelTrackerHitRelations 
+     FTDSpacePointRelations 
+     TPCTrackerHitRelations 
+     SETSpacePointRelations  
+   </parameter>
+   <!-- same for the calos: Simulated calo hits (has the connection to MCParticles) -->
+   <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
+     BeamCalCollection
+     EcalBarrelSiliconCollection
+     EcalBarrelSiliconPreShowerCollection
+     EcalEndcapRingCollection
+     EcalEndcapRingPreShowerCollection
+     EcalEndcapSiliconCollection
+     EcalEndcapSiliconPreShowerCollection
+     HcalBarrelRegCollection
+     HcalEndCapRingsCollection
+     HcalEndCapsCollection
+     LHcalCollection
+     LumiCalCollection
+     MuonBarrelCollection
+     MuonEndCapCollection
+   </parameter> 
+   <!-- Connections from calo hist (connected to clusters) tp sim calo hits  (connects to MC particle) -->
+   <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
+     RelationCaloHit
+     RelationLHcalHit
+     RelationMuonHit
+     RelationLcalHit
+     <!-- this is missing in DBD
+     RelationBCalHit
+     -->
+   </parameter> 
+   
+   <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
+   <parameter name="KeepDaughtersPDG" type="IntVec"> 22 111 310 13 211 321</parameter>
+   
+   <!--Names of the output collections -->
    <!--Name of the skimmed MCParticle  output collection-->
-  <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
-  <!--Name of the RecoMCTruthLink output collection-->
-  <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
-  <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
-  <parameter name="KeepDaughtersPDG" type="IntVec"> 22 111 310 13 211 321</parameter>
-  <!--true: use relations for TrackerHits, false : use getRawHits -->
-  <parameter name="UseTrackerHitRelations" type="bool">true </parameter>
-  <!--If Using Particle Gun Ignore Gen Stat-->
-  <parameter name="UsingParticleGun" type="bool">false </parameter>
-  <!--Names of the SimTrackerHits input collection-->
-  <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">VXDCollection SITCollection FTD_PIXELCollection FTD_STRIPCollection TPCCollection SETCollection  </parameter>
-  <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. -->
-  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string"> DEBUG </parameter-->
-  </processor>
+   <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
+   
+   <!-- links between tracks or clusters and mcparticles. The two sets differ
+        in what the weight means. These four will only be output if the
+        name is given here in the steering -->
+   <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthMarlinTrkTracksLink </parameter>  
+   <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> MarlinTrkTracksMCTruthLink </parameter>
+   <parameter name="MCTruthClusterLinkName" type="string" lcioOutType="LCRelation"> MCTruthClusterLink </parameter>
+   <parameter name="ClusterMCTruthLinkName" type="string" lcioOutType="LCRelation"> ClusterMCTruthLink </parameter>
 
 
+   <!-- Links PFO <-> MCParticles. Only RecoMCTruthLink is output by default,
+        to also get the reverse link, MCTruthRecoLinkName must be given here -->
+   <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
+   <parameter name="MCTruthRecoLinkName" type="string" lcioOutType="LCRelation"> MCTruthRecoLink </parameter>
+   <!-- set to true to get the weights in RecoMCTruthLink to include both weights to
+        tracks and clusters. False implies that only the true particle that
+        gives most contributions to the track of the PFO (charged PFOs), or
+        to the cluster (neutral ones) is linked to the PFO -->
+   <parameter name="FullRecoRelation" type="bool"> true </parameter>
+   
+   <!-- further options -->
+   <!--true: use relations for TrackerHits, false : use getRawHits -->
+   <parameter name="UseTrackerHitRelations" type="bool"> true </parameter>
+   <!--If Using Particle Gun Ignore Gen Stat-->
+   <parameter name="UsingParticleGun" type="bool"> false </parameter>
+ </processor>
+
+
+<!--################################################ -->
   <processor name="VertexFinder" type="LcfiplusProcessor">
 
     <!-- run primary and secondary vertex finders -->
