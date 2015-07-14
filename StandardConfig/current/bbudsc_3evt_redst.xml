@@ -55,8 +55,9 @@
    <parameter name="LCIOOutputFile" type="string" >
      example_reDST.slcio
    </parameter>
-   <parameter name="DropCollectionTypes" type="StringVec"> 
-       MCParticle 
+    <!-- collections of these types will be dropped, unless specified below -->
+   <parameter name="DropCollectionTypes" type="StringVec">  
+       MCParticle
        SimTrackerHit 
        SimCalorimeterHit
        TrackerHit 
@@ -66,13 +67,18 @@
        Track 
        LCFloatVec      
     </parameter>
-    <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
+    <!-- IMPORTANT: adjust to MCParticle collection name which should be kept! -->
+    <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmedNew"/>
+    <!-- collections of the above types to keep -->
     <parameter name="KeepCollectionNames" type="StringVec"> 
-      MCParticlesSkimmed 
+      MCParticlesSkimmedNew 
       MarlinTrkTracks
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
-      RecoMCTruthLink
+      MCTruthClusterLink
+      ClusterMCTruthLink
+      RecoMCTruthLinkNew
+      MCTruthRecoLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -236,7 +242,7 @@
        tracks and clusters. False implies that only the true particle that
        gives most contributions to the track of the PFO (charged PFOs), or
        to the cluster (neutral ones) is linked to the PFO -->
-  <parameter name="FullRecoRelation" type="bool">1</parameter>
+  <parameter name="FullRecoRelation" type="bool"> true </parameter>
 </processor>
 
 
