@@ -1049,18 +1049,44 @@
 
 <!--######  SimpleBCALDigi ##########################################-->
 
- <processor name="MySimpleBCalDigi" type="SimpleLCalDigi">
- <!--Performs simple digitization of sim calo hits...-->
-   <!--Calibration coefficients for LCAL-->
-   <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>
-   <!--LCAL Collection Names-->
-   <parameter name="LCALCollections" type="StringVec">BeamCalCollection</parameter>
-   <!--LCAL Collection of real Hits-->
-   <parameter name="LCALOutputCollection" type="string">BCAL</parameter>
-   <!--Threshold for LCAL Hits in GeV-->
-   <parameter name="LCALThreshold" type="float">1e-06 </parameter>
-   <!--BCalHit Relation Collection-->
+<!-- <processor name="MySimpleBCalDigi" type="SimpleLCalDigi">
+<!-- <!--Performs simple digitization of sim calo hits...-->
+<!--   <!--Calibration coefficients for LCAL-->
+<!--   <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>
+<!--   <!--LCAL Collection Names-->
+<!--   <parameter name="LCALCollections" type="StringVec">BeamCalCollection</parameter>
+<!--   <!--LCAL Collection of real Hits-->
+<!--   <parameter name="LCALOutputCollection" type="string">BCAL</parameter>
+<!--   <!--Threshold for LCAL Hits in GeV-->
+<!--   <parameter name="LCALThreshold" type="float">1e-06 </parameter>
+<!--   <!--BCalHit Relation Collection-->
+<!--   <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
+<!--</processor>
+-->
+
+ <processor name="MySimpleBCalDigi" type="SimpleLHCalDigi">
+   <!--Performs simple digitization of sim calo hits...-->
+   <!--Calibration coefficients for BCAL-->
+   <parameter name="CalibrLHCAL" type="FloatVec">1.</parameter>
+   <!--BCAL Collection Name-->
+   <parameter name="LHCALCollections" type="StringVec"> BeamCalCollection</parameter>
+   <!--BCAL Collection of real Hits-->
+   <parameter name="LHCALOutputCollection" type="string">BCAL </parameter>
+   <!--Threshold for BCAL Hits in GeV-->
+   <parameter name="LHCALThreshold" type="float"> 1e-06 </parameter>
+   <!--LHCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
+   <!-- type of calorimeter: em = 0, had = 1, muon = 2-->
+   <!--parameter name="CaloType" type="string"> _caloType </parameter-->
+   <parameter name="CaloType" type="int"> 0 </parameter>
+   <!-- ID of calorimeter: lcal, lhcal, bcal -->
+   <parameter name="CaloID" type="string"> bcal </parameter>
+   <!-- subdetector layout: barrel, endcap, plug, ring -->
+   <parameter name="CaloLayout" type="string"> endcap </parameter>
+   <!-- string defining cell encoding -->
+   <parameter name="DefaultEncoding" type="string"> "I:10,J:10,K:10,S-1:2" </parameter>
+   <!-- name of the part of the cellID that holds the layer -->
+   <parameter name="CellIDLayerString" type="string"> K </parameter>
 </processor>
 
 <!--######  SimpleLCalDigi ##########################################-->
@@ -1074,10 +1100,37 @@
    <!--LCAL Collection of real Hits-->
    <parameter name="LCALOutputCollection" type="string">LCAL </parameter>
    <!--Threshold for LCALHits in GeV-->
-   <parameter name="LCALThreshold" type="float">0e-04 </parameter>
+  <parameter name="LCALThreshold" type="float">0e-04 </parameter>
    <!--LCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
  </processor>
+
+
+<!-- <processor name="MySimpleLCalDigi" type="SimpleLHCalDigi">
+<!-- <!--Performs simple digitization of sim calo hits...-->
+<!--   <!--Calibration coefficients for LCAL-->
+<!--   <parameter name="CalibrLHCAL" type="FloatVec">89.0</parameter>
+<!--   <!--LCAL Collection Name-->
+<!--   <parameter name="LHCALCollections" type="StringVec"> LumiCalCollection</parameter>
+<!--   <!--LCAL Collection of real Hits-->
+<!--   <parameter name="LHCALOutputCollection" type="string">LCAL </parameter>
+<!--   <!--Threshold for LCAL Hits in GeV-->
+<!--   <parameter name="LHCALThreshold" type="float"> 0e-04 </parameter>
+<!--   <!--LHCALHit Relation Collection-->
+<!--   <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
+<!--   <!-- type of calorimeter: em = 0, had = 1, muon = 2-->
+<!--   <!--parameter name="CaloType" type="string"> _caloType </parameter-->
+<!--   <parameter name="CaloType" type="int"> 0 </parameter>
+<!--   <!-- ID of calorimeter: lcal, lhcal, bcal -->
+<!--   <parameter name="CaloID" type="string"> lcal </parameter>
+<!--   <!-- subdetector layout: barrel, endcap, plug, ring -->
+<!--   <parameter name="CaloLayout" type="string"> endcap </parameter>
+<!--   <!-- string defining cell encoding -->
+<!--   <parameter name="DefaultEncoding" type="string"> "I:10,J:10,K:10,S-1:2" </parameter>
+<!--   <!-- name of the part of the cellID that holds the layer -->
+<!--   <parameter name="CellIDLayerString" type="string"> K </parameter>
+<!--</processor>
+-->
 					  
 <!--######  SimpleLHCALDigi ##########################################-->
 
@@ -1093,6 +1146,17 @@
    <parameter name="LHCALThreshold" type="float">1e-06 </parameter>
    <!--LHCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationLHcalHit </parameter>
+   <!-- type of calorimeter: em = 0, had = 1, muon = 2-->
+   <!--parameter name="CaloType" type="string"> _caloType </parameter-->
+   <parameter name="CaloType" type="int"> 1 </parameter>
+   <!-- ID of calorimeter: lcal, lhcal, bcal -->
+   <parameter name="CaloID" type="string"> lhcal </parameter>
+   <!-- subdetector layout: barrel, endcap, plug, ring -->
+   <parameter name="CaloLayout" type="string"> endcap </parameter>
+   <!-- string defining cell encoding -->
+   <parameter name="DefaultEncoding" type="string"> M:3,S-1:3,I:9,J:9,K-1:6 </parameter>
+   <!-- name of the part of the cellID that holds the layer -->
+   <parameter name="CellIDLayerString" type="string"> K-1 </parameter>
 </processor>
 
 <!--######  SimpleMuonDigi ##########################################-->
@@ -1445,7 +1509,7 @@
  <!--links RecontructedParticles to the MCParticle based on number of hits used-->
    
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
+   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> WARNING0  </parameter> 
    
    <!--  Input collections: mcparticles, pfos, clusters and tracks 
          PFOs already connect to tracks and clusters, so what we do in this processor is to connect
@@ -1504,9 +1568,7 @@
      RelationLHcalHit
      RelationMuonHit
      RelationLcalHit
-     <!-- this is missing in DBD
      RelationBCalHit
-     -->
    </parameter> 
    
    <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
