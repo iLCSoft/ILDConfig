@@ -67,6 +67,14 @@
 # -- and correct accordingly for spatial resolution at the VXDPlanarDigiProcessor --
    
 
+
+
+3.2 reconstruct with using 'new' reconstruction based on DDRec
+
+Marlin bbudsc_3evt_stdreco_dd4hep.xml --InitDD4hep.DD4hepXMLFile=$lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml
+
+
+
 # 4. ---- view the result in the event display
  
 # a) 
