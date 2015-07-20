@@ -11,13 +11,7 @@
    
    <execute>
      <processor name="MyAIDAProcessor"/>
-    
-     <!-- ========== Remove BCal clusters and PFOs from Pandora output  ======== -->
-     <!-- Needed to avoid using clusters and PFOs made by Pandora
-     using BCal information. RecoMCTruthLinker will complain
-     a lot about missing true--Seen connection if this is not done -->
-     <processor name="MyNoPandoraBcal"/>
-     
+         
      <!-- ========== RecoMCTruthLinker   ================= -->
      <processor name="MyRecoMCTruthLinker"/>
      
@@ -94,29 +88,6 @@
   <parameter name="FileType" type="string" value="root "/>
 </processor>
 
-<!--################   fix BeamCal duplication  ################################ -->
-
- <processor name="MyNoPandoraBcal" type="NoPandoraBcal">
-   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
-   <!-- Inputs. These are the defauls -->
-   <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle">
-      PandoraPFOs
-   </parameter>
-   <parameter name="CluCollectionName" type="string" lcioInType="ReconstructedParticle">
-      PandoraClusters
-   </parameter>
-
-   <!-- Outputs. These are the defaults. They are sub-set collections of the inputs,
-     so don't try to write them out to the DST -->
-   <parameter name="NewRecoCollectionName" type="string" lcioInType="ReconstructedParticle">
-      PandoraPFOsnoBcal
-   </parameter>
-   <parameter name="NewCluCollectionName" type="string" lcioInType="ReconstructedParticle">
-      PandoraClustersnoBcal
-   </parameter>
-
-</processor>
-
 <!--- ############ RecoMCTruthLink ############# --->
  <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
@@ -132,10 +103,10 @@
    <!-- (Default of these two ar PandoraPFOs and PandoraClusters. Use the one below to fix the 
          BCal problem. Clearly NoPandoraBcal must have been run before for them to exists ! ) -->
    <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle">
-         PandoraPFOsnoBcal
+         PandoraPFOs
    </parameter>
    <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> 
-         PandoraClustersnoBcal
+         PandoraClusters
    </parameter>
 
    <parameter name="TrackCollection" type="string" lcioInType="Track"> 
@@ -186,9 +157,9 @@
          RelationCaloHit
          RelationLHcalHit
          RelationMuonHit
-         RelationLcalHit
-         <!-- this is missing in DBD
-         RelationBCalHit
+         <!-- missing in DBD files --> 
+         <!-- RelationLcalHit
+         RelationBCalHit -->
           -->
   </parameter> 
 
@@ -261,7 +232,7 @@
 <processor name="MyPfoAnalysis" type="PfoAnalysis">
   <!--PfoAnalysis analyses output of PandoraPFANew-->
   <!--Names of input pfo collection-->
-  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOsnoBcal </parameter>
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
   <!--Names of mc particle collection-->
   <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticleSkimmedNew </parameter>
   <!--Set the debug print level-->
@@ -277,7 +248,6 @@
 <!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
 <processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
   <!-- Name of the PandoraPFOs collection   --> 
-  <!-- (here it is ok to leave PandoraPFOs, since the "noBCal" is subset of it)  -->
   <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
   <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
@@ -291,10 +261,9 @@
   <!--Debugging?-->
   <parameter name="Debug" type="int">0 </parameter>
   <!--Name of the PFO collection-->
-  <!--  NO BCAL HERE -->
-  <parameter name="PFOCollection" type="string"> PandoraPFOsnoBcal </parameter>
+  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
   <!--Name of the Cluster collection-->
-  <parameter name="ClusterCollectionName" type="string"> PandoraClustersnoBcal </parameter>
+  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
   <!-- Radiation Length of Ecal-->
   <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
   <!-- Radiation Length of Hcal-->
@@ -339,8 +308,7 @@
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_20GeVP_clusterinfo.weights.xml
   </parameter>
   <!--Name of the PFO collection-->
-  <!--  NO BCAL HERE -->
-  <parameter name="RecoParticleCollection" type="string">PandoraPFOsnoBcal</parameter>
+  <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
  </processor>
 
 <!--################################################ -->

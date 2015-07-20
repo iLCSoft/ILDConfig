@@ -114,7 +114,7 @@
         ./bbudsc_3evt.slcio 
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
-      <parameter name="MaxRecordNumber" value="0"/>
+      <parameter name="MaxRecordNumber" value="2"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
@@ -1064,21 +1064,23 @@
 <!--</processor>
 -->
 
- <processor name="MySimpleBCalDigi" type="SimpleLHCalDigi">
+<processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
    <!--Performs simple digitization of sim calo hits...-->
    <!--Calibration coefficients for BCAL-->
-   <parameter name="CalibrLHCAL" type="FloatVec">1.</parameter>
+   <parameter name="CalibrFCAL" type="FloatVec">1.</parameter>
    <!--BCAL Collection Name-->
-   <parameter name="LHCALCollections" type="StringVec"> BeamCalCollection</parameter>
+   <parameter name="FCALCollections" type="StringVec"> BeamCalCollection</parameter>
    <!--BCAL Collection of real Hits-->
-   <parameter name="LHCALOutputCollection" type="string">BCAL </parameter>
+   <parameter name="FCALOutputCollection" type="string">BCAL </parameter>
    <!--Threshold for BCAL Hits in GeV-->
-   <parameter name="LHCALThreshold" type="float"> 1e-06 </parameter>
+   <parameter name="FCALThreshold" type="float"> 1e-06 </parameter>
    <!--LHCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
-   <!-- type of calorimeter: em = 0, had = 1, muon = 2-->
-   <!--parameter name="CaloType" type="string"> _caloType </parameter-->
-   <parameter name="CaloType" type="int"> 0 </parameter>
+   <!-- Fix the hit positions in LCal using the cellID (for DBD simulated samples) -->
+   <parameter name="FixLCalHits" type="bool"> false </parameter>
+   <!-- type of calorimeter: em, had, muon -->
+   <parameter name="CaloType" type="string"> em </parameter>
+   <!--parameter name="CaloType" type="int"> 0 </parameter-->
    <!-- ID of calorimeter: lcal, lhcal, bcal -->
    <parameter name="CaloID" type="string"> bcal </parameter>
    <!-- subdetector layout: barrel, endcap, plug, ring -->
@@ -1091,64 +1093,68 @@
 
 <!--######  SimpleLCalDigi ##########################################-->
 
- <processor name="MySimpleLCalDigi" type="SimpleLCalDigi">
-   <!--Performs simple digitization of sim calo hits...-->
-   <!--Calibration coefficients for LCAL-->
-   <parameter name="CalibrLCAL" type="FloatVec">89.0</parameter>
-   <!--LCAL Collection Names-->
-   <parameter name="LCALCollections" type="StringVec"> LumiCalCollection  </parameter>
-   <!--LCAL Collection of real Hits-->
-   <parameter name="LCALOutputCollection" type="string">LCAL </parameter>
-   <!--Threshold for LCALHits in GeV-->
-  <parameter name="LCALThreshold" type="float">0e-04 </parameter>
-   <!--LCALHit Relation Collection-->
-   <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
- </processor>
-
-
-<!-- <processor name="MySimpleLCalDigi" type="SimpleLHCalDigi">
-<!-- <!--Performs simple digitization of sim calo hits...-->
+<!-- <processor name="MySimpleLCalDigi" type="SimpleLCalDigi">
+<!--   <!--Performs simple digitization of sim calo hits...-->
 <!--   <!--Calibration coefficients for LCAL-->
-<!--   <parameter name="CalibrLHCAL" type="FloatVec">89.0</parameter>
-<!--   <!--LCAL Collection Name-->
-<!--   <parameter name="LHCALCollections" type="StringVec"> LumiCalCollection</parameter>
+<!--   <parameter name="CalibrLCAL" type="FloatVec">89.0</parameter>
+<!--   <!--LCAL Collection Names-->
+<!--   <parameter name="LCALCollections" type="StringVec"> LumiCalCollection  </parameter>
 <!--   <!--LCAL Collection of real Hits-->
-<!--   <parameter name="LHCALOutputCollection" type="string">LCAL </parameter>
-<!--   <!--Threshold for LCAL Hits in GeV-->
-<!--   <parameter name="LHCALThreshold" type="float"> 0e-04 </parameter>
-<!--   <!--LHCALHit Relation Collection-->
+<!--   <parameter name="LCALOutputCollection" type="string">LCAL </parameter>
+<!--   <!--Threshold for LCALHits in GeV-->
+<!--  <parameter name="LCALThreshold" type="float">0e-04 </parameter>
+<!--   <!--LCALHit Relation Collection-->
 <!--   <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
-<!--   <!-- type of calorimeter: em = 0, had = 1, muon = 2-->
-<!--   <!--parameter name="CaloType" type="string"> _caloType </parameter-->
-<!--   <parameter name="CaloType" type="int"> 0 </parameter>
-<!--   <!-- ID of calorimeter: lcal, lhcal, bcal -->
-<!--   <parameter name="CaloID" type="string"> lcal </parameter>
-<!--   <!-- subdetector layout: barrel, endcap, plug, ring -->
-<!--   <parameter name="CaloLayout" type="string"> endcap </parameter>
-<!--   <!-- string defining cell encoding -->
-<!--   <parameter name="DefaultEncoding" type="string"> "I:10,J:10,K:10,S-1:2" </parameter>
-<!--   <!-- name of the part of the cellID that holds the layer -->
-<!--   <parameter name="CellIDLayerString" type="string"> K </parameter>
-<!--</processor>
+<!-- </processor>
 -->
-					  
+
+<processor name="MySimpleLCalDigi" type="SimpleFCalDigi">
+<!--Performs simple digitization of sim calo hits...-->
+  <!--Calibration coefficients for LCAL-->
+  <parameter name="CalibrFCAL" type="FloatVec">89.0</parameter>
+  <!--LCAL Collection Name-->
+  <parameter name="FCALCollections" type="StringVec"> LumiCalCollection</parameter>
+  <!--LCAL Collection of real Hits-->
+  <parameter name="FCALOutputCollection" type="string">LCAL </parameter>
+  <!--Threshold for LCAL Hits in GeV-->
+  <parameter name="FCALThreshold" type="float"> 0e-04 </parameter>
+  <!--LHCALHit Relation Collection-->
+  <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
+  <!-- Fix the hit positions in LCal using the cellID (for DBD simulated samples) -->
+  <parameter name="FixLCalHits" type="bool"> false </parameter>
+  <!-- type of calorimeter: em, had, muon -->
+  <parameter name="CaloType" type="string"> em </parameter>
+  <!--parameter name="CaloType" type="int"> 0 </parameter-->
+  <!-- ID of calorimeter: lcal, lhcal, bcal -->
+  <parameter name="CaloID" type="string"> lcal </parameter>
+  <!-- subdetector layout: barrel, endcap, plug, ring -->
+  <parameter name="CaloLayout" type="string"> endcap </parameter>
+  <!-- string defining cell encoding -->
+  <parameter name="DefaultEncoding" type="string"> "I:10,J:10,K:10,S-1:2" </parameter>
+  <!-- name of the part of the cellID that holds the layer -->
+  <parameter name="CellIDLayerString" type="string"> K </parameter>
+</processor>
+
+	 				  
 <!--######  SimpleLHCALDigi ##########################################-->
 
- <processor name="MySimpleLHCalDigi" type="SimpleLHCalDigi">
- <!--Performs simple digitization of sim calo hits...-->
+<processor name="MySimpleLHCalDigi" type="SimpleFCalDigi">
+<!--Performs simple digitization of sim calo hits...-->
    <!--Calibration coefficients for LHCAL-->
-   <parameter name="CalibrLHCAL" type="FloatVec">150</parameter>
+   <parameter name="CalibrFCAL" type="FloatVec">150</parameter>
    <!--LHCAL Collection Names-->
-   <parameter name="LHCALCollections" type="StringVec"> LHcalCollection</parameter>
+   <parameter name="FCALCollections" type="StringVec"> LHcalCollection</parameter>
    <!--LHCAL Collection of real Hits-->
-   <parameter name="LHCALOutputCollection" type="string">LHCAL </parameter>
+   <parameter name="FCALOutputCollection" type="string">LHCAL </parameter>
    <!--Threshold for LHCAL Hits in GeV-->
-   <parameter name="LHCALThreshold" type="float">1e-06 </parameter>
+   <parameter name="FCALThreshold" type="float">1e-06 </parameter>
    <!--LHCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationLHcalHit </parameter>
-   <!-- type of calorimeter: em = 0, had = 1, muon = 2-->
-   <!--parameter name="CaloType" type="string"> _caloType </parameter-->
-   <parameter name="CaloType" type="int"> 1 </parameter>
+   <!-- Fix the hit positions in LCal using the cellID (for DBD simulated samples) -->
+   <parameter name="FixLCalHits" type="bool"> false </parameter>
+   <!-- type of calorimeter: em, had, muon -->
+   <parameter name="CaloType" type="string"> had </parameter>
+   <!--parameter name="CaloType" type="int"> 1 </parameter-->
    <!-- ID of calorimeter: lcal, lhcal, bcal -->
    <parameter name="CaloID" type="string"> lhcal </parameter>
    <!-- subdetector layout: barrel, endcap, plug, ring -->
@@ -1161,8 +1167,8 @@
 
 <!--######  SimpleMuonDigi ##########################################-->
 
- <processor name="MySimpleMuonDigi" type="SimpleMuonDigi">
- <!--Performs simple digitization of sim calo hits...-->
+<processor name="MySimpleMuonDigi" type="SimpleMuonDigi">
+<!--Performs simple digitization of sim calo hits...-->
    <!--Calibration coefficients for MUON-->
    <parameter name="CalibrMUON" type="FloatVec">56.7</parameter>
    <!-- maximum hit energy for a MUON hit -->

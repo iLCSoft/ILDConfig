@@ -20,7 +20,9 @@ VXD digitizer (point res) & pair overlay (time res):
       "dream option"
       point resolution of layers in mm:     same as CMOSVXD5
       timing resolution of layers in mus:   single BX
-
+      
+      
+EXAMPLE FOR PAIR OVERLAY in overlayBX.xml!
 
 SiliconTracking:
      <processor name="MySiliconTracking_MarlinTrk"/>  
@@ -42,4 +44,4 @@ PANDORA:
   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter>
   with improved photon finding by Bono
   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettings_ILD_o1_v05_SiW_5x5_Garlic.xml</parameter>
-  with input of Garlic photons: THIS DOES NOT WORK YET!
+  with input of Garlic photons 

@@ -64,7 +64,9 @@ or
 
 # 3. ----  reconstruct these events:  ------
 
-  Marlin bbudsc_3evt_stdreco.xml
+  Marlin bbudsc_3evt_stdreco.xml 
+  
+# FOR OPTIONS SEE bbudsc_3evt_stdreco_README.txt  
 
 
 #-- creates:   bbudsc_3evt_REC.slcio 
@@ -75,19 +77,14 @@ or
    dumpevent bbudsc_3evt_DST.slcio 2 | less
 
 # 3.1 ---- alternative reconstrunction steering files: ------
-# -- they substitute std silicon tracking with new algorithms --
-# -- Attention! still experimental --
 
-  Marlin FPCCDTracker_stdreco.xml
-# -- Adding Marlin steering file which runs the FPCCD tracking algorithm --
-# -- Experimental - not yet fully validated --
+# for running updated high-level reconstruction on DBD *REC.slcio files:
 
-  Marlin minivector_reco.xml
-# -- Adding a reconstruction file which uses a mini-vector algorithm, based on cellular automaton tools, --
-# -- for pattern recognition at the VXD-SIT --
-# -- still experimental - not fully validated --
-# -- According to the examined VXD design, the user should set the proper time resolution for pair bkg overlay in overlayBX.xml --
-# -- and correct accordingly for spatial resolution at the VXDPlanarDigiProcessor --   
+  Marlin bbudsc_3evt_redst.xml 
+
+# for running analysis-level reconstruction *DST.slcio files - under construction!:
+
+  Marlin bbudsc_3evt_postdst.xml 
 
 # 4. ---- view the result in the event display
  
