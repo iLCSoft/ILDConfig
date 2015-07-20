@@ -50,18 +50,20 @@
      -->
      <parameter name="DrawInLayer"> 
        
-       VXDCollection 0 5 1
-       SITCollection 0 5 1
+       XXVXDCollection 0 5 1
+       XXSITCollection 0 5 1
+       XXTPCCollection 0 3 1
+       XXSETCollection 0 3 1
+       XXETDCollection 0 3 1
+
        FTD_PIXELCollection 0 5 1
        FTD_STRIPCollection 0 5 1
-       TPCCollection 0 3 1
-       SETCollection 0 3 1
-       ETDCollection 0 3 1
        
-       VXDTrackerHits       0 3  11
-       SITTrackerHits       0 3  11
-       TPCTrackerHits       0 3  11
-       FTDTrackerHits       0 3  11
+       XXVXDTrackerHits       0 3  11
+       XXSITTrackerHits       0 3  11
+       XXTPCTrackerHits       0 3  11
+       FTDPixelTrackerHits  0 3  11
+       FTDSpacePoints       0 3  11
 
        HcalEndCapsCollection       0 3 2
        LHcalCollection             0 3 2
