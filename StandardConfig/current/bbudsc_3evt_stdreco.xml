@@ -1049,7 +1049,7 @@
 
 <!--######  SimpleBCALDigi ##########################################-->
 
-<!-- <processor name="MySimpleBCalDigi" type="SimpleLCalDigi">
+<!-- <processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
 <!-- <!--Performs simple digitization of sim calo hits...-->
 <!--   <!--Calibration coefficients for LCAL-->
 <!--   <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>

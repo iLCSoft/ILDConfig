@@ -946,7 +946,7 @@
 
 <!--######  SimpleBCALDigi ##########################################-->
 
- <processor name="MySimpleBCalDigi" type="SimpleLCalDigi">
+ <processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
  <!--Performs simple digitization of sim calo hits...-->
   <!--Calibration coefficients for LCAL-->
   <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>
@@ -962,7 +962,7 @@
 
 <!--######  SimpleLCalDigi ##########################################-->
 
- <processor name="MySimpleLCalDigi" type="SimpleLCalDigi">
+ <processor name="MySimpleLCalDigi" type="SimpleFCalDigi">
    <!--Performs simple digitization of sim calo hits...-->
    <!--Calibration coefficients for LCAL-->
    <parameter name="CalibrLCAL" type="FloatVec">89.0</parameter>
@@ -978,7 +978,7 @@
 					  
 <!--######  SimpleLHCALDigi ##########################################-->
 
- <processor name="MySimpleLHCalDigi" type="SimpleLHCalDigi">
+ <processor name="MySimpleLHCalDigi" type="SimpleFCalDigi">
  <!--Performs simple digitization of sim calo hits...-->
   <!--Calibration coefficients for LHCAL-->
   <parameter name="CalibrLHCAL" type="FloatVec">150</parameter>

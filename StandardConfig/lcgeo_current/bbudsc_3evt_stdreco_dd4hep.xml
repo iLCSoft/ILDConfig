@@ -920,7 +920,7 @@
 
 <!--######  SimpleBCALDigi ##########################################-->
 
- <processor name="MySimpleBCalDigi" type="SimpleLCalDigi">
+ <processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
  <!--Performs simple digitization of sim calo hits...-->
 
   <!--name of the part of the cellID that holds the layer-->
@@ -940,7 +940,7 @@
 
 <!--######  SimpleLCalDigi ##########################################-->
 
- <processor name="MySimpleLCalDigi" type="SimpleLCalDigi">
+ <processor name="MySimpleLCalDigi" type="SimpleFCalDigi">
    <!--Performs simple digitization of sim calo hits...-->
 
   <!--name of the part of the cellID that holds the layer-->
@@ -960,7 +960,7 @@
 					  
 <!--######  SimpleLHCALDigi ##########################################-->
 
- <processor name="MySimpleLHCalDigi" type="SimpleLHCalDigi">
+ <processor name="MySimpleLHCalDigi" type="SimpleFCalDigi">
  <!--Performs simple digitization of sim calo hits...-->
 
   <!--name of the part of the cellID that holds the layer-->
