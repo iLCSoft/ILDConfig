@@ -1073,7 +1073,7 @@
    <!--BCAL Collection of real Hits-->
    <parameter name="FCALOutputCollection" type="string">BCAL </parameter>
    <!--Threshold for BCAL Hits in GeV-->
-   <parameter name="FCALThreshold" type="float"> 1e-06 </parameter>
+   <parameter name="FcalThreshold" type="float"> 1e-06 </parameter>
    <!--LHCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
    <!-- Fix the hit positions in LCal using the cellID (for DBD simulated samples) -->
@@ -1117,7 +1117,7 @@
   <!--LCAL Collection of real Hits-->
   <parameter name="FCALOutputCollection" type="string">LCAL </parameter>
   <!--Threshold for LCAL Hits in GeV-->
-  <parameter name="FCALThreshold" type="float"> 0e-04 </parameter>
+  <parameter name="FcalThreshold" type="float"> 0e-04 </parameter>
   <!--LHCALHit Relation Collection-->
   <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
   <!-- Fix the hit positions in LCal using the cellID (for DBD simulated samples) -->
@@ -1147,7 +1147,7 @@
    <!--LHCAL Collection of real Hits-->
    <parameter name="FCALOutputCollection" type="string">LHCAL </parameter>
    <!--Threshold for LHCAL Hits in GeV-->
-   <parameter name="FCALThreshold" type="float">1e-06 </parameter>
+   <parameter name="FcalThreshold" type="float">1e-06 </parameter>
    <!--LHCALHit Relation Collection-->
    <parameter name="RelationOutputCollection" type="string">RelationLHcalHit </parameter>
    <!-- Fix the hit positions in LCal using the cellID (for DBD simulated samples) -->
