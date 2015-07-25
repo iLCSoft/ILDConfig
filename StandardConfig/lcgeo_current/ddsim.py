@@ -39,13 +39,20 @@ numberOfEvents = 3
 # input file: either .slcio or .stdhep
 # --------------------------------------
 
-lcioInputFile  = 'bbudsc_3evt.stdhep'
 #lcioInputFile  = 'mcparticles.slcio'
+lcioInputFile  = 'bbudsc_3evt.stdhep'
+#lcioInputFile  = 'bbudsc_3evt_dd4hep.slcio'
+#lcioInputFile  = 'mcparticles_single_muon_5GeV_10deg.slcio'
+#lcioInputFile  = 'mcparticles_single_muon_5GeV_7deg.slcio'
+#lcioInputFile  = 'mcparticles_single_muon_5GeV_85deg.slcio'
 
-lcioOutputFile = 'bbudsc_3evt.slcio'
-#lcioOutputFile = lcioInputFile[:len(lcioInputFile)-len('.slcio')]+'_SIM_simple.slcio'
+lcioOutputFile  = 'bbudsc_3evt.slcio'
+#lcioOutputFile = 'simpleCLIC_single_muon_5GeV_85deg.slcio'
+#lcioOutputFile = 'simpleILD_single_muon_5GeV_85deg.slcio'
+#lcioOutputFile = 'simple_lcio.slcio'
+#lcioOutputFile = lcioInputFile[:len(lcioInputFile)-len('.slcio')]+'_SIM.slcio'
 
-physicsList    = 'QGSP_BERT'  #'FTFP_BERT'  #
+physicsList    = 'FTFP_BERT'  # 'QGSP_BERT'
 
 #---subset of detectors to initialize (all if list is empty)
 # this does not work, as the complete geometry form the compact.xml files
@@ -120,9 +127,7 @@ def run():
 
 #----------------------------------------------------------------------------------
 
-  simple = DDG4.Geant4( kernel, tracker='Geant4TrackerAction',calo='Geant4CalorimeterAction')
-## Apply BirksLaw effect for Scintillator Calorimeter by using 'Geant4ScintillatorCalorimeterAction'.
-#  simple = DDG4.Geant4( kernel, tracker='Geant4TrackerAction',calo='Geant4ScintillatorCalorimeterAction')
+  simple = DDG4.Geant4( kernel, tracker='Geant4TrackerCombineAction',calo='Geant4ScintillatorCalorimeterAction')
 
   simple.printDetectors()
 
@@ -204,7 +209,10 @@ def run():
 
   for t in trk:
     print 'simple.setupTracker(  ' , t , ')'
-    seq,act = simple.setupTracker( t )
+    if( 'tpc' in t.lower() ):
+      seq,act = simple.setupTracker( t ,type='TPCSDAction')
+    else:
+      seq,act = simple.setupTracker( t )
     seq.add(f1)
     act.HitCreationMode = 2
 
@@ -213,6 +221,7 @@ def run():
   for c in cal:
     print 'simple.setupCalorimeter(  ' , c , ')'
     seq,act = simple.setupCalorimeter( c )
+    act.HitCreationMode = 2
 
 
 #=================================================================================
