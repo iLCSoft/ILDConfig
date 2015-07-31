@@ -153,7 +153,10 @@
       MarlinTrkTracks
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
+      MCTruthClusterLink
+      ClusterMCTruthLink
       RecoMCTruthLink
+      MCTruthRecoLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -1073,38 +1076,103 @@
 <!--################################################ -->
 
 
-
  <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
  <!--links RecontructedParticles to the MCParticle based on number of hits used-->
-  <!--Name of the MCParticle input collection-->
-  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
-  <!--Name of the ReconstructedParticles input collection-->
-  <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
-  <!--Name of the  SimCalorimeterHit - CalorimeterHit relation-->
-  <parameter name="SimCalorimeterHitRelationName" type="string" lcioInType="LCRelation"> RelationCaloHit </parameter>
-  <!--Name of the Tracks input collection-->
-  <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
-  <!--Name of the trackMCTruthLink output collection - not created if empty()-->
-  <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> MarlinTrkTracksMCTruthLink </parameter>
-  <!--Name of the MCParticle to Track relation output collection - not created if empty()-->
-  <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthMarlinTrkTracksLink </parameter>
+   
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> WARNING0  </parameter> 
+   
+   <!--  Input collections: mcparticles, pfos, clusters and tracks 
+         PFOs already connect to tracks and clusters, so what we do in this processor is to connect
+         tracks and clusters to mcparticles ... 
+         The values given here are the defaults, so they don't really need to be
+         specified -->
+   <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
+   <!--Name of the ReconstructedParticles input collection-->
+   <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+   <!--Name of the Cluster collection -->
+   <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters </parameter>
+   <!--Name of the Tracks input collection-->
+   <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
+  
+   <!-- Don't change any of these hit related collections if you're not very sure you know what you are doing.
+        In any case, the ones listed here are the defaults, so they can be removed from
+        this steering -->
+   <!--  Simulated tracker hits (has the conection to MCParticles -->
+   <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">
+     VXDCollection 
+     SITCollection 
+     FTD_PIXELCollection 
+     FTD_STRIPCollection 
+     TPCCollection 
+     SETCollection  
+   </parameter>
+   <!--  Connections from tracker hits (connected to tracks) to sim tracker hits (connects to MC particle) -->
+   <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">
+     VXDTrackerHitRelations 
+     SITSpacePointRelations 
+     FTDPixelTrackerHitRelations 
+     FTDSpacePointRelations 
+     TPCTrackerHitRelations 
+     SETSpacePointRelations  
+   </parameter>
+   <!-- same for the calos: Simulated calo hits (has the connection to MCParticles) -->
+   <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
+     BeamCalCollection
+     EcalBarrelCollection
+     EcalEndcapRingCollection
+     EcalEndcapsCollection
+     HcalBarrelRegCollection
+     HcalEndCapRingCollection
+     HcalEndCapsCollection
+     LHcalCollection
+     LumiCalCollection
+     MuonBarrelCollection
+     MuonEndCapCollection
+   </parameter> 
+   <!-- Connections from calo hist (connected to clusters) tp sim calo hits  (connects to MC particle) -->
+   <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
+     RelationCaloHit
+     RelationLHcalHit
+     RelationMuonHit
+     RelationLcalHit
+     RelationBCalHit
+   </parameter> 
+   
+   <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
+   <parameter name="KeepDaughtersPDG" type="IntVec"> 22 111 310 13 211 321</parameter>
+   
+   <!--Names of the output collections -->
    <!--Name of the skimmed MCParticle  output collection-->
-  <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
-  <!--Name of the RecoMCTruthLink output collection-->
-  <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
-  <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
-  <parameter name="KeepDaughtersPDG" type="IntVec"> 22 111 310 13 211 321</parameter>
-  <!--true: use relations for TrackerHits, false : use getRawHits -->
-  <parameter name="UseTrackerHitRelations" type="bool">true </parameter>
-  <!--If Using Particle Gun Ignore Gen Stat-->
-  <parameter name="UsingParticleGun" type="bool">false </parameter>
-  <!--Names of the SimTrackerHits input collection-->
-  <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">VXDCollection SITCollection FTD_PIXELCollection FTD_STRIPCollection TPCCollection SETCollection  </parameter>
-  <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. -->
-  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string"> DEBUG </parameter-->
-  </processor>
+   <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
+   
+   <!-- links between tracks or clusters and mcparticles. The two sets differ
+        in what the weight means. These four will only be output if the
+        name is given here in the steering -->
+   <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthMarlinTrkTracksLink </parameter>  
+   <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> MarlinTrkTracksMCTruthLink </parameter>
+   <parameter name="MCTruthClusterLinkName" type="string" lcioOutType="LCRelation"> MCTruthClusterLink </parameter>
+   <parameter name="ClusterMCTruthLinkName" type="string" lcioOutType="LCRelation"> ClusterMCTruthLink </parameter>
+
+
+   <!-- Links PFO <-> MCParticles. Only RecoMCTruthLink is output by default,
+        to also get the reverse link, MCTruthRecoLinkName must be given here -->
+   <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
+   <parameter name="MCTruthRecoLinkName" type="string" lcioOutType="LCRelation"> MCTruthRecoLink </parameter>
+   <!-- set to true to get the weights in RecoMCTruthLink to include both weights to
+        tracks and clusters. False implies that only the true particle that
+        gives most contributions to the track of the PFO (charged PFOs), or
+        to the cluster (neutral ones) is linked to the PFO -->
+   <parameter name="FullRecoRelation" type="bool"> true </parameter>
+   
+   <!-- further options -->
+   <!--true: use relations for TrackerHits, false : use getRawHits -->
+   <parameter name="UseTrackerHitRelations" type="bool"> true </parameter>
+   <!--If Using Particle Gun Ignore Gen Stat-->
+   <parameter name="UsingParticleGun" type="bool"> false </parameter>
+ </processor>
+
+
 
 
   <processor name="VertexFinder" type="LcfiplusProcessor">
