@@ -64,6 +64,7 @@
      <processor name="MySimpleLHCalDigi"/>
      <processor name="MySimpleMuonDigi"/>
      
+     <!-- <processor name="MyDDPandoraPFANewProcessor"/> -->
      <processor name="MyDDMarlinPandora"/>
      <!-- <processor name="MyMarlinPandora"/> -->
 
@@ -1312,6 +1313,200 @@
     <parameter name="BuildUpVertex.AssocIPTracksChi2RatioSecToPri" type="double" value="2.0" />
     <parameter name="BuildUpVertex.UseV0Selection" type="int" value="1" />
 
+  </processor>
+
+  <processor name="MyDDPandoraPFANewProcessor" type="DDPandoraPFANewProcessor">
+    <!--Pandora reconstructs clusters and particle flow objects-->
+    <!--The absorber interaction length in the ECal-->
+    <parameter name="AbsorberIntLengthECal" type="float">0.0101 </parameter>
+    <!--The absorber interaction length in the HCal-->
+    <parameter name="AbsorberIntLengthHCal" type="float">0.006 </parameter>
+    <!--The absorber interaction length in other detector regions-->
+    <parameter name="AbsorberIntLengthOther" type="float">0.006 </parameter>
+    <!--The absorber radation length in the ECal-->
+    <parameter name="AbsorberRadLengthECal" type="float">0.2854 </parameter>
+    <!--The absorber radation length in the HCal-->
+    <parameter name="AbsorberRadLengthHCal" type="float">0.0569 </parameter>
+    <!--The absorber radation length in other detector regions-->
+    <parameter name="AbsorberRadLengthOther" type="float">0.0569 </parameter>
+    <!--Cluster Collection Name-->
+    <parameter name="ClusterCollectionName" type="string" lcioOutType="Cluster">PandoraPFANewClusters </parameter>
+    <!--The name of the Coil-->
+    <parameter name="CoilName" type="string">Coil </parameter>
+    <!--Constant relating track curvature in b field to momentum-->
+    <parameter name="CurvatureToMomentumFactor" type="float">0.00015 </parameter>
+    <!--Track d0 cut used to determine whether track can be used to form pfo-->
+    <parameter name="D0TrackCut" type="float">50 </parameter>
+    <!--d0 cut used to determine whether unmatched vertex track can form pfo-->
+    <parameter name="D0UnmatchedVertexTrackCut" type="float">5 </parameter>
+    <!--Treat muon hits as digital-->
+    <parameter name="DigitalMuonHits" type="int">1 </parameter>
+    <!--Name of the ECAL calo hit collections-->
+    <parameter name="ECalCaloHitCollections" type="StringVec" lcioInType="CalorimeterHit">ECALBarrel ECALEndcap ECALOther </parameter>
+    <!--The name of the ECal Barrel detector-->
+    <parameter name="ECalBarrelDetectorName" type="string">EcalBarrel </parameter>
+    <!--The name of the ECal Endcap detector-->
+    <parameter name="ECalEndcapDetectorName" type="string">EcalEndcap </parameter>
+    <!--Threshold for creating calo hits in the ECal, units mip-->
+    <parameter name="ECalMipThreshold" type="float">0 </parameter>
+    <!--The names of the other ECal detectors-->
+    <parameter name="ECalOtherDetectorNames" type="StringVec">EcalPlug Lcal BeamCal  </parameter>
+    <!--Threshold for creating calo hits in the Sc-layers of ECAL, units mip-->
+    <parameter name="ECalScMipThreshold" type="float">0 </parameter>
+    <!--The calibration from deposited Sc-layer energy to EM energy-->
+    <parameter name="ECalScToEMGeVCalibration" type="float">1 </parameter>
+    <!--The calibration from deposited Sc-layer energy to the barrel hadronic energy-->
+    <parameter name="ECalScToHadGeVCalibrationBarrel" type="float">1 </parameter>
+    <!--The calibration from deposited Sc-layer energy on the endcaps to hadronic energy-->
+    <parameter name="ECalScToHadGeVCalibrationEndCap" type="float">1 </parameter>
+    <!--The calibration from deposited Sc-layer energy to mip-->
+    <parameter name="ECalScToMipCalibration" type="float">1 </parameter>
+    <!--Threshold for creating calo hits in the Si-layers of ECAL, units mip-->
+    <parameter name="ECalSiMipThreshold" type="float">0 </parameter>
+    <!--The calibration from deposited Si-layer energy to EM energy-->
+    <parameter name="ECalSiToEMGeVCalibration" type="float">1 </parameter>
+    <!--The calibration from deposited Si-layer energy on the barrel to hadronic energy-->
+    <parameter name="ECalSiToHadGeVCalibrationBarrel" type="float">1 </parameter>
+    <!--The calibration from deposited Si-layer energy on the enecaps to hadronic energy-->
+    <parameter name="ECalSiToHadGeVCalibrationEndCap" type="float">1 </parameter>
+    <!--The calibration from deposited Si-layer energy to mip-->
+    <parameter name="ECalSiToMipCalibration" type="float">1 </parameter>
+    <!--The calibration from deposited ECal energy to EM energy-->
+    <parameter name="ECalToEMGeVCalibration" type="float">1 </parameter>
+    <!--The calibration from deposited ECal energy to hadronic energy-->
+    <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1 </parameter>
+    <!--The calibration from deposited ECal energy to hadronic energy-->
+    <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1 </parameter>
+    <!--The calibration from deposited ECal energy to mip-->
+    <parameter name="ECalToMipCalibration" type="float">1 </parameter>
+    <!--The name of the HCal Barrel detector-->
+    <parameter name="HCalBarrelDetectorName" type="string">HcalBarrel </parameter>
+    <!--Name of the HCAL calo hit collections-->
+    <parameter name="HCalCaloHitCollections" type="StringVec" lcioInType="CalorimeterHit">HCALBarrel HCALEndcap HCALOther </parameter>
+    <!--The name of the HCal Endcap detector-->
+    <parameter name="HCalEndcapDetectorName" type="string">HcalEndcap </parameter>
+    <!--Threshold for creating calo hits in the HCal, units mip-->
+    <parameter name="HCalMipThreshold" type="float">0 </parameter>
+    <!--The names of the Other HCal detectors-->
+    <parameter name="HCalOtherDetectorNames" type="StringVec">HcalRing  </parameter>
+    <!--The calibration from deposited HCal energy to EM energy-->
+    <parameter name="HCalToEMGeVCalibration" type="float">1 </parameter>
+    <!--The calibration from deposited HCal energy to hadronic energy-->
+    <parameter name="HCalToHadGeVCalibration" type="float">1 </parameter>
+    <!--The calibration from deposited HCal energy to mip-->
+    <parameter name="HCalToMipCalibration" type="float">1 </parameter>
+    <!--The input energy points for hadronic energy correction-->
+    <!-- <parameter name="InputEnergyCorrectionPoints" type="FloatVec"> </parameter> -->
+    <!--Name of external kink Vertex collections-->
+    <parameter name="KinkVertexCollections" type="StringVec" lcioInType="Vertex">KinkVertices </parameter>
+    <!--Name of the LCAL calo hit collections-->
+    <parameter name="LCalCaloHitCollections" type="StringVec" lcioInType="CalorimeterHit">LCAL </parameter>
+    <!--Name of the LHCAL calo hit collections-->
+    <parameter name="LHCalCaloHitCollections" type="StringVec" lcioInType="CalorimeterHit">LHCAL </parameter>
+    <!--Maximum number of layers from candidate outer layer hit to rear of detector-->
+    <parameter name="LayersFromEdgeMaxRearDistance" type="float">250 </parameter>
+    <!--Name of mc particle collections-->
+    <parameter name="MCParticleCollections" type="StringVec" lcioInType="MCParticle">MCParticle </parameter>
+    <!--The maximum hadronic energy allowed for a single hcal hit-->
+    <parameter name="MaxHCalHitHadronicEnergy" type="float">10000 </parameter>
+    <!--Track cut on distance from tpc inner r to id whether track can form pfo-->
+    <parameter name="MaxTpcInnerRDistance" type="float">50 </parameter>
+    <!--Track quality cut: the maximum number of track hits-->
+    <parameter name="MaxTrackHits" type="int">5000 </parameter>
+    <!--Cut on fractional track momentum error-->
+    <parameter name="MaxTrackSigmaPOverP" type="float">0.15 </parameter>
+    <!--Cut on minimum number of FTD hits of TPC hit fraction to be applied-->
+    <parameter name="MinFtdHitsForTpcHitFraction" type="int">2 </parameter>
+    <!--Track quality cut: the minimum number of ftd track hits for ftd only tracks-->
+    <parameter name="MinFtdTrackHits" type="int">0 </parameter>
+    <!--Min track momentum required to perform final quality checks on number of hits-->
+    <parameter name="MinMomentumForTrackHitChecks" type="float">1 </parameter>
+    <!--Cut on fractional of expected number of TPC hits-->
+    <parameter name="MinTpcHitFractionOfExpected" type="float">0.2 </parameter>
+    <!--Sanity check on separation between ip and track projected ecal position-->
+    <parameter name="MinTrackECalDistanceFromIp" type="float">100 </parameter>
+    <!--Track quality cut: the minimum number of track hits-->
+    <parameter name="MinTrackHits" type="int">5 </parameter>
+    <!--The bfield in the muon barrel, units Tesla-->
+    <parameter name="MuonBarrelBField" type="float">-1.5 </parameter>
+    <!--The name of the Muon Barrel detector-->
+    <parameter name="MuonBarrelDetectorName" type="string">YokeBarrel </parameter>
+    <!--Name of the muon calo hit collections-->
+    <parameter name="MuonCaloHitCollections" type="StringVec" lcioInType="CalorimeterHit">MUON </parameter>
+    <!--The bfield in the muon endcap, units Tesla-->
+    <parameter name="MuonEndCapBField" type="float">0.01 </parameter>
+    <!--The name of the Muon Endcap detector-->
+    <parameter name="MuonEndcapDetectorName" type="string">YokeEndcap </parameter>
+    <!--The energy for a digital muon calorimeter hit, units GeV-->
+    <parameter name="MuonHitEnergy" type="float">0.5 </parameter>
+    <!--The names of the Other Muon detectors-->
+    <!-- <parameter name="MuonOtherDetectorNames" type="StringVec">YokePlug </parameter> -->
+    <!--The calibration from deposited Muon energy to mip-->
+    <parameter name="MuonToMipCalibration" type="float">1 </parameter>
+    <!--Number of layers from edge for hit to be flagged as an outer layer hit-->
+    <parameter name="NOuterSamplingLayers" type="int">3 </parameter>
+    <!--The output energy points for hadronic energy correction-->
+    <!-- <parameter name="OutputEnergyCorrectionPoints" type="FloatVec"> </parameter> -->
+    <!--PFO Collection Name-->
+    <parameter name="PFOCollectionName" type="string" lcioOutType="ReconstructedParticle">PandoraPFANewPFOs </parameter>
+    <!--The pandora settings xml file-->
+    <parameter name="PandoraSettingsXmlFile" type="string">PandoraSettingsDefault.xml </parameter>
+    <!--Name of external prong Vertex collections-->
+    <parameter name="ProngVertexCollections" type="StringVec" lcioInType="Vertex">ProngVertices </parameter>
+    <!--Max distance from track hit to ftd z position to identify ftd hits-->
+    <parameter name="ReachesECalFtdZMaxDistance" type="float">1 </parameter>
+    <!--Min FTD layer for track to be considered to have reached ecal-->
+    <parameter name="ReachesECalMinFtdLayer" type="int">9 </parameter>
+    <!--Minimum number of ftd hits to consider track as reaching ecal-->
+    <parameter name="ReachesECalNFtdHits" type="int">4 </parameter>
+    <!--Minimum number of tpc hits to consider track as reaching ecal-->
+    <parameter name="ReachesECalNTpcHits" type="int">11 </parameter>
+    <!--Max distance from track to tpc r max to id whether track reaches ecal-->
+    <parameter name="ReachesECalTpcOuterDistance" type="float">-100 </parameter>
+    <!--Max distance from track to tpc z max to id whether track reaches ecal-->
+    <parameter name="ReachesECalTpcZMaxDistance" type="float">-50 </parameter>
+    <!--SimCaloHit to CaloHit Relations Collection Name-->
+    <parameter name="RelCaloHitCollections" type="StringVec" lcioInType="LCRelation">RelationCaloHit RelationMuonHit </parameter>
+    <!--Track to MCParticle Relations Collection Name-->
+    <parameter name="RelTrackCollections" type="StringVec" lcioInType="LCRelation">MarlinTrkTracksMCP </parameter>
+    <!--Whether to form pandora track relationships using v0 and kink info-->
+    <parameter name="ShouldFormTrackRelationships" type="int">1 </parameter>
+    <!--Name of external split Vertex collections-->
+    <parameter name="SplitVertexCollections" type="StringVec" lcioInType="Vertex">SplitVertices </parameter>
+    <!--To use strip splitting algorithm, this should be true-->
+    <parameter name="StripSplittingOn" type="int">0 </parameter>
+    <!--Tpc membrane max z coordinate-->
+    <parameter name="TpcMembraneMaxZ" type="float">10 </parameter>
+    <!--Names of the Track collections used for clustering-->
+    <parameter name="TrackCollections" type="StringVec" lcioInType="Track">MarlinTrkTracks </parameter>
+    <!--Detector names of the Trackers in the Barrel starting from the innermost one-->
+    <parameter name="TrackerBarrelDetectorNames" type="StringVec">SIT SET  </parameter>
+    <!--Detector names of the Trackers in the Endcap starting from the innermost one-->
+    <parameter name="TrackerEndcapDetectorNames" type="StringVec">FTD </parameter>
+    <!--Maximum energy for unmatched vertex track-->
+    <parameter name="UnmatchedVertexTrackMaxEnergy" type="float">5 </parameter>
+    <!--To use scintillator layers ~ hybrid ECAL, this should be true-->
+    <parameter name="UseEcalScLayers" type="int">0 </parameter>
+    <!--Whether can form pfos from tracks that don't start at vertex-->
+    <parameter name="UseNonVertexTracks" type="int">1 </parameter>
+    <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+    <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+    <!--Whether can form pfos from unmatched tracks that don't start at vertex-->
+    <parameter name="UseUnmatchedNonVertexTracks" type="int">0 </parameter>
+    <!--Whether can form pfos from unmatched tracks that start at vertex-->
+    <parameter name="UseUnmatchedVertexTracks" type="int">1 </parameter>
+    <!--Name of external V0 Vertex collections-->
+    <parameter name="V0VertexCollections" type="StringVec" lcioInType="Vertex">V0Vertices </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+    <!--The name of the Vertex Barrel detector-->
+    <parameter name="VertexBarrelDetectorName" type="string">VertexBarrel </parameter>
+    <!--Track z0 cut used to determine whether track can be used to form pfo-->
+    <parameter name="Z0TrackCut" type="float">50 </parameter>
+    <!--z0 cut used to determine whether unmatched vertex track can form pfo-->
+    <parameter name="Z0UnmatchedVertexTrackCut" type="float">5 </parameter>
+    <!--Non vtx track z cut to determine whether track can be used to form pfo-->
+    <parameter name="ZCutForNonVertexTracks" type="float">250 </parameter>
   </processor>
   
 </marlin>
