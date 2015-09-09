@@ -22,7 +22,8 @@
 
     python ddsim.py $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml
 
-    ( modify ddsim.py as needed for other inputfiles/simulations)
+    ( modify ddsim.py as needed for other inputfiles/simulations
+     the original can be found at $lcgeo_DIR/example/ddsim.py )
 
 #--   this creates the file:    bbudsc_3evt.slcio
 

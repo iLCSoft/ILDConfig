@@ -64,7 +64,6 @@
      <processor name="MySimpleLHCalDigi"/>
      <processor name="MySimpleMuonDigi"/>
      
-     <!-- <processor name="MyDDPandoraPFANewProcessor"/> -->
      <processor name="MyDDMarlinPandora"/>
      <!-- <processor name="MyMarlinPandora"/> -->
 
@@ -266,7 +265,7 @@
 </processor>
 
 
- <processor name="FTDPixelPlanarDigiProcessor" type="PlanarDigiProcessor">
+ <processor name="FTDPixelPlanarDigiProcessor" type="DDPlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> FTD </parameter>
    <!--whether hits are 1D strip hits-->
@@ -286,7 +285,7 @@
  </processor>
 
 
- <processor name="FTDStripPlanarDigiProcessor" type="PlanarDigiProcessor">
+ <processor name="FTDStripPlanarDigiProcessor" type="DDPlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> FTD </parameter>
    <!--whether hits are 1D strip hits-->
@@ -306,7 +305,7 @@
  </processor>
 
  
- <processor name="SETPlanarDigiProcessor" type="PlanarDigiProcessor">
+ <processor name="SETPlanarDigiProcessor" type="DDPlanarDigiProcessor">
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> SET </parameter>
    <!--whether hits are 1D strip hits-->
@@ -1046,32 +1045,15 @@
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter>
-  <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter>
 
   <!--Whether to calculate track states manually, rather than copy stored fitter values-->
-  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <parameter name="UseOldTrackStateCalculation" type="int"> 1  </parameter> <!-- !!!FIXME, workaround for some missing TS AtCalo face - this should really be: 0 -->
   <parameter name="NEventsToSkip" type="int">0</parameter>
   <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG0 </parameter-->
-
-  <!--Energy Corrections in Marlin Pandora-->
-  <!--parameter name="InputEnergyCorrectionPoints" type="FloatVec">InputEnergyCorrectionPoints_XXXX</parameter-->
-  <!--parameter name="OutputEnergyCorrectionPoints" type="FloatVec">OutputEnergyCorrectionPoints_XXXX</parameter-->
-  <!-- <parameter name="MinFtdHitsForTpcHitFraction" type="int">0 </parameter> -->
-  <!-- <\!--Track quality cut: the minimum number of ftd track hits for ftd only tracks-\-> -->
-  <!-- <parameter name="MinFtdTrackHits" type="int">0 </parameter> -->
-  <!-- <\!--Min track momentum required to perform final quality checks on number of hits-\-> -->
-  <!-- <parameter name="MinMomentumForTrackHitChecks" type="float">0 </parameter> -->
-  <!-- <\!--Cut on fractional of expected number of TPC hits-\-> -->
-  <!-- <parameter name="MinTpcHitFractionOfExpected" type="float">0 </parameter> -->
-  <!-- <\!--Sanity check on separation between ip and track projected ecal position-\-> -->
-  <!-- <parameter name="MinTrackECalDistanceFromIp" type="float">0 </parameter> -->
-  <!-- <\!--Track quality cut: the minimum number of track hits-\-> -->
-  <!-- <parameter name="MinTrackHits" type="int">0 </parameter> -->
-  
   <!--The name of the Vertex Barrel detector-->
   <parameter name="VertexBarrelDetectorName" type="string">VXD </parameter>
   <!--Detector names of the Trackers in the Barrel starting from the innermost one-->
-  <parameter name="TrackerBarrelDetectorNames" type="StringVec">SIT SET</parameter>
+  <parameter name="TrackerBarrelDetectorNames" type="StringVec">TPC</parameter>
   <!--Detector names of the Trackers in the Endcap starting from the innermost one-->
   <parameter name="TrackerEndcapDetectorNames" type="StringVec">FTD</parameter>
   <parameter name="CoilName" type="string">Coil</parameter>
@@ -1083,9 +1065,86 @@
   <parameter name="HCalOtherDetectorNames" type="StringVec">HcalRing LHcal </parameter>
   <parameter name="MuonBarrelDetectorName" type="string">YokeBarrel </parameter>
   <parameter name="MuonEndcapDetectorName" type="string">YokeEndcap </parameter>
-  <parameter name="MuonOtherDetectorNames" type="StringVec">YokePlug  </parameter>
-
+  <parameter name="MuonOtherDetectorNames" type="StringVec"></parameter>
+  <!--Decides whether to create gaps in the geometry (ILD-specific)-->
+  <!---SHOULD BE TRUE FOR ILD BUT INNER/OUTER SYMMETRIES ARE NOT COMPATIBLE -->
+  <parameter name="CreateGaps" type="bool">false</parameter>
+    <!--The name of the DDTrackCreator implementation-->
+    <parameter name="TrackCreatorName" type="string">DDTrackCreatorILD </parameter>
 </processor>
+
+<!-- <processor name="MyDDMarlinPandora" type="DDPandoraPFANewProcessor"> -->
+<!--   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter> -->
+<!--   <\!-- Collection names -\-> -->
+<!--   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter> -->
+<!--   <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter> -->
+<!--   <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter> -->
+<!--   <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter> -->
+<!--   <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter> -->
+<!--   <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter> -->
+<!--   <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter> -->
+<!--   <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter> -->
+<!--   <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCP</parameter> -->
+<!--   <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter> -->
+<!--   <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter> -->
+<!--   <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter> -->
+<!--   <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter> -->
+<!--   <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter> -->
+<!--   <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter> -->
+<!--   <\!-- Calibration constants -\-> -->
+<!--   <parameter name="ECalToMipCalibration" type="float">160.0</parameter> -->
+<!--   <parameter name="HCalToMipCalibration" type="float">34.8</parameter> -->
+<!--   <parameter name="ECalMipThreshold" type="float">0.5</parameter> -->
+<!--   <parameter name="HCalMipThreshold" type="float">0.3</parameter> -->
+<!--   <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter> -->
+<!--   <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter> -->
+<!--   <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter> -->
+<!--   <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter> -->
+<!--   <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter> -->
+<!--   <parameter name="MuonToMipCalibration" type="float">10.0</parameter> -->
+<!--   <parameter name="DigitalMuonHits" type="int">0</parameter> -->
+<!--   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter>  -->
+<!--   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> -->
+<!--   <parameter name="AbsorberRadiationLength" type="float">0.2857</parameter> -->
+
+<!--   <\!--Whether to calculate track states manually, rather than copy stored fitter values-\-> -->
+<!--   <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter> -->
+<!--   <parameter name="NEventsToSkip" type="int">0</parameter> -->
+<!--   <\!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG0 </parameter-\-> -->
+
+<!--   <\!--Energy Corrections in Marlin Pandora-\-> -->
+<!--   <\!--parameter name="InputEnergyCorrectionPoints" type="FloatVec">InputEnergyCorrectionPoints_XXXX</parameter-\-> -->
+<!--   <\!--parameter name="OutputEnergyCorrectionPoints" type="FloatVec">OutputEnergyCorrectionPoints_XXXX</parameter-\-> -->
+<!--   <\!-- <parameter name="MinFtdHitsForTpcHitFraction" type="int">0 </parameter> -\-> -->
+<!--   <\!-- <\\!--Track quality cut: the minimum number of ftd track hits for ftd only tracks-\\-> -\-> -->
+<!--   <\!-- <parameter name="MinFtdTrackHits" type="int">0 </parameter> -\-> -->
+<!--   <\!-- <\\!--Min track momentum required to perform final quality checks on number of hits-\\-> -\-> -->
+<!--   <\!-- <parameter name="MinMomentumForTrackHitChecks" type="float">0 </parameter> -\-> -->
+<!--   <\!-- <\\!--Cut on fractional of expected number of TPC hits-\\-> -\-> -->
+<!--   <\!-- <parameter name="MinTpcHitFractionOfExpected" type="float">0 </parameter> -\-> -->
+<!--   <\!-- <\\!--Sanity check on separation between ip and track projected ecal position-\\-> -\-> -->
+<!--   <\!-- <parameter name="MinTrackECalDistanceFromIp" type="float">0 </parameter> -\-> -->
+<!--   <\!-- <\\!--Track quality cut: the minimum number of track hits-\\-> -\-> -->
+<!--   <\!-- <parameter name="MinTrackHits" type="int">0 </parameter> -\-> -->
+  
+<!--   <\!--The name of the Vertex Barrel detector-\-> -->
+<!--   <parameter name="VertexBarrelDetectorName" type="string">VXD </parameter> -->
+<!--   <\!--Detector names of the Trackers in the Barrel starting from the innermost one-\-> -->
+<!--   <parameter name="TrackerBarrelDetectorNames" type="StringVec">SIT SET</parameter> -->
+<!--   <\!--Detector names of the Trackers in the Endcap starting from the innermost one-\-> -->
+<!--   <parameter name="TrackerEndcapDetectorNames" type="StringVec">FTD</parameter> -->
+<!--   <parameter name="CoilName" type="string">Coil</parameter> -->
+<!--   <parameter name="ECalBarrelDetectorName" type="string">EcalBarrel </parameter> -->
+<!--   <parameter name="ECalEndcapDetectorName" type="string">EcalEndcap </parameter> -->
+<!--   <parameter name="ECalOtherDetectorNames" type="StringVec">EcalPlug Lcal BeamCal  </parameter> -->
+<!--   <parameter name="HCalEndcapDetectorName" type="string">HcalEndcap </parameter> -->
+<!--   <parameter name="HCalBarrelDetectorName" type="string">HcalBarrel </parameter> -->
+<!--   <parameter name="HCalOtherDetectorNames" type="StringVec">HcalRing LHcal </parameter> -->
+<!--   <parameter name="MuonBarrelDetectorName" type="string">YokeBarrel </parameter> -->
+<!--   <parameter name="MuonEndcapDetectorName" type="string">YokeEndcap </parameter> -->
+<!--   <parameter name="MuonOtherDetectorNames" type="StringVec">YokePlug  </parameter> -->
+
+<!-- </processor> -->
 
 
 
