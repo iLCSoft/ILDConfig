@@ -71,6 +71,19 @@
         <ShouldMakePdfHistograms>false</ShouldMakePdfHistograms>
         <NEnergyBins>9</NEnergyBins>
         <HistogramFile>PandoraLikelihoodData9EBin.xml</HistogramFile>
+        <ShouldDeleteNonPhotonClusters>false</ShouldDeleteNonPhotonClusters>
+        <algorithm type = "RecoPhotonFragmentMerging" description = "PhotonFragmentMerging">
+            <NonPhotonClusterListName>NonPhotonClusters</NonPhotonClusterListName>
+            <associationAlgorithms>
+                <algorithm type = "ProximityBasedMerging">
+                    <algorithm type = "TrackClusterAssociation"/>
+                </algorithm>
+                <algorithm type = "SoftClusterMerging">
+                    <algorithm type = "TrackClusterAssociation"/>
+                    <AdditionalClusterListNames>PhotonClusters</AdditionalClusterListNames>
+                </algorithm>
+            </associationAlgorithms>
+        </algorithm>
     </algorithm>
 
     <!-- Clustering parent algorithm runs a daughter clustering algorithm -->
@@ -421,6 +434,8 @@
         <MergedCandidateListName>PfoCreation</MergedCandidateListName>
     </algorithm>
 
+    <algorithm type = "PhotonFragmentMerging"/>
+
     <!-- Create particle flow objects -->
     <algorithm type = "ForceSplitTrackAssociations"/>
     <algorithm type = "PfoCreation">
@@ -435,7 +450,6 @@
     <!-- Particle flow object modification algorithms -->
     <algorithm type = "FinalParticleId"/>
     <algorithm type = "V0PfoCreation"/>
-    <!-- for DEBUGGING / MONITORING : NEED TO RUN RecoMCTruthLink BEFORE Pandora! --->
     <!--algorithm type = "DumpPfosMonitoring"/-->
     <!--algorithm type = "VisualMonitoring"/-->
 </pandora>
