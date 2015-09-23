@@ -71,6 +71,19 @@
         <ShouldMakePdfHistograms>false</ShouldMakePdfHistograms>
         <NEnergyBins>9</NEnergyBins>
         <HistogramFile>PandoraLikelihoodData9EBin.xml</HistogramFile>
+        <ShouldDeleteNonPhotonClusters>false</ShouldDeleteNonPhotonClusters>
+        <algorithm type = "RecoPhotonFragmentMerging" description = "PhotonFragmentMerging">
+            <NonPhotonClusterListName>NonPhotonClusters</NonPhotonClusterListName>
+            <associationAlgorithms>
+                <algorithm type = "ProximityBasedMerging">
+                    <algorithm type = "TrackClusterAssociation"/>
+                </algorithm>
+                <algorithm type = "SoftClusterMerging">
+                    <algorithm type = "TrackClusterAssociation"/>
+                    <AdditionalClusterListNames>PhotonClusters</AdditionalClusterListNames>
+                </algorithm>
+            </associationAlgorithms>
+        </algorithm>
     </algorithm>
 
     <!-- Clustering parent algorithm runs a daughter clustering algorithm -->
@@ -420,6 +433,8 @@
         <CandidateListNames>PrimaryClusters PhotonClusters</CandidateListNames>
         <MergedCandidateListName>PfoCreation</MergedCandidateListName>
     </algorithm>
+
+    <algorithm type = "PhotonFragmentMerging"/>
 
     <!-- Create particle flow objects -->
     <algorithm type = "ForceSplitTrackAssociations"/>
