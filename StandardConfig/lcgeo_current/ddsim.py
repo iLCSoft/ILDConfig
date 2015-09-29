@@ -33,26 +33,18 @@ from SystemOfUnits import *
 # some configuration variables (could go to a seperate 'steering' file)
 #
 
-numberOfEvents = 3
+numberOfEvents = 1
 
 # ---------------------------------------
 # input file: either .slcio or .stdhep
 # --------------------------------------
 
-#lcioInputFile  = 'mcparticles.slcio'
 lcioInputFile  = 'bbudsc_3evt.stdhep'
-#lcioInputFile  = 'bbudsc_3evt_dd4hep.slcio'
-#lcioInputFile  = 'mcparticles_single_muon_5GeV_10deg.slcio'
-#lcioInputFile  = 'mcparticles_single_muon_5GeV_7deg.slcio'
-#lcioInputFile  = 'mcparticles_single_muon_5GeV_85deg.slcio'
-
 lcioOutputFile  = 'bbudsc_3evt.slcio'
-#lcioOutputFile = 'simpleCLIC_single_muon_5GeV_85deg.slcio'
-#lcioOutputFile = 'simpleILD_single_muon_5GeV_85deg.slcio'
-#lcioOutputFile = 'simple_lcio.slcio'
+
 #lcioOutputFile = lcioInputFile[:len(lcioInputFile)-len('.slcio')]+'_SIM.slcio'
 
-physicsList    = 'FTFP_BERT'  # 'QGSP_BERT'
+physicsList    = 'QGSP_BERT'
 
 #---subset of detectors to initialize (all if list is empty)
 # this does not work, as the complete geometry form the compact.xml files
@@ -127,6 +119,8 @@ def run():
 
 #----------------------------------------------------------------------------------
 
+#  simple = DDG4.Geant4( kernel, tracker='Geant4TrackerCombineAction',calo='Geant4ScintillatorCalorimeterAction')
+## Apply BirksLaw effect for Scintillator Calorimeter by using 'Geant4ScintillatorCalorimeterAction'.
   simple = DDG4.Geant4( kernel, tracker='Geant4TrackerAction',calo='Geant4ScintillatorCalorimeterAction')
 
   simple.printDetectors()
@@ -220,7 +214,11 @@ def run():
 
   for c in cal:
     print 'simple.setupCalorimeter(  ' , c , ')'
-    seq,act = simple.setupCalorimeter( c )
+    if( 'ecal' in c.lower() ):
+      seq,act = simple.setupCalorimeter( c ,type='CaloPreShowerSDAction')
+      act.FirstLayerNumber = 1
+    else:
+      seq,act = simple.setupCalorimeter( c )
     act.HitCreationMode = 2
 
 

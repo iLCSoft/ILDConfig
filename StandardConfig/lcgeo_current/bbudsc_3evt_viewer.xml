@@ -79,7 +79,6 @@
      OTrackerHits          0 5 11
      VXDEndcapTrackerHits  0 5 11
 
-     HcalEndCapsCollection       0 3 2
      LHcalCollection             0 3 2
      LumiCalCollection           0 3 2
      MuonBarrelCollection        0 3 2
@@ -96,7 +95,8 @@
      EcalEndcapRingCollection    0 3 2 
      EcalEndcapsCollection       0 3 2
      HcalBarrelRegCollection     0 3 2
-     HcalEndCapRingsCollection   0 3 2
+     HcalEndCapRingCollection    0 3 2
+     HcalEndcapsCollection       0 3 2 
 
      ECalBarrelCollection 0 3 2
      ECalEndcapCollection 0 3 2

@@ -166,12 +166,12 @@
   <parameter name="CollectionMap" type="StringVec">
     BeamCalCollection                     BeamCalCollection                     
     COILCollection                        COILCollection                        
-    EcalBarrelSiliconCollection           EcalBarrelSiliconCollection           
-    EcalBarrelSiliconPreShowerCollection  EcalBarrelSiliconPreShowerCollection  
+    EcalBarrelCollection                  EcalBarrelCollection           
+    EcalBarrelCollection_preShower        EcalBarrelCollection_preShower
     EcalEndcapRingCollection              EcalEndcapRingCollection              
-    EcalEndcapRingPreShowerCollection     EcalEndcapRingPreShowerCollection     
-    EcalEndcapSiliconCollection           EcalEndcapSiliconCollection           
-    EcalEndcapSiliconPreShowerCollection  EcalEndcapSiliconPreShowerCollection  
+    EcalEndcapRingCollection_preShower    EcalEndcapRingCollection_preShower
+    EcalEndcapsCollection                 EcalEndcapsCollection           
+    EcalEndcapsCollection_preShower       EcalEndcapsCollection_preShower
     FTD_PIXELCollection                   FTD_PIXELCollection                   
     FTD_STRIPCollection                   FTD_STRIPCollection                   
     HcalBarrelRegCollection               HcalBarrelRegCollection               
