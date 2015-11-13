@@ -11,100 +11,98 @@ SIM.field.eps_min = 1*mm
 SIM.part.minimalKineticEnergy = 1*MeV
 
 SIM.action.mapActions['tpc'] = "TPCSDAction"
-SIM.action.mapActions['ecal'] = "EcalSDAction"
+SIM.action.mapActions['ecal'] = "CaloPreShowerSDAction"
 
 SIM.physicsList = "QGSP_BERT"
 
 SIM.inputFiles = "bbudsc_3evt.stdhep"
 SIM.outputFile = "bbudsc_3evt_ddsim.slcio"
 
-#SIM.enableDetailedShowerMode=True
-SIM.dumpParameter = 1
+SIM.enableDetailedShowerMode=True
+
 
 ##optional arguments:
-##  -h, --help            show this help message and exit
-##  --steeringFile STEERINGFILE, -S STEERINGFILE
-##                        Steering file to change default behaviour
-##  --compactFile COMPACTFILE
+##  SIM.compactFile COMPACTFILE
 ##                        The compact XML file
-##  --runType {batch,vis,run,shell}
+##  SIM.runType {batch,vis,run,shell}
 ##                        The type of action to do in this invocation
 ##                        batch: just simulate some events, needs numberOfEvents, and input file or gun
 ##                        vis: enable visualisation
 ##                        run: enable run the macro
 ##                        shell: enable interactive session
-##  --inputFiles INPUTFILES [INPUTFILES ...], -I INPUTFILES [INPUTFILES ...]
+##  SIM.inputFiles INPUTFILES [INPUTFILES ...], -I INPUTFILES [INPUTFILES ...]
 ##                        InputFiles for simulation, lcio, stdhep, HEPEvt, and hepevt files are supported
-##  --outputFile OUTPUTFILE, -O OUTPUTFILE
+##  SIM.outputFile OUTPUTFILE, -O OUTPUTFILE
 ##                        Outputfile from the simulation,only lcio output is supported
-##  -v {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}, --printLevel {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
+##  -v {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}, 
+##  SIM.printLevel {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
 ##                        Verbosity use integers from 1(most) to 7(least) verbose
 ##                        or strings: VERBOSE, DEBUG, INFO, WARNING, ERROR, FATAL, ALWAYS
-##  --numberOfEvents NUMBEROFEVENTS, -N NUMBEROFEVENTS
+##  SIM.numberOfEvents NUMBEROFEVENTS, -N NUMBEROFEVENTS
 ##                        number of events to simulate, used in batch mode
-##  --skipNEvents SKIPNEVENTS
+##  SIM.skipNEvents SKIPNEVENTS
 ##                        Skip first N events when reading a file
-##  --physicsList PHYSICSLIST
+##  SIM.physicsList PHYSICSLIST
 ##                        Physics list to use in simulation
-##  --crossingAngleBoost CROSSINGANGLEBOOST
+##  SIM.crossingAngleBoost CROSSINGANGLEBOOST
 ##                        Lorentz boost for the crossing angle, in radian!
-##  --vertexSigma X Y Z T
+##  SIM.vertexSigma X Y Z T
 ##                        FourVector of the Sigma for the Smearing of the Vertex position: x y z t
-##  --vertexOffset X Y Z T
+##  SIM.vertexOffset X Y Z T
 ##                        FourVector of translation for the Smearing of the Vertex position: x y z t
-##  --macroFile MACROFILE, -M MACROFILE
+##  SIM.macroFile MACROFILE, -M MACROFILE
 ##                        Macro file to execute for runType 'run' or 'vis'
-##  --enableGun, -G       enable the DDG4 particle gun
-##  --dumpParameter, --dump
+##  SIM.enableGun, -G       enable the DDG4 particle gun
+##  SIM.dumpParameter, SIM.dump
 ##                        Print all configuration Parameters and exit
-##  --enableDetailedShowerMode
+##  SIM.enableDetailedShowerMode
 ##                        use detailed shower mode
-##  --random.type RANDOM.TYPE
-##  --random.seed RANDOM.SEED
-##  --random.replace_gRandom RANDOM.REPLACE_GRANDOM
-##  --random.luxury RANDOM.LUXURY
-##  --random.file RANDOM.FILE
-##  --field.delta_intersection FIELD.DELTA_INTERSECTION
-##  --field.min_chord_step FIELD.MIN_CHORD_STEP
-##  --field.equation FIELD.EQUATION
-##  --field.stepper FIELD.STEPPER
-##  --field.delta_chord FIELD.DELTA_CHORD
-##  --field.eps_min FIELD.EPS_MIN
-##  --field.eps_max FIELD.EPS_MAX
-##  --field.delta_one_step FIELD.DELTA_ONE_STEP
-##  --part.keepAllParticles PART.KEEPALLPARTICLES
+##  SIM.random.type RANDOM.TYPE
+##  SIM.random.seed RANDOM.SEED
+##  SIM.random.replace_gRandom RANDOM.REPLACE_GRANDOM
+##  SIM.random.luxury RANDOM.LUXURY
+##  SIM.random.file RANDOM.FILE
+##  SIM.field.delta_intersection FIELD.DELTA_INTERSECTION
+##  SIM.field.min_chord_step FIELD.MIN_CHORD_STEP
+##  SIM.field.equation FIELD.EQUATION
+##  SIM.field.stepper FIELD.STEPPER
+##  SIM.field.delta_chord FIELD.DELTA_CHORD
+##  SIM.field.eps_min FIELD.EPS_MIN
+##  SIM.field.eps_max FIELD.EPS_MAX
+##  SIM.field.delta_one_step FIELD.DELTA_ONE_STEP
+##  SIM.part.keepAllParticles PART.KEEPALLPARTICLES
 ##                         Keep all created particles 
-##  --part.minimalKineticEnergy PART.MINIMALKINETICENERGY
+##  SIM.part.minimalKineticEnergy PART.MINIMALKINETICENERGY
 ##                        MinimalKineticEnergy to store particles created in the tracking region
-##  --part.saveProcesses PART.SAVEPROCESSES
+##  SIM.part.saveProcesses PART.SAVEPROCESSES
 ##                        List of processes to save, give as whitespace separated string in quotation marks
-##  --part.printStartTracking PART.PRINTSTARTTRACKING
+##  SIM.part.printStartTracking PART.PRINTSTARTTRACKING
 ##                         Printout at Start of Tracking 
-##  --part.printEndTracking PART.PRINTENDTRACKING
+##  SIM.part.printEndTracking PART.PRINTENDTRACKING
 ##                         Printout at End of Tracking 
-##  --gun.direction GUN.DIRECTION
+##  SIM.gun.direction GUN.DIRECTION
 ##                         direction of the particle gun, 3 vector 
-##  --gun.particle GUN.PARTICLE
-##  --gun.multiplicity GUN.MULTIPLICITY
-##  --gun.energy GUN.ENERGY
-##  --gun.isotrop GUN.ISOTROP
+##  SIM.gun.particle GUN.PARTICLE
+##  SIM.gun.multiplicity GUN.MULTIPLICITY
+##  SIM.gun.energy GUN.ENERGY
+##  SIM.gun.isotrop GUN.ISOTROP
 ##                         isotropic distribution for the particle gun 
-##  --gun.position GUN.POSITION
+##  SIM.gun.position GUN.POSITION
 ##                         position of the particle gun, 3 vector 
-##  --action.tracker ACTION.TRACKER
+##  SIM.action.tracker ACTION.TRACKER
 ##                         set the default tracker action 
-##  --action.mapActions ACTION.MAPACTIONS
+##  SIM.action.mapActions ACTION.MAPACTIONS
 ##                         create a map of patterns and actions to be applied to sensitive detectors
-##                            e.g. tpc --> TPCSDAction 
-##  --action.calo ACTION.CALO
+##                            e.g. tpc SIM.> TPCSDAction 
+##  SIM.action.calo ACTION.CALO
 ##                         set the default calorimeter action 
-##  --output.random OUTPUT.RANDOM
+##  SIM.output.random OUTPUT.RANDOM
 ##                        Output level for Random Number Generator setup
-##  --output.kernel OUTPUT.KERNEL
+##  SIM.output.kernel OUTPUT.KERNEL
 ##                        Output level for Geant4 kernel
-##  --output.part OUTPUT.PART
+##  SIM.output.part OUTPUT.PART
 ##                        Output level for ParticleHandler
-##  --output.inputStage OUTPUT.INPUTSTAGE
+##  SIM.output.inputStage OUTPUT.INPUTSTAGE
 ##                        Output level for input sources
 
 
