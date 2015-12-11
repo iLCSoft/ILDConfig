@@ -1318,9 +1318,9 @@
 
 <processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
   <!--============= default Pandora ===================== -->
-  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter-->
+  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
   <!--============= with improved photon finding by Bono ===================== -->
-  <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter>
+  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter-->
   <!--============= with photons from Garlic  -- this does not work yet! ===================== -->
   <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsGarlic.xml </parameter-->
   <!-- Collection names -->
