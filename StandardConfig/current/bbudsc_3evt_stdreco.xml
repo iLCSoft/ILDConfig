@@ -87,6 +87,10 @@
      <!-- ========== should be done by MarlinPandora eventually ======= -->
      <processor name="MyAdd4MomCovMatrixCharged"/>
 
+     <!-- ========== cluster position and direction w/ covariance; covanriance matrix for neutral PFOs  ======= 
+-->
+     <!-- processor name="MyAddClusterProperties"/-->
+
      <!-- ========== BeamCal ======= -->
      <processor name="MyBCalReco"/>
 
@@ -114,7 +118,7 @@
         ./bbudsc_3evt.slcio 
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
-      <parameter name="MaxRecordNumber" value="2"/>
+      <parameter name="MaxRecordNumber" value="100000"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
@@ -1387,6 +1391,14 @@
   <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
   <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
   <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
+</processor>
+
+<!--########## AddClusterProperties ###################################### -->
+ <processor name="MyAddClusterProperties" type="AddClusterProperties">
+  <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <parameter name="ClusterCollection" type="string" lcioInType="Cluster">PandoraClusters </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">MESSAGE </parameter>
 </processor>
 
 
