@@ -1502,6 +1502,11 @@
      1.350e-7
    </parameter>
 
+   <!--dE/dx error factor-->
+   <parameter name="dEdxErrorFactor" type="float">
+     7.55
+   </parameter>
+
    <!-- Method: Maximum Likelihood(0) or Bayesian(1)-->
    <parameter name="UseBayesian" type="int">
      0
