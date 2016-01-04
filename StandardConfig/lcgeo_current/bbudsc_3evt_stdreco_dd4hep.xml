@@ -83,7 +83,7 @@
 
    <global>
       <parameter name="LCIOInputFiles">
-        bbudsc_3evt.slcio
+        bbudsc_3evt_SIM.slcio
       </parameter>
       <parameter name="GearXMLFile" value="gear_ILD_o1_v05_dd4hep.xml"/>
       <parameter name="MaxRecordNumber" value="0"/>
@@ -877,7 +877,7 @@
   </parameter>
   <!-- <parameter name="ECALCollections" type="StringVec">EcalBarrelSiliconCollection EcalEndcapSiliconCollection  EcalEndcapRingCollection </parameter> -->
   <!--Index of ECal Layers-->
-  <parameter name="ECALLayers" type="IntVec">20 100  </parameter>
+  <parameter name="ECALLayers" type="IntVec">21 100  </parameter> <!-- we start layer counting from 1 in lcgeo -->
   <!--Threshold for ECAL Hits in GeV-->
   <parameter name="ECALThreshold" type="float">5e-05 </parameter>
   <!--HCAL Collection Names-->

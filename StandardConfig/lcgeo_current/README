@@ -20,10 +20,8 @@
 
 # 2. ---- run the lcgeo/ddsim simulation example  ------
 
-    python ddsim.py $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml
+    ddsim --inputFiles ./bbudsc_3evt.stdhep --outputFile=./bbudsc_3evt.slcio --compactFile $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml --steeringFile=./bbudsc_3evt_ddsim.steer
 
-    ( modify ddsim.py as needed for other inputfiles/simulations
-     the original can be found at $lcgeo_DIR/example/ddsim.py )
 
 #--   this creates the file:    bbudsc_3evt.slcio
 
