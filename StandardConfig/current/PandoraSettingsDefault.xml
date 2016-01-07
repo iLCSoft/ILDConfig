@@ -15,6 +15,15 @@
 
     <!-- ALGORITHM SETTINGS -->
 
+    <algorithm type = "EventWriting">
+      <EventFileName>PandoraEvents_mokka.xml</EventFileName>
+      <GeometryFileName>PandoraGeometry_mokka.xml</GeometryFileName>
+      <ShouldWriteEvents>false</ShouldWriteEvents>
+      <ShouldWriteGeometry>false</ShouldWriteGeometry>
+      <ShouldOverwriteEventFile>true</ShouldOverwriteEventFile>
+      <ShouldOverwriteGeometryFile>true</ShouldOverwriteGeometryFile>
+    </algorithm>
+    
     <!-- Set calo hit properties, then select tracks and hits to use for clustering -->
     <algorithm type = "CaloHitPreparation"/>
     <algorithm type = "EventPreparation">
