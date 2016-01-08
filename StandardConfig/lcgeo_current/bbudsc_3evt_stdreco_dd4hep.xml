@@ -1495,7 +1495,7 @@
     <!--calibration to convert HCAL deposited energy to MIPs-->
     <parameter name="CalibHCALMIP" type="float">0.0001 </parameter>
     <!--Calibration coefficients for ECAL-->
-    <parameter name="CalibrECAL" type="FloatVec">40.91 81.81  </parameter>
+    <parameter name="CalibrECAL" type="FloatVec">42.91 85.82  </parameter>
     <!--Calibration coefficients for Barrel HCAL-->
     <parameter name="CalibrHCALBarrel" type="FloatVec">54.7  </parameter>
     <!--Calibration coefficients for EndCap HCAL-->
