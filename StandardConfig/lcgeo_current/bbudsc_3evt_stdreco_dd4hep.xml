@@ -58,7 +58,8 @@
      <processor name="MyKinkFinder"/>
      
      <!-- ========== calorimeter digitization and PFA ======= -->
-     <processor name="MyNewLDCCaloDigi"/>
+     <!--processor name="MyNewLDCCaloDigi"/-->
+     <processor name="MyDDCaloDigi"/>
      <processor name="MySimpleBCalDigi"/>
      <processor name="MySimpleLCalDigi"/>
      <processor name="MySimpleLHCalDigi"/>
@@ -1485,6 +1486,164 @@
     <parameter name="Z0UnmatchedVertexTrackCut" type="float">5 </parameter>
     <!--Non vtx track z cut to determine whether track can be used to form pfo-->
     <parameter name="ZCutForNonVertexTracks" type="float">250 </parameter>
+  </processor>
+
+  <processor name="MyDDCaloDigi" type="DDCaloDigi">
+    <!--Performs simple digitization of sim calo hits...-->
+    <!--calibration to convert ECAL deposited energy to MIPs-->
+    <parameter name="CalibECALMIP" type="float">0.0001 </parameter>
+    <!--calibration to convert HCAL deposited energy to MIPs-->
+    <parameter name="CalibHCALMIP" type="float">0.0001 </parameter>
+    <!--Calibration coefficients for ECAL-->
+    <parameter name="CalibrECAL" type="FloatVec">40.91 81.81  </parameter>
+    <!--Calibration coefficients for Barrel HCAL-->
+    <parameter name="CalibrHCALBarrel" type="FloatVec">54.7  </parameter>
+    <!--Calibration coefficients for EndCap HCAL-->
+    <parameter name="CalibrHCALEndcap" type="FloatVec">54.7  </parameter>
+    <!--Calibration coefficients for Other (Ring) HCAL-->
+    <parameter name="CalibrHCALOther" type="FloatVec">54.7  </parameter>
+    <!--ECAL BarrelTime Window maximum time in ns-->
+    <parameter name="ECALBarrelTimeWindowMax" type="float">100 </parameter>
+    <!--ECAL Collection Names-->
+    <parameter name="ECALCollections" type="StringVec" lcioInType="SimCalorimeterHit">EcalBarrelCollection EcalEndcapsCollection EcalEndcapRingCollection  </parameter>
+    <!--Correct ECAL hit times for propagation: radial distance/c-->
+    <parameter name="ECALCorrectTimesForPropagation" type="int">0 </parameter>
+    <!--ECAL Minimum Delta Time in ns for resolving two hits-->
+    <parameter name="ECALDeltaTimeHitResolution" type="float">10 </parameter>
+    <!--Energy correction for ECAL endcap-->
+    <parameter name="ECALEndcapCorrectionFactor" type="float">1.025 </parameter>
+    <!--ECAL Endcap Time Window maximum time in ns-->
+    <parameter name="ECALEndcapTimeWindowMax" type="float">100 </parameter>
+    <!--Correct for ECAL gaps-->
+    <parameter name="ECALGapCorrection" type="int">1 </parameter>
+    <!--Factor applied to gap correction-->
+    <parameter name="ECALGapCorrectionFactor" type="float">1.0 </parameter>
+    <!--Index of ECal Layers-->
+    <parameter name="ECALLayers" type="IntVec">21 100  </parameter>
+    <!--Factor applied to module gap correction-->
+    <parameter name="ECALModuleGapCorrectionFactor" type="float">0.0 </parameter>
+    <!--ECAL Collection of real Hits-->
+    <parameter name="ECALOutputCollection0" type="string" lcioOutType="CalorimeterHit">ECALBarrel </parameter>
+    <!--ECAL Collection of real Hits-->
+    <parameter name="ECALOutputCollection1" type="string" lcioOutType="CalorimeterHit">ECALEndcap </parameter>
+    <!--ECAL Collection of real Hits-->
+    <parameter name="ECALOutputCollection2" type="string" lcioOutType="CalorimeterHit">ECALOther </parameter>
+    <!--Use simple time window cut on hit times? If false: use original hit-time clustering algorithm. If true: use time window defined by ECALBarrelTimeWindowMin and ECALBarrelTimeWindowMax-->
+    <parameter name="ECALSimpleTimingCut" type="bool">true </parameter>
+    <!--Threshold for ECAL Hits in GeV-->
+    <parameter name="ECALThreshold" type="float">5e-05 </parameter>
+    <!--Unit for ECAL Threshold. Can be "GeV", "MIP" or "px". MIP and px need properly set calibration constants-->
+    <parameter name="ECALThresholdUnit" type="string">GeV </parameter>
+    <!--ECAL Time Resolution used to smear hit times-->
+    <parameter name="ECALTimeResolution" type="float">10 </parameter>
+    <!--ECAL Time Window minimum time in ns-->
+    <parameter name="ECALTimeWindowMin" type="float">-10 </parameter>
+    <!--ECAL total number of MPPC/SiPM pixels for implementation of saturation effect-->
+    <parameter name="ECAL_PPD_N_Pixels" type="int">10000 </parameter>
+    <!--ECAL fractional uncertainty of effective total number of MPPC/SiPM pixels-->
+    <parameter name="ECAL_PPD_N_Pixels_uncertainty" type="float">0.05 </parameter>
+    <!--# Photo-electrons per MIP (scintillator): used to poisson smear #PEs if >0-->
+    <parameter name="ECAL_PPD_PE_per_MIP" type="float">7 </parameter>
+    <!--apply realistic digitisation to ECAL hits? (0=none, 1=silicon, 2=scintillator)-->
+    <parameter name="ECAL_apply_realistic_digi" type="int">0 </parameter>
+    <!--ECAL random dead cell fraction (as a fraction: 0->1) -->
+    <parameter name="ECAL_deadCellRate" type="float">0 </parameter>
+    <!--store dead ECAL cells in memory? (WARNING: can take a lot of memory if used...) -->
+    <parameter name="ECAL_deadCell_memorise" type="bool">false </parameter>
+    <!--default ECAL layer configuration (used if not found in gear file)-->
+    <parameter name="ECAL_default_layerConfig" type="string">000000000000000 </parameter>
+    <!--typical electronics noise (ECAL, in MIP units)-->
+    <parameter name="ECAL_elec_noise_mips" type="float">0 </parameter>
+    <!--maximum of dynamic range for ECAL (in MIPs)-->
+    <parameter name="ECAL_maxDynamicRange_MIP" type="float">2500 </parameter>
+    <!--correlated ECAL random gaussian miscalibration (as a fraction: 1.0 = 100%) -->
+    <parameter name="ECAL_miscalibration_correl" type="float">0 </parameter>
+    <!--uncorrelated ECAL random gaussian miscalibration (as a fraction: 1.0 = 100%) -->
+    <parameter name="ECAL_miscalibration_uncorrel" type="float">0 </parameter>
+    <!--store oncorrelated ECAL miscalbrations in memory? (WARNING: can take a lot of memory if used...) -->
+    <parameter name="ECAL_miscalibration_uncorrel_memorise" type="bool">false </parameter>
+    <!--variation of mppc/sipm pixels capacitance in ECAL (as a fraction: 0.01=1%)-->
+    <parameter name="ECAL_pixel_spread" type="float">0.05 </parameter>
+    <!--length scale for absorbtion along scintillator strip (mm)-->
+    <parameter name="ECAL_strip_absorbtionLength" type="float">1e+06 </parameter>
+    <!--HCAL Time Window maximum time in ns-->
+    <parameter name="HCALBarrelTimeWindowMax" type="float">100 </parameter>
+    <!--HCAL Collection Names-->
+    <parameter name="HCALCollections" type="StringVec" lcioInType="SimCalorimeterHit">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection  </parameter>
+    <!--Correct HCAL hit times for propagation: radial distance/c-->
+    <parameter name="HCALCorrectTimesForPropagation" type="int">0 </parameter>
+    <!--HCAL Minimum Delta Time in ns for resolving two hits-->
+    <parameter name="HCALDeltaTimeHitResolution" type="float">10 </parameter>
+    <!--Energy correction for HCAL endcap-->
+    <parameter name="HCALEndcapCorrectionFactor" type="float">1.025 </parameter>
+    <!--HCAL Time Window maximum time in ns-->
+    <parameter name="HCALEndcapTimeWindowMax" type="float">100 </parameter>
+    <!--Correct for ECAL gaps-->
+    <parameter name="HCALGapCorrection" type="int">1 </parameter>
+    <!--Index of HCal Layers-->
+    <parameter name="HCALLayers" type="IntVec">100  </parameter>
+    <!--Factor applied to module gap correction-->
+    <parameter name="HCALModuleGapCorrectionFactor" type="float">0.5 </parameter>
+    <!--HCAL Collection of real Hits-->
+    <parameter name="HCALOutputCollection0" type="string" lcioOutType="CalorimeterHit">HCALBarrel </parameter>
+    <!--HCAL Collection of real Hits-->
+    <parameter name="HCALOutputCollection1" type="string" lcioOutType="CalorimeterHit">HCALEndcap </parameter>
+    <!--HCAL Collection of real Hits-->
+    <parameter name="HCALOutputCollection2" type="string" lcioOutType="CalorimeterHit">HCALOther </parameter>
+    <!--Use simple time window cut on hit times? If false: use original hit-time clustering algorithm. If true: use time window defined by HCALBarrelTimeWindowMin and HCALBarrelTimeWindowMax-->
+    <parameter name="HCALSimpleTimingCut" type="bool">true </parameter>
+    <!--Threshold for HCAL Hits in GeV-->
+    <parameter name="HCALThreshold" type="FloatVec">0.00025  </parameter>
+    <!--Unit for HCAL Threshold. Can be "GeV", "MIP" or "px". MIP and px need properly set calibration constants-->
+    <parameter name="HCALThresholdUnit" type="string">GeV </parameter>
+    <!--HCAL Time Resolution used to smear hit times-->
+    <parameter name="HCALTimeResolution" type="float">10 </parameter>
+    <!--HCAL Time Window minimum time in ns-->
+    <parameter name="HCALTimeWindowMin" type="float">-10 </parameter>
+    <!--HCAL total number of MPPC/SiPM pixels for implementation of saturation effect-->
+    <parameter name="HCAL_PPD_N_Pixels" type="int">400 </parameter>
+    <!--HCAL fractional uncertainty of effective total number of MPPC/SiPM pixels-->
+    <parameter name="HCAL_PPD_N_Pixels_uncertainty" type="float">0.05 </parameter>
+    <!--# Photo-electrons per MIP (for AHCAL): used to poisson smear #PEs if >0-->
+    <parameter name="HCAL_PPD_PE_per_MIP" type="float">10 </parameter>
+    <!--apply realistic digitisation to HCAL hits? (0=none, 1=scintillator/SiPM)-->
+    <parameter name="HCAL_apply_realistic_digi" type="int">0 </parameter>
+    <!--HCAL random dead cell fraction (as a fraction: 0->1) -->
+    <parameter name="HCAL_deadCellRate" type="float">0 </parameter>
+    <!--store dead HCAL cells in memory? (WARNING: can take a lot of memory if used...) -->
+    <parameter name="HCAL_deadCell_memorise" type="bool">false </parameter>
+    <!--typical electronics noise (HCAL, in MIP units)-->
+    <parameter name="HCAL_elec_noise_mips" type="float">0 </parameter>
+    <!--maximum of dynamic range for HCAL (in MIPs)-->
+    <parameter name="HCAL_maxDynamicRange_MIP" type="float">200 </parameter>
+    <!--correlated HCAL random gaussian miscalibration (as a fraction: 1.0 = 100%) -->
+    <parameter name="HCAL_miscalibration_correl" type="float">0 </parameter>
+    <!--uncorrelated HCAL random gaussian miscalibration (as a fraction: 1.0 = 100%) -->
+    <parameter name="HCAL_miscalibration_uncorrel" type="float">0 </parameter>
+    <!--store oncorrelated HCAL miscalbrations in memory? (WARNING: can take a lot of memory if used...) -->
+    <parameter name="HCAL_miscalibration_uncorrel_memorise" type="bool">false </parameter>
+    <!--variation of mppc/sipm pixels capacitance in HCAL (as a fraction: 0.01=1%)-->
+    <parameter name="HCAL_pixel_spread" type="float">0 </parameter>
+    <!--Hit times histograms-->
+    <parameter name="Histograms" type="int">0 </parameter>
+    <!--Digital Ecal-->
+    <parameter name="IfDigitalEcal" type="int">0 </parameter>
+    <!--Digital Hcal-->
+    <parameter name="IfDigitalHcal" type="int">0 </parameter>
+    <!--Ecal correction for theta dependency of calibration for MAPS-->
+    <parameter name="MapsEcalCorrection" type="int">0 </parameter>
+    <!--CaloHit Relation Collection-->
+    <parameter name="RelationOutputCollection" type="string" lcioOutType="LCRelation">RelationCaloHit </parameter>
+    <!--default number of virtual cells (used if not found in gear file)-->
+    <parameter name="StripEcal_default_nVirtualCells" type="int">9 </parameter>
+    <!--Use ECAL hit times-->
+    <parameter name="UseEcalTiming" type="int">0 </parameter>
+    <!--Use HCAL hit times-->
+    <parameter name="UseHcalTiming" type="int">1 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+    <!--energy required to create e-h pair in silicon (in eV)-->
+    <parameter name="energyPerEHpair" type="float">3.6 </parameter>
   </processor>
   
 </marlin>
