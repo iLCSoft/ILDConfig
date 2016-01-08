@@ -1507,9 +1507,9 @@
     <!--ECAL Collection Names-->
     <parameter name="ECALCollections" type="StringVec" lcioInType="SimCalorimeterHit">EcalBarrelCollection EcalEndcapsCollection EcalEndcapRingCollection  </parameter>
     <!--Correct ECAL hit times for propagation: radial distance/c-->
-    <parameter name="ECALCorrectTimesForPropagation" type="int">0 </parameter>
+    <parameter name="ECALCorrectTimesForPropagation" type="int">1 </parameter>
     <!--ECAL Minimum Delta Time in ns for resolving two hits-->
-    <parameter name="ECALDeltaTimeHitResolution" type="float">10 </parameter>
+    <parameter name="ECALDeltaTimeHitResolution" type="float">20.0 </parameter>
     <!--Energy correction for ECAL endcap-->
     <parameter name="ECALEndcapCorrectionFactor" type="float">1.025 </parameter>
     <!--ECAL Endcap Time Window maximum time in ns-->
@@ -1537,7 +1537,7 @@
     <!--ECAL Time Resolution used to smear hit times-->
     <parameter name="ECALTimeResolution" type="float">10 </parameter>
     <!--ECAL Time Window minimum time in ns-->
-    <parameter name="ECALTimeWindowMin" type="float">-10 </parameter>
+    <parameter name="ECALTimeWindowMin" type="float">-1.0 </parameter>
     <!--ECAL total number of MPPC/SiPM pixels for implementation of saturation effect-->
     <parameter name="ECAL_PPD_N_Pixels" type="int">10000 </parameter>
     <!--ECAL fractional uncertainty of effective total number of MPPC/SiPM pixels-->
@@ -1567,17 +1567,17 @@
     <!--length scale for absorbtion along scintillator strip (mm)-->
     <parameter name="ECAL_strip_absorbtionLength" type="float">1e+06 </parameter>
     <!--HCAL Time Window maximum time in ns-->
-    <parameter name="HCALBarrelTimeWindowMax" type="float">100 </parameter>
+    <parameter name="HCALBarrelTimeWindowMax" type="float">1000000.0 </parameter>
     <!--HCAL Collection Names-->
     <parameter name="HCALCollections" type="StringVec" lcioInType="SimCalorimeterHit">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection  </parameter>
     <!--Correct HCAL hit times for propagation: radial distance/c-->
-    <parameter name="HCALCorrectTimesForPropagation" type="int">0 </parameter>
+    <parameter name="HCALCorrectTimesForPropagation" type="int">1 </parameter>
     <!--HCAL Minimum Delta Time in ns for resolving two hits-->
-    <parameter name="HCALDeltaTimeHitResolution" type="float">10 </parameter>
+    <parameter name="HCALDeltaTimeHitResolution" type="float">20.0 </parameter>
     <!--Energy correction for HCAL endcap-->
     <parameter name="HCALEndcapCorrectionFactor" type="float">1.025 </parameter>
     <!--HCAL Time Window maximum time in ns-->
-    <parameter name="HCALEndcapTimeWindowMax" type="float">100 </parameter>
+    <parameter name="HCALEndcapTimeWindowMax" type="float">1000000.0 </parameter>
     <!--Correct for ECAL gaps-->
     <parameter name="HCALGapCorrection" type="int">1 </parameter>
     <!--Index of HCal Layers-->
@@ -1599,7 +1599,7 @@
     <!--HCAL Time Resolution used to smear hit times-->
     <parameter name="HCALTimeResolution" type="float">10 </parameter>
     <!--HCAL Time Window minimum time in ns-->
-    <parameter name="HCALTimeWindowMin" type="float">-10 </parameter>
+    <parameter name="HCALTimeWindowMin" type="float">-1.0 </parameter>
     <!--HCAL total number of MPPC/SiPM pixels for implementation of saturation effect-->
     <parameter name="HCAL_PPD_N_Pixels" type="int">400 </parameter>
     <!--HCAL fractional uncertainty of effective total number of MPPC/SiPM pixels-->
@@ -1637,7 +1637,7 @@
     <!--default number of virtual cells (used if not found in gear file)-->
     <parameter name="StripEcal_default_nVirtualCells" type="int">9 </parameter>
     <!--Use ECAL hit times-->
-    <parameter name="UseEcalTiming" type="int">0 </parameter>
+    <parameter name="UseEcalTiming" type="int">1 </parameter>
     <!--Use HCAL hit times-->
     <parameter name="UseHcalTiming" type="int">1 </parameter>
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
