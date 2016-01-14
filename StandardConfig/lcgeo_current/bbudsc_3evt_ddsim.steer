@@ -3,6 +3,8 @@ from SystemOfUnits import mm, GeV, MeV
 
 SIM = DD4hepSimulation()
 
+SIM.printLevel="INFO"
+
 SIM.runType = "batch"
 SIM.numberOfEvents = 3
 SIM.skipNEvents = 0
@@ -11,6 +13,8 @@ SIM.field.eps_min = 1*mm
 
 SIM.part.minimalKineticEnergy = 1*MeV
 
+SIM.action.tracker = "Geant4TrackerCombineAction"
+#SIM.action.tracker = ("Geant4TrackerWeightedAction", {"HitPositionCombination" : 1 , "CollectSingleDeposits" :  False } )
 SIM.action.mapActions['tpc'] = "TPCSDAction"
 SIM.action.mapActions['ecal'] = ( "CaloPreShowerSDAction", {"FirstLayerNumber": 0} )
 
