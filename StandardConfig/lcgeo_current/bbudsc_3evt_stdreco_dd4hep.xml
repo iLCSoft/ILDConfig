@@ -221,6 +221,9 @@
 
 
  <processor name="VXDPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+  <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+  <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
   <parameter name="SubDetectorName" type="string"> VXD </parameter>
    <!--whether hits are 1D strip hits-->
@@ -241,6 +244,9 @@
  
 
  <processor name="SITPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+   <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+   <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> SIT </parameter>
    <!--whether hits are 1D strip hits-->
@@ -276,6 +282,9 @@
 
 
  <processor name="FTDPixelPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+   <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+   <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> FTD </parameter>
    <!--whether hits are 1D strip hits-->
@@ -296,6 +305,9 @@
 
 
  <processor name="FTDStripPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+   <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+   <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> FTD </parameter>
    <!--whether hits are 1D strip hits-->
@@ -316,6 +328,9 @@
 
  
  <processor name="SETPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+   <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+   <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
    <parameter name="SubDetectorName" type="string"> SET </parameter>
    <!--whether hits are 1D strip hits-->
