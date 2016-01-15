@@ -179,10 +179,10 @@
     COILCollection                        COILCollection                        
     EcalBarrelCollection                  EcalBarrelCollection           
     EcalBarrelCollection_preShower        EcalBarrelCollection_preShower
-    EcalEndcapRingCollection              EcalEndcapRingCollection              
-    EcalEndcapRingCollection_preShower    EcalEndcapRingCollection_preShower
     EcalEndcapsCollection                 EcalEndcapsCollection           
     EcalEndcapsCollection_preShower       EcalEndcapsCollection_preShower
+    EcalEndcapRingCollection              EcalEndcapRingCollection              
+    EcalEndcapRingCollection_preShower    EcalEndcapRingCollection_preShower
     FTD_PIXELCollection                   FTD_PIXELCollection                   
     FTD_STRIPCollection                   FTD_STRIPCollection                   
     HcalBarrelRegCollection               HcalBarrelRegCollection               
@@ -898,8 +898,8 @@
   <!--ECAL Collection Names-->
   <parameter name="ECALCollections" type="StringVec">
     EcalBarrelCollection
-    EcalEndcapRingCollection
     EcalEndcapsCollection
+    EcalEndcapRingCollection
   </parameter>
   <!-- <parameter name="ECALCollections" type="StringVec">EcalBarrelSiliconCollection EcalEndcapSiliconCollection  EcalEndcapRingCollection </parameter> -->
   <!--Index of ECal Layers-->
@@ -909,8 +909,8 @@
   <!--HCAL Collection Names-->
   <parameter name="HCALCollections" type="StringVec">
     HcalBarrelRegCollection
-    HcalEndcapRingCollection
     HcalEndcapsCollection
+    HcalEndcapRingCollection
   </parameter>
   <!-- <parameter name="HCALCollections" type="StringVec">HcalBarrelRegCollection  HcalEndCapsCollection HcalEndCapRingsCollection</parameter> -->
   <!--Index of HCal Layers-->
@@ -1221,11 +1221,11 @@
    <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
      BeamCalCollection
      EcalBarrelCollection
-     EcalEndcapRingCollection
      EcalEndcapsCollection
+     EcalEndcapRingCollection
      HcalBarrelRegCollection
-     HcalEndCapRingCollection
      HcalEndCapsCollection
+     HcalEndCapRingCollection
      LHCalCollection
      LumiCalCollection
      MuonBarrelCollection
@@ -1594,7 +1594,7 @@
     <!--HCAL Time Window maximum time in ns-->
     <parameter name="HCALBarrelTimeWindowMax" type="float">1000000.0 </parameter>
     <!--HCAL Collection Names-->
-    <parameter name="HCALCollections" type="StringVec" lcioInType="SimCalorimeterHit">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection  </parameter>
+    <parameter name="HCALCollections" type="StringVec" lcioInType="SimCalorimeterHit">HcalBarrelRegCollection  HcalEndcapsCollection  HcalEndcapRingCollection</parameter>
     <!--Correct HCAL hit times for propagation: radial distance/c-->
     <parameter name="HCALCorrectTimesForPropagation" type="int">1 </parameter>
     <!--HCAL Minimum Delta Time in ns for resolving two hits-->
