@@ -189,7 +189,7 @@
     HcalEndCapRingsCollection             HcalEndCapRingsCollection             
     HcalEndCapsCollection                 HcalEndCapsCollection                 
     LumiCalCollection                     LumiCalCollection  
-    LHcalCollection                       LHcalCollection
+    LHCalCollection                       LHCalCollection
     MCParticle                            MCParticle                            
     MuonBarrelCollection                  MuonBarrelCollection                  
     MuonEndCapCollection                  MuonEndCapCollection                  
@@ -999,7 +999,7 @@
   <!--Calibration coefficients for LHCAL-->
   <parameter name="CalibrFCAL" type="FloatVec">150</parameter>
   <!--LHCAL Collection Names-->
-  <parameter name="FCALCollections" type="StringVec"> LHcalCollection</parameter>
+  <parameter name="FCALCollections" type="StringVec"> LHCalCollection</parameter>
   <!--LHCAL Collection of real Hits-->
   <parameter name="FCALOutputCollection" type="string">LHCAL </parameter>
   <!--Threshold for LHCAL Hits in GeV-->
@@ -1226,7 +1226,7 @@
      HcalBarrelRegCollection
      HcalEndCapRingCollection
      HcalEndCapsCollection
-     LHcalCollection
+     LHCalCollection
      LumiCalCollection
      MuonBarrelCollection
      MuonEndCapCollection
