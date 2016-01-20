@@ -88,7 +88,7 @@
   <parameter name="FileType" type="string" value="root "/>
 </processor>
 
-<!--- ############ RecoMCTruthLink ############# --->
+<!-- ############ RecoMCTruthLink ############# -->
  <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
 
@@ -217,7 +217,7 @@
 </processor>
 
 
-<!--- ############ dedx calculation processor ############# --->
+<!-- ############ dedx calculation processor ############# -->
 
 <processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
   <!--Energy Loss Error for TPC-->
@@ -286,7 +286,7 @@
   <parameter name="FilePDFName" type="StringVec">
     LikelihoodPID_Histogram_v01.root
   </parameter>
- <parameter name="FileWeightFormupiSeparationName" type="std::vector< std::string >">
+ <parameter name="FileWeightFormupiSeparationName" type="StringVec">
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_03GeVP_clusterinfo.weights.xml
  ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_04GeVP_clusterinfo.weights.xml

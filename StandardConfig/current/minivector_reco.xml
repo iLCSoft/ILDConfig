@@ -737,7 +737,7 @@
   <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
 </processor>
 
-<!---  dedx calculation processor --->
+<!--  dedx calculation processor -->
 <processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
   <!--Energy Loss Error for TPC-->
   <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>

@@ -880,7 +880,7 @@
   <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
 </processor>
 
-<!---  dedx calculation processor --->
+<!--  dedx calculation processor -->
 <processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
   <!--Energy Loss Error for TPC-->
   <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
@@ -1053,20 +1053,19 @@
 
 <!--######  SimpleBCALDigi ##########################################-->
 
-<!-- <processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
-<!-- <!--Performs simple digitization of sim calo hits...-->
-<!--   <!--Calibration coefficients for LCAL-->
-<!--   <parameter name="CalibrLCAL" type="FloatVec">1.</parameter>
-<!--   <!--LCAL Collection Names-->
-<!--   <parameter name="LCALCollections" type="StringVec">BeamCalCollection</parameter>
-<!--   <!--LCAL Collection of real Hits-->
-<!--   <parameter name="LCALOutputCollection" type="string">BCAL</parameter>
-<!--   <!--Threshold for LCAL Hits in GeV-->
-<!--   <parameter name="LCALThreshold" type="float">1e-06 </parameter>
-<!--   <!--BCalHit Relation Collection-->
-<!--   <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
-<!--</processor>
--->
+<!--  <processor name="MySimpleBCalDigi" type="SimpleFCalDigi"> -->
+<!--  <!-\-Performs simple digitization of sim calo hits...-\-> -->
+<!--    <!-\-Calibration coefficients for LCAL-\-> -->
+<!--    <parameter name="CalibrLCAL" type="FloatVec">1.</parameter> -->
+<!--    <!-\-LCAL Collection Names-\-> -->
+<!--    <parameter name="LCALCollections" type="StringVec">BeamCalCollection</parameter> -->
+<!--    <!-\-LCAL Collection of real Hits-\-> -->
+<!--    <parameter name="LCALOutputCollection" type="string">BCAL</parameter> -->
+<!--    <!-\-Threshold for LCAL Hits in GeV-\-> -->
+<!--    <parameter name="LCALThreshold" type="float">1e-06 </parameter> -->
+<!--    <!-\-BCalHit Relation Collection-\-> -->
+<!--    <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter> -->
+<!-- </processor> -->
 
 <processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
    <!--Performs simple digitization of sim calo hits...-->
@@ -1097,20 +1096,19 @@
 
 <!--######  SimpleLCalDigi ##########################################-->
 
-<!-- <processor name="MySimpleLCalDigi" type="SimpleLCalDigi">
-<!--   <!--Performs simple digitization of sim calo hits...-->
-<!--   <!--Calibration coefficients for LCAL-->
-<!--   <parameter name="CalibrLCAL" type="FloatVec">89.0</parameter>
-<!--   <!--LCAL Collection Names-->
-<!--   <parameter name="LCALCollections" type="StringVec"> LumiCalCollection  </parameter>
-<!--   <!--LCAL Collection of real Hits-->
-<!--   <parameter name="LCALOutputCollection" type="string">LCAL </parameter>
-<!--   <!--Threshold for LCALHits in GeV-->
-<!--  <parameter name="LCALThreshold" type="float">0e-04 </parameter>
-<!--   <!--LCALHit Relation Collection-->
-<!--   <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
-<!-- </processor>
--->
+<!-- <processor name="MySimpleLCalDigi" type="SimpleLCalDigi"> -->
+<!--   <!-\-Performs simple digitization of sim calo hits...-\-> -->
+<!--   <!-\-Calibration coefficients for LCAL-\-> -->
+<!--   <parameter name="CalibrLCAL" type="FloatVec">89.0</parameter> -->
+<!--   <!-\-LCAL Collection Names-\-> -->
+<!--   <parameter name="LCALCollections" type="StringVec"> LumiCalCollection  </parameter> -->
+<!--   <!-\-LCAL Collection of real Hits-\-> -->
+<!--   <parameter name="LCALOutputCollection" type="string">LCAL </parameter> -->
+<!--   <!-\-Threshold for LCALHits in GeV-\-> -->
+<!--  <parameter name="LCALThreshold" type="float">0e-04 </parameter> -->
+<!--   <!-\-LCALHit Relation Collection-\-> -->
+<!--   <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter> -->
+<!-- </processor> -->
 
 <processor name="MySimpleLCalDigi" type="SimpleFCalDigi">
 <!--Performs simple digitization of sim calo hits...-->
@@ -1325,7 +1323,7 @@
   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
   <!--============= with improved photon finding by Bono ===================== -->
   <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter-->
-  <!--============= with photons from Garlic  -- this does not work yet! ===================== -->
+  <!--============= with photons from Garlic - this does not work yet! ===================== -->
   <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsGarlic.xml </parameter-->
   <!-- Collection names -->
   <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
@@ -1458,7 +1456,7 @@
      true
    </parameter>
    <!-- Whether MVA weight files for low momentum mu/pi is used or not-->
-   <parameter name="FileWeightFormupiSeparationName" type="std::vector< std::string >">
+   <parameter name="FileWeightFormupiSeparationName" type="StringVec">
      ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
      ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_03GeVP_clusterinfo.weights.xml
      ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_04GeVP_clusterinfo.weights.xml
@@ -1481,19 +1479,19 @@
    </parameter>
    
    <!--dE/dx parameters for each particle-->
-   <parameter name="dEdxParameter_electron" type="std::vector< std::float >">
+   <parameter name="dEdxParameter_electron" type="FloatVec">
      -2.40638e-03 7.10337e-01 2.87718e-01 -1.71591e+00 0.0
    </parameter>
-   <parameter name="dEdxParameter_muon" type="std::vector< std::float >">
+   <parameter name="dEdxParameter_muon" type="FloatVec">
      8.11408e-02 9.92207e-01 7.58509e+05 -1.70167e-01 4.63670e-04
    </parameter>
-   <parameter name="dEdxParameter_pion" type="std::vector< std::float >">
+   <parameter name="dEdxParameter_pion" type="FloatVec">
      8.10756e-02 -1.45051e+06 -3.09843e+04 2.84056e-01 3.38131e-04
    </parameter>
-   <parameter name="dEdxParameter_kaon" type="std::vector< std::float >">
+   <parameter name="dEdxParameter_kaon" type="FloatVec">
      7.96117e-02 4.13335e+03 1.13577e+06 1.80555e-01 -3.15083e-04
    </parameter>
-   <parameter name="dEdxParameter_proton" type="std::vector< std::float >">
+   <parameter name="dEdxParameter_proton" type="FloatVec">
      7.78772e-02 4.49300e+04 9.13778e+04 1.50088e-01 -6.64184e-04
    </parameter>
 
@@ -1518,7 +1516,7 @@
 
 <!--################################################ -->
  <processor name="MyTauFinder" type="TaJetClustering">
- <!--Performs tau jet finding>
+ <!--Performs tau jet finding -->
    <!--  0. Collections -->
    <!--Input PFO collection-->
    <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>

@@ -295,7 +295,7 @@
      aux nvtx
    </parameter>
    
-   <parameter name="FlavorTag.CategoryDefinition2" type="string">nvtx==1&&nvtxall==1</parameter>
+   <parameter name="FlavorTag.CategoryDefinition2" type="string">nvtx==1&amp;&amp;nvtxall==1</parameter>
    <parameter name="FlavorTag.CategoryPreselection2" type="string">trk1d0sig!=0</parameter>
    <parameter name="FlavorTag.CategoryVariables2" type="stringVec">
      trk1d0sig trk2d0sig trk1z0sig trk2z0sig trk1pt_jete trk2pt_jete jprobr jprobz
@@ -307,7 +307,7 @@
      aux nvtx
    </parameter>
    
-   <parameter name="FlavorTag.CategoryDefinition3" type="string">nvtx==1&&nvtxall==2</parameter>
+   <parameter name="FlavorTag.CategoryDefinition3" type="string">nvtx==1&amp;&amp;nvtxall==2</parameter>
    <parameter name="FlavorTag.CategoryPreselection3" type="string">trk1d0sig!=0</parameter>
    <parameter name="FlavorTag.CategoryVariables3" type="stringVec">
      trk1d0sig trk2d0sig trk1z0sig trk2z0sig trk1pt_jete trk2pt_jete jprobr jprobz
