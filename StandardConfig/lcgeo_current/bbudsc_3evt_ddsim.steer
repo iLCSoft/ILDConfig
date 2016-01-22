@@ -13,14 +13,21 @@ SIM.field.eps_min = 1*mm
 
 SIM.part.minimalKineticEnergy = 1*MeV
 
-SIM.action.tracker = "Geant4TrackerCombineAction"
-#SIM.action.tracker = ("Geant4TrackerWeightedAction", {"HitPositionCombination" : 1 , "CollectSingleDeposits" :  False } )
+#SIM.action.tracker = "Geant4TrackerCombineAction"
+SIM.action.tracker = ("Geant4TrackerWeightedAction", {"HitPositionCombination" : 2 , "CollectSingleDeposits" :  False } )
+
 SIM.action.mapActions['tpc'] = "TPCSDAction"
 SIM.action.mapActions['ecal'] = ( "CaloPreShowerSDAction", {"FirstLayerNumber": 0} )
 
 SIM.filter.mapDetFilter['TPC'] = "edep0"
 
-SIM.physicsList = "QGSP_BERT"
+SIM.physics.list = "QGSP_BERT"
+SIM.physics.rangecut = 0.1*mm
+
+## Add parameters to the run header
+## This will store the Parameter "MyNewParameter" in the runHeader of the slcio file
+## all members are added to the runheader. Isn't Python beautiful?
+#SIM.MyNewParameter = "Value"
 
 SIM.enableGun = False
 
