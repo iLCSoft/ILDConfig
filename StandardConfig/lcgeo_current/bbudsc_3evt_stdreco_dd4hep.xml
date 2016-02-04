@@ -603,6 +603,9 @@
 
 <processor name="MyTrackSubsetProcessor" type="TrackSubsetProcessor">
    <!--TrackSubsetProcessor takes tracks from multiple sources and outputs them (or modified versions, or a subset of them) as one track collection.-->
+   <!--Remove short tracks from the list that have a longer track sharing the same hits-->
+   <parameter name="RemoveShortTracks" type="bool">true </parameter>
+
    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
    <!--Use Energy Loss in Fit-->

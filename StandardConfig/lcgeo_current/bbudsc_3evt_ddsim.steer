@@ -13,7 +13,8 @@ SIM.field.eps_min = 1*mm
 
 SIM.part.minimalKineticEnergy = 1*MeV
 
-#SIM.action.tracker = "Geant4TrackerCombineAction"
+SIM.crossingAngleBoost = 7.e-3*rad
+
 SIM.action.tracker = ("Geant4TrackerWeightedAction", {"HitPositionCombination" : 2 , "CollectSingleDeposits" :  False } )
 
 SIM.action.mapActions['tpc'] = "TPCSDAction"
@@ -32,6 +33,9 @@ SIM.physics.rangecut = 0.1*mm
 SIM.enableGun = False
 
 SIM.enableDetailedShowerMode=True
+
+SIM.physics.pdgfile = os.path.join( os.environ.get("DD4hepINSTALL"), 
+                                    "examples/DDG4/examples/particle.tbl")
 
 
 ##optional arguments:
