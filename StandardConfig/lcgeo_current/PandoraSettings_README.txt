@@ -35,8 +35,9 @@ A number of sample PandoraSettings.xml files are present in your MarlinPandora/s
 *PandoraSettingsDefault.xml - As above, but also includes a standalone photon reconstruction algorithm, which requires associated Likelihood data. Offers the best performance and is recommended for use with ILD_o1_v05/v06.
 
 The PandoraLikelihoodData xml files are used by the standalone photon reconstruction algorithms and links to these files are specified in PandoraSettingsDefault.xml. The likelihood data has currently only been validated for ILD_o1_v05/v06. The two xml files contain likelihood PDFs for photon identification. The difference between the two files is the number of energy-bins for which separate PDFs are created. For PandoraLikelihoodData1EBin, there is only one PDF for signal and background for each likelihood variable. For PandoraLikelihoodData9EBin, there are separate PDFs for each of the energy ranges shown below (in GeV). PandoraLikelihoodData9EBin offers the best performance.
-0.-0.5, 0.5-1., 1.-1.5, 1.5-2.5, 2.5-5., 5.-10., 10.-20., 20.-50., 50.+
+0.-0.2, 0.2-0.5, 0.5-1., 1.-1.5, 1.5-2.5, 2.5-5., 5.-10., 10.-20., 20.+
 
+*PandoraSettingsPhotonTraining.xml - The pandora settings file to train likelihood PDFs and write a PandoraLikelihoodData xml file. The number of energy bins and associated energy bins edges should be specified. After the training, the output PandoraLikelihoodData xml file can be used for the standalone photon reconstruction algorithm. The user is recommended to retrain the likelihood file if the detector differs from ILD_o1_v05/v06.
 
 Also available are some PandoraSettings.xml files that use MC information to cheat elements of the pattern recognition:
 
@@ -46,4 +47,4 @@ Also available are some PandoraSettings.xml files that use MC information to che
 
 ---------------------------
 
-The accompanying Marlin steering files are configured for use with Ilcsoft v01-17-05, with the detector model ILD_o1_v05/v06 and the physics list QGSP_BERT.
+The accompanying Marlin steering file has been configured for use with Ilcsoft v01-17-07, with the detector model ILD_o1_v06 and the physics list QGSP_BERT. The PandoraPFA calibration constants were derived using the ILDCaloDigi digitiser with semi-infinite timing cuts (10^6 ns) and a hadronic energy cell truncation of 1 GeV.

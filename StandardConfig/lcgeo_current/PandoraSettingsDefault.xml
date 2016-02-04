@@ -15,15 +15,6 @@
 
     <!-- ALGORITHM SETTINGS -->
 
-    <algorithm type = "EventWriting">
-      <EventFileName>PandoraEvents_gear.xml</EventFileName>
-      <GeometryFileName>PandoraGeometry_gear.xml</GeometryFileName>
-      <ShouldWriteEvents>false</ShouldWriteEvents>
-      <ShouldWriteGeometry>true</ShouldWriteGeometry>
-      <ShouldOverwriteEventFile>true</ShouldOverwriteEventFile>
-      <ShouldOverwriteGeometryFile>true</ShouldOverwriteGeometryFile>
-    </algorithm>
-
     <!-- Set calo hit properties, then select tracks and hits to use for clustering -->
     <algorithm type = "CaloHitPreparation"/>
     <algorithm type = "EventPreparation">
@@ -78,21 +69,7 @@
         <ClusterListName>PhotonClusters</ClusterListName>
         <ReplaceCurrentClusterList>false</ReplaceCurrentClusterList>
         <ShouldMakePdfHistograms>false</ShouldMakePdfHistograms>
-        <NEnergyBins>9</NEnergyBins>
         <HistogramFile>PandoraLikelihoodData9EBin.xml</HistogramFile>
-        <ShouldDeleteNonPhotonClusters>false</ShouldDeleteNonPhotonClusters>
-        <algorithm type = "RecoPhotonFragmentMerging" description = "PhotonFragmentMerging">
-            <NonPhotonClusterListName>NonPhotonClusters</NonPhotonClusterListName>
-            <associationAlgorithms>
-                <algorithm type = "ProximityBasedMerging">
-                    <algorithm type = "TrackClusterAssociation"/>
-                </algorithm>
-                <algorithm type = "SoftClusterMerging">
-                    <algorithm type = "TrackClusterAssociation"/>
-                    <AdditionalClusterListNames>PhotonClusters</AdditionalClusterListNames>
-                </algorithm>
-            </associationAlgorithms>
-        </algorithm>
     </algorithm>
 
     <!-- Clustering parent algorithm runs a daughter clustering algorithm -->
@@ -116,6 +93,10 @@
                 </algorithm>
                 <algorithm type = "MipPhotonSeparation">
                     <algorithm type = "TrackClusterAssociation"/>
+                </algorithm>
+                <algorithm type = "HighEnergyPhotonRecovery">
+                    <algorithm type = "TrackClusterAssociation"/>
+                    <AdditionalClusterListNames>PhotonClusters</AdditionalClusterListNames>
                 </algorithm>
                 <algorithm type = "SoftClusterMerging">
                     <algorithm type = "TrackClusterAssociation"/>
@@ -443,6 +424,7 @@
         <MergedCandidateListName>PfoCreation</MergedCandidateListName>
     </algorithm>
 
+    <algorithm type = "PhotonSplitting"/>
     <algorithm type = "PhotonFragmentMerging"/>
 
     <!-- Create particle flow objects -->
