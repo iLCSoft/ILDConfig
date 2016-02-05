@@ -1,5 +1,5 @@
 from DDSim.DD4hepSimulation import DD4hepSimulation
-from SystemOfUnits import mm, GeV, MeV
+from SystemOfUnits import mm, GeV, MeV, rad
 
 SIM = DD4hepSimulation()
 
