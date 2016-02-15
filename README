@@ -70,6 +70,21 @@ subdirectories:
  versions:
  ========
 
+ - ./StandardConfig/lcgeo_current/
+    - bbudsc_3evt_stdreco_dd4hep.xml
+      - Fix the calorimeters collection name order in stringVec for input and output.
+      - Fix forward calorimeter collection name, updated 'LHcalCollection' to 'LHCalCollection'.
+      - Added one 'MyDDPandoraPFANewProcessor' configuration.
+      - Added 'DDCaloDigi' Marlin processor, to use 'DDCaloDigi' for standard reconstruction within DD4hep/lcgeo framework.
+
+    - Update the PandoraPFA steering files according to the current development of PhotonReconstructionAlgorithm in PandoraPFA. We copy the following new steering files from 'https://github.com/PandoraPFA/MarlinPandora/tree/master/scripts.
+      - PandoraSettings_README.txt
+      - PandoraSettingsPhotonTraining.xml
+      - PandoraSettingsDefault.xml
+      - PandoraLikelihoodData9EBin.xml
+      - PandoraLikelihoodData1EBin.xml
+
+
  ------------
 | v01-14-p00 |
  ------------
