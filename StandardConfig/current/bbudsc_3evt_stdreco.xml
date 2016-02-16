@@ -15,7 +15,7 @@
      
      <!-- =========  overlay gamma gamma background  === -->
      <!-- activate for production -->
-     <!-- processor name="BgOverlay" /-->
+     <processor name="BgOverlay" />
 
      <!-- ========== track digitization and tracking  === -->
 <!-- concerning the VXD digitisation, one can use one of the following VXD models-->
@@ -91,11 +91,23 @@
      <processor name="MyAddClusterProperties"/>
 
      <!-- ========== BeamCal ======= -->
-     <processor name="MyBCalReco"/>
+     <processor name="MyBeamCalClusterReco"/>
+
+     <!-- ========== cluster position and direction w/ covariance; covariance matrix for neutral BeamCal PFOs  ======= -->
+     <processor name="BCalAddClusterProperties"/>
 
      <!-- ========== Shower Profiles   ================= -->
      <processor name="MyComputeShowerShapesProcessor"/>    
 
+     <!-- ========== GammaGammaCandidateFinder   ================= -->
+     <processor name="MyPi0Finder"/>
+     <processor name="MyEtaFinder"/> 
+     <processor name="MyEtaPrimeFinder"/>  
+
+
+     <processor name="MyGammaGammaSolutionFinder"/> 
+     <processor name="MyDistilledPFOCreator"/> 
+ 
      <!-- ========== particle ID ============================ -->
      <processor name="MyLikelihoodPID" />
 
@@ -114,10 +126,11 @@
 
    <global>
       <parameter name="LCIOInputFiles">
-        ./bbudsc_3evt.slcio 
+       <!-- /pnfs/desy.de/ilc/prod/ilc/mc-dbd/ild/sim/500-TDR_ws/higgs_ffh/ILD_o1_v05/v01-14-01-p00/sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001.slcio -->
+       ./bbudsc_3evt.slcio 
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
-      <parameter name="MaxRecordNumber" value="100000"/>
+      <parameter name="MaxRecordNumber" value="4"/>
       <parameter name="SkipNEvents" value="0"/>
       <parameter name="SupressCheck" value="false"/>
       <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
@@ -127,7 +140,8 @@
  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
   <!--   standard output: full reconstruction keep all collections -->
   <parameter name="LCIOOutputFile" type="string" >
-      ./bbudsc_3evt_REC.slcio
+    <!--    ./rHEAD-2016-02-14.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001-REC.slcio -->
+    ./bbudsc_3evt_REC.slcio
   </parameter>
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -138,7 +152,8 @@
      DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
    -->
    <parameter name="LCIOOutputFile" type="string" >
-       ./bbudsc_3evt_DST.slcio 
+     <!--  ./rHEAD-2016-02-14.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001-DST.slcio -->
+      ./bbudsc_3evt_DST.slcio
    </parameter>
    <parameter name="DropCollectionTypes" type="StringVec"> 
        MCParticle 
@@ -1319,10 +1334,8 @@
 <!--########## MarlinPandora ###################################### -->
 
 <processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
-  <!--============= default Pandora ===================== -->
+  <!--============= default Pandora (now with Bono's photon finder) ===================== -->
   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
-  <!--============= with improved photon finding by Bono ===================== -->
-  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefaultNewPhoton.xml </parameter-->
   <!--============= with photons from Garlic - this does not work yet! ===================== -->
   <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsGarlic.xml </parameter-->
   <!-- Collection names -->
@@ -1400,27 +1413,57 @@
 </processor>
 
 
-<!--################################################ -->
-<processor name="MyBCalReco" type="BCalReco">
- <!--Filling Histograms with deposited energy from beamstrahlung pairs in BeamCal-->
-  <!--Name of the Beamcal clusters collection-->
-  <parameter name="BCALClusterName" type="string" lcioOutType="Cluster">BCALClusters </parameter>
-  <!--Name of the Beamcal cluster to mc-particle relation collection-->
-  <parameter name="BCALMCTruthLinkName" type="string" lcioOutType="LCRelation">BCALMCTruthLink </parameter>
-  <!-- Name of input file for background energy density-->
-  <parameter name="BackgroundFilename" type="string">
-      bg_aver.sv01-14-p00.mILD_o1_v05.E1000-B1b_ws.PBeamstr-pairs.I210000.root
-  </parameter>
-  <!--Collection of SimCalorimeterHits in BeamCal-->
-  <parameter name="BeamCalHitCol" type="string">BCAL </parameter>
-  <!--Name of the MCParticle collection-->
-  <parameter name="CollectionName" type="string" lcioInType="MCParticle">MCParticle </parameter>
-  <!-- Event Clusters Histgram X axis range [n] (10 by default)-->
-  <parameter name="EventClustersHistoRange" type="int">10 </parameter>
-  <!--Name of the Beamcal reconstructed particles collection-->
-  <parameter name="RecoPartCollectionName" type="string" lcioOutType="ReconstructedParticle">BCALParticles </parameter>
+<!--########## AddClusterProperties ###################################### -->
+ <processor name="BCalAddClusterProperties" type="AddClusterProperties">
+  <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle"> BCalRecoParticle </parameter>
+  <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> BCalClusters </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  <parameter name="Verbosity" type="string">MESSAGE </parameter>
+</processor>
+
+
+<!--################################################ -->
+ <processor name="MyBeamCalClusterReco" type="BeamCalClusterReco">
+   <!--BeamCalClusterReco takes a list of beamcal background files from the ReadBeamCalprocessor, adds NumberOfBX of them together and puts the signal hits from thelcio input file on top of that, and then clustering is attempted.-->
+   <!--Name of BeamCal Collection-->
+   <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BCAL </parameter>
+   <!--Flag to create the TEfficiency for fast tagging library-->
+   <parameter name="CreateEfficiencyFile" type="bool"> true </parameter>
+   <!--Energy in a Cluster to consider it an electron-->
+   <parameter name="ETCluster" type="FloatVec">0.5 0.5  </parameter>
+   <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
+   <parameter name="ETPad" type="FloatVec"> 0.01 0.3  </parameter>
+   <!--The name of the rootFile which will contain the TEfficiency objects-->
+   <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
+   <!--Background simulation method-->
+   <parameter name="BackgroundMethod" type="string">Parametrised</parameter>
+   <!--Root Inputfile(s)-->
+   <parameter name="InputFileBackgrounds" type="StringVec">
+     BeamCal_bg_E500-TDR_ws.root
+   </parameter>
+  <!--Name of the MCParticle Collection-->
+  <parameter name="MCParticle Collection Name, only needed and used to estimate efficiencies" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Minimum number of pads in a single tower to be considered for signal-->
+  <parameter name="MinimumTowerSize" type="int">6 </parameter>
+  <parameter name="LinearCalibrationFactor" type="double"> 60. </parameter>
+  <!--Number of Bunch Crossings of Background-->
+  <parameter name="NumberOfBX" type="int">1 </parameter>
+  <!--Number of Event that should be printed to PDF File-->
+  <parameter name="PrintThisEvent" type="int">1 </parameter>
+  <!--Name of the Reconstructed Cluster collection-->
+  <parameter name="RecoClusterCollectionname" type="string" lcioOutType="Cluster">BCalClusters </parameter>
+  <!--Name of the Reconstructed Particle collection-->
+  <parameter name="RecoParticleCollectionname" type="string" lcioOutType="ReconstructedParticle">BCalRecoParticle </parameter>
+  <!--If not using ConstPadCuts, each pad SigmaCut*variance is considered for clusters-->
+  <parameter name="SigmaCut" type="double">2 </parameter>
+  <!--Layer (inclusive) from which on we start looking for signal clusters-->
+  <parameter name="StartLookingInLayer" type="int">2 </parameter>
+  <!--Rings from which onwards the outside Thresholds are used-->
+  <parameter name="StartingRing" type="FloatVec">0 1  </parameter>
+  <!--Use the cuts for the pads specified in ETPad, if false, the variance in each pad is used times SigmaPad Factor-->
+  <parameter name="UseConstPadCuts" type="bool">False </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">WARNING </parameter>
 </processor>
 <!--################################################ -->
 
@@ -1455,7 +1498,6 @@
    <parameter name="UseLowMomentumMuPiSeparation" type="bool">
      true
    </parameter>
-   <!-- Whether MVA weight files for low momentum mu/pi is used or not-->
    <parameter name="FileWeightFormupiSeparationName" type="StringVec">
      ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
      ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_03GeVP_clusterinfo.weights.xml
@@ -1703,4 +1745,49 @@
 
   </processor>
   
+ <processor name="MyPi0Finder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="Pi0" />
+    <parameter name="GammaGammaResonanceMass" value="0.1349766" />
+    <parameter name="MaxDeltaMgg" value="0.04" />
+    <parameter name="GammaMomentumCut" value="0.5" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidatePi0s" />
+ </processor>
+
+ <processor name="MyEtaFinder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="Eta" />
+    <parameter name="GammaGammaResonanceMass" value="0.547862" />
+    <parameter name="MaxDeltaMgg" value="0.14" />
+    <parameter name="GammaMomentumCut" value="1.0" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidateEtas" />
+ </processor>
+
+ <processor name="MyEtaPrimeFinder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="EtaPrime" />
+    <parameter name="GammaGammaResonanceMass" value="0.95778" />
+    <parameter name="MaxDeltaMgg" value="0.19" />
+    <parameter name="GammaMomentumCut" value="2.0" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidateEtaPrimes" />
+ </processor>
+ 
+ <processor name="MyGammaGammaSolutionFinder" type="GammaGammaSolutionFinder">
+    <parameter name="InputParticleCollectionName1" value="GammaGammaCandidatePi0s" />
+    <parameter name="InputParticleCollectionName2" value="GammaGammaCandidateEtas" />
+    <parameter name="InputParticleCollectionName3" value="GammaGammaCandidateEtaPrimes" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaParticles" />
+ </processor>
+
+ <processor name="MyDistilledPFOCreator" type="DistilledPFOCreator">
+    <parameter name="InputParticleCollectionName1" value="PandoraPFOsWithoutIsoLep" />
+    <parameter name="InputParticleCollectionName2" value="GammaGammaParticles" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="DistilledPFOs" />
+ </processor>
+ 
 </marlin>
