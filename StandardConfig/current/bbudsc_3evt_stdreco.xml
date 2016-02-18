@@ -124,9 +124,9 @@
      <processor name="DSTOutput"/>
    </execute>
 
+       <!-- /pnfs/desy.de/ilc/prod/ilc/mc-dbd/ild/sim/500-TDR_ws/higgs_ffh/ILD_o1_v05/v01-14-01-p00/sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001.slcio -->
    <global>
       <parameter name="LCIOInputFiles">
-       <!-- /pnfs/desy.de/ilc/prod/ilc/mc-dbd/ild/sim/500-TDR_ws/higgs_ffh/ILD_o1_v05/v01-14-01-p00/sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001.slcio -->
        ./bbudsc_3evt.slcio 
       </parameter>
       <parameter name="GearXMLFile" value="GearOutput.xml"/>
