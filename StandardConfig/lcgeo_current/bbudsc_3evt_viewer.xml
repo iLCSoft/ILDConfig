@@ -121,11 +121,12 @@
      ECALOther    0 2 12
      HCALBarrel   0 5 12
 
-     TruthTracks      0 3 3
-     ForwardTracks    0 3 4
-     SiTracks         0 3 5
-     ClupatraTracks   3 5 6
-     MarlinTrkTracks  3 3 7
+     TruthTracks      0 6 3
+     ForwardTracks    0 6 4
+     SiTracks         0 6 5
+     ClupatraTracks   0 6 6
+     MarlinTrkTracks  0 6 7
+
 
      PandoraClusters  0 3 8
      PandoraPFOs      0 3 9
