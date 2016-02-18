@@ -69,7 +69,8 @@
      <processor name="MyDDMarlinPandora"/>
      <!-- <processor name="MyMarlinPandora"/> -->
 
-     <!--  <processor name="MyBCalReco"/> -->
+     <!-- ========== BeamCal ======= -->
+     <processor name="MyBeamCalClusterReco"/>
 
      <!-- <\!-- ========== particle ID ============================ -\-> -->
      <!-- <\!--processor name="MyPFOID" /-\-> -->
@@ -1133,6 +1134,50 @@
   <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
   <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
   <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+
+<!--################################################ -->
+ <processor name="MyBeamCalClusterReco" type="BeamCalClusterReco">
+   <!--BeamCalClusterReco takes a list of beamcal background files from the ReadBeamCalprocessor, adds NumberOfBX of them together and puts the signal hits from thelcio input file on top of that, and then clustering is attempted.-->
+   <!--Name of BeamCal Collection-->
+   <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BCAL </parameter>
+   <!--Flag to create the TEfficiency for fast tagging library-->
+   <parameter name="CreateEfficiencyFile" type="bool"> true </parameter>
+   <!--Energy in a Cluster to consider it an electron-->
+   <parameter name="ETCluster" type="FloatVec">0.5 0.5  </parameter>
+   <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
+   <parameter name="ETPad" type="FloatVec"> 0.01 0.3  </parameter>
+   <!--The name of the rootFile which will contain the TEfficiency objects-->
+   <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
+   <!--Background simulation method-->
+   <parameter name="BackgroundMethod" type="string"> Gaussian </parameter>
+   <!--Root Inputfile(s)-->
+   <parameter name="InputFileBackgrounds" type="StringVec">
+     BeamCal_bg_E500-TDR_ws.root
+   </parameter>
+  <!--Name of the MCParticle Collection-->
+  <parameter name="MCParticle Collection Name, only needed and used to estimate efficiencies" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Minimum number of pads in a single tower to be considered for signal-->
+  <parameter name="MinimumTowerSize" type="int">6 </parameter>
+  <parameter name="LinearCalibrationFactor" type="double"> 60. </parameter>
+  <!--Number of Bunch Crossings of Background-->
+  <parameter name="NumberOfBX" type="int">1 </parameter>
+  <!--Number of Event that should be printed to PDF File-->
+  <parameter name="PrintThisEvent" type="int">1 </parameter>
+  <!--Name of the Reconstructed Cluster collection-->
+  <parameter name="RecoClusterCollectionname" type="string" lcioOutType="Cluster">BCalClusters </parameter>
+  <!--Name of the Reconstructed Particle collection-->
+  <parameter name="RecoParticleCollectionname" type="string" lcioOutType="ReconstructedParticle">BCalRecoParticle </parameter>
+  <!--If not using ConstPadCuts, each pad SigmaCut*variance is considered for clusters-->
+  <parameter name="SigmaCut" type="double">2 </parameter>
+  <!--Layer (inclusive) from which on we start looking for signal clusters-->
+  <parameter name="StartLookingInLayer" type="int">2 </parameter>
+  <!--Rings from which onwards the outside Thresholds are used-->
+  <parameter name="StartingRing" type="FloatVec">0 1  </parameter>
+  <!--Use the cuts for the pads specified in ETPad, if false, the variance in each pad is used times SigmaPad Factor-->
+  <parameter name="UseConstPadCuts" type="bool">False </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">WARNING </parameter>
 </processor>
 
 <!--################################################ -->

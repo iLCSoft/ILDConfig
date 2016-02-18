@@ -31,12 +31,25 @@ SIM.physics.rangecut = 0.1*mm
 ## all members are added to the runheader. Isn't Python beautiful?
 #SIM.MyNewParameter = "Value"
 
-SIM.enableGun = False
 
 SIM.enableDetailedShowerMode=True
 
 SIM.physics.pdgfile = os.path.join( os.environ.get("DD4hepINSTALL"), 
                                     "examples/DDG4/examples/particle.tbl")
+
+
+## --- set to True in order to run particle gun --------
+SIM.enableGun = False
+
+if( SIM.enableGun ):
+#    SIM.gun.direction GUN.DIRECTION
+    SIM.gun.particle = "pi-"
+    SIM.gun.multiplicity=1 
+    SIM.gun.energy = 5*GeV
+#    SIM.gun.isotrop = True
+    SIM.gun.position = (0., 0., 0. ) 
+    SIM.gun.direction = (.5, .5 , .5 ) 
+
 
 
 ##optional arguments:
