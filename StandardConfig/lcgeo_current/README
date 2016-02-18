@@ -23,7 +23,7 @@
 #===============================================================================================
 # 2. ---- run the lcgeo/ddsim simulation example  ------
 
-    ddsim --inputFiles ./bbudsc_3evt.stdhep --outputFile=./bbudsc_3evt.slcio --compactFile $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml --steeringFile=./bbudsc_3evt_ddsim.steer
+    ddsim --inputFiles ./bbudsc_3evt.stdhep --outputFile=./bbudsc_3evt.slcio --compactFile $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml --steeringFile=./ddsim_steer.py
 
 
 #===============================================================================================
@@ -103,7 +103,7 @@ ced2go -s 1 -d $lcgeo_DIR/ILD/compact/Simplified_ILD_o1_v05/Simplified_ILD_o1_v0
 #===============================================================================================
 # 6.  ----- create a ROOT TTree with an n-tuple
 
-Marlin lctuple.xml
+  Marlin lctuple.xml
 
 #-- creates: bbudsc_3evt_REC_lctuple.root
 #  which you can analyze with ROOT in the usual way
