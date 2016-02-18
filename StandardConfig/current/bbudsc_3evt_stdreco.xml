@@ -1387,7 +1387,7 @@
     If either the detector model changes or the reconstruction parameters change you must recalibrate!
 -->
 
-<processor name="MyMarlinPandoraDefault" type="PandoraPFANewProcessor">
+<processor name="MyMarlinPandora" type="PandoraPFANewProcessor">
   <!--============= default Pandora (now with Bono's photon finder) ===================== -->
   <parameter name="PandoraSettingsXmlFile" type="String">PandoraSettingsDefault.xml</parameter>
   <!--============= with photons from Garlic - this does not work yet! ===================== -->
@@ -1491,7 +1491,7 @@
    <!--The name of the rootFile which will contain the TEfficiency objects-->
    <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
    <!--Background simulation method-->
-   <parameter name="BackgroundMethod" type="string">Parametrised</parameter>
+   <parameter name="BackgroundMethod" type="string"> Gaussian </parameter>
    <!--Root Inputfile(s)-->
    <parameter name="InputFileBackgrounds" type="StringVec">
      BeamCal_bg_E500-TDR_ws.root
