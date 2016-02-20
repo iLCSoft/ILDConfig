@@ -1037,6 +1037,74 @@
 
 <!--########## MarlinPandora ###################################### -->
 
+<!--
+    Calibration constants in MarlinPandora are determined using 100ns timing cuts in both the ECal
+    and HCal, realistic digitisation options in the ECal (Si) and HCal and a 1 GeV hadronic energy 
+    truncation for HCal cells (post digitisation).  Timing cuts and realistic digitisation options 
+    are specified in ILDCaloDigi and the hadronic energy truncation is specified in MarlinPandora. 
+    If either the detector model changes or the reconstruction parameters change you must recalibrate!
+-->
+
+<processor name="NEW_MyDDMarlinPandora_DONT_USE" type="DDPandoraPFANewProcessor">
+  <!-- 
+    fg: 20160220  copied the latest steering section from current/bbudsc_3evt_stdreco.xml
+        here, but this gives worse energy resoltution -> needs checking
+        for now use the old steering  
+   -->
+
+
+  <!--============= default Pandora (now with Bono's photon finder) ===================== -->
+  <parameter name="PandoraSettingsXmlFile" type="String">PandoraSettingsDefault.xml</parameter>
+  <!--============= with photons from Garlic - this does not work yet! ===================== -->
+  <!--parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsGarlic.xml </parameter-->
+  <!-- Collection names -->
+  <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+  <parameter name="ECalCaloHitCollections" type="StringVec">ECALBarrel ECALEndcap ECALOther</parameter>
+  <parameter name="HCalCaloHitCollections" type="StringVec">HCALBarrel HCALEndcap HCALOther</parameter>
+  <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+  <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+  <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+  <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+  <parameter name="RelCaloHitCollections" type="StringVec">RelationCaloHit RelationMuonHit</parameter>
+  <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+  <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+  <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+  <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+  <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+  <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
+  <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
+  <parameter name="StartVertexCollectionName" type="String">StartVertices</parameter>
+  <!-- Calibration constants -->
+  <parameter name="ECalToMipCalibration" type="float">153.846</parameter>
+  <parameter name="HCalToMipCalibration" type="float">38.0228</parameter>
+  <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+  <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.00356141304</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.12083052744</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.14127910463</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.14127910463</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.12083052744</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.3093</parameter>
+  <parameter name="DigitalMuonHits" type="int">0</parameter>
+  <parameter name="MaxHCalHitHadronicEnergy" type="float">1.0</parameter>
+  <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
+  <parameter name="AbsorberIntLengthECal" type="float">0.0101</parameter>
+  <parameter name="AbsorberRadLengthHCal" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthHCal" type="float">0.0060</parameter>
+  <parameter name="AbsorberRadLengthOther" type="float">0.0569</parameter>
+  <parameter name="AbsorberIntLengthOther" type="float">0.0060</parameter>
+  <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+  <parameter name="UseOldTrackStateCalculation" type="int">0 </parameter>
+  <parameter name="CreateGaps" type="bool">false</parameter>
+  <!--The name of the DDTrackCreator implementation-->
+  <parameter name="TrackCreatorName" type="string">DDTrackCreatorILD </parameter>
+
+  <!--<parameter name="NEventsToSkip" type="int">0</parameter>-->
+  <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE DEBUG </parameter-->
+</processor>
+
+
+
 <processor name="MyDDMarlinPandora" type="DDPandoraPFANewProcessor">
   <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
   <!-- Collection names -->
@@ -1561,7 +1629,106 @@
     <parameter name="ZCutForNonVertexTracks" type="float">250 </parameter>
   </processor>
 
-  <processor name="MyDDCaloDigi" type="DDCaloDigi">
+ <processor name="NEW_MyDDCaloDigi_DONT_USE" type="DDCaloDigi">
+  <!-- 
+    fg: 20160220  copied the latest steering section from current/bbudsc_3evt_stdreco.xml
+        here, but this gives worse energy resoltution -> needs checking
+        for now use the old steering  
+   -->
+  <!--ILD digitizer...-->
+  <!--Calibration coefficients for ECAL-->
+  <parameter name="CalibrECAL" type="FloatVec">42.9631192209 85.9262384418</parameter>
+  <!--Calibration coefficients for HCAL barrel, endcap, other-->
+  <parameter name="CalibrHCALBarrel" type="FloatVec">49.3344654494</parameter>
+  <parameter name="CalibrHCALEndcap" type="FloatVec">55.3271575116</parameter>
+  <parameter name="CalibrHCALOther" type="FloatVec">31.1454028868</parameter>
+  <!--ECAL Collection Names-->
+  <parameter name="ECALCollections" type="StringVec">
+    EcalBarrelCollection EcalEndcapsCollection EcalEndcapRingCollection  
+  </parameter>
+  <!--Index of ECal Layers-->
+  <parameter name="ECALLayers" type="IntVec">20 100 </parameter>
+  <!--Threshold for ECAL Hits in GeV-->
+  <parameter name="ECALThreshold" type="float">5e-05 </parameter>
+  <!--HCAL Collection Names-->
+  <parameter name="HCALCollections" type="StringVec">
+     HcalBarrelRegCollection  HcalEndcapsCollection  HcalEndcapRingCollection
+  </parameter>
+  <!--Index of HCal Layers-->
+  <parameter name="HCALLayers" type="IntVec">100  </parameter>
+  <!--Threshold for HCAL Hits in MIPs - given HCALThresholdUnit is specified-->
+  <parameter name="HCALThreshold" type="float">0.5 </parameter>
+  <!--Digital Ecal-->
+  <parameter name="IfDigitalEcal" type="int">0 </parameter>
+  <!--Digital Hcal-->
+  <parameter name="IfDigitalHcal" type="int">0 </parameter>
+  <!--name for the new collection -->
+  <parameter name="ECALOutputCollection0" type="stringVec">ECALBarrel </parameter>
+  <parameter name="ECALOutputCollection1" type="stringVec">ECALEndcap </parameter>
+  <parameter name="ECALOutputCollection2" type="stringVec">ECALOther </parameter>
+  <parameter name="HCALOutputCollection0" type="stringVec">HCALBarrel </parameter>
+  <parameter name="HCALOutputCollection1" type="stringVec">HCALEndcap </parameter>
+  <parameter name="HCALOutputCollection2" type="stringVec">HCALOther </parameter>
+  <!--CaloHit Relation Collection-->
+  <parameter name="RelationOutputCollection" type="string"> RelationCaloHit</parameter>
+  <!--Gap Correction-->
+  <parameter name="ECALGapCorrection" type="int"> 1 </parameter>
+  <!--Gap Correction Fudge Factor-->
+  <parameter name="ECALGapCorrectionFactor" type="float">1</parameter>
+  <parameter name="ECALModuleGapCorrectionFactor" type="int"> 0.0 </parameter>
+  <!-- Timing -->
+  <parameter name="UseEcalTiming" type="int">1</parameter>
+  <parameter name="UseHcalTiming" type="int">1</parameter>
+  <parameter name="ECALBarrelTimeWindowMax" type="float">100.0</parameter>
+  <parameter name="HCALBarrelTimeWindowMax" type="float">100.0</parameter>
+  <parameter name="ECALEndcapTimeWindowMax" type="float">100.0</parameter>
+  <parameter name="HCALEndcapTimeWindowMax" type="float">100.0</parameter>
+  <parameter name="ECALTimeWindowMin" type="float"> -1.0 </parameter>
+  <parameter name="HCALTimeWindowMin" type="float"> -1.0 </parameter>
+  <parameter name="ECALCorrectTimesForPropagation" type="int">1</parameter>
+  <parameter name="HCALCorrectTimesForPropagation" type="int">1</parameter>
+  <parameter name="ECALDeltaTimeHitResolution" type="float"> 20.0 </parameter>
+  <parameter name="HCALDeltaTimeHitResolution" type="float"> 20.0 </parameter>
+  <!-- Realistic ECal -->
+  <parameter name="ECAL_apply_realistic_digi" type="int">1</parameter>
+  <parameter name="CalibECALMIP" type="float">0.0001475</parameter>
+  <parameter name="ECAL_maxDynamicRange_MIP" type="float">2500</parameter>
+  <parameter name="ECAL_elec_noise_mips" type="float">0.07</parameter>
+  <parameter name="ECAL_deadCellRate" type="float">0</parameter>
+  <parameter name="ECAL_miscalibration_uncorrel" type="float">0</parameter>
+  <parameter name="ECAL_miscalibration_uncorrel_memorise" type="bool">false</parameter>
+  <parameter name="ECAL_miscalibration_correl" type="float">0</parameter>
+  <parameter name="energyPerEHpair" type="float">3.6</parameter>
+  <parameter name="ECAL_PPD_PE_per_MIP" type="float">7</parameter>
+  <parameter name="ECAL_PPD_N_Pixels" type="int">10000</parameter>
+  <parameter name="ECAL_PPD_N_Pixels_uncertainty" type="float">0.05</parameter>
+  <parameter name="ECAL_pixel_spread" type="float">0.05</parameter>
+  <!-- Realistic HCal -->
+  <parameter name="HCAL_apply_realistic_digi" type="int">1</parameter>
+  <parameter name="HCALThresholdUnit" type="string">MIP</parameter>
+  <parameter name="CalibHCALMIP" type="float">0.0004925</parameter>
+  <parameter name="HCAL_maxDynamicRange_MIP" type="float">99999999</parameter>
+  <parameter name="HCAL_elec_noise_mips" type="float">0.06</parameter>
+  <parameter name="HCAL_deadCellRate" type="float">0</parameter>
+  <parameter name="HCAL_PPD_N_Pixels" type="int">2000</parameter>
+  <parameter name="HCAL_PPD_PE_per_MIP" type="float">15</parameter>
+  <parameter name="HCAL_pixel_spread" type="float">0.05</parameter>
+  <parameter name="HCAL_PPD_N_Pixels_uncertainty" type="float">0</parameter>
+  <parameter name="HCAL_miscalibration_uncorrel" type="float">0</parameter>
+  <parameter name="HCAL_miscalibration_correl" type="float">0</parameter>
+  <!-- Histograms-->
+  <parameter name="Histograms" type="int"> 0 </parameter>
+
+  <!--default ECAL layer configuration (used if not found in gear file)-->
+  <parameter name="ECAL_default_layerConfig" type="string">
+    0000000000000000000000000000000 
+  </parameter>
+  <!--default number of virtual cells (used if not found in gear file)-->
+  <parameter name="StripEcal_default_nVirtualCells" type="int">9 </parameter>
+
+</processor>
+
+ <processor name="MyDDCaloDigi" type="DDCaloDigi">
     <!--Performs simple digitization of sim calo hits...-->
     <!--calibration to convert ECAL deposited energy to MIPs-->
     <parameter name="CalibECALMIP" type="float">0.0001 </parameter>
