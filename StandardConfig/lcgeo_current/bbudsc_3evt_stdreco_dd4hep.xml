@@ -1026,7 +1026,7 @@
   <parameter name="MaxHitEnergyMUON" type="float">2.0</parameter>
   <!--MUON Collection Names-->
   <parameter name="MUONCollections" type="StringVec">
-   MuonBarrelCollection MuonEndCapCollection</parameter>
+   YokeBarrelCollection YokeEndcapsCollection</parameter>
   <!--MUON Collection of real Hits-->
   <parameter name="MUONOutputCollection" type="string">MUON </parameter>
   <!--Threshold for MUON Hits in GeV-->
