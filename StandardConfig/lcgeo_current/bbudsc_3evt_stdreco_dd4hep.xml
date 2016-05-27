@@ -1124,16 +1124,16 @@
   <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
   <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
   <!-- Calibration constants -->
-  <parameter name="ECalToMipCalibration" type="float">160.0</parameter>
-  <parameter name="HCalToMipCalibration" type="float">34.8</parameter>
+  <parameter name="ECalToMipCalibration" type="float">158.73</parameter>
+  <parameter name="HCalToMipCalibration" type="float">37.7359</parameter>
   <parameter name="ECalMipThreshold" type="float">0.5</parameter>
   <parameter name="HCalMipThreshold" type="float">0.3</parameter>
-  <parameter name="ECalToEMGeVCalibration" type="float">1.007</parameter>
-  <parameter name="HCalToEMGeVCalibration" type="float">1.007</parameter>
-  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.075</parameter>
-  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.075</parameter>
-  <parameter name="HCalToHadGeVCalibration" type="float">1.027</parameter>
-  <parameter name="MuonToMipCalibration" type="float">10.0</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.0204507704997166</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.1204686863186613</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.2422633362694797</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.2422633362694797</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.1204686863186613</parameter>
+  <parameter name="MuonToMipCalibration" type="float">10.3093</parameter>
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter> 
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1.</parameter>
@@ -1731,17 +1731,17 @@
  <processor name="MyDDCaloDigi" type="DDCaloDigi">
     <!--Performs simple digitization of sim calo hits...-->
     <!--calibration to convert ECAL deposited energy to MIPs-->
-    <parameter name="CalibECALMIP" type="float">0.0001 </parameter>
+    <parameter name="CalibECALMIP" type="float">0.0001475 </parameter>
     <!--calibration to convert HCAL deposited energy to MIPs-->
-    <parameter name="CalibHCALMIP" type="float">0.0001 </parameter>
+    <parameter name="CalibHCALMIP" type="float">0.0004875 </parameter>
     <!--Calibration coefficients for ECAL-->
-    <parameter name="CalibrECAL" type="FloatVec">42.91 85.82  </parameter>
+    <parameter name="CalibrECAL" type="FloatVec">41.265161674959622 82.530323349919243 </parameter>
     <!--Calibration coefficients for Barrel HCAL-->
-    <parameter name="CalibrHCALBarrel" type="FloatVec">54.7  </parameter>
+    <parameter name="CalibrHCALBarrel" type="FloatVec">49.197875413749401 </parameter>
     <!--Calibration coefficients for EndCap HCAL-->
-    <parameter name="CalibrHCALEndcap" type="FloatVec">54.7  </parameter>
+    <parameter name="CalibrHCALEndcap" type="FloatVec">57.265495113555389 </parameter>
     <!--Calibration coefficients for Other (Ring) HCAL-->
-    <parameter name="CalibrHCALOther" type="FloatVec">54.7  </parameter>
+    <parameter name="CalibrHCALOther" type="FloatVec">68.0982251823757 </parameter>
     <!--ECAL BarrelTime Window maximum time in ns-->
     <parameter name="ECALBarrelTimeWindowMax" type="float">100 </parameter>
     <!--ECAL Collection Names-->
