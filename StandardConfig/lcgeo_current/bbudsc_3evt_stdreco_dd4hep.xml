@@ -1833,7 +1833,7 @@
     <!--Use simple time window cut on hit times? If false: use original hit-time clustering algorithm. If true: use time window defined by HCALBarrelTimeWindowMin and HCALBarrelTimeWindowMax-->
     <parameter name="HCALSimpleTimingCut" type="bool">true </parameter>
     <!--Threshold for HCAL Hits in GeV-->
-    <parameter name="HCALThreshold" type="FloatVec">0.00025  </parameter>
+    <parameter name="HCALThreshold" type="FloatVec">0.0001462  </parameter> <!-- 0.3*MIP = 0.3*0.0004875GeV = 0.0001462GeV -->
     <!--Unit for HCAL Threshold. Can be "GeV", "MIP" or "px". MIP and px need properly set calibration constants-->
     <parameter name="HCALThresholdUnit" type="string">GeV </parameter>
     <!--HCAL Time Resolution used to smear hit times-->
