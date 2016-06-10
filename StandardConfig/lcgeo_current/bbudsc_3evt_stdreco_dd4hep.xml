@@ -69,8 +69,31 @@
      <processor name="MyDDMarlinPandora"/>
      <!-- <processor name="MyMarlinPandora"/> -->
 
+     <!-- ========== covanriance matrix for charged PFOs  ======= -->
+     <!-- ========== should be done by MarlinPandora eventually ======= -->
+     <processor name="MyAdd4MomCovMatrixCharged"/>
+
+     <!-- ========== cluster position and direction w/ covariance; covariance matrix for neutral PFOs  ======= -->
+     <processor name="MyAddClusterProperties"/>
+
      <!-- ========== BeamCal ======= -->
      <processor name="MyBeamCalClusterReco"/>
+
+     <!-- ========== cluster position and direction w/ covariance; covariance matrix for neutral BeamCal PFOs  ======= -->
+     <!--processor name="BCalAddClusterProperties"/-->
+
+     <!-- ========== Shower Profiles   ================= -->
+     <processor name="MyComputeShowerShapesProcessor"/>    
+
+     <!-- ========== GammaGammaCandidateFinder   ================= -->
+
+     <processor name="MyPi0Finder"/>
+     <processor name="MyEtaFinder"/> 
+     <processor name="MyEtaPrimeFinder"/>  
+
+
+     <processor name="MyGammaGammaSolutionFinder"/> 
+     <processor name="MyDistilledPFOCreator"/> 
 
      <!-- <\!-- ========== particle ID ============================ -\-> -->
      <!-- <\!--processor name="MyPFOID" /-\-> -->
@@ -79,7 +102,7 @@
      <!-- <processor name="MyRecoMCTruthLinker"/> -->
      
      <!-- ========== vertex finder ========================== -->
-     <!-- <processor name="VertexFinder"/> -->
+     <processor name="VertexFinder"/>
      
      <processor name="MyLCIOOutputProcessor"/>
      <processor name="DSTOutput"/>
@@ -1885,5 +1908,180 @@
     <!--energy required to create e-h pair in silicon (in eV)-->
     <parameter name="energyPerEHpair" type="float">3.6 </parameter>
   </processor>
+
+
+<!--################################################ -->
+
+ <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
+  <!--Performs Shower profile extraction-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0 </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+  <!--Name of the Cluster collection-->
+  <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+  <!-- Radiation Length of Ecal-->
+  <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
+  <!-- Radiation Length of Hcal-->
+  <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
+  <!-- Moliere radius of Ecal-->
+  <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
+  <!-- Moliere radius of Hcal-->
+  <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
+  </processor>
+
+<!--################################################ -->
+ <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+ <!--Performs particle identification-->
+   <!--Debugging?-->
+   <parameter name="Debug" type="int">1 </parameter>
+   <!--Boundaries for energy binning-->
+   <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+   <!--Name of files containing pdfs for charged particles-->
+   <parameter name="FilePDFName" type="StringVec"> LikelihoodPID_Histogram_v01.root </parameter>
+   <!-- Whether MVA low momentum mu/pi is used or not-->
+   <parameter name="UseLowMomentumMuPiSeparation" type="bool">
+     true
+   </parameter>
+   <parameter name="FileWeightFormupiSeparationName" type="StringVec">
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_03GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_04GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_05GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_06GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_07GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_08GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_09GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_10GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_11GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_12GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_13GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_14GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_15GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_16GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_17GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_18GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_19GeVP_clusterinfo.weights.xml
+     ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_20GeVP_clusterinfo.weights.xml
+   </parameter>
+   
+   <!--dE/dx parameters for each particle-->
+   <parameter name="dEdxParameter_electron" type="FloatVec">
+     -2.40638e-03 7.10337e-01 2.87718e-01 -1.71591e+00 0.0
+   </parameter>
+   <parameter name="dEdxParameter_muon" type="FloatVec">
+     8.11408e-02 9.92207e-01 7.58509e+05 -1.70167e-01 4.63670e-04
+   </parameter>
+   <parameter name="dEdxParameter_pion" type="FloatVec">
+     8.10756e-02 -1.45051e+06 -3.09843e+04 2.84056e-01 3.38131e-04
+   </parameter>
+   <parameter name="dEdxParameter_kaon" type="FloatVec">
+     7.96117e-02 4.13335e+03 1.13577e+06 1.80555e-01 -3.15083e-04
+   </parameter>
+   <parameter name="dEdxParameter_proton" type="FloatVec">
+     7.78772e-02 4.49300e+04 9.13778e+04 1.50088e-01 -6.64184e-04
+   </parameter>
+
+   <!--dE/dx normalization-->
+   <parameter name="dEdxNormalization" type="float">
+     1.350e-7
+   </parameter>
+
+   <!--dE/dx error factor-->
+   <parameter name="dEdxErrorFactor" type="float">
+     7.55
+   </parameter>
+
+   <!-- Method: Maximum Likelihood(0) or Bayesian(1)-->
+   <parameter name="UseBayesian" type="int">
+     0
+   </parameter>
+
+   <!--Name of the PFO collection-->
+   <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+ </processor>
+
+<!--################################################ -->
+ <processor name="MyTauFinder" type="TaJetClustering">
+ <!--Performs tau jet finding -->
+   <!--  0. Collections -->
+   <!--Input PFO collection-->
+   <parameter name="PFOCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+   <!--Tau output collection-->
+   <parameter name="OutputTauCollection" type="string" lcioOutType="ReconstructedParticle">TaJets </parameter>
+   <!--Remained PFO collection not clustered-->
+   <parameter name="RemainPFOCollection" type="string" lcioOutType="ReconstructedParticle">TaJetsRemainPFOs </parameter>
+   <!--  1. Clustering -->
+   <!--Tau mass for tau clustering [GeV]-->
+   <parameter name="TauMass" type="double">2 </parameter>
+   <!--Allowed cosine angle to be clustered-->
+   <parameter name="TauCosAngle" type="double">0.98 </parameter>
+   <!--  2. Primary cut -->
+   <!-- Skip ANY Primary and Cone cuts if true: should be only used in lepton-only final states! -->
+   <parameter name="NoSelection" type="int">0 </parameter>
+
+   <!--Primary cut include IMPLICIT selection of accepting only 1 or 3 tracks in jets:
+              this loosen the counting of low energy tracks-->
+   <parameter name="AcceptFlexibleLowEnergyTrack" type="int">1 </parameter>
+   <!--Minimum jet energy to be accepted as taus-->
+   <parameter name="MinimumJetEnergy" type="double">3 </parameter>
+   <!--Minimum track energy to be accepted as taus-->
+   <parameter name="MinimumTrackEnergy" type="double">2 </parameter>
+   <!--Minimum track energy to be counted-->
+   <parameter name="MinimumTrackEnergyAssoc" type="double">2 </parameter>
+   <!--  3. Cone cut: currently simple 1D cut -->
+   <!-- No cone selection if true -->
+   <parameter name="NoSelection" type="int">0 </parameter>
+
+   <!--Minimum cosine angle for cone-->
+   <parameter name="ConeMinCosAngle" type="double">0.9 </parameter>
+   <!--Maximum cosine angle for cone-->
+   <parameter name="ConeMaxCosAngle" type="double">1 </parameter>
+   <!--Energy fraction of cone compared to central-->
+   <parameter name="ConeMaxEnergyFrac" type="double">0.1 </parameter>
+ </processor>
+
+<!--########## AddClusterProperties ###################################### -->
+ <processor name="BCalAddClusterProperties" type="AddClusterProperties">
+  <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle"> BCalRecoParticle </parameter>
+  <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> BCalClusters </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">MESSAGE </parameter>
+</processor>
+
+<!--########## PfoAnalysis ###################################### -->
+
+<processor name="MyPfoAnalysis" type="PfoAnalysis">
+  <!--PfoAnalysis analyses output of PandoraPFANew-->
+  <!--Names of input pfo collection-->
+  <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <!--Names of mc particle collection-->
+  <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Set the debug print level-->
+  <parameter name="Printing" type="int">0 </parameter>
+  <!--Name of the output root file-->
+  <parameter name="RootFile" type="string"> PfoAnalysis.root  </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+<!--########## Add4MomCovMatrixCharged ###################################### -->
+<!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
+<processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+  <!--Name of the PandoraPFOs collection-->
+  <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
+  <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
+  <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
+</processor>
+
+<!--########## AddClusterProperties ###################################### -->
+ <processor name="MyAddClusterProperties" type="AddClusterProperties">
+  <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <parameter name="ClusterCollection" type="string" lcioInType="Cluster">PandoraClusters </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">MESSAGE </parameter>
+</processor>
+
+
   
 </marlin>
