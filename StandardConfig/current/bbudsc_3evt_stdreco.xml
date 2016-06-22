@@ -44,9 +44,9 @@
       
      <!-- ========== central silicon tracking =============== -->
      <!-- ========== standard DBD version =============== -->
-     <!--processor name="MySiliconTracking_MarlinTrk"/-->  
+     <processor name="MySiliconTracking_MarlinTrk"/>  
      <!-- ========== mini-vectors - make sure you use matching digitizer! =============== -->
-     <processor name="MyCellsAutomatonMV"/>
+     <!--processor name="MyCellsAutomatonMV"/-->
      <!-- ========== FPCCD - make sure you use matching digitizer! =============== -->
      <!--processor name="MyFPCCDSiliconTracking_MarlinTrk"/-->  
      
@@ -94,7 +94,7 @@
      <processor name="MyBeamCalClusterReco"/>
 
      <!-- ========== cluster position and direction w/ covariance; covariance matrix for neutral BeamCal PFOs  ======= -->
-     <processor name="BCalAddClusterProperties"/>
+     <!--processor name="BCalAddClusterProperties"/-->
 
      <!-- ========== Shower Profiles   ================= -->
      <processor name="MyComputeShowerShapesProcessor"/>    
@@ -1483,7 +1483,7 @@
    <!--Name of BeamCal Collection-->
    <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BCAL </parameter>
    <!--Flag to create the TEfficiency for fast tagging library-->
-   <parameter name="CreateEfficiencyFile" type="bool"> true </parameter>
+   <parameter name="CreateEfficiencyFile" type="bool"> false </parameter>
    <!--Energy in a Cluster to consider it an electron-->
    <parameter name="ETCluster" type="FloatVec">0.5 0.5  </parameter>
    <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
@@ -1491,7 +1491,7 @@
    <!--The name of the rootFile which will contain the TEfficiency objects-->
    <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
    <!--Background simulation method-->
-   <parameter name="BackgroundMethod" type="string"> Gaussian </parameter>
+   <parameter name="BackgroundMethod" type="string"> Parametrised </parameter>
    <!--Root Inputfile(s)-->
    <parameter name="InputFileBackgrounds" type="StringVec">
      BeamCal_bg_E500-TDR_ws.root
@@ -1500,7 +1500,7 @@
   <parameter name="MCParticle Collection Name, only needed and used to estimate efficiencies" type="string" lcioInType="MCParticle">MCParticle </parameter>
   <!--Minimum number of pads in a single tower to be considered for signal-->
   <parameter name="MinimumTowerSize" type="int">6 </parameter>
-  <parameter name="LinearCalibrationFactor" type="double"> 60. </parameter>
+  <parameter name="LinearCalibrationFactor" type="double"> 72. </parameter>
   <!--Number of Bunch Crossings of Background-->
   <parameter name="NumberOfBX" type="int">1 </parameter>
   <!--Number of Event that should be printed to PDF File-->
