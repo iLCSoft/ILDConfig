@@ -1412,7 +1412,7 @@
    <!--The name of the rootFile which will contain the TEfficiency objects-->
    <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
    <!--Background simulation method-->
-   <parameter name="BackgroundMethod" type="string"> Parametrised </parameter>
+   <parameter name="BackgroundMethod" type="string"> Gaussian </parameter>
    <!--Root Inputfile(s)-->
    <parameter name="InputFileBackgrounds" type="StringVec">
      BeamCal_bg_E500-TDR_ws.root
