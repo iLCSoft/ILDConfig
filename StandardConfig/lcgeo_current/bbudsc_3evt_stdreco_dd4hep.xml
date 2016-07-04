@@ -227,7 +227,7 @@
     FTD_STRIPCollection                   FTD_STRIPCollection                   
     HcalBarrelRegCollection               HcalBarrelRegCollection               
     HcalEndCapRingsCollection             HcalEndCapRingsCollection             
-    HcalEndCapsCollection                 HcalEndCapsCollection                 
+    HcalEndcapsCollection                 HcalEndcapsCollection                 
     LumiCalCollection                     LumiCalCollection  
     LHCalCollection                       LHCalCollection
     MCParticle                            MCParticle                            
@@ -1110,7 +1110,7 @@
     HcalEndcapsCollection
     HcalEndcapRingCollection
   </parameter>
-  <!-- <parameter name="HCALCollections" type="StringVec">HcalBarrelRegCollection  HcalEndCapsCollection HcalEndCapRingsCollection</parameter> -->
+  <!-- <parameter name="HCALCollections" type="StringVec">HcalBarrelRegCollection  HcalEndcapsCollection HcalEndCapRingsCollection</parameter> -->
   <!--Index of HCal Layers-->
   <parameter name="HCALLayers" type="IntVec">100  </parameter>
   <!--Threshold for HCAL Hits in GeV-->
@@ -1534,8 +1534,8 @@
      EcalEndcapsCollection
      EcalEndcapRingCollection
      HcalBarrelRegCollection
-     HcalEndCapsCollection
-     HcalEndCapRingCollection
+     HcalEndcapsCollection
+     HcalEndcapRingCollection
      LHCalCollection
      LumiCalCollection
      MuonBarrelCollection
