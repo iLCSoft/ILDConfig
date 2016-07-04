@@ -226,13 +226,13 @@
     FTD_PIXELCollection                   FTD_PIXELCollection                   
     FTD_STRIPCollection                   FTD_STRIPCollection                   
     HcalBarrelRegCollection               HcalBarrelRegCollection               
-    HcalEndCapRingsCollection             HcalEndCapRingsCollection             
+    HcalEndcapRingCollection              HcalEndcapRingCollection             
     HcalEndcapsCollection                 HcalEndcapsCollection                 
     LumiCalCollection                     LumiCalCollection  
     LHCalCollection                       LHCalCollection
     MCParticle                            MCParticle                            
-    MuonBarrelCollection                  MuonBarrelCollection                  
-    MuonEndCapCollection                  MuonEndCapCollection                  
+    YokeBarrelCollection                  YokeBarrelCollection                  
+    YokeEndcapsCollection                  YokeEndcapsCollection                  
     SETCollection                         SETCollection                         
     SITCollection                         SITCollection                         
     TPCCollection                         TPCCollection                         
@@ -1110,7 +1110,7 @@
     HcalEndcapsCollection
     HcalEndcapRingCollection
   </parameter>
-  <!-- <parameter name="HCALCollections" type="StringVec">HcalBarrelRegCollection  HcalEndcapsCollection HcalEndCapRingsCollection</parameter> -->
+  <!-- <parameter name="HCALCollections" type="StringVec">HcalBarrelRegCollection  HcalEndcapsCollection HcalEndcapRingCollection</parameter> -->
   <!--Index of HCal Layers-->
   <parameter name="HCALLayers" type="IntVec">100  </parameter>
   <!--Threshold for HCAL Hits in GeV-->
@@ -1538,8 +1538,8 @@
      HcalEndcapRingCollection
      LHCalCollection
      LumiCalCollection
-     MuonBarrelCollection
-     MuonEndCapCollection
+     YokeBarrelCollection
+     YokeEndcapsCollection
    </parameter> 
    <!-- Connections from calo hist (connected to clusters) tp sim calo hits  (connects to MC particle) -->
    <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
