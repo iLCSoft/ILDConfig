@@ -1604,20 +1604,20 @@
    </parameter>
    
    <!--dE/dx parameters for each particle-->
-   <parameter name="dEdxParameter_electron" type="FloatVec">
-     -2.40638e-03 7.10337e-01 2.87718e-01 -1.71591e+00 0.0
+   <parameter name="dEdxParameter_electron" type="std::vector< std::float >">
+     -4.05313e-03 1.91596e-06 8.11184e-01 -1.64888e+00 0.0
    </parameter>
-   <parameter name="dEdxParameter_muon" type="FloatVec">
-     8.11408e-02 9.92207e-01 7.58509e+05 -1.70167e-01 4.63670e-04
+   <parameter name="dEdxParameter_muon" type="std::vector< std::float >">
+     7.91559e-02 -2.39454e+15 -1.43041e+14 2.01428e+00 4.66820e-04
    </parameter>
-   <parameter name="dEdxParameter_pion" type="FloatVec">
-     8.10756e-02 -1.45051e+06 -3.09843e+04 2.84056e-01 3.38131e-04
+   <parameter name="dEdxParameter_pion" type="std::vector< std::float >">
+     7.38570e-02 -4.78319e+10 -2.85734e+09 1.00232e+00 3.46155e-04
    </parameter>
-   <parameter name="dEdxParameter_kaon" type="FloatVec">
-     7.96117e-02 4.13335e+03 1.13577e+06 1.80555e-01 -3.15083e-04
+   <parameter name="dEdxParameter_kaon" type="std::vector< std::float >">
+     7.73601e-02 8.02069e+03 1.98912e+06 2.29348e-01 6.96261e-05
    </parameter>
-   <parameter name="dEdxParameter_proton" type="FloatVec">
-     7.78772e-02 4.49300e+04 9.13778e+04 1.50088e-01 -6.64184e-04
+   <parameter name="dEdxParameter_proton" type="std::vector< std::float >">
+     7.68495e-02 2.39298e+04 1.18134e+05 1.49840e-01 1.25641e-04
    </parameter>
 
    <!--dE/dx normalization-->
@@ -1632,7 +1632,16 @@
 
    <!-- Method: Maximum Likelihood(0) or Bayesian(1)-->
    <parameter name="UseBayesian" type="int">
-     1
+     2
+   </parameter>
+
+   <!--Cost Matrix-->
+   <parameter name="CostMatrix" type="std::vector< std::float >">
+     1.0e-50 1.0 2.0 1.0 2.0
+     1.0 1.0e-50 20.0 1.0 1.0
+     1.0 1.0 1.0e-50 1.0 1.0
+     1.0 1.0 20.0 1.0e-50 1.0
+     1.0 1.0 5.0 20.0 1.0e-50
    </parameter>
 
    <!--Name of the PFO collection-->
