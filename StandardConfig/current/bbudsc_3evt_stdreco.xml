@@ -1030,14 +1030,15 @@
     reconstruction parameters change you must recalibrate! 
 -->
 
+
 <processor name="MyILDCaloDigi" type="ILDCaloDigi">
   <!--ILD digitizer...-->
   <!--Calibration coefficients for ECAL-->
-  <parameter name="CalibrECAL" type="FloatVec">42.9631192209 85.9262384418</parameter>
+  <parameter name="CalibrECAL" type="FloatVec">42.9631 85.9262</parameter>
   <!--Calibration coefficients for HCAL barrel, endcap, other-->
-  <parameter name="CalibrHCALBarrel" type="FloatVec">49.3344654494</parameter>
-  <parameter name="CalibrHCALEndcap" type="FloatVec">55.3271575116</parameter>
-  <parameter name="CalibrHCALOther" type="FloatVec">31.1454028868</parameter>
+  <parameter name="CalibrHCALBarrel" type="FloatVec">54.5446</parameter>
+  <parameter name="CalibrHCALEndcap" type="FloatVec">60.6559</parameter>
+  <parameter name="CalibrHCALOther" type="FloatVec">31.1454</parameter>
   <!--ECAL Collection Names-->
   <parameter name="ECALCollections" type="StringVec">EcalBarrelSiliconCollection EcalEndcapSiliconCollection  EcalEndcapRingCollection </parameter>
   <!--Index of ECal Layers-->
@@ -1411,15 +1412,15 @@
   <parameter name="StartVertexCollectionName" type="String">StartVertices</parameter>
   <!-- Calibration constants -->
   <parameter name="ECalToMipCalibration" type="float">153.846</parameter>
-  <parameter name="HCalToMipCalibration" type="float">38.0228</parameter>
+  <parameter name="HCalToMipCalibration" type="float">33.3357</parameter>
   <parameter name="MuonToMipCalibration" type="float">10.3093</parameter>
   <parameter name="ECalMipThreshold" type="float">0.5</parameter>
   <parameter name="HCalMipThreshold" type="float">0.3</parameter>
-  <parameter name="ECalToEMGeVCalibration" type="float">1.00326122634</parameter>
-  <parameter name="HCalToEMGeVCalibration" type="float">1.06166688118</parameter>
-  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.16376244596</parameter>
-  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.16376244596</parameter>
-  <parameter name="HCalToHadGeVCalibration" type="float">1.06166688118</parameter>
+  <parameter name="ECalToEMGeVCalibration" type="float">1.0175</parameter>
+  <parameter name="HCalToEMGeVCalibration" type="float">1.10625</parameter>
+  <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.16169</parameter>
+  <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.16169</parameter>
+  <parameter name="HCalToHadGeVCalibration" type="float">1.10625</parameter>
   <parameter name="DigitalMuonHits" type="int">0</parameter>
   <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000</parameter>
   <parameter name="AbsorberRadLengthECal" type="float">0.2854</parameter>
