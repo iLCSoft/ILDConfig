@@ -112,7 +112,7 @@
      <processor name="MyDistilledPFOCreator"/> 
 
      <!-- ========== particle ID ============================ -->
-     <!--processor name="MyPFOID" /-->
+     <processor name="MyLikelihoodPID" />
 
      <!-- ========== full and DST output ==================== -->
      <processor name="MyRecoMCTruthLinker"/> 
