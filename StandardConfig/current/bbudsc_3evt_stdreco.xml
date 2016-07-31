@@ -655,11 +655,13 @@
    <!--Use MultipleScattering in Fit-->
    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
    <!--Smooth All Measurement Sites in Fit-->
-   <parameter name="SmoothOn" type="bool">false </parameter>
+   <parameter name="SmoothOn" type="bool">true </parameter>
    <!--Cut on minimum PT-->
    <parameter name="PTCut" type="double"> 0.0 </parameter>
    <!--Use SIT-->
    <parameter name="UseSIT" type="int"> 1 </parameter>
+   <!--Make a hit at IP-->
+   <parameter name="IPhit" type="int"> 0 </parameter>
    <!--The chi2 probability value below which tracks will be cut-->
    <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
    <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
@@ -670,6 +672,10 @@
    <parameter name="HitsPerTrackMin" type="int"> 2 </parameter>
    <!--Maximal number of hits for which a track with n hits is better than one with n-1hits-->
    <parameter name="NHitsChi2" type="int"> 6 </parameter>
+  <!-- TrackState to use for initialization of the fit: -1: refit from hits [default], 1: AtIP, 2: AtFirstHit, 3: AtLastHit, 4:AtCalo -->
+  <parameter name="InitialTrackState" type="int"> 1</parameter>
+ <!--Fit direction: -1: backward [default], +1: forward-->
+  <parameter name="FitDirection" type="int"> +1 </parameter>
    <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
    <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
    <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
@@ -684,6 +690,8 @@
    <parameter name="MVHitsThetaDifference" type="double"> 0.1 </parameter>
    <!--The difference in polar angle (in degrees)  between two hits in the INNER layer in order to form a minivector-->
    <parameter name="MVHitsThetaDifferenceInner" type="double"> 0.1 </parameter>
+   <!--The difference in polar angle (in degrees)  between two hits in SIT-->
+   <parameter name="MVHitsThetaDifferenceSIT" type="double"> 3.5 </parameter>
    <!--The maximum step between layers-->
    <parameter name="StepMax" type="int"> 4 </parameter>
    <!--The last layer that can be connected directly with the IP-->
@@ -692,25 +700,27 @@
    <parameter name="Crit2_3DAngle_MV_min" type="float"> 0.0 </parameter>
    <parameter name="Crit2_3DAngle_MV_max" type="float"> 15.0 </parameter>
    <parameter name="Crit2_DeltaPhi_MV_min" type="float"> 0.0 </parameter>
-   <parameter name="Crit2_DeltaPhi_MV_max" type="float"> 15.0 </parameter>
+   <parameter name="Crit2_DeltaPhi_MV_max" type="float"> 150.0 </parameter>
    <parameter name="Crit2_DeltaPhi_MV_InnLayer_min" type="float"> 0.0 </parameter>
    <parameter name="Crit2_DeltaPhi_MV_InnLayer_max" type="float"> 5.0 </parameter>
    <parameter name="Crit2_DeltaTheta_MV_min" type="float"> 0.0 </parameter>
-   <parameter name="Crit2_DeltaTheta_MV_max" type="float"> 1.5 </parameter>
+   <parameter name="Crit2_DeltaTheta_MV_max" type="float"> 150.0 </parameter>
    <parameter name="Crit3_NoZigZag_MV_min" type="float"> -1.0 </parameter>
    <parameter name="Crit3_NoZigZag_MV_max" type="float"> 1.0 </parameter>
-   <parameter name="Crit3_PT_MV_min" type="float"> 0.35 </parameter>
+   <parameter name="Crit3_PT_MV_min" type="float"> 0.1 </parameter>
    <parameter name="Crit3_PT_MV_max" type="float"> 999999 </parameter>   
    <parameter name="Criteria" type="StringVec">
       Crit2_DeltaPhi_MV
       Crit2_DeltaTheta_MV
-      Crit3_NoZigZag_MV
+      Crit3_PT_MV
    </parameter>
    
    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
    
 </processor> 
+
+
 
 <!--###########  FPCCD tracking #################################    -->
 
