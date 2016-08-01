@@ -21,13 +21,13 @@
    
      <processor name="MyStatusmonitor" />
 
-     <!-- =========  overlay gamma gamma background  === -->
-     <!-- activate for production -->
-     <!-- <processor name="BgOverlay" /> -->
-
      <processor name="MySplitCollectionByLayer" />
 
-     <!-- ========== track digitization and tracking  === -->
+     <!-- =========  overlay gamma gamma background  === -->
+     <!-- activate for production -->
+     <processor name="BgOverlay" />
+
+      <!-- ========== track digitization and tracking  === -->
 <!-- concerning the VXD digitisation, one can use one of the following VXD models-->
 <!-- DBD VXD, conservative CMOS design and ambitious CMOS design, cf  -->
 <!-- please not forget to consider the corresponding time resolutions when overlaying beam(pair)bkg!-->
