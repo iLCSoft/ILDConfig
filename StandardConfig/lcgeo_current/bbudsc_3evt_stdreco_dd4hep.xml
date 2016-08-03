@@ -150,7 +150,7 @@
 
   <global>
     <parameter name="LCIOInputFiles">
-      /nfs/dust/ilc/group/ild/DD4hep_data/SIM/TYPE/SLCIOINPUTFILE
+      bbudsc_3evt.slcio
     </parameter>
     <parameter name="GearXMLFile" value="gear_ILD_o1_v05_dd4hep.xml"/>
     <parameter name="MaxRecordNumber" value="0"/>
@@ -163,7 +163,7 @@
   <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
     <!--   standard output: full reconstruction keep all collections -->
     <parameter name="LCIOOutputFile" type="string" >
-      RECO_HEAD-2016-05-20.uds91_09_09_SIM.slcio
+      ./bbudsc_3evt_REC.slcio
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -1848,7 +1848,7 @@
     <!--Set the debug print level-->
     <parameter name="Printing" type="int">0 </parameter>
     <!--Name of the output root file-->
-    <parameter name="RootFile" type="string"> /nfs/dust/ilc/user/huonglan/ReconstructionGroup/ILDConfig/trunk/StandardConfig/lcgeo_current/mytestArea/Rootfiles/CellSIZE/RECO_SLCIOINPUTFILE.root  </parameter>
+    <parameter name="RootFile" type="string"> PfoAnalysis.root </parameter>
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
   </processor>
