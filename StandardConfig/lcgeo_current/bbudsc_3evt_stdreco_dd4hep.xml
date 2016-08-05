@@ -21,11 +21,11 @@
     
     <processor name="MyStatusmonitor" />
     
-    <processor name="MySplitCollectionByLayer" />
-    
     <!-- =========  overlay gamma gamma background  === -->
     <!-- activate for production -->
     <processor name="BgOverlay" />
+    
+    <processor name="MySplitCollectionByLayer" />
     
     <!-- ========== track digitization and tracking  === -->
     <!-- concerning the VXD digitisation, one can use one of the following VXD models-->
