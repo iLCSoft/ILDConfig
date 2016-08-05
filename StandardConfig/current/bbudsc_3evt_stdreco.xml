@@ -140,7 +140,6 @@
  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
   <!--   standard output: full reconstruction keep all collections -->
   <parameter name="LCIOOutputFile" type="string" >
-    <!--    ./rHEAD-2016-02-14.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001-REC.slcio -->
     ./bbudsc_3evt_REC.slcio
   </parameter>
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
@@ -152,7 +151,6 @@
      DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
    -->
    <parameter name="LCIOOutputFile" type="string" >
-     <!--  ./rHEAD-2016-02-14.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR-00001-DST.slcio -->
       ./bbudsc_3evt_DST.slcio
    </parameter>
    <parameter name="DropCollectionTypes" type="StringVec"> 
@@ -696,6 +694,12 @@
    <parameter name="StepMax" type="int"> 4 </parameter>
    <!--The last layer that can be connected directly with the IP-->
    <parameter name="LastLayerToIP" type="int"> 4 </parameter>
+   <!--number of neighbouring phi sectors to search-->
+   <parameter name="neighPhi" type="int"> 8 </parameter>
+   <!--number of neighbouring theta sectors to search-->
+   <parameter name="neighTheta" type="int"> 1 </parameter>
+   <!--The layer to start the automaton-->
+   <parameter name="layerMax" type="int"> 10 </parameter>
    
    <parameter name="Crit2_3DAngle_MV_min" type="float"> 0.0 </parameter>
    <parameter name="Crit2_3DAngle_MV_max" type="float"> 15.0 </parameter>
