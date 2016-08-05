@@ -140,7 +140,7 @@
     <!-- ========== vertex finder ========================== -->
     <processor name="VertexFinder"/>
     
-    <!--processor name="MyLCIOOutputProcessor"/-->
+    <processor name="MyLCIOOutputProcessor"/>
     <processor name="DSTOutput"/>
 
     <!-- =========== Pfo Analysis ======================== -->
