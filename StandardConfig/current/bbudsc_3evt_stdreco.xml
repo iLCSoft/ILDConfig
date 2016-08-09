@@ -118,7 +118,7 @@
      <processor name="MyRecoMCTruthLinker"/>
      
      <!-- ========== vertex finder ========================== -->
-     <processor name="VertexFinder"/>
+     <!--processor name="VertexFinder"/-->
      
      <processor name="MyLCIOOutputProcessor"/>
      <processor name="DSTOutput"/>
