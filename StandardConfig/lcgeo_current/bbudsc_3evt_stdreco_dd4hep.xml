@@ -37,14 +37,17 @@
     
 
     <processor name="SITPlanarDigiProcessor"/>
-    <processor name="SITSpacePointBuilder" />
+    <!-- <processor name="SITSpacePointBuilder" /> -->
+    <processor name="SITDDSpacePointBuilder" />
     
     <processor name="FTDPixelPlanarDigiProcessor"/>
     <processor name="FTDStripPlanarDigiProcessor"/>
-    <processor name="FTDSpacePointBuilder"/>
+    <!-- <processor name="FTDSpacePointBuilder"/> -->
+    <processor name="FTDDDSpacePointBuilder" />
     
     <processor name="SETPlanarDigiProcessor"/>
-    <processor name="SETSpacePointBuilder" />
+    <!-- <processor name="SETSpacePointBuilder" /> -->
+    <processor name="SETDDSpacePointBuilder" />
     
     <processor name="MyTPCDigiProcessor"/>
     
@@ -1912,5 +1915,59 @@
     <parameter name="OutputParticleCollectionName" value="DistilledPFOs" />
   </processor>
 
+  <!-- new implementation DDSpacePointBuilder using DD4hep/DDRec, no gear needed.  -->
+  <processor name="SITDDSpacePointBuilder" type="DDSpacePointBuilder">
+    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+    <!--Name of sub detector-->
+    <parameter name="SubDetectorName" type="string"> SIT </parameter>
+    <!--The length of the strips of the subdetector in mm-->
+    <parameter name="StripLength" type="Double"> 9.200000000e+01 </parameter>
+    <!--Name of the SpacePoint SimTrackerHit relation collection-->
+    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SITSpacePointRelations </parameter>
+    <!--SpacePointsCollection-->
+    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SITSpacePoints </parameter>
+    <!--TrackerHitCollection-->  
+    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SITTrackerHits </parameter>
+    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SITTrackerHitRelations </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+
+  <processor name="SETDDSpacePointBuilder" type="DDSpacePointBuilder">
+    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+    <!--Name of sub detector-->
+    <parameter name="SubDetectorName" type="string"> SET </parameter>
+    <!--The length of the strips of the subdetector in mm-->
+    <parameter name="StripLength" type="Double"> 9.200000000e+01 </parameter>
+    <!--Name of the SpacePoint SimTrackerHit relation collection-->
+    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SETSpacePointRelations </parameter>
+    <!--SpacePointsCollection-->
+    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SETSpacePoints </parameter>
+    <!--TrackerHitCollection-->  
+    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SETTrackerHits </parameter>
+    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SETTrackerHitRelations </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+
+  <processor name="FTDDDSpacePointBuilder" type="DDSpacePointBuilder">
+    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+    <!--Name of sub detector-->
+    <parameter name="SubDetectorName" type="string"> FTD </parameter>
+    <!--The length of the strips of the subdetector in mm-->
+    <parameter name="StripLength" type="Double"> 2.500000000e+02 </parameter>
+    <!--Name of the SpacePoint SimTrackerHit relation collection-->
+    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> FTDSpacePointRelations </parameter>
+    <!--SpacePointsCollection-->
+    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> FTDSpacePoints </parameter>
+    <!--TrackerHitCollection-->  
+    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> FTDStripTrackerHits </parameter>
+    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> FTDStripTrackerHitRelations </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
   
 </marlin>
