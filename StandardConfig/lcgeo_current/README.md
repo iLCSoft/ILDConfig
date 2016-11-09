@@ -95,9 +95,7 @@ view REC or DST events:
 
 Displays also the tracking surfaces: 
 	
-	ced2go -s 1 -d $lcgeo_DIR/ILD/compact/Simplified_ILD_o1_v05/Simplified_ILD_o1_v05.xml bbudsc_3evt_REC.slcio
-
-(note: here a slightly simplified model is used to reduce startup time)
+	ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml bbudsc_3evt_REC.slcio
 
 
 ## 6. create a ROOT TTree for analysis
