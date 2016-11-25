@@ -47,7 +47,9 @@ You can now examine the collections in the file:
 
 ## 4. reconstruct these events:
 
-	Marlin bbudsc_3evt_stdreco_dd4hep.xml --InitDD4hep.DD4hepXMLFile=$lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml
+	Marlin bbudsc_3evt_stdreco_dd4hep.xml \
+	--global.GearXMLFile=gear_ILD_l1_v01_dd4hep.xml \
+	--InitDD4hep.DD4hepXMLFile=$lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml
 
 creates:   bbudsc_3evt_REC.slcio 
 and        bbudsc_3evt_DST.slcio
