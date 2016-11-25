@@ -158,7 +158,7 @@
     <parameter name="LCIOInputFiles">
       bbudsc_3evt.slcio
     </parameter>
-    <parameter name="GearXMLFile" value="gear_ILD_o1_v05_dd4hep.xml"/>
+    <parameter name="GearXMLFile" value="gear_ILD_l1_v01_dd4hep.xml"/>
     <parameter name="MaxRecordNumber" value="0"/>
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
