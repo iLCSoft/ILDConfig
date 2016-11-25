@@ -22,9 +22,12 @@
     <processor name="MyStatusmonitor" />
     
     <!-- =========  overlay gamma gamma background  === -->
-    <!-- activate for production -->
-    <processor name="BgOverlay" />
-    
+
+    <!-- ###### activate for production ! ########## -->
+    <!-- processor name="BgOverlay" / -->
+    <!-- ########################################### -->
+
+
     <processor name="MySplitCollectionByLayer" />
     
     <!-- ========== track digitization and tracking  === -->
