@@ -137,10 +137,10 @@
     <processor name="MyGammaGammaSolutionFinder"/> 
     <processor name="MyDistilledPFOCreator"/> 
 
-    <!-- <\!-- ========== particle ID ============================ -\-> -->
+    <!-- ========== particle ID ============================ -->
     <processor name="MyLikelihoodPID" />
 
-    <!-- <\!-- ========== full and DST output ==================== -\-> -->
+    <!-- ========== full and DST output ==================== -->
     <processor name="MyRecoMCTruthLinker"/> 
     
     <!-- ========== vertex finder ========================== -->
