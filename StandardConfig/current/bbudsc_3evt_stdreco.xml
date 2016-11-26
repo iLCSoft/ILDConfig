@@ -1651,7 +1651,7 @@
    </parameter>
 
    <!--Cost Matrix-->
-   <parameter name="CostMatrix" type="std::vector< std::float >">
+   <parameter name="CostMatrix" type="FloatVec">
      1.0e-50 1.0 2.0 1.0 2.0
      1.0 1.0e-50 20.0 1.0 1.0
      1.0 1.0 1.0e-50 1.0 1.0
