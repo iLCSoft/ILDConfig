@@ -17,13 +17,13 @@ They can also be used as a mini-test after installation of a new (complete) ilcs
 release.
 
 For more information on the iLCSoft tools refer to the [iLCSoft Portal](http://ilcsoft.desy.de)
-or directly to the [source code documentation](http://ilcsoft.desy.de/v01-19/package_doc.html) of the individual packages.
+or directly to the [source code documentation](http://ilcsoft.desy.de/v01-19-01/package_doc.html) of the individual packages.
 
 
 ## 1. initialize the current ilcsoft release, e.g.
    
    
-   source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc48_sl6/v01-19/init_ilcsoft.sh
+   source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-01/init_ilcsoft.sh
 
 
 ## 2. run the lcgeo/ddsim simulation example 
@@ -87,7 +87,7 @@ Displays also the tracking surfaces:
 
 ## 6. create a ROOT TTree for analysis
 
-  Marlin lctuple.xml
+	Marlin lctuple.xml --global.GearXMLFile=gear_ILD_l1_v01_dd4hep.xml
 
 creates: bbudsc_3evt_REC_lctuple.root
 which you can analyze with ROOT in the usual way - or run some examples:
