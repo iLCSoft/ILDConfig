@@ -60,9 +60,13 @@
     
     <!-- ========== central silicon tracking =============== -->
     <!-- ========== standard DBD version =============== -->
-    <processor name="MySiliconTracking_MarlinTrk"/>  
+    <!--processor name="MySiliconTracking_MarlinTrk"/-->  
     <!-- ========== mini-vectors - make sure you use matching digitizer! =============== -->
-    <!--processor name="MyCellsAutomatonMV"/-->
+    <!--processor name="MyCellsAutomatonMV_UseSIT"/-->
+
+    <processor name="MyCellsAutomatonMV"/>
+    <processor name="MyExtrToSIT"/>
+
     <!-- ========== FPCCD - make sure you use matching digitizer! =============== -->
     <!--processor name="MyFPCCDSiliconTracking_MarlinTrk"/-->  
 
@@ -739,7 +743,7 @@
 
   <!--###########  mini-vector tracking #################################    -->
 
-  <processor name="MyCellsAutomatonMV" type="CellsAutomatonMV">
+  <processor name="MyCellsAutomatonMV_UseSIT" type="CellsAutomatonMV">
     <!--ForwardTracking reconstructs tracks through the FTDs-->
     <!--Name of the Cellular Automaton Tracking output collection-->
     <parameter name="CATrackCollection" type="string" lcioOutType="Track"> SiTracks </parameter>
@@ -816,6 +820,146 @@
     <parameter name="Verbosity" type="string"> MESSAGE </parameter>
     
   </processor> 
+
+
+  <!--###########  mini-vector tracking + ExtrToSIT #################################    -->
+
+  <processor name="MyCellsAutomatonMV" type="CellsAutomatonMV">
+    <!--ForwardTracking reconstructs tracks through the FTDs-->
+    
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+    
+    <!--Name of the Cellular Automaton Tracking output collection-->
+    <parameter name="CATrackCollection" type="string" lcioOutType="Track"> CATracks </parameter>
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <!--Number of divisions in Phi-->
+    <parameter name="NDivisionsInPhi" type="int"> 160 </parameter>
+    <!--Number of divisions in Theta-->
+    <parameter name="NDivisionsInTheta" type="int"> 80 </parameter>
+    <!--Number of divisions in Phi in  order to create mini-vectors-->
+    <parameter name="NDivisionsInPhiMV" type="int"> 80 </parameter>
+    <!--Number of divisions in Theta  in  order to create mini-vectors-->
+    <parameter name="NDivisionsInThetaMV" type="int"> 80 </parameter>
+    <!--VXD Hit Collections-->
+    <parameter name="VTXHitCollectionName" type="StringVec"> VXDTrackerHits </parameter>
+    <!--SIT Hit Collections-->
+    <parameter name="SITHitCollectionName" type="StringVec"> SITSpacePoints </parameter>
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <!--Smooth All Measurement Sites in Fit-->
+    <parameter name="SmoothOn" type="bool">true </parameter>
+    <!--Cut on minimum PT-->
+    <parameter name="PTCut" type="double"> 0.0 </parameter>
+    <!--Use SIT-->
+    <parameter name="UseSIT" type="int"> 0 </parameter>
+    <!--Make a hit at IP-->
+    <parameter name="IPhit" type="int"> 1 </parameter>
+    <!--The chi2 probability value below which tracks will be cut-->
+    <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+    <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
+    <parameter name="HelixFitMax" type="double"> 100 </parameter>
+    <!--the maximum chi2/Ndf that is allowed as result of a Kalman fit-->
+    <parameter name="kalFitMax" type="double"> 10 </parameter>
+    <!--The minimum number of hits to create a track-->
+    <parameter name="HitsPerTrackMin" type="int"> 2 </parameter>
+    <!--Maximal number of hits for which a track with n hits is better than one with n-1hits-->
+    <parameter name="NHitsChi2" type="int"> 6 </parameter>
+    <!-- TrackState to use for initialization of the fit: -1: refit from hits [default], 1: AtIP, 2: AtFirstHit, 3: AtLastHit, 4:AtCalo -->
+    <parameter name="InitialTrackState" type="int"> 1</parameter>
+    <!--Fit direction: -1: backward [default], +1: forward-->
+    <parameter name="FitDirection" type="int"> +1 </parameter>
+    <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
+    <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
+    <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
+    <!--parameter name="TakeBestVersionOfTrack" type="bool">true </parameter-->
+    <!--If the automaton has more connections than this it will be redone with the next parameters-->
+    <parameter name="MaxConnectionsAutomaton" type="int"> 10000000 </parameter>
+    <!--Maximal number of hits allowed on a sector-->
+    <parameter name="MaxHitsPerSector" type="int">1000 </parameter>
+    <!--The maximum distance between two hits in adjacent layers in order to form a minivector-->
+    <parameter name="MaxDistance" type="double"> 5.0 </parameter>
+    <!--The difference in polar angle (in degrees)  between two hits in adjacent layers in order to form a minivector-->
+    <parameter name="MVHitsThetaDifference" type="double"> 0.1 </parameter>
+    <!--The difference in polar angle (in degrees)  between two hits in the INNER layer in order to form a minivector-->
+    <parameter name="MVHitsThetaDifferenceInner" type="double"> 0.1 </parameter>
+    <!--The difference in polar angle (in degrees)  between two hits in SIT-->
+    <parameter name="MVHitsThetaDifferenceSIT" type="double"> 3.5 </parameter>
+    <!--The maximum step between layers-->
+    <parameter name="StepMax" type="int"> 4 </parameter>
+    <!--The last layer that can be connected directly with the IP-->
+    <parameter name="LastLayerToIP" type="int"> 4 </parameter>
+   
+    <parameter name="Crit2_3DAngle_MV_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_3DAngle_MV_max" type="float"> 15.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_max" type="float"> 150.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_InnLayer_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_InnLayer_max" type="float"> 5.0 </parameter>
+    <parameter name="Crit2_DeltaTheta_MV_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_DeltaTheta_MV_max" type="float"> 150.0 </parameter>
+    <parameter name="Crit3_NoZigZag_MV_min" type="float"> -1.0 </parameter>
+    <parameter name="Crit3_NoZigZag_MV_max" type="float"> 1.0 </parameter>
+    <parameter name="Crit3_PT_MV_min" type="float"> 0.1 </parameter>
+    <parameter name="Crit3_PT_MV_max" type="float"> 999999 </parameter>   
+    <parameter name="Criteria" type="StringVec">
+      Crit2_DeltaPhi_MV
+      Crit2_DeltaTheta_MV
+      Crit3_PT_MV
+    </parameter>
+   
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+   
+  </processor> 
+
+  <processor name="MyExtrToSIT" type="ExtrToSIT">
+    <!--ExtrToSIT refits an input track collection, producing a new collection of tracks.-->
+
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <!--Name of the input track collection-->
+    <!--parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> MarlinTrkTracks </parameter-->
+    <!--parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> TruthTracks </parameter-->
+    <parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> CATracks </parameter>
+    <!--Name of the SITTrackerHit collection-->
+    <!--parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter-->
+    <parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITSpacePoints </parameter>
+    <!--Name of the VTXTrackerHit collection-->
+    <parameter name="digitisedVXDHits" type="string" lcioInType="TrackerHit"> VXDTrackerHits </parameter>
+    <!--Name of the MCParticle-Track Relations collection for input tracks-->
+    <!--parameter name="InputTrackRelCollection" type="string" lcioInType="LCRelation"> MarlinTrkTracksMCP </parameter-->
+    <!--parameter name="InputTrackRelCollection" type="string" lcioInType="LCRelation"> TruthTracksMCP </parameter-->
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <!--maximum allowable chi2 increment when moving from one site to another-->
+    <parameter name="Max_Chi2_Incr" type="double"> 100 </parameter>
+    <!--minimum acceptable no of hits for the TPC tracks-->
+    <parameter name="TPCHitsCut" type="int"> 100 </parameter>
+    <!--Which layer should the seed be propagated to-->
+    <parameter name="PropagateToLayer" type="double"> 0 </parameter>
+    <!--maximum acceptable chi2/ndof for the TPC tracks-->
+    <parameter name="Chi2NDoFCut" type="int"> 100 </parameter>
+    <!--maximum acceptable Z0 at IP-->
+    <parameter name="Z0Cut" type="float"> 25 </parameter>
+    <!--maximum acceptable D0 at IP-->
+    <parameter name="D0Cut" type="float"> 2500000 </parameter>
+    <!--times d0(Z0) acceptable from track extrapolation point-->
+    <parameter name="SearchSigma" type="double"> 10.0 </parameter>
+    <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
+    <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
+    <!--Name of the output track collection-->
+    <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track"> SiTracks </parameter>
+    <!--Name of the MCParticle-Track Relations collection for output tracks-->
+    <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation"> SiTracksMCP </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+  </processor>
+
 
   <!--###########  FPCCD tracking #################################    -->
 
