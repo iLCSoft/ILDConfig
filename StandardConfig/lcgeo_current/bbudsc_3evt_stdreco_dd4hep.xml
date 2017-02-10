@@ -251,11 +251,8 @@
     <parameter name="CollectionMap" type="StringVec">
       BeamCalCollection                     BeamCalCollection                     
       EcalBarrelCollection                  EcalBarrelCollection           
-      EcalBarrelCollection_preShower        EcalBarrelCollection_preShower
       EcalEndcapsCollection                 EcalEndcapsCollection           
-      EcalEndcapsCollection_preShower       EcalEndcapsCollection_preShower
       EcalEndcapRingCollection              EcalEndcapRingCollection              
-      EcalEndcapRingCollection_preShower    EcalEndcapRingCollection_preShower
       FTDCollection                         FTDCollection                   
       HcalBarrelRegCollection               HcalBarrelRegCollection               
       HcalEndcapRingCollection              HcalEndcapRingCollection             
@@ -272,7 +269,7 @@
     </parameter>
     <!--Name of the lcio input file(s)-->
     <parameter name="InputFileNames" type="StringVec"> 
-      /nfs/dust/ilc/group/ild/DD4hep_data/SIM/bkg/aa_lowpt/v01-17-10-pre.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I37580.01._00_SIM.slcio
+      /nfs/dust/ilc/group/ild/DD4hep_data/SIM/bkg/aa_lowpt/v01-19-01.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I37580.01_ILD_l1_v01_SIM.slcio
     </parameter>
     <!--Overlay each event with this number of background events. (default 0)-->
     <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
