@@ -123,7 +123,7 @@
     <processor name="MyAddClusterProperties"/>
 
     <!-- ========== BeamCal ======= -->
-    <!--processor name="MyBeamCalClusterReco"/-->
+    <processor name="MyBeamCalClusterReco"/>
 
     <!-- ========== cluster position and direction w/ covariance; covariance matrix for neutral BeamCal PFOs  ======= -->
     <!--processor name="BCalAddClusterProperties"/-->
@@ -1599,7 +1599,7 @@
     <!--The name of the rootFile which will contain the TEfficiency objects-->
     <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
     <!--Background simulation method-->
-    <parameter name="BackgroundMethod" type="string"> Gaussian </parameter>
+    <parameter name="BackgroundMethod" type="string">Parametrised </parameter>
     <!--Root Inputfile(s)-->
     <parameter name="InputFileBackgrounds" type="StringVec">
       BeamCal_bg_E500-TDR_ws.root
@@ -1608,7 +1608,7 @@
     <parameter name="MCParticle Collection Name, only needed and used to estimate efficiencies" type="string" lcioInType="MCParticle">MCParticle </parameter>
     <!--Minimum number of pads in a single tower to be considered for signal-->
     <parameter name="MinimumTowerSize" type="int">6 </parameter>
-    <parameter name="LinearCalibrationFactor" type="double"> 60. </parameter>
+    <parameter name="LinearCalibrationFactor" type="double"> 72. </parameter>
     <!--Number of Bunch Crossings of Background-->
     <parameter name="NumberOfBX" type="int">1 </parameter>
     <!--Number of Event that should be printed to PDF File-->
