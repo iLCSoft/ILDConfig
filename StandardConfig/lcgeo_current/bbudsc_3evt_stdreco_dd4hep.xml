@@ -1,7 +1,7 @@
 <!--
    Example steering file to run a new standard reconstruction
    using DDRec on events simulated with DD4hep/lcgeo for
-   detector ILD_o1_v05.
+   detector ILD_l1_v01 and ILD_s1_v01.
    
    Based on bbudsc_3evt_stdreco.xml form ILDconfig
    
@@ -40,16 +40,13 @@
     
 
     <processor name="SITPlanarDigiProcessor"/>
-    <!-- <processor name="SITSpacePointBuilder" /> -->
     <processor name="SITDDSpacePointBuilder" />
     
     <processor name="FTDPixelPlanarDigiProcessor"/>
     <processor name="FTDStripPlanarDigiProcessor"/>
-    <!-- <processor name="FTDSpacePointBuilder"/> -->
     <processor name="FTDDDSpacePointBuilder" />
     
     <processor name="SETPlanarDigiProcessor"/>
-    <!-- <processor name="SETSpacePointBuilder" /> -->
     <processor name="SETDDSpacePointBuilder" />
     
     <processor name="MyTPCDigiProcessor"/>
@@ -378,21 +375,6 @@
   </processor>
 
 
-  <processor name="SITSpacePointBuilder" type="SpacePointBuilder">
-    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
-    <!--Name of the SpacePoint SimTrackerHit relation collection-->
-    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SITSpacePointRelations </parameter>
-    <!--SpacePointsCollection-->
-    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SITSpacePoints </parameter>
-    <!--TrackerHitCollection-->  
-    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SITTrackerHits </parameter>
-    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
-    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SITTrackerHitRelations </parameter>
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-  </processor>
-
-
   <processor name="FTDPixelPlanarDigiProcessor" type="DDPlanarDigiProcessor">
     <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
     <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
@@ -460,37 +442,6 @@
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
   </processor>
-
-
-  <processor name="SETSpacePointBuilder" type="SpacePointBuilder">
-    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
-    <!--Name of the SpacePoint SimTrackerHit relation collection-->
-    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SETSpacePointRelations </parameter>
-    <!--SpacePointsCollection-->
-    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SETSpacePoints </parameter>
-    <!--TrackerHitCollection-->  
-    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SETTrackerHits </parameter>
-    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
-    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SETTrackerHitRelations </parameter>
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
-  </processor>
-
-
-  <processor name="FTDSpacePointBuilder" type="SpacePointBuilder">
-    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
-    <!--Name of the SpacePoint SimTrackerHit relation collection-->
-    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation">FTDSpacePointRelations </parameter>
-    <!--SpacePointsCollection-->
-    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit">FTDSpacePoints </parameter>                                                                
-    <!--TrackerHitCollection-->
-    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane">FTDStripTrackerHits </parameter>
-    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
-    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation">FTDStripTrackerHitRelations </parameter>
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->                                            
-  </processor>
-
 
 
   <processor name="MyTPCDigiProcessor" type="TPCDigiProcessor">
