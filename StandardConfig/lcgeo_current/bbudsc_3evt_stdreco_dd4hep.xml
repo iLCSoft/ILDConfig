@@ -120,7 +120,7 @@
     <processor name="MyAddClusterProperties"/>
 
     <!-- ========== BeamCal ======= -->
-    <processor name="MyBeamCalClusterReco"/>
+    <!-- <processor name="MyBeamCalClusterReco"/> -->
 
     <!-- ========== cluster position and direction w/ covariance; covariance matrix for neutral BeamCal PFOs  ======= -->
     <!--processor name="BCalAddClusterProperties"/-->
