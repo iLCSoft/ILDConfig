@@ -1476,6 +1476,8 @@
     -->
 
   <processor name="MyDDMarlinPandora" type="DDPandoraPFANewProcessor">
+    <!--Track cut on distance from BarrelTracker inner r to id whether track can form pfo-->
+    <parameter name="MaxBarrelTrackerInnerRDistance" type="float">105.0 </parameter>
     <parameter name="PandoraSettingsXmlFile" type="String"> PandoraSettingsDefault.xml </parameter>
     <!-- Collection names -->
     <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
