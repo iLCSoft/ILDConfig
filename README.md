@@ -1,6 +1,4 @@
 # ILDConfig
-[![Build Status](https://travis-ci.org/iLCSoft/ILDConfig.svg?branch=master)](https://travis-ci.org/iLCSoft/ILDConfig)
-
 This package contains ilcsoft configuration files for running simulation and reconstruction for the ILD detector in iLCSoft with lcio, Marlin and DD4hep.
 
 ILDConfig is distributed under the [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html)
