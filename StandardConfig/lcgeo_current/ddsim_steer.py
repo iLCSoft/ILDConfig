@@ -19,7 +19,6 @@ SIM.crossingAngleBoost = 7.e-3*rad
 SIM.action.tracker = ("Geant4TrackerWeightedAction", {"HitPositionCombination" : 2 , "CollectSingleDeposits" :  False } )
 
 SIM.action.mapActions['tpc'] = "TPCSDAction"
-#SIM.action.mapActions['ecal'] = ( "CaloPreShowerSDAction", {"FirstLayerNumber": 0} )
 
 SIM.filter.mapDetFilter['TPC'] = "edep0"
 
