@@ -1532,7 +1532,7 @@
    <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
    <parameter name="ETPad" type="FloatVec"> 0.01 0.3  </parameter>
    <!--The name of the rootFile which will contain the TEfficiency objects-->
-   <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
+   <parameter name="EfficiencyFilename" type="string"></parameter>
    <!--Background simulation method-->
    <parameter name="BackgroundMethod" type="string"> Parametrised </parameter>
    <!--Root Inputfile(s)-->
@@ -1721,9 +1721,9 @@
          specified -->
    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
    <!--Name of the ReconstructedParticles input collection-->
-   <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+   <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs BCalRecoParticle </parameter>
    <!--Name of the Cluster collection -->
-   <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters </parameter>
+   <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters BCalClusters </parameter>
    <!--Name of the Tracks input collection-->
    <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
   
@@ -1798,7 +1798,7 @@
         tracks and clusters. False implies that only the true particle that
         gives most contributions to the track of the PFO (charged PFOs), or
         to the cluster (neutral ones) is linked to the PFO -->
-   <parameter name="FullRecoRelation" type="bool"> true </parameter>
+   <parameter name="FullRecoRelation" type="bool"> false </parameter>
    
    <!-- further options -->
    <!--true: use relations for TrackerHits, false : use getRawHits -->
