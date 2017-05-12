@@ -39,7 +39,7 @@ You can now examine the collections in the file:
 
 ## 3. create a gear file for this model 
 
-  convertToGear default $lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml gear_ILD_l1_v01_dd4hep.xml
+	convertToGear default $lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml gear_ILD_l1_v01_dd4hep.xml
 
   This creates a gear file for the ILD model and is currently still needed when running with 
   DD4hep/lcgeo as some processors have not yet been updated
