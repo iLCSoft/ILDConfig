@@ -692,7 +692,7 @@
 
   <!--###########  mini-vector tracking #################################    -->
 
-  <processor name="MyCellsAutomatonMV_UseSIT" type="CellsAutomatonMV">
+  <processor name="MyCellsAutomatonMV_UseSIT" type="DDCellsAutomatonMV">
     <!--ForwardTracking reconstructs tracks through the FTDs-->
     <!--Name of the Cellular Automaton Tracking output collection-->
     <parameter name="CATrackCollection" type="string" lcioOutType="Track"> SiTracks </parameter>
@@ -773,7 +773,7 @@
 
   <!--###########  mini-vector tracking + ExtrToSIT #################################    -->
 
-  <processor name="MyCellsAutomatonMV" type="CellsAutomatonMV">
+  <processor name="MyCellsAutomatonMV" type="DDCellsAutomatonMV">
     <!--ForwardTracking reconstructs tracks through the FTDs-->
     
     <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
