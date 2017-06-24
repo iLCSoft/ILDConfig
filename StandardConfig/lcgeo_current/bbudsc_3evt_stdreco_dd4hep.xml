@@ -445,7 +445,7 @@
   </processor>
 
 
-  <processor name="MyTPCDigiProcessor" type="TPCDigiProcessor">
+  <processor name="MyTPCDigiProcessor" type="DDTPCDigiProcessor">
     <!--Produces TPC TrackerHit collection from SimTrackerHit collection, smeared in RPhi and Z. A search is made for adjacent hits on a pad row, if they are closer in z and r-phi than the steering parameters _doubleHitResRPhi (default value 2.0 mm) and _doubleHitResZ (default value 5.0 mm) they are considered to overlap. Clusters of hits smaller than _maxMerge (default value 3) are merged into a single tracker hit, with the position given as the average poision of the hits in phi and in z. Clusters which have _maxMerge hits or more are determined to be identifiable as multiple hits, and are not added to the tracker hit collection. This of course means that good hits caught up in a cluster of background hits will be lossed.-->
 
     <!--Do not encode the side in the cellID of the TrackerHit-->
