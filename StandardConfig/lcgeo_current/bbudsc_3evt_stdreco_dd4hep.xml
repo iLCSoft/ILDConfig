@@ -448,9 +448,6 @@
   <processor name="MyTPCDigiProcessor" type="DDTPCDigiProcessor">
     <!--Produces TPC TrackerHit collection from SimTrackerHit collection, smeared in RPhi and Z. A search is made for adjacent hits on a pad row, if they are closer in z and r-phi than the steering parameters _doubleHitResRPhi (default value 2.0 mm) and _doubleHitResZ (default value 5.0 mm) they are considered to overlap. Clusters of hits smaller than _maxMerge (default value 3) are merged into a single tracker hit, with the position given as the average poision of the hits in phi and in z. Clusters which have _maxMerge hits or more are determined to be identifiable as multiple hits, and are not added to the tracker hit collection. This of course means that good hits caught up in a cluster of background hits will be lossed.-->
 
-    <!--Do not encode the side in the cellID of the TrackerHit-->
-    <parameter name="DontEncodeSide" type="bool"> false </parameter>
-
     <!--R-Phi Diffusion Coefficent in TPC-->
     <parameter name="DiffusionCoeffRPhi" type="float">0.025 </parameter>
     <!--Z Diffusion Coefficent in TPC-->
@@ -485,6 +482,16 @@
     <parameter name="TPCTrackerHitsCol" type="string" lcioOutType="TrackerHit"> TPCTrackerHits </parameter>
     <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
     <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">TPCTrackerHitRelations </parameter>
+
+    <!--Gap size in mm of the gaps between the endplace modules in Phi-->
+    <parameter name="TPCEndPlateModuleGapPhi" type="float"> 1. </parameter>
+    <!--Gap size in mm of the gaps between the endplace modules in R-->
+    <parameter name="TPCEndPlateModuleGapR" type="float">1. </parameter>
+    <!--Number of modules in the rings of the TPC endplate-->
+    <parameter name="TPCEndPlateModuleNumbers" type="IntVec">14 18 23 28 32 37 42 46  </parameter>
+    <!--Phi0s of modules in the rings of the TPC endplate-->
+    <parameter name="TPCEndPlateModulePhi0s" type="FloatVec">0 0.01 0.02 0.03 0.04 0.05 0.06 0.07  </parameter>
+
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string"> MESSAGE </parameter-->
   </processor>
