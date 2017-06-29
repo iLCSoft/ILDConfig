@@ -24,7 +24,7 @@
     <!-- =========  overlay gamma gamma background  === -->
 
     <!-- ###### activate for production ! ########## -->
-    <!-- processor name="BgOverlay" / -->
+    <!-- <processor name="BgOverlay" /> -->
     <!-- ########################################### -->
 
 
@@ -490,7 +490,9 @@
     <!--Number of modules in the rings of the TPC endplate-->
     <parameter name="TPCEndPlateModuleNumbers" type="IntVec">14 18 23 28 32 37 42 46  </parameter>
     <!--Phi0s of modules in the rings of the TPC endplate-->
-    <parameter name="TPCEndPlateModulePhi0s" type="FloatVec">0 0.01 0.02 0.03 0.04 0.05 0.06 0.07  </parameter>
+    <parameter name="TPCEndPlateModulePhi0s" type="FloatVec">
+      0  0.17453292519943298  0.030350516853376176  0.2108457469509264  0.11998920441304516  0.1600004647682326  0.02051011203843622  0.062176216344090166
+    </parameter>
 
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string"> MESSAGE </parameter-->
