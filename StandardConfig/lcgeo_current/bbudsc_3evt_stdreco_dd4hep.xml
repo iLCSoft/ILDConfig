@@ -1224,7 +1224,7 @@
     <parameter name="inputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalBarrelCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalBarrelRelationsSimRec </parameter>
-    <parameter name="calibration_layergroups"> 21 11 </parameter>
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev"> 0.00616054 0.0125136 </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
@@ -1254,7 +1254,7 @@
     <parameter name="inputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalEndcapsCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimRec </parameter>
-    <parameter name="calibration_layergroups"> 21 11 </parameter>
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev"> 0.00616054 0.0125136 </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
@@ -1284,7 +1284,7 @@
     <parameter name="inputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalEndcapRingCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimRec </parameter>
-    <parameter name="calibration_layergroups"> 21 11 </parameter>
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev"> 0.00616054 0.0125136 </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
