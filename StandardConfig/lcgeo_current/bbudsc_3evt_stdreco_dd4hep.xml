@@ -40,7 +40,6 @@
     
 
     <processor name="SITPlanarDigiProcessor"/>
-    <processor name="SITDDSpacePointBuilder" />
     
     <processor name="FTDPixelPlanarDigiProcessor"/>
     <processor name="FTDStripPlanarDigiProcessor"/>
@@ -360,11 +359,11 @@
     <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
     <parameter name="SubDetectorName" type="string"> SIT </parameter>
     <!--whether hits are 1D strip hits-->
-    <parameter name="IsStrip" type="bool">true </parameter>
+    <parameter name="IsStrip" type="bool"> false </parameter>
     <!--resolution in direction of u-->
     <parameter name="ResolutionU" type="float">0.007 </parameter>
     <!--resolution in direction of v-->
-    <parameter name="ResolutionV" type="float">0 </parameter>
+    <parameter name="ResolutionV" type="float">0.007 </parameter>
     <!--Name of the Input SimTrackerHit collection-->
     <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
     <!--Name of TrackerHit SimTrackHit relation collection-->
@@ -658,7 +657,7 @@
     <!--Run MarlinTrk Diagnostics. MarlinTrk must be compiled with MARLINTRK_DIAGNOSTICS_ON defined-->
     <parameter name="RunMarlinTrkDiagnostics" type="bool">false </parameter>
     <!--SIT Hit Collection Name-->
-    <parameter name="SITHitCollectionName" type="string" lcioInType="TrackerHit"> SITSpacePoints </parameter>
+    <parameter name="SITHitCollectionName" type="string" lcioInType="TrackerHit"> SITTrackerHits</parameter>
     <!--Silicon track Collection Name-->
     <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track">SiTracks </parameter>
     <!--Smooth All Mesurement Sites in Fit-->
@@ -718,7 +717,7 @@
     <!--VXD Hit Collections-->
     <parameter name="VTXHitCollectionName" type="StringVec"> VXDTrackerHits </parameter>
     <!--SIT Hit Collections-->
-    <parameter name="SITHitCollectionName" type="StringVec"> SITSpacePoints </parameter>
+    <parameter name="SITHitCollectionName" type="StringVec"> SITTrackerHits </parameter>
     <!--Use MultipleScattering in Fit-->
     <parameter name="MultipleScatteringOn" type="bool">true </parameter>
     <!--Smooth All Measurement Sites in Fit-->
@@ -803,7 +802,7 @@
     <!--VXD Hit Collections-->
     <parameter name="VTXHitCollectionName" type="StringVec"> VXDTrackerHits </parameter>
     <!--SIT Hit Collections-->
-    <parameter name="SITHitCollectionName" type="StringVec"> SITSpacePoints </parameter>
+    <parameter name="SITHitCollectionName" type="StringVec"> SITTrackerHits </parameter>
     <!--Use MultipleScattering in Fit-->
     <parameter name="MultipleScatteringOn" type="bool">true </parameter>
     <!--Smooth All Measurement Sites in Fit-->
@@ -886,7 +885,7 @@
     <parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> CATracks </parameter>
     <!--Name of the SITTrackerHit collection-->
     <!--parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter-->
-    <parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITSpacePoints </parameter>
+    <parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter>
     <!--Name of the VTXTrackerHit collection-->
     <parameter name="digitisedVXDHits" type="string" lcioInType="TrackerHit"> VXDTrackerHits </parameter>
     <!--Name of the MCParticle-Track Relations collection for input tracks-->
@@ -1025,7 +1024,7 @@
     <!--Cut on distance between track and SET hits-->
     <parameter name="SETHitToTrackDistance" type="float">50 </parameter>
     <!--SIT Hit Collection Name-->
-    <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit">SITSpacePoints </parameter>
+    <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter>
     <!--Cut on distance between track and SIT hits-->
     <parameter name="SITHitToTrackDistance" type="float">2 </parameter>
     <!--Si Track Collection-->
@@ -1179,7 +1178,7 @@
     <!--Smooth All Mesurement Sites in Fit-->
     <parameter name="SmoothOn" type="bool"> true </parameter>
     <!--Name of the tracker hit input collections-->
-    <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITSpacePoints FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETSpacePoints  </parameter>
+    <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITTrackerHits FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETSpacePoints  </parameter>
     <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. Have to be in same order as TrackerHitsInputCollections!!!-->
     <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
     <!--Fit the Tracks with MarlinTrk using iterative approach. If 3 consecutive hits fail to be included then the  current fit is written out and a new fit started. Use instead of FitTracksWithMarlinTrk.-->
@@ -2022,24 +2021,6 @@
     <parameter name="OutputParticleCollectionName" value="DistilledPFOs" />
   </processor>
 
-  <!-- new implementation DDSpacePointBuilder using DD4hep/DDRec, no gear needed.  -->
-  <processor name="SITDDSpacePointBuilder" type="DDSpacePointBuilder">
-    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
-    <!--Name of sub detector-->
-    <parameter name="SubDetectorName" type="string"> SIT </parameter>
-    <!--The length of the strips of the subdetector in mm-->
-    <parameter name="StripLength" type="Double"> 9.200000000e+01 </parameter>
-    <!--Name of the SpacePoint SimTrackerHit relation collection-->
-    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SITSpacePointRelations </parameter>
-    <!--SpacePointsCollection-->
-    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SITSpacePoints </parameter>
-    <!--TrackerHitCollection-->  
-    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SITTrackerHits </parameter>
-    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
-    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SITTrackerHitRelations </parameter>
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <parameter name="Verbosity" type="string">MESSAGE </parameter>
-  </processor>
 
   <processor name="SETDDSpacePointBuilder" type="DDSpacePointBuilder">
     <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
