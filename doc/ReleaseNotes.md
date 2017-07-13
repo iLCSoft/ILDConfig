@@ -1,0 +1,721 @@
+
+# v01-19-03
+
+Frank Gaede 2017-07-07 
+  - add old stdreco as bbudsc_3evt_stdreco_dd4hep_stripSIT.xml
+  - use pixel readout for SIT in stdreco ( no SpacePointBuilder)
+  - changed ecal calibration back to 20 thin layers
+
+Frank Gaede 2017-06-29 
+  - update phi-offsets in TPCEndPlateModulePhi0 for DDTPCDigi s
+
+Shaojun Lu 2017-07-03 
+  -  Follow the ECAL driver update, and change the ECAL 'calibration_layergroups' configuration.
+
+Frank Gaede 2017-06-28 
+  - add TPC endplate to DDTPCDigi in stdreco
+
+Frank Gaede 2017-06-24 
+  - use DDTPCDigiProcessor in bbudsc_3evt_stdreco_dd4hep
+
+Frank Gaede 2017-06-12 
+  - use DDCellsAutomatonMV rather than CellsAutomatonMV
+
+Frank Gaede 2017-05-12 
+  - add ddsim_steer_default.py as reference
+  - update ddsim_steer.py based on complete default steering file
+  - fix indentation in README.md
+
+
+# v01-19-02
+
+Shaojun Lu 2017-04-04 
+  - Update ddsim_steer.py
+
+Marko Petric 2017-03-23 
+  - Add CONTRIBUTING.md and PULL_REQUEST_TEMPLATE
+
+Frank Gaede 2017-03-21 
+  - add AUTHORS file
+
+Marko Petric 2017-03-21 
+  - Remove badge for CI
+  - add LICENCE
+
+Shaojun Lu 2017-03-10 
+  -  Added parameter 'MaxBarrelTrackerInnerRDistance' into the Marlin processor 'MyDDMarlinPandora', and over write the defalt value to accept most of the TCP only track hits as charge track for PFO.
+
+Shaojun Lu 2017-03-06 
+  -  Need further investigation about the mini-vector. For the time being we should thus use the ‘DBD’ tracking as default reconstruction.
+
+Shaojun Lu 2017-02-21 
+  -  Fix a typo about the collection name, 'HcalEndcapsRelationsSimRec', which is generated in Marlin processor 'MyHcalEndcapReco', and is needed by Marlin processor 'MyDDMarlinPandora'.
+  -  Comment out 'MyBeamCalClusterReco', need more expert validation work.
+
+Shaojun Lu 2017-02-15 
+  -  Cleanup steering file: Remove unused old 'SpacePointBuilde', use the up-to-date 'DDSpacePointBuilder' for DD4hep reconstruction.
+  -  Apply Marlin processor 'BeamCalClusterReco' as standard reconstruction, and updated the parameters from BeamCal expert.
+
+Shaojun Lu 2017-02-10 
+  -  Updated the standard reconstruction steering file for the Marlin processor 'BgOverlay', removed '...preShower' collections in the CollectionMap, and updated the gamma-gamma background sample file.
+
+
+# v01-19-01
+
+Shaojun Lu 2017-01-19 
+  -  use mini-vecotrs processor CellsAutomatonMV (w/o SIT) and ExtrToSIT for SIT as the default stdreco steering configuration, which provide the better tracking efficiency for the forward region than DBD-style tracking.
+
+Frank Gaede 2017-01-18 
+  - update for v01-19-01
+
+Huong Lan Tran 2017-01-11 
+  - Update calibration constants after fixing bug in Muon cluster association algorithm
+
+Huong Lan Tran 2016-12-22 
+  - Update Pandora steering files to cope with changes in MuonClusterAssociationAlgorithm
+
+# v01-19
+
+Frank Gaede 2016-11-25 
+  -  remove duplicate xml comments
+  -  - use gear_ILD_l1_v01_dd4hep.xml
+  -  - deactivate BgOverlay
+
+Frank Gaede 2016-11-24 
+  -  - remove obsoelte reco config files  - update versions to v01-19
+  -  - remove old, obsolete directories:     - MokkaDBConfig     - LCFI_MokkaBasedNets     - StandardConfig        - clic_cdr, current, scripts  - updated README ( now README.md )
+
+Shaojun Lu 2016-11-21 
+  -  comment out the Ecal 'PreShowerSDAction' to follow the update in the new 'SEcal05' drivers which  are used 'ILD_l1_v01' and 'ILD_s1_v01'.
+
+Shaojun Lu 2016-11-09 
+  -  Updated README.md by replacing 'Simplified_ILD_o1_v05' with 'ILD_o1_v05' in the example.
+
+Shaojun Lu 2016-10-21 
+  -  Apply the new implementation DDSpacePointBuilder for SIT, SET and FTD, which using DD4hep/DDRec, and no gear needed.
+
+
+
+# Older releases
+
+Georgios Voutsinas 2016-09-22 
+  - adding the updated beamcal bg files from Moritz
+  - adding the updated beamcal bg files from Moritz
+
+Shaojun Lu 2016-08-05 
+  -  Fix the wrong execute order. Marlin processor 'BgOverlay' should be executed before Marlin processor 'MySplitCollectionByLayer'.
+
+Georgios Voutsinas 2016-08-05 
+  - updating CA processor parameters
+
+Frank Gaede 2016-08-05 
+  -  - re-activated LCIOOutputProcessor writing REC file
+
+Shaojun Lu 2016-08-03 
+  -  Update 'BgOverlay' processor CollectionMap and InputFileNames. The background file is generated with DD4hep ILD_o1_v05 module in lcgeo, and have the identicial encoding for each collection in the CollectionMap.
+
+Huong Lan Tran 2016-08-03 
+  - Correct input file bbudsc_3evt.slcio
+  - Update dd4hep steering file with new realistic calo digi and new calibration constants with software compensation
+
+Georgios Voutsinas 2016-08-01 
+  - running BgOverlay after the SplitCollectionByLayer
+
+Georgios Voutsinas 2016-07-31 
+  - updating minivector tracking processor paraneters to accomodate SIT mini vectors
+
+Georgios Voutsinas 2016-07-15 
+  - and adding the necessary root files that forgot to add before...
+  - activating - updating likelihood pid for dd4hep based sim...
+
+Georgios Voutsinas 2016-07-14 
+  - add weightFiles for Low Momentum Mu Pi Separation at lcgeo current
+
+Georgios Voutsinas 2016-07-13 
+  - updated calibration constants by Lan
+
+Masakazu Kurata 2016-07-13 
+  - add some parameters for PID
+
+Shaojun Lu 2016-07-04 
+  -  Fix the collection names for sub-detecor Yoke.
+  -  Fix the collection names, case sensitive issue.
+
+Andre Sailer 2016-06-30 
+  - make the steering file valid XML
+
+Georgios Voutsinas 2016-06-29 
+  - change back the BackgroundMEthod in BeamCalClusterReco from parametrised to gaussian in dd4hep steering file, cause it causes a runtime error
+
+Georgios Voutsinas 2016-06-28 
+  - updating standard config file wrt to latest modifications on sw compensation from Lan
+
+Georgios Voutsinas 2016-06-22 
+  - updating BeamCalClusterReco parameters & some provisional changes
+
+Georgios Voutsinas 2016-06-10 
+  - consistency between xml files for mokka & dd4hep based sim, concerning tracking and HLR tools
+  - adding HLR tools at dd4hep based std reconstruction steering file
+
+Shaojun Lu 2016-05-27 
+  -  HCALThreshold has been changed as 0.3MIP is 0.0001462GeV.
+  -  Updated calibration constants for the ILD_o1_v05 in DD4hep/lcgeo, which obtained with 'LCPandoraAnalysis' from 10GeV Gamma, 10 GeV Muon and 20 GeV Kaon0L. Note: 'G4_W' was used as absorber material in SiWEcal.
+
+Masakazu Kurata 2016-05-25 
+  - add PID histgram templetes
+
+Shaojun Lu 2016-05-24 
+  -  Fix the Muon collection names. They come from the detectors now in  DD4hep/lcgeo: YokeBarrelCollection YokeEndcapsCollection.
+
+Frank Gaede 2016-04-08 
+  -  - add symbolic link to README.md
+  -  - replaced README with README.md
+
+Georgios Voutsinas 2016-02-24 
+  - updating minivector steering file
+
+Frank Gaede 2016-02-20 
+  -  - added steering sections for DDCaloDigi and DDMarlinPandora    copied from the latest version in current/bbudsc_3evt_stdreco.xml   -> not used for now - needs checking ...
+
+Frank Gaede 2016-02-18 
+  -  - added BeamCalReco bg file
+  -  - renamed bbudsc_3evt_ddsim.steer to ddsim_steer.py
+  -  - moved the commented out file on pnfs outside of <parameter/> tag
+
+Steven Green 2016-02-18 
+  - Correcting typo in previous update to MarlinPandora and to BeamCalClusterReco steering.
+  - Updated the settings in the digitsation and MarlinPandora processors specified in bbudsc_3evt_stdreco.xml.
+  -  - updated README file  - added example for creating and analyzing an n-tuple
+  -  - enabled BeamCalClusterReco in bbudsc_3evt_stdreco_dd4hep.xml  - removed onsolete ddsim.py  - added example for using particle gun to bbudsc_3evt_ddsim.steer
+  -  - switched to Gaussian from Parameterised fro BeamCalReco
+
+Jenny List 2016-02-16 
+  - updated bbudsc_3evt_stdreco.xml to new BeamCalReco, added ClusterProperties and neutral PFO convariances for both PandoraPFOs and BeamCalPFOs, added pi0 finding and DistilledPFOs. No detailed testing yet, and many warnings from root via BeamReco
+
+Frank Gaede 2016-02-16 
+  -  - updated Pandora steering files also for the    old reconstruction ( new photon reco from Bono)
+
+Shaojun Lu 2016-02-15 
+  -  Update README for the current changes in ./StandardConfig/lcgeo_current folder.
+
+Georgios Voutsinas 2016-02-05 
+  - importing os so we can add the particle table
+  - adding rad to the system of units
+
+Shaojun Lu 2016-02-04 
+  -  Update the PandoraPFA steering files according to the current development of PhotonReconstructionAlgorithm in PandoraPFA. We copy the new steering files from 'https://github.com/PandoraPFA/MarlinPandora/tree/master/scripts' with 'git clone https://github.com/PandoraPFA/MarlinPandora.git'.
+
+Frank Gaede 2016-02-04 
+  -  - added crossing angle and particle table to bbudsc_3evt_ddsim.steer  - added RemoveShortTracks in SubsetProcessor to bbudsc_3evt_stdreco_dd4hep.xml
+
+Frank Gaede 2016-01-22 
+  -  - added range cut to physics list  - changed to using physics.list  - changed to Geant4TrackerWeightedAction    without using weights as default for trackers
+
+Constantino Calancha 2016-01-20 
+  - Fixed syntactic errors in xml files.
+
+Jenny List 2016-01-19 
+  - enabled AddClusterProperties, changed overlay expectation value to 1.7 (500 GeV DBD)
+
+Shaojun Lu 2016-01-15 
+  -  Fix the calorimeters collection name order in stringVec for input and output.
+  -  Fix forward calorimeter collection name, updated 'LHcalCollection' to 'LHCalCollection'.
+
+Frank Gaede 2016-01-14 
+  -  - force Si hits onto the tracking surface for all Si    trackers in DDPlanarDigi
+  -  - updated tracker action for ddsim  - added StatusMonitor
+
+Shaojun Lu 2016-01-08 
+  -  Update few DDCaloDigi parameters value according to the steering 'ILD_o1_v05_SiW_5x5_Garlic_XXXX.xml'
+  -  Update parameter 'CalibrECAL' - the Ecal calibration constant values in DDCaloDigi.
+  -  Added 'DDCaloDigi' Marlin processor into 'bbudsc_3evt_stdreco_dd4hep.xml' standard reconstruction steering file. Try to replace 'NewLDCCaloDigi' Marlin processor, and to use 'DDCaloDigi' for standard reconstruction within DD4hep/lcgeo framework.
+
+Frank Gaede 2016-01-07 
+  -  - fixed skipEvents
+  -  - added debug section for writing events and geometry to PandoraSettingsDefault  - added skipEvents to ddsim steering file
+
+Frank Gaede 2016-01-04 
+  -  - updated README to use ddsim  - fixed layer number for Ecal pre-shower layer    in bbudsc_3evt_ddsim.steer  - fixed ecal layer number for calo digi in  bbudsc_3evt_stdreco_dd4hep.xml
+
+Masakazu Kurata 2015-12-18 
+  - Add a parameter of Particle ID
+
+Masakazu Kurata 2015-12-17 
+  - Add parameters of LikelihoodPIDProcessor
+
+Mikael Berggren 2015-12-13 
+  - Added AddClusterProperties stanza. The execute one is out-commented at the moment, awaiting full tests.
+
+Shaojun Lu 2015-12-11 
+  -  Update the 'bbudsc_3evt_stdreco.xml' standard reconstrction steering file according to the revision 5164 updated by marshall, 'PandoraSettingsDefaultNewPhoton.xml' does not exist after '5164'. and Marshall has included the new photon fragment merging algorithms from B. Xu in the 'PandoraSettingsDefault.xml'.
+
+Frank Gaede 2015-11-13 
+  -  - updated steering file for ddsim
+
+Frank Gaede 2015-11-12 
+  -  - steering file for running ddsim
+
+Georgios Voutsinas 2015-11-01 
+  - Updating steering file that uses FPCCD tracking in order to be compatible with latest sw
+
+Frank Gaede 2015-09-29 
+  -  - enable CaloPreShowerSDAction for Ecals  - enable debug geometry dump from pandora  - fixed some collection names
+
+Frank Gaede 2015-09-23 
+  -  - copy updated PandoraSettingsDefault.xml from ./current  - update bbudsc_3evt_stdreco_dd4hep.xml to new calo surfaces  - include new collection names in bbudsc_3evt_viewer.xml
+
+John Marshall 2015-09-10 
+  - Remove placeholder PandoraSettings file containing the new photon fragment merging algorithms.
+  - PandoraSettings update - include new photon fragment merging algorithms from B. Xu.
+
+Frank Gaede 2015-09-09 
+  -  - updated to latest DDMarlinPandora     - runs w/o crashing     - no reasonable results however ...  - use DDPlanarDigi for FTD and SET
+
+Shaojun Lu 2015-09-03 
+  -  Added one 'MyDDPandoraPFANewProcessor' configuration.
+
+Frank Gaede 2015-07-31 
+  -  - updated parameters for RecoMCTruthlinker
+
+Frank Gaede 2015-07-30 
+  -  - replaced TrackerCombineAction w/ TrackerAction
+
+Frank Gaede 2015-07-25 
+  -   - set default SD actions to Geant4TrackerCombineAction' and 'Geant4ScintillatorCalorimeterAction   - fixed FCalDigi parameter names
+
+Frank Gaede 2015-07-24 
+  -  - fixed capitalization of FcalThreshold parameter
+
+Frank Gaede 2015-07-20 
+  -  - renamed SimpleL(H)CalDigi to SimpleFCalDigi
+  -   - use DDMarlinPandora in bbudsc_3evt_stdreco_dd4hep.xml   - updated viewer
+
+Jenny List 2015-07-20 
+  - adapted stdreco to new FCalDigi and removed BcalFix from redst
+
+Frank Gaede 2015-07-15 
+  -  - added bbudsc_3evt_stdreco_dd4hep ( incomplete )
+
+Jenny List 2015-07-14 
+  - stdreco now using SimpleLHCalDigi also for BeamCal. For LumiCal, using the new digitiser (thus writing a relation collection) crashes RecoMCTruthLink, thus LumiCal for now uses SimpleLCalDigi as before
+
+Junping Tian 2015-07-14 
+  - a list of reference post dst processors for analysis
+  - adding config files for garlic option and fixed redst.xml to have MCParticlesSkimmedNew on the DST
+  - stdreco.xml now with full RecoMCTruthLink
+
+Hale Sert 2015-07-13 
+  - updated reco steering files
+  - reco steering file is updated to use PID mu-pi weights
+  - weightfiles fow low mu-pi separation
+
+Jenny List 2015-07-10 
+  - added a redst.xml - still needs tracks to be updatable
+  - now also Garlic read-in option works for Pandora
+  - prototype of postDST.xml. For now just taufinder, rest to be added
+
+Taikan Suehara 2015-07-09 
+  - New steering in v3 for new jet clustering
+
+Jenny List 2015-07-09 
+  - now also with covariance matrix for charged PFOs
+  - first version of new standard steering file with SiTracking options, Pandora options, Taufinding, ClusterShapes etc pp
+
+Georgios Voutsinas 2015-07-09 
+  - xml file for pair bkg overlay added
+  - I forgot to switch off by default the additional VXD digitisers in the minivector steering file
+  - adding different VXD digitiser options, corresponding to different CMOS VXD models, to minivector tracking steering file
+
+Georgios Voutsinas 2015-07-08 
+  - updating mini-vector & FPCCD tracking steering files according to developments made in HLR week
+
+Frank Gaede 2015-07-07 
+  -   - add pandora steering file for new photon finder algorithm     from Boruo Xu (Bono)   - use this as new default in bbudsc_3evt_stdreco.xml
+
+Frank Gaede 2015-07-06 
+  -  - updated Pandora parameters ( absorber and int. lengths) from S.Green/J.Marshall  - added (commented out ) PFOAnalyis processor for JER studies     -> uncomment if needed
+
+Frank Gaede 2015-06-25 
+  -  - added modifued ddsim.py for 3 evt example
+
+Frank Gaede 2015-06-24 
+  -  - remove thislcgeo.sh from instructions    -> now included in init_ilcsoft.sh
+
+Masakazu Kurata 2015-06-24 
+  - change parameter names for shower profile
+
+Masakazu Kurata 2015-06-19 
+  - added new processors for dedx, cluster shower profile, and particle identification
+
+Frank Gaede 2015-06-15 
+  -  - updated Readme and steering file for    reconstructing DD4hep based simulation with    the 'old' standard reconstruction
+
+Taikan Suehara 2015-06-15 
+  - Description for v3 functions added.
+
+Frank Gaede 2015-06-09 
+  -  - added copy of standrad config files - to be modified   for dd4hep ...
+
+Georgios Voutsinas 2015-06-04 
+  - updating README file with comments for the alternative reconstruction steering files
+
+Georgios Voutsinas 2015-06-03 
+  - Adding Marlin steering file which runs the FPCCD tracking algorithm Experimental - not yet fully validated
+  - adding a reconstruction file which uses a mini-vector algorithm, based on cellular automaton tools, for pattern recognition at the VXD-SIT still experimental - not fully validated According to the examined VXD design, the user should set the proper time resolution for pair bkg overlay and spatial resolution at the VXDPlanarDigiProcessor
+
+Taikan Suehara 2015-04-08 
+  - training files v03/vtxprob files v2 added
+
+John Marshall 2015-02-16 
+  - Restore PandoraSettingsBasic.xml to repository. Add to list of cheated neutral hadrons in PandoraSettingsPerfectPhotonNeutronK0L.xml Update readme.
+
+Georgios Voutsinas 2015-01-23 
+  - Updating pandora xml files to run std reco
+
+John Marshall 2014-07-30 
+  - Copy across latest Pandora settings to prevent divergence (minor modifications only).
+
+Christoph Rosemann 2013-10-24 
+  - updated some convenience stuff for initialization
+
+Christoph Rosemann 2013-08-06 
+  - add line for new model; allows simple copy&paste for starting
+
+Jan Engels 2012-12-18 
+  - added -U option (needed for /Mokka/init/globalModelParameter FieldPropagator_LargestAcceptableStep 10)
+
+Gerald Grenier 2012-12-10 
+  - add ILD_o2_v05 gearfile
+  - add ILD_o2_v05 reconstruction steering file
+
+Jan Engels 2012-11-23 
+  - added fix by A. Sailer (FieldPropagator_LargestAcceptableStep)
+
+Jan Engels 2012-11-07 
+  - changed path of BgOverlay file for making example runnable by everyone
+
+Tomohiko Tanabe 2012-10-25 
+  - fix typo..
+  - fix steering files for v02 add 1 TeV weight files
+
+Tomohiko Tanabe 2012-10-17 
+  - training files v02 added
+  - added more explanation
+  - added more weight files, packed as tarball to save space
+
+Tomohiko Tanabe 2012-10-15 
+  - remove duplicated entries (does not affect performance)
+  - update stdreco.xml to be consistent with LCFIPlus training weights
+  - LCFIPlusConfig first release
+
+Steven Aplin 2012-10-11 
+  - restore RecoMCTruthLink
+
+Jan Engels 2012-10-11 
+  - fixed for storing DSTs outside of tape (files are too small)
+
+Jan Engels 2012-10-08 
+  - added bg map for 500 GeV (A. Rosca)
+
+Frank Gaede 2012-10-05 
+  -    - activate BgOverlay (now default !)
+
+Frank Gaede 2012-10-01 
+  -  - updated bg map from A.Rosca for 1 TeV    and new/updated map for 500 GeV
+
+Robin Glattauer 2012-09-30 
+  - parameters for ForwardTracking
+
+Frank Gaede 2012-09-27 
+  -    - updated LCFIPlus Vertex finder steering section      as suggested by T.Suehara: merged parameters from      LCFIPlus/steer/vertex.xml
+
+Jan Engels 2012-09-27 
+  - removed hardcoded timeout values (set as the default values from corresponding scripts)
+
+Robin Glattauer 2012-09-26 
+  - ForwardTracking: Set chi2prob cut to 0.
+
+Jan Engels 2012-09-26 
+  - fixed bug with whitespaces
+
+Jan Engels 2012-09-25 
+  - added BG_OVERLAY_FILE optional command line parameter
+  - added optional BG_OVERLAY_FILE
+
+Frank Gaede 2012-09-25 
+  -    - set SuppressCheck false again ---- v01-15-02-p00 ---
+
+John Marshall 2012-09-25 
+  - Reduce MarlinPandora ECALToHAD and HCALToHAD calibration constants by factor of 0.96. This represents a calibration optimised for jet energy resolution, rather than for the reconstruction of single hadrons.
+
+Frank Gaede 2012-09-21 
+  -    - changed the point resolution for the FTD      to res_pixel = 0.003 and res_strip = 0.007
+  -    - include SET hits in tracking again    - turn off ForceTPCSegmentsMerging
+
+Frank Gaede 2012-09-20 
+  -   - turned ForceTPCSegmentsMerging on again
+  -   - remove SET hits from FullLDCTracking
+  -   - turned ForceTPCSegmentsMerging off
+
+Frank Gaede 2012-09-19 
+  -  - increased SETHitToTrackDistance to 50 mm    in order to take parallax into account    when assignint SET hits to tracks
+
+Frank Gaede 2012-09-14 
+  -  - do not run check() method (workaround for BCal bug)
+
+Jan Engels 2012-09-13 
+  - switched to use new beamcal background file from A.Rosca: bg_aver.sv01-14-p00.mILD_o1_v05.E1000-B1b_ws.PBeamstr-pairs.I210000.root
+
+Frank Gaede 2012-09-13 
+  -   - switched to use new beamcal background file from A.Rosca:     bg_aver.sv01-14-p00.mILD_o1_v05.E1000-B1b_ws.PBeamstr-pairs.I210000.root
+
+Jan Engels 2012-09-12 
+  - added missing setting of RandomSeed
+
+Frank Gaede 2012-09-11 
+  -    - added section for BGOverlay to overlay      gamma gamma -> hadrons background (4.1 evts/BX)      currently commented out
+
+Steven Aplin 2012-09-07 
+  - Removed old depreacted digitizers. Added SET digi and spacepoint builder. Set new tracking as default.
+  - renamed SimplePlanarTestDigiProcessor PlanarDigiProcessor
+
+Tomohiko Tanabe 2012-09-07 
+  - Added BuildUpVertex_V0 as a collection to keep for standard DST, needed for LCFIPlus
+
+Frank Gaede 2012-09-06 
+  -  - updated resolution parameters for the VXD according to    the table given in the DBD draft:      ResolutionU:  0.0028 0.006 0.004 0.004 0.004 0.004      ResolutionV:  0.0028 0.006 0.004 0.004 0.004 0.004
+
+Jan Engels 2012-09-05 
+  - fixed polarisation values
+
+Steven Aplin 2012-08-30 
+  - changed MCPRelColl names in FullLDCTracking
+
+Steven Aplin 2012-08-28 
+  - corrected FTD TrackerHit collection name parameter. It would have had no effect before as the default would have always been used.
+
+Frank Gaede 2012-08-20 
+  - - added BCalParticles in CEDViewer
+
+Steven Aplin 2012-08-17 
+  - Added SimTrackerHitCollections to MyRecoMCTruthLinker
+  - Do not assign left over TPC hits. Clupatra is good enough.
+
+Jan Engels 2012-08-15 
+  - added PandoraLikelihoodData9EBin.xml and renamed PandoraSettings.xml to PandoraSettingsDefault.xml
+  - deactivated TruthTracker
+  - updated ilcsoft versin
+  - updated mokka version
+  - increased timeout values
+
+Steven Aplin 2012-08-02 
+  - corrected SITSpacePointRelations in RecoMCTruthLinker
+
+John Marshall 2012-07-04 
+  - Update reconstruction steering file to use pandora photon clustering algorithm. Add pandora steering file README.
+
+Jan Engels 2012-07-02 
+  - copy stdout and stderr to tarball
+
+John Marshall 2012-06-28 
+  - Remove MuonCoilCorrection plugin energy correction function.
+
+Jan Engels 2012-06-28 
+  - fixed bug initializing MokkaDBConfig
+  - added info message
+
+Jan Engels 2012-06-27 
+  - regenerate steering file when running job.rerun
+  - copy mokka.steer.in to log tarball
+  - copy particle.tbl to log tarball
+  - added -o ignore switch to grid-dl-file.py
+  - changed to download ilcsoft binary tarballs from SE
+
+John Marshall 2012-06-26 
+  - By default, choose to copy stored fitter track states to pandora tracks, rather than calculate the track states manually.
+
+Jan Engels 2012-06-25 
+  - commented out primaryVertexSpreadZ
+
+Steven Aplin 2012-06-25 
+  - commented out primaryVertexSpreadZ
+
+Steven Aplin 2012-06-21 
+  - switched back to truth tracker for now
+  - updated parameters for SiliconTracking_MarlinTrk and FullLDCTracking_MarlinTrk. Switch to using these instead of TruthTracker for testing
+
+Frank Gaede 2012-06-20 
+  -  - updated to ILD_o1_v05 detector model
+
+Jan Engels 2012-06-20 
+  - added PandoraSettingsMuon.xml
+
+Jan Engels 2012-06-19 
+  - synchronized mokka steering file
+
+Frank Gaede 2012-06-19 
+  -   - added BCALParticles to DST
+  -  - added sqrt(2) to spread of zvertex
+  -  - added  /Mokka/init/primaryVertexSpreadZ 0.300 mm to Mokka steering file
+  -   - keep BuildUpVertex_RP and PrimaryVertex_RP collections on DST
+  -  - updated release notes with changes in bbudsc_stdreco.xml
+  -  - fixed name of UseOldTrackStateCalculation parameter for MarlinPandora
+  -  - turn on UseIterativeFitting for TruthTracker
+  -  - merged in new calibration constants form J.Marshall (branch ucam_2012)  - added new pandora settings: PandoraSettingsMuon.xml
+  - updated release notes
+  - added new mokka dump: mokka-08-00-dbdump.sql.tgz (2012-06-19 - 16:38:53) - last commit was broken
+  - added new mokka dump: mokka-08-00-dbdump.sql.tgz (2012-06-19 - 16:28:17)
+  -  - fixed syntax for <if condition/> for switching between tracking algorithms
+
+Steven Aplin 2012-06-19 
+  - changed model naming from ILD_OX_v0X to ILD_oX_v05
+  -  - use TruthTracker instead of SiliconTracking/FullLDCTracking for now
+  -  - switched Pandora to not use TracksTate @ Calorimeter
+  -  - enabled KinkFinder  - removed local Verbosity parameters
+  - added parameter /Mokka/init/mcRunNumber
+  - added \*.py files into log tarball
+  - added ./ for calling mokka-steer-gen.py
+  - added mokka-steer-gen.py
+  - added mokka parameter /Mokka/init/mcRunNumber
+
+Jan Engels 2012-06-15 
+  -  ----- v01-13-07-p02 -----
+  - updated GearOutput.xml for mokka-07-07-p11
+  - added new mokka dump: mokka-07-07-p11-dbdump.sql.tgz (2012-06-15 - 11:51:54)
+
+Jan Engels 2012-06-12 
+  -  ----- tagged v01-13-07-p01 -----
+  - updated gear file for mokka-07-07-p10
+  - added new mokka dump: mokka-07-07-p10-dbdump.sql.tgz (2012-06-12 - 16:32:57)
+
+Jan Engels 2012-06-09 
+  - added parameter /Mokka/init/lcioDetailedTRKHitMode SETCollection
+
+Jan Engels 2012-06-08 
+  - updated ilcsoft version and detector model
+  - --- pre-tagged v01-13-07-p00 ---
+  - updated GearOutput.xml to ILD_O1_v04
+  - added new mokka dump: mokka-07-07-p09-dbdump.sql.tgz (2012-06-08 - 20:41:54)
+
+Jan Engels 2012-06-04 
+  - removed -a switch from copy command
+
+Jan Engels 2012-05-24 
+  - added GearOutput.xml
+  - re-added GearOutput.xml (symlink to current)
+  - removed GearOutput.xml
+  - fixed unpacking of ilcsoft tarball
+
+Robin Glattauer 2012-05-24 
+  - ForwardTracking: updated to the latest steering
+
+Jan Engels 2012-05-16 
+  -  ------ v01-13-06 ---------
+  - updated mokka dump: mokka-07-07-p08-dbdump.sql.tgz (2012-05-16 - 18:33:52)
+  - updated ILD_O1_v02 to ILD_O1_v03
+
+Frank Gaede 2012-05-16 
+  -  - updated Clupatra steering parameters to v00-06
+
+Jan Engels 2012-05-11 
+  - fixed: call mysql-cleanup before anything else to make sure mysql socket is always cleaned up
+
+Jan Engels 2012-05-10 
+  - updated mokka dump: mokka-07-07-p08-dbdump.sql.tgz (2012-05-10 - 14:40:29)
+  - added resource sharing
+
+Jan Engels 2012-05-08 
+  - added new mokka dump: mokka-07-07-p08-dbdump.sql.tgz (2012-05-08 - 14:35:40)
+
+Robin Glattauer 2012-05-07 
+  - changed steering parameters for the Cellular Automaton in ForwardTracking
+
+Jan Engels 2012-05-02 
+  - fixed error codes
+  - fixed ILCSOFT path in job.sh
+  - added MokkaDBConfig init.sh script
+  - fixed number of arguments in job.sh
+
+Jan Engels 2012-04-25 
+  - added scripts to run sim/rec jobs on the grid
+  - moved particle.tbl from MokkaDBConfig to StandardConfig/current
+
+Steven Aplin 2012-04-24 
+  - updated TruthTracker parameters
+
+Robin Glattauer 2012-04-24 
+  - removed the "works only for single particles, so far" comment for the TruthTracker, as it is outdated
+  - modified some steering parameters of ForwardTracking
+
+Robin Glattauer 2012-04-19 
+  - Added TrackSubsetProcessor to the standard steer. It combines the tracks of SiliconTracking_MarlinTrk and ForwardTracking to one collection of tracks. This collections is then passed to FullLDCTracking_MarlinTrk
+
+Robin Glattauer 2012-04-18 
+  - corrected wrong comment in ForwardTracking steering
+
+Frank Gaede 2012-04-16 
+  -  - release notes fro version v01-13-05 -------
+
+Robin Glattauer 2012-04-11 
+  - reactivated ForwardTracking and changed steering parameter BestSubsetFinder to SubsetHopfieldNN
+
+Jan Engels 2012-04-02 
+  - removed duplicate BatchMode parameter
+
+Jan Engels 2012-03-29 
+  - updated README
+  - added new mokka dump: mokka-07-07-p07-dbdump.sql.tgz (2012-03-29 - 17:56:36)
+
+Frank Gaede 2012-03-29 
+  -  - updated CLupatra steering section
+
+Steven Aplin 2012-03-29 
+  - updated planar digitiser and RecoMCTruthLinker for silicon strip hits
+  -  - activated lcioDetailedTRKHitMode for all tracking detectors
+
+Robin Glattauer 2012-03-29 
+  - Slight corrections for the steering of ForwardTracking
+
+Robin Glattauer 2012-03-16 
+  - Added steering param to ForwardTracking: TakeBestVersionOfTrack
+
+Robin Glattauer 2012-03-14 
+  - Added steering parameter to ForwardTracking. It steers which method is used to find the best subset of tracks
+
+Robin Glattauer 2012-03-13 
+  - updated ForwardTracking parameter for hit collections
+
+Steven Aplin 2012-03-02 
+  - updated mokka-dbdump to mokka-07-07-p06
+  - updated FTDCollection name to FTD_PIXELCollection and FTD_STRIPCollection
+
+Frank Gaede 2012-03-02 
+  -  --- updated release notes for v00-02
+  -  - changed CutOnTPCHits from 35 to 10 for FullLDCTracking
+  -  - added track-truth relations to RecoMCTruthLinker  - turned off drawing of helices
+  -  - added optional stdhep test file with 1TeV tth events
+  - updated tracking parameters
+
+Jan Engels 2012-02-16 
+  - changed mokka-wrapper to exit with the status returned by Mokka
+
+Robin Glattauer 2012-02-16 
+  - new TruthTracker steering parameters
+
+Jan Engels 2012-02-01 
+  - updated simple planar digitiser parameters for VXD to use CellID0 as written in the simhits (S. Aplin) * (r3055 merged from old location of Standardconfig)
+
+Jan Engels 2012-01-26 
+  - added utility to compare mokka models from the DB
+
+Frank Gaede 2012-01-26 
+  -  - added curren Mokka models
+
+Frank Gaede 2012-01-25 
+  -  - initial version
+  -   - fixed LCIO types that need should be dropped form DST     - keep all ReconstructedParticles, and       remove all TrackerHit(Plane/ZCylinder) and LCGenericObject
+
+Jan Engels 2012-01-25 
+  - added MokkaDBConfig and LCFI_MokkaBasedNets
+  - added StandardConfig
+  - created new package ILDConfig
