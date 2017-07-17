@@ -1006,7 +1006,7 @@
     <!--LDC track collection name-->
     <parameter name="LDCTrackCollection" type="string" lcioOutType="Track">MarlinTrkTracks </parameter>
     <!--Maximum Chi-squared value allowed when assigning a hit to a track-->
-    <parameter name="MaxChi2PerHit" type="double">100 </parameter>
+    <parameter name="MaxChi2PerHit" type="double"> 200 </parameter>
     <!--Use MultipleScattering in Fit-->
     <parameter name="MultipleScatteringOn" type="bool"> true </parameter>
     <!--number of hits for outward extrapolation-->
