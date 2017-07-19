@@ -1215,7 +1215,6 @@
     <parameter name="timingCut"> 1  </parameter>
     <parameter name="calibration_mip"> 0.0001475  </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
-    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG0 </parameter>
   </processor>
   <!-- reconstruction -->
   <processor name="MyEcalBarrelReco" type="RealisticCaloRecoSilicon">
