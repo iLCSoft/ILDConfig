@@ -1180,7 +1180,7 @@
     <!--Name of the tracker hit input collections-->
     <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITTrackerHits FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETSpacePoints  </parameter>
     <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. Have to be in same order as TrackerHitsInputCollections!!!-->
-    <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITSpacePointRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
+    <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITTrackerHitRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
     <!--Fit the Tracks with MarlinTrk using iterative approach. If 3 consecutive hits fail to be included then the  current fit is written out and a new fit started. Use instead of FitTracksWithMarlinTrk.-->
     <parameter name="UseIterativeFitting" type="bool">  true </parameter>
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
@@ -1670,7 +1670,7 @@
     <!--  Connections from tracker hits (connected to tracks) to sim tracker hits (connects to MC particle) -->
     <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">
       VXDTrackerHitRelations 
-      SITSpacePointRelations 
+      SITTrackerHitRelations
       FTDPixelTrackerHitRelations 
       FTDSpacePointRelations 
       TPCTrackerHitRelations 
