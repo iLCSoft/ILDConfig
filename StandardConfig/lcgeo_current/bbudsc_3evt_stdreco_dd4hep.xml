@@ -1503,7 +1503,7 @@
     <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
     <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
     <!-- Calibration constants -->
-    <parameter name="ECalToMipCalibration" type="float">147.58</parameter>
+    <parameter name="ECalToMipCalibration" type="float">156.88</parameter>
     <parameter name="HCalToMipCalibration" type="float">40.4858</parameter>
     <parameter name="MuonToMipCalibration" type="float">10.3093</parameter>
     <parameter name="ECalMipThreshold" type="float">0.5</parameter>
