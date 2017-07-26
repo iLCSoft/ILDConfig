@@ -1,3 +1,18 @@
+# v01-19-04
+
+* 2017-07-26 Frank Gaede ([PR#10](https://github.com/iLCSoft/ILDConfig/pull/10))
+  - add stdreco file for ILD_ls5_v02 models w/ hybrid ecal
+        - merge collections from even and odd layers for Ecal barrel and endcap
+           before digitization
+         - requires LCTuple > v01-08  ( for correct collection parameters )
+
+* 2017-07-21 Ete Remi ([PR#9](https://github.com/iLCSoft/ILDConfig/pull/9))
+  - Updated Ecal calibration constants to reflect the ecal sensitive layer thickness change (+5%) in this ILD model
+  - Changed mip calibration constant in digitizer
+  - Changed ecal energy factors in digitizers
+  - Changed ECal mip scale in DDMarlinPandora accordingly
+  - Changed ECalToEmGeV in DDMarlinPandora to 1 to reflect what is done in the calibration procedure
+
 
 Frank Gaede 2017-07-19
   - add gear files for ILD_l/s_4/5_v02 models
