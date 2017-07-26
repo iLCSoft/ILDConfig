@@ -54,7 +54,7 @@ Shaojun Lu 2017-03-10
   -  Added parameter 'MaxBarrelTrackerInnerRDistance' into the Marlin processor 'MyDDMarlinPandora', and over write the defalt value to accept most of the TCP only track hits as charge track for PFO.
 
 Shaojun Lu 2017-03-06 
-  -  Need further investigation about the mini-vector. For the time being we should thus use the ‘DBD’ tracking as default reconstruction.
+  -  Need further investigation about the mini-vector. For the time being we should thus use the 'DBD' tracking as default reconstruction.
 
 Shaojun Lu 2017-02-21 
   -  Fix a typo about the collection name, 'HcalEndcapsRelationsSimRec', which is generated in Marlin processor 'MyHcalEndcapReco', and is needed by Marlin processor 'MyDDMarlinPandora'.
