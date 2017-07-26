@@ -1,4 +1,12 @@
 
+Frank Gaede 2017-07-19
+  - add gear files for ILD_l/s_4/5_v02 models
+  - supress DEBUG printout from EcalBarrelDigi in stdreco
+  - replace SITSpacePointRelations w/ SITTrackerHitRelations
+
+Frank Gaede 2017-07-17
+  - increase MaxChi2PerHit in FullLDCTracking for SiTPC-merging
+
 # v01-19-03
 
 Frank Gaede 2017-07-07 
