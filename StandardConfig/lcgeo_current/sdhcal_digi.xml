@@ -1,0 +1,131 @@
+<!--
+      Example steering file to run sdhcal digitizer
+-->
+
+
+ <marlin>
+   
+   <execute>
+     <processor name="MyAIDAProcessor"/>
+     <processor name="InitDD4hep"/>
+     <processor name="MySimDigital"/>  
+     <processor name="MyLCIOOutputProcessor"/>
+   </execute>
+
+   <global>
+      <parameter name="LCIOInputFiles">
+         particles.slcio
+      </parameter>
+      <parameter name="GearXMLFile" value="gear_ILD_l2_v01_dd4hep.xml"/>
+      <parameter name="MaxRecordNumber" value="0"/>
+      <parameter name="SkipNEvents" value="0"/>
+      <parameter name="SupressCheck" value="false"/>
+      <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+      <parameter name="RandomSeed" value="1234567890" />
+   </global>
+
+   <processor name="InitDD4hep" type="InitializeDD4hep">
+     <!--InitializeDD4hep reads a compact xml file and initializes the DD4hep::LCDD object-->
+     <!--Name of the DD4hep compact xml file to load-->
+     <parameter name="DD4hepXMLFile" type="string"> $lcgeo_DIR/ILD/ILD_l2_v01/ILD_l2_v01.xml </parameter>
+   </processor>
+
+ <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
+  <!--   standard output: full reconstruction keep all collections -->
+  <parameter name="LCIOOutputFile" type="string" >
+     particles_digi.slcio 
+  </parameter>
+  <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+  <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
+ </processor>
+
+<!--################MySimDigital################################ -->
+ <processor name="MySimDigital" type="SimDigital">
+ <!--the transfer Between Energy and Induced Charge for SDHCAL-->
+ <!--HCAL parameters-->
+ <!-- Collections -->
+  <!--Sim Calorimeter Hit Collections-->
+  <parameter name="HCALCollections" type="StringVec" lcioInType="SimCalorimeterHit"> HcalBarrelRegCollection HcalEndcapsCollection HcalEndcapRingCollection </parameter>
+  <!--HCAL Collection of real Hits-->
+  <parameter name="HCALOutputCollection0" type="string" lcioOutType="CalorimeterHit">HCALBarrel </parameter>
+  <!--HCAL Collection of real Hits-->
+  <parameter name="HCALOutputCollection1" type="string" lcioOutType="CalorimeterHit">HCALEndcap </parameter>
+  <!--HCAL Collection of real Hits-->
+  <parameter name="HCALOutputCollection2" type="string" lcioOutType="CalorimeterHit">HCALOther </parameter>
+
+ <!--Induced charge simulation parameters-->
+  <!--Parameter for the Polya distribution used to simulate the induced charge distribution : mean of the distribution-->
+  <parameter name="PolyaAverageCharge" type="double">4.55 </parameter>
+  <!--Parameter for the Polya distribution used to simulate the induced charge distribution : related to the distribution width -->
+  <parameter name="PolyaWidthParameter" type="double">1.0 </parameter>
+
+ <!--Induced charge dispatching parameters-->
+ <!--Induced charge dispatching : which steps to use parameters-->
+  <!--Maximum distance (mm) between the Geant4 step position and the cell center, in the RPC width direction, to keep a step for digitization. 
+Default value=0.0005-->
+  <parameter name="StepCellCenterMaxDistanceLayerDirection" type="float">0.0005 </parameter>
+  <!--if true, ensure that each hit will keep at least one step for digitisation independatly of filtering conditions (StepCellCenterMaxDistanc
+eLayerDirection)-->
+  <parameter name="KeepAtLeastOneStep" type="bool">true </parameter>
+  <!--Minimum distance (mm) between 2 Geant4 steps, in the RPC plane, to keep the 2 steps. Default value=0.5-->
+  <parameter name="StepsMinDistanceRPCplaneDirection" type="float">1.2 </parameter>
+
+ <!--Induced charge dispatching : dispatching mode-->
+  <!--Define the charge splitter method. Possible option : Uniform, Function, Erf-->
+  <parameter name="ChargeSplitterOption" type="string"> Erf </parameter>
+  <!--If true, use function to split the charge between pads. If false split uniformely-->
+  <!--parameter name="UseFunctionForChargeSplitting" type="bool">true </parameter-->
+
+ <!--Induced charge dispatching : dispatching uniformely parameters-->
+  <!--Distance (in mm) from the border of the cell that implies hit on neighbouring cell for 'Uniform' charge splitter : used if UseFunctionFor
+ChargeSplitting is false-->
+  <parameter name="CellEdgeDistance" type="float">2 </parameter>
+
+ <!--Induced charge dispatching : dispatching with function parameters-->
+  <!--ROOT TF2 formula for function describing the induced charge distribution, x and y are coordinates from the step position in I and J direction: used if UseFunctionForChargeSplitting is true-->
+  <parameter name="functionFormula" type="string"> exp(-(x*x+y*y)/([0]*[0])) +[1]*exp(-(x*x+y*y)/([2]*[2]))</parameter>
+  <!--parameter values for the function defined with functionFormula-->
+  <parameter name="functionParameters" type="FloatVec">1. 0.00067 11.2 0.000005 80</parameter>
+  <!--Width values for the different Erf functions-->
+  <parameter name="erfWidth" type="FloatVec">1. 10.</parameter>
+  <!--Weigth for the different Erf functions-->
+  <parameter name="erfWeigth" type="FloatVec">1. 0.00077 </parameter>
+  <!--distance in mm between two RPC pads : used if UseFunctionForChargeSplitting is true -->
+  <parameter name="RPC_PadSeparation" type="float">0.408 </parameter>
+  <!--maximal distance (in mm) at which a step can induce charge using the 2D function defined with functionFormula-->
+  <parameter name="functionRange" type="float">30 </parameter>
+
+ <!--digitisation parameters--> 
+  <!--Threshold for HCAL Hits in pC-->
+  <parameter name="HCALThreshold" type="FloatVec">0.114 5.4 14. </parameter>
+  <!--parameter name="HCALThreshold" type="FloatVec">0.114 1.0 15.5 </parameter-->
+  <!--Calibration coefficients for HCAL-->
+  <!-- DBD parameters -->
+  <!-- <parameter name="CalibrHCAL" type="FloatVec">0.0406459 0.101952 0.258078 </parameter> -->
+  <!-- arnaud thesis results -->
+  <parameter name="CalibrHCAL" type="FloatVec">0.0400452 0.101322 0.39448</parameter>
+  <!-- guillaume optimisation parameters (hcal threshold = 0.114 1.0 15.5) -->
+  <!--parameter name="CalibrHCAL" type="FloatVec">1.07078184934584807e-18 8.19425005794504058e-02 3.44473833749605329e-01</parameter-->
+  <!--Replace analog hit energy by value given in CalibrHCAL according to thresholds given in HCALThreshold-->
+  <parameter name="doThresholds" type="bool">false </parameter>
+
+  <!--Print or not SimDigital-->
+  <!--parameter name="printSimDigital" type="bool">true </parameter-->
+  <!--CaloHit Relation Collection-->
+  <parameter name="RelationOutputCollection" type="string" lcioOutType="LCRelation">RelationCaloHit </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+
+</processor>
+
+ <processor name="MyAIDAProcessor" type="AIDAProcessor">
+ <!--Processor that handles AIDA files. Creates on directory per processor.  Processors only need to create and fill the histograms, clouds and tuples. Needs to be the first ActiveProcessor-->
+  <!-- compression of output file 0: false >0: true (default) -->
+  <parameter name="Compress" type="int" value="1"/>
+  <!-- filename without extension-->
+  <parameter name="FileName" type="string" value="particles_digi"/>
+  <!-- type of output file xml (default) or root ( only OpenScientist)-->
+  <parameter name="FileType" type="string" value="root "/>
+</processor>
+
+</marlin>
