@@ -41,8 +41,7 @@
 
 <!--################MySimDigital################################ -->
  <processor name="MySimDigital" type="SimDigital">
- <!--the transfer Between Energy and Induced Charge for SDHCAL-->
- <!--HCAL parameters-->
+  <!--These are parameters for SDHCAL-->
  <!-- Collections -->
   <!--Sim Calorimeter Hit Collections-->
   <parameter name="HCALCollections" type="StringVec" lcioInType="SimCalorimeterHit"> HcalBarrelRegCollection HcalEndcapsCollection HcalEndcapRingCollection </parameter>
@@ -71,21 +70,9 @@ eLayerDirection)-->
   <parameter name="StepsMinDistanceRPCplaneDirection" type="float">1.2 </parameter>
 
  <!--Induced charge dispatching : dispatching mode-->
-  <!--Define the charge splitter method. Possible option : Uniform, Function, Erf-->
   <parameter name="ChargeSplitterOption" type="string"> Erf </parameter>
-  <!--If true, use function to split the charge between pads. If false split uniformely-->
-  <!--parameter name="UseFunctionForChargeSplitting" type="bool">true </parameter-->
-
- <!--Induced charge dispatching : dispatching uniformely parameters-->
-  <!--Distance (in mm) from the border of the cell that implies hit on neighbouring cell for 'Uniform' charge splitter : used if UseFunctionFor
-ChargeSplitting is false-->
-  <parameter name="CellEdgeDistance" type="float">2 </parameter>
 
  <!--Induced charge dispatching : dispatching with function parameters-->
-  <!--ROOT TF2 formula for function describing the induced charge distribution, x and y are coordinates from the step position in I and J direction: used if UseFunctionForChargeSplitting is true-->
-  <parameter name="functionFormula" type="string"> exp(-(x*x+y*y)/([0]*[0])) +[1]*exp(-(x*x+y*y)/([2]*[2]))</parameter>
-  <!--parameter values for the function defined with functionFormula-->
-  <parameter name="functionParameters" type="FloatVec">1. 0.00067 11.2 0.000005 80</parameter>
   <!--Width values for the different Erf functions-->
   <parameter name="erfWidth" type="FloatVec">1. 10.</parameter>
   <!--Weigth for the different Erf functions-->
@@ -98,16 +85,10 @@ ChargeSplitting is false-->
  <!--digitisation parameters--> 
   <!--Threshold for HCAL Hits in pC-->
   <parameter name="HCALThreshold" type="FloatVec">0.114 5.4 14. </parameter>
-  <!--parameter name="HCALThreshold" type="FloatVec">0.114 1.0 15.5 </parameter-->
   <!--Calibration coefficients for HCAL-->
-  <!-- DBD parameters -->
-  <!-- <parameter name="CalibrHCAL" type="FloatVec">0.0406459 0.101952 0.258078 </parameter> -->
-  <!-- arnaud thesis results -->
   <parameter name="CalibrHCAL" type="FloatVec">0.0400452 0.101322 0.39448</parameter>
-  <!-- guillaume optimisation parameters (hcal threshold = 0.114 1.0 15.5) -->
-  <!--parameter name="CalibrHCAL" type="FloatVec">1.07078184934584807e-18 8.19425005794504058e-02 3.44473833749605329e-01</parameter-->
   <!--Replace analog hit energy by value given in CalibrHCAL according to thresholds given in HCALThreshold-->
-  <parameter name="doThresholds" type="bool">false </parameter>
+  <parameter name="doThresholds" type="bool">true </parameter>
 
   <!--Print or not SimDigital-->
   <!--parameter name="printSimDigital" type="bool">true </parameter-->
