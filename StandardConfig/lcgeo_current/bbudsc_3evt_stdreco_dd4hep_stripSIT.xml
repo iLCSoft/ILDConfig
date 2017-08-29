@@ -1652,7 +1652,7 @@
     <!--Name of the ReconstructedParticles input collection-->
     <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
     <!--Name of the Cluster collection -->
-    <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClustersHack </parameter>
+    <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters </parameter>
     <!--Name of the Tracks input collection-->
     <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
     
