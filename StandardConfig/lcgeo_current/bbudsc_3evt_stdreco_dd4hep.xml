@@ -1213,7 +1213,7 @@
     <parameter name="outputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
     <parameter name="timingCut"> 1  </parameter>
-    <parameter name="calibration_mip"> 0.0001525 </parameter>
+    <parameter name="calibration_mip">0.0001575</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
@@ -1223,7 +1223,7 @@
     <parameter name="outputHitCollections"> EcalBarrelCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalBarrelRelationsSimRec </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
-    <parameter name="calibration_factorsMipGev"> 0.00637432 0.01274865 </parameter>
+    <parameter name="calibration_factorsMipGev">0.00648596690341 0.0131746235626</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
@@ -1243,7 +1243,7 @@
     <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
     <parameter name="timingCut"> 1  </parameter>
-    <parameter name="calibration_mip"> 0.0001525 </parameter>
+    <parameter name="calibration_mip">0.0001575</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
@@ -1253,7 +1253,7 @@
     <parameter name="outputHitCollections"> EcalEndcapsCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimRec </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
-    <parameter name="calibration_factorsMipGev"> 0.00637432 0.01274865 </parameter>
+    <parameter name="calibration_factorsMipGev">0.00677453657324 0.0137607808509</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
@@ -1273,7 +1273,7 @@
     <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
     <parameter name="timingCut"> 1  </parameter>
-    <parameter name="calibration_mip"> 0.0001525 </parameter>
+    <parameter name="calibration_mip">0.0001575</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
@@ -1283,7 +1283,7 @@
     <parameter name="outputHitCollections"> EcalEndcapRingCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimRec </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
-    <parameter name="calibration_factorsMipGev"> 0.00637432 0.01274865 </parameter>
+    <parameter name="calibration_factorsMipGev">0.00600726928777 0.012202268788</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
 
@@ -1298,7 +1298,7 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip"> 0.0004925 </parameter>
+    <parameter name="calibration_mip">0.0004925</parameter>
     <parameter name="ppd_mipPe"> 15 </parameter>
     <parameter name="ppd_npix"> 2000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
@@ -1315,7 +1315,7 @@
     <parameter name="ppd_npix"> 2000 </parameter> 
     <parameter name="calibration_layergroups"> 100 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev"> 0.0246896 </parameter>
+    <parameter name="calibration_factorsMipGev">0.0282939686687</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!--### the Hcal endcaps ###-->
@@ -1328,7 +1328,7 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip"> 0.0004725 </parameter>
+    <parameter name="calibration_mip">0.0004725</parameter>
     <parameter name="ppd_mipPe"> 15 </parameter>
     <parameter name="ppd_npix"> 2000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
@@ -1345,7 +1345,7 @@
     <parameter name="ppd_npix"> 2000 </parameter> 
     <parameter name="calibration_layergroups"> 100 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev"> 0.0291279 </parameter>
+    <parameter name="calibration_factorsMipGev">0.0300448694145</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!--### the Hcal ring ###-->
@@ -1358,7 +1358,7 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip"> 0.0004875  </parameter>
+    <parameter name="calibration_mip">0.0004875</parameter>
     <parameter name="ppd_mipPe"> 15 </parameter>
     <parameter name="ppd_npix"> 2000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
@@ -1375,7 +1375,7 @@
     <parameter name="ppd_npix"> 2000 </parameter> 
     <parameter name="calibration_layergroups"> 100 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev"> 0.0347959 </parameter>
+    <parameter name="calibration_factorsMipGev">0.0359436163529</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   
@@ -1503,16 +1503,16 @@
     <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
     <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
     <!-- Calibration constants -->
-    <parameter name="ECalToMipCalibration" type="float">156.88</parameter>
-    <parameter name="HCalToMipCalibration" type="float">40.4858</parameter>
-    <parameter name="MuonToMipCalibration" type="float">10.3093</parameter>
+    <parameter name="ECalToMipCalibration">149.254</parameter>
+    <parameter name="HCalToMipCalibration">35.3357</parameter>
+    <parameter name="MuonToMipCalibration">10.3093</parameter>
     <parameter name="ECalMipThreshold" type="float">0.5</parameter>
     <parameter name="HCalMipThreshold" type="float">0.3</parameter>
-    <parameter name="ECalToEMGeVCalibration" type="float">1.</parameter>
-    <parameter name="HCalToEMGeVCalibration" type="float">1.04898</parameter>
-    <parameter name="ECalToHadGeVCalibrationBarrel" type="float">1.21826</parameter>
-    <parameter name="ECalToHadGeVCalibrationEndCap" type="float">1.21826</parameter>
-    <parameter name="HCalToHadGeVCalibration" type="float">1.04898</parameter>
+    <parameter name="ECalToEMGeVCalibration">1.0</parameter>
+    <parameter name="HCalToEMGeVCalibration">1.0</parameter>
+    <parameter name="ECalToHadGeVCalibrationBarrel">1.20700253651</parameter>
+    <parameter name="ECalToHadGeVCalibrationEndCap">1.20700253651</parameter>
+    <parameter name="HCalToHadGeVCalibration">1.02821419758</parameter>
     <parameter name="DigitalMuonHits" type="int">0</parameter>
     <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter> 
     <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter>
