@@ -8,6 +8,9 @@
 
     <!-- PLUGIN SETTINGS -->
     <HadronicEnergyCorrectionPlugins>SoftwareCompensation</HadronicEnergyCorrectionPlugins>
+    <SoftwareCompensation>
+      <SoftwareCompensationWeights>2.34327 -0.152397 0.00370771 0.0445602 -0.00344702 -0.000303649 2.96254e-06 3.6394e-06 -0.970597</SoftwareCompensationWeights>
+    </SoftwareCompensation>
     <EmShowerPlugin>LCEmShowerId</EmShowerPlugin>
     <PhotonPlugin>LCPhotonId</PhotonPlugin>
     <ElectronPlugin>LCElectronId</ElectronPlugin>
