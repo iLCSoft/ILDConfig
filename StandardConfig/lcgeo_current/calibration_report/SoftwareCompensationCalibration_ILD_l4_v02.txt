@@ -1,0 +1,17 @@
+_____________________________________________________________________________________
+Software compensation weight determination         : 
+File pattern                                       : CalibrationSoftComp_sv01-19-04_lcgeo.mILD_l4_v02_PDG130_%{energy}.root
+Input energies                                     : 010:020:030:040:050:060:070:080:090
+True energy used                                   : false
+Minimizer                                          : Minuit (Migrad)
+Software compensation parameters                   : 
+Parameter 0                                        : 2.34327
+Parameter 1                                        : -0.152397
+Parameter 2                                        : 0.00370771
+Parameter 3                                        : 0.0445602
+Parameter 4                                        : -0.00344702
+Parameter 5                                        : -0.000303649
+Parameter 6                                        : 2.96254e-06
+Parameter 7                                        : 3.6394e-06
+Parameter 8                                        : -0.970597
+The total number of events considered was          : 24718
