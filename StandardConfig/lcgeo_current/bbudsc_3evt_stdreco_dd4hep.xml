@@ -1,11 +1,11 @@
 <!--
-   Example steering file to run a new standard reconstruction
+   Example steering file to run the standard reconstruction
    using DDRec on events simulated with DD4hep/lcgeo for
-   detector ILD_l1_v01 and ILD_s1_v01.
+   detectors ILD_l4_v02 and ILD_s4_v02 (and compatible).
    
    Based on bbudsc_3evt_stdreco.xml form ILDconfig
    
-   Status:  - experimental
+   Status:  - work in progress
    
    @author F.Gaede, CERN/DESY
    @date Jul, 2015 2014
