@@ -996,7 +996,7 @@
     <!--Value used for the initial d0 variance of the trackfit-->
     <parameter name="InitialTrackErrorD0" type="float">1e+06 </parameter>
     <!--Value used for the initial omega variance of the trackfit-->
-    <parameter name="InitialTrackErrorOmega" type="float">0.0001 </parameter>
+    <parameter name="InitialTrackErrorOmega" type="float"> 0.00001 </parameter>
     <!--Value used for the initial phi0 variance of the trackfit-->
     <parameter name="InitialTrackErrorPhi0" type="float">100 </parameter>
     <!--Value used for the initial tanL variance of the trackfit-->
