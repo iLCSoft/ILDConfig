@@ -866,6 +866,13 @@
       Crit3_PT_MV
     </parameter>
    
+    <!--Name of the vertex detector element-->
+    <parameter name="VXDName" type="string">VXD </parameter>
+    <!--Name of the inner tracker detector element-->
+    <parameter name="InnerTrackerName" type="string">SIT </parameter>
+    <!--Name of the outer tracker detector element-->
+    <parameter name="OuterTrackerName" type="string">SET </parameter>
+
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <parameter name="Verbosity" type="string"> MESSAGE </parameter>
    
