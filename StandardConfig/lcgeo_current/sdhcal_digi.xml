@@ -86,7 +86,7 @@ eLayerDirection)-->
   <!--Threshold for HCAL Hits in pC-->
   <parameter name="HCALThreshold" type="FloatVec">0.114 5.4 14. </parameter>
   <!--Calibration coefficients for HCAL-->
-  <parameter name="CalibrHCAL" type="FloatVec">0.0400452 0.101322 0.39448</parameter>
+  <parameter name="CalibrHCAL" type="FloatVec">0.0490334 0.106432 0.522787</parameter>
   <!--Replace analog hit energy by value given in CalibrHCAL according to thresholds given in HCALThreshold-->
   <parameter name="doThresholds" type="bool">true </parameter>
 
