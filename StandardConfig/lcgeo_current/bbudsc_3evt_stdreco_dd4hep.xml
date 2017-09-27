@@ -56,13 +56,13 @@
     
     <!-- ========== central silicon tracking =============== -->
     <!-- ========== standard DBD version =============== -->
-    <processor name="MySiliconTracking_MarlinTrk"/>  
+    <!-- <processor name="MySiliconTracking_MarlinTrk"/> -->
     <!-- ========== mini-vectors - make sure you use matching digitizer! =============== -->
     <!--processor name="MyCellsAutomatonMV_UseSIT"/-->
 
     <!-- need further investigation about the mini-vector tracking -->
-    <!-- <processor name="MyCellsAutomatonMV"/> -->
-    <!-- <processor name="MyExtrToSIT"/> -->
+    <processor name="MyCellsAutomatonMV"/>
+    <processor name="MyExtrToSIT"/>
 
     <!-- ========== FPCCD - make sure you use matching digitizer! =============== -->
     <!--processor name="MyFPCCDSiliconTracking_MarlinTrk"/-->  
