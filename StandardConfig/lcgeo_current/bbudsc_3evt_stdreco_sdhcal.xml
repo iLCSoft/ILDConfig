@@ -1283,6 +1283,7 @@
      <!--These are parameters for SDHCAL-->
      <parameter name="HCALOption"> TESLA </parameter>
      <parameter name="CellIDEncodingStringType"> LCGEO </parameter>
+     <parameter name="HCALCellSize"> 10. </parameter>
      
     <!-- Collections -->
      <!--Sim Calorimeter Hit Collections-->
