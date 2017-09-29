@@ -1,0 +1,85 @@
+
+
+<!--######  My RealisticCaloDigi ################################-->
+<!--#### ECAL ####-->
+<!--### the Ecal barrel ###-->
+<!--digitisation -->
+<processor name="MyEcalBarrelDigi" type="RealisticCaloDigiSilicon">
+  <parameter name="inputHitCollections"> EcalBarrelCollection </parameter>
+  <parameter name="outputHitCollections"> EcalBarrelCollectionDigi </parameter>
+  <parameter name="outputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
+  <parameter name="threshold"> 0.5 </parameter>
+  <parameter name="timingCut"> 1  </parameter>
+  <parameter name="calibration_mip">${EcalBarrelMip}</parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+</processor>
+<!-- reconstruction -->
+<processor name="MyEcalBarrelReco" type="RealisticCaloRecoSilicon">
+  <parameter name="inputHitCollections"> EcalBarrelCollectionDigi </parameter>
+  <parameter name="inputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
+  <parameter name="outputHitCollections"> EcalBarrelCollectionRec </parameter>
+  <parameter name="outputRelationCollections"> EcalBarrelRelationsSimRec </parameter>
+  <parameter name="calibration_layergroups"> 20 11 </parameter>
+  <parameter name="calibration_factorsMipGev">${EcalBarrelEnergyFactors}</parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+</processor>
+<!-- gap filling -->
+<processor name="MyEcalBarrelGapFiller" type="BruteForceEcalGapFiller">
+  <parameter name="inputHitCollection"> EcalBarrelCollectionRec </parameter>
+  <parameter name="outputHitCollection"> EcalBarrelCollectionGapHits </parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+  <parameter name="CellIDModuleString"> module </parameter>
+  <parameter name="CellIDStaveString"> stave </parameter>
+  <parameter name="expectedInterModuleDistance"> 7.0 </parameter>
+</processor>
+<!--### the Ecal endcaps ###-->
+<!-- digitisation -->
+<processor name="MyEcalEndcapDigi" type="RealisticCaloDigiSilicon">
+  <parameter name="inputHitCollections"> EcalEndcapsCollection </parameter>
+  <parameter name="outputHitCollections"> EcalEndcapsCollectionDigi </parameter>
+  <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
+  <parameter name="threshold"> 0.5 </parameter>
+  <parameter name="timingCut"> 1  </parameter>
+  <parameter name="calibration_mip">${EcalEndcapMip}</parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+</processor>
+<!-- reconstruction -->
+<processor name="MyEcalEndcapReco" type="RealisticCaloRecoSilicon">
+  <parameter name="inputHitCollections"> EcalEndcapsCollectionDigi </parameter>
+  <parameter name="inputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
+  <parameter name="outputHitCollections"> EcalEndcapsCollectionRec </parameter>
+  <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimRec </parameter>
+  <parameter name="calibration_layergroups"> 20 11 </parameter>
+  <parameter name="calibration_factorsMipGev">${EcalEndcapEnergyFactors}</parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+</processor>
+<!-- gap filling -->
+<processor name="MyEcalEndcapGapFiller" type="BruteForceEcalGapFiller">
+  <parameter name="inputHitCollection"> EcalEndcapsCollectionRec </parameter>
+  <parameter name="outputHitCollection"> EcalEndcapsCollectionGapHits </parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+  <parameter name="CellIDModuleString"> module </parameter>
+  <parameter name="CellIDStaveString"> stave </parameter>
+  <parameter name="expectedInterModuleDistance"> 7.0 </parameter>
+</processor>
+<!--### the Ecal endcap rings ###-->
+<!-- digitisation -->
+<processor name="MyEcalRingDigi" type="RealisticCaloDigiSilicon">
+  <parameter name="inputHitCollections"> EcalEndcapRingCollection </parameter>
+  <parameter name="outputHitCollections"> EcalEndcapRingCollectionDigi </parameter>
+  <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
+  <parameter name="threshold"> 0.5 </parameter>
+  <parameter name="timingCut"> 1  </parameter>
+  <parameter name="calibration_mip">${EcalRingMip}</parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+</processor>
+<!-- reconstruction -->
+<processor name="MyEcalRingReco" type="RealisticCaloRecoSilicon">
+  <parameter name="inputHitCollections"> EcalEndcapRingCollectionDigi </parameter>
+  <parameter name="inputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
+  <parameter name="outputHitCollections"> EcalEndcapRingCollectionRec </parameter>
+  <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimRec </parameter>
+  <parameter name="calibration_layergroups"> 20 11 </parameter>
+  <parameter name="calibration_factorsMipGev">${EcalRingEnergyFactors}</parameter>
+  <parameter name="CellIDLayerString"> layer </parameter>
+</processor>
