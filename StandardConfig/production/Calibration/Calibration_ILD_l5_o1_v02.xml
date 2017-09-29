@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='ASCII'?>
+
+<!-- Calibration constants -->
+<constant name="EcalBarrelMip">0.0001575</constant>
+<constant name="EcalEndcapMip">0.0001575</constant>
+<constant name="EcalRingMip">0.0001575</constant>
+<constant name="HcalBarrelMip">0.0004925</constant>
+<constant name="HcalEndcapMip">0.0004725</constant>
+<constant name="HcalRingMip">0.0004875</constant>
+<constant name="EcalBarrelEnergyFactors">0.00648596690341 0.0131746235626</constant>
+<constant name="EcalEndcapEnergyFactors">0.00677453657324 0.0137607808509</constant>
+<constant name="EcalRingEnergyFactors">0.00600726928777 0.012202268788</constant>
+<constant name="HcalBarrelEnergyFactors">0.0282939686687</constant>
+<constant name="HcalEndcapEnergyFactors">0.0300448694145</constant>
+<constant name="HcalRingEnergyFactors">0.0359436163529</constant>
+<constant name="PandoraEcalToMip">149.254</constant>
+<constant name="PandoraHcalToMip">35.3357</constant>
+<constant name="PandoraMuonToMip">10.3093</constant>
+<constant name="PandoraEcalToEMScale">1.0</constant>
+<constant name="PandoraHcalToEMScale">1.0</constant>
+<constant name="PandoraEcalToHadBarrelScale">1.20700253651</constant>
+<constant name="PandoraEcalToHadEndcapScale">1.20700253651</constant>
+<constant name="PandoraHcalToHadScale">1.02821419758</constant>
+
+<!-- Ecal technology : SiWEcal or ScEcal -->
+<constant name="EcalTechnology" value="SiWEcal" />
+<!-- Hcal technology : AHcal or SDHcal -->
+<constant name="HcalTechnology" value="AHcal" /> 

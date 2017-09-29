@@ -1,0 +1,343 @@
+
+
+
+
+<processor name="VXDPlanarDigiProcessor_DBDVXD" type="DDPlanarDigiProcessor">
+  <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+  <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+  <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+  <parameter name="SubDetectorName" type="string"> VXD </parameter>
+  <!--whether hits are 1D strip hits-->
+  <parameter name="IsStrip" type="bool">false </parameter>
+  <!--resolution in direction of u-->
+  <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004 </parameter>
+  <!--resolution in direction of v-->
+  <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.004 0.004 0.004  </parameter>
+  <!--Name of the Input SimTrackerHit collection-->
+  <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+  <!--Name of TrackerHit SimTrackHit relation collection-->
+  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+  <!--Name of the TrackerHit output collection-->
+  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+
+
+<processor name="VXDPlanarDigiProcessor_CMOSVXD1" type="DDPlanarDigiProcessor">
+  <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+  <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+  <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+  <parameter name="SubDetectorName" type="string"> VXD </parameter>
+  <!--whether hits are 1D strip hits-->
+  <parameter name="IsStrip" type="bool">false </parameter>
+  <!--resolution in direction of u-->
+  <parameter name="ResolutionU" type="float"> 0.0028 0.006 0.004 0.01 0.004 0.01 </parameter>
+  <!--resolution in direction of v-->
+  <parameter name="ResolutionV" type="float"> 0.0028 0.006 0.004 0.01 0.004 0.01  </parameter>
+  <!--Name of the Input SimTrackerHit collection-->
+  <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+  <!--Name of TrackerHit SimTrackHit relation collection-->
+  <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+  <!--Name of the TrackerHit output collection-->
+  <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+
+<processor name="MySiliconTracking_MarlinTrk" type="SiliconTracking_MarlinTrk">
+  <!--Pattern recognition in silicon trackers-->
+  <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+  <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+  <!--Angle Cut For Merging-->
+  <parameter name="AngleCutForMerging" type="float">0.1 </parameter>
+  <!--Check for Delta rays hits in hit-to-track assignment-->
+  <parameter name="CheckForDelta" type="int">1 </parameter>
+  <!--Chi2 Fit Cut-->
+  <parameter name="Chi2FitCut" type="float">120 </parameter>
+  <!--Chi2 Prefit Cut-->
+  <parameter name="Chi2PrefitCut" type="float">1e+10 </parameter>
+  <!--Chi2WRphiQuartet-->
+  <parameter name="Chi2WRphiQuartet" type="float">1 </parameter>
+  <!--Chi2WRphiSeptet-->
+  <parameter name="Chi2WRphiSeptet" type="float">1 </parameter>
+  <!--Chi2WRphiTriplet-->
+  <parameter name="Chi2WRphiTriplet" type="float">1 </parameter>
+  <!--Chi2WZQuartet-->
+  <parameter name="Chi2WZQuartet" type="float">0.5 </parameter>
+  <!--Chi2WZSeptet-->
+  <parameter name="Chi2WZSeptet" type="float">0.5 </parameter>
+  <!--Chi2WZTriplet-->
+  <parameter name="Chi2WZTriplet" type="float">0.5 </parameter>
+  <!--cut on D0 for tracks-->
+  <parameter name="CutOnD0" type="float">100 </parameter>
+  <!--cut on Pt-->
+  <parameter name="CutOnPt" type="float">0.05 </parameter>
+  <!--cut on Z0 for tracks-->
+  <parameter name="CutOnZ0" type="float">100 </parameter>
+  <!--Use Energy Loss in Fit-->
+  <parameter name="EnergyLossOn" type="bool"> true </parameter>
+  <!--FTD Pixel Hit Collection Name-->
+  <parameter name="FTDPixelHitCollectionName" type="string" lcioInType="TrackerHitPlane"> FTDPixelTrackerHits </parameter>
+  <!--FTD FTDSpacePoint Collection Name-->
+  <parameter name="FTDSpacePointCollection" type="string" lcioInType="TrackerHit"> FTDSpacePoints </parameter>
+  <!--Fast attachment-->
+  <parameter name="FastAttachment" type="int">0 </parameter>
+  <!--Value used for the initial d0 variance of the trackfit-->
+  <parameter name="InitialTrackErrorD0" type="float">1e+06 </parameter>
+  <!--Value used for the initial omega variance of the trackfit-->
+  <parameter name="InitialTrackErrorOmega" type="float">0.0001 </parameter>
+  <!--Value used for the initial phi0 variance of the trackfit-->
+  <parameter name="InitialTrackErrorPhi0" type="float">100 </parameter>
+  <!--Value used for the initial tanL variance of the trackfit-->
+  <parameter name="InitialTrackErrorTanL" type="float">100 </parameter>
+  <!--Value used for the initial z0 variance of the trackfit-->
+  <parameter name="InitialTrackErrorZ0" type="float">1e+06 </parameter>
+  <!--Combinations of Hits in Layers-->
+  <parameter name="LayerCombinations" type="IntVec"> 
+    8 6 5  8 6 4  8 6 3  8 6 2
+    8 5 3  8 5 2  8 4 3  8 4 2  
+    6 5 3  6 5 2  6 4 3  6 4 2 
+    6 3 1  6 3 0  6 2 1  6 2 0 
+    5 3 1  5 3 0  5 2 1  5 2 0
+    4 3 1  4 3 0  4 2 1  4 2 0    
+  </parameter>
+  <!--Combinations of Hits in FTD-->
+  <parameter name="LayerCombinationsFTD" type="IntVec"> 
+    13 11  9    13 11 8    13 10 9    13 10 8
+    12 11  9    12 11 8    12 10 9    12 10 8
+    11  9  7    11  9 6    11  8 7    11  8 6 
+    10  9  7    10  9 6    10  8 7    10  8 6
+    9  7  5     9  7 4     9  6 5     9  6 4
+    8  7  5     8  7 4     8  6 5     8  6 4
+    7  5  3     7  5 2     7  4 3     7  4 2
+    6  5  3     6  5 2     6  4 3     6  4 2
+    5  3  1     5  3 0     5  2 1     5  2 0
+    4  3  1     4  3 0     4  2 1     4  2 0
+  </parameter>
+  <!--Maximum Chi-squared value allowed when assigning a hit to a track-->
+  <parameter name="MaxChi2PerHit" type="double">100 </parameter>
+  <!--Maximal number of hits allowed in one theta-phi sector in VXD/SIT and FTD-->
+  <parameter name="MaxHitsPerSector" type="int">100 </parameter>
+  <!--MinDistCutAttach-->
+  <parameter name="MinDistCutAttach" type="float">2.5 </parameter>
+  <!--Minimal distance of track hit to the delta electron hit-->
+  <parameter name="MinDistToDelta" type="float">0.25 </parameter>
+  <!--MinLayerToAttach-->
+  <parameter name="MinLayerToAttach" type="int">-1 </parameter>
+  <!--minimal hits-->
+  <parameter name="MinimalHits" type="int">3 </parameter>
+  <!--Use MultipleScattering in Fit-->
+  <parameter name="MultipleScatteringOn" type="bool"> true </parameter>
+  <!--Number of divisions in Phi-->
+  <parameter name="NDivisionsInPhi" type="int"> 80 </parameter>
+  <!--Number of divisions in Phi for FTD-->
+  <parameter name="NDivisionsInPhiFTD" type="int"> 30 </parameter>
+  <!--Number of divisions in Theta-->
+  <parameter name="NDivisionsInTheta" type="int"> 80 </parameter>
+  <!--Maximal number of hits for which a track with n hits is better than one with n-1hits. (defaut 5)-->
+  <parameter name="NHitsChi2" type="int">5 </parameter>
+  <!--Run MarlinTrk Diagnostics. MarlinTrk must be compiled with MARLINTRK_DIAGNOSTICS_ON defined-->
+  <parameter name="RunMarlinTrkDiagnostics" type="bool">false </parameter>
+  <!--SIT Hit Collection Name-->
+  <parameter name="SITHitCollectionName" type="string" lcioInType="TrackerHit"> SITTrackerHits</parameter>
+  <!--Silicon track Collection Name-->
+  <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track">SiTracks </parameter>
+  <!--Smooth All Mesurement Sites in Fit-->
+  <parameter name="SmoothOn" type="bool"> false </parameter>
+  <!--Use SIT-->
+  <parameter name="UseSIT" type="int">1 </parameter>
+  <!--UseEventDisplay-->
+  <parameter name="UseEventDisplay" type="bool"> false </parameter>
+  <!--VTX Hit Collection Name-->
+  <parameter name="VTXHitCollectionName" type="string" lcioInType="TrackerHitPlane">VXDTrackerHits </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+<processor name="MyCellsAutomatonMV_UseSIT" type="DDCellsAutomatonMV">
+  <!--ForwardTracking reconstructs tracks through the FTDs-->
+  <!--Name of the Cellular Automaton Tracking output collection-->
+  <parameter name="CATrackCollection" type="string" lcioOutType="Track"> SiTracks </parameter>
+  <!--Use Energy Loss in Fit-->
+  <parameter name="EnergyLossOn" type="bool">true </parameter>
+  <!--Number of divisions in Phi-->
+  <parameter name="NDivisionsInPhi" type="int"> 160 </parameter>
+  <!--Number of divisions in Theta-->
+  <parameter name="NDivisionsInTheta" type="int"> 80 </parameter>
+  <!--Number of divisions in Phi in  order to create mini-vectors-->
+  <parameter name="NDivisionsInPhiMV" type="int"> 80 </parameter>
+  <!--Number of divisions in Theta  in  order to create mini-vectors-->
+  <parameter name="NDivisionsInThetaMV" type="int"> 80 </parameter>
+  <!--VXD Hit Collections-->
+  <parameter name="VTXHitCollectionName" type="StringVec"> VXDTrackerHits </parameter>
+  <!--SIT Hit Collections-->
+  <parameter name="SITHitCollectionName" type="StringVec"> SITTrackerHits </parameter>
+  <!--Use MultipleScattering in Fit-->
+  <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+  <!--Smooth All Measurement Sites in Fit-->
+  <parameter name="SmoothOn" type="bool">false </parameter>
+  <!--Cut on minimum PT-->
+  <parameter name="PTCut" type="double"> 0.0 </parameter>
+  <!--Use SIT-->
+  <parameter name="UseSIT" type="int"> 1 </parameter>
+  <!--The chi2 probability value below which tracks will be cut-->
+  <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+  <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
+  <parameter name="HelixFitMax" type="double"> 100 </parameter>
+  <!--the maximum chi2/Ndf that is allowed as result of a Kalman fit-->
+  <parameter name="kalFitMax" type="double"> 10 </parameter>
+  <!--The minimum number of hits to create a track-->
+  <parameter name="HitsPerTrackMin" type="int"> 2 </parameter>
+  <!--Maximal number of hits for which a track with n hits is better than one with n-1hits-->
+  <parameter name="NHitsChi2" type="int"> 6 </parameter>
+  <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
+  <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
+  <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
+  <!--parameter name="TakeBestVersionOfTrack" type="bool">true </parameter-->
+  <!--If the automaton has more connections than this it will be redone with the next parameters-->
+  <parameter name="MaxConnectionsAutomaton" type="int"> 10000000 </parameter>
+  <!--Maximal number of hits allowed on a sector-->
+  <parameter name="MaxHitsPerSector" type="int">1000 </parameter>
+  <!--The maximum distance between two hits in adjacent layers in order to form a minivector-->
+  <parameter name="MaxDistance" type="double"> 5.0 </parameter>
+  <!--The difference in polar angle (in degrees)  between two hits in adjacent layers in order to form a minivector-->
+  <parameter name="MVHitsThetaDifference" type="double"> 0.1 </parameter>
+  <!--The difference in polar angle (in degrees)  between two hits in the INNER layer in order to form a minivector-->
+  <parameter name="MVHitsThetaDifferenceInner" type="double"> 0.1 </parameter>
+  <!--The maximum step between layers-->
+  <parameter name="StepMax" type="int"> 4 </parameter>
+  <!--The last layer that can be connected directly with the IP-->
+  <parameter name="LastLayerToIP" type="int"> 4 </parameter>
+  
+  <parameter name="Crit2_3DAngle_MV_min" type="float"> 0.0 </parameter>
+  <parameter name="Crit2_3DAngle_MV_max" type="float"> 15.0 </parameter>
+  <parameter name="Crit2_DeltaPhi_MV_min" type="float"> 0.0 </parameter>
+  <parameter name="Crit2_DeltaPhi_MV_max" type="float"> 15.0 </parameter>
+  <parameter name="Crit2_DeltaPhi_MV_InnLayer_min" type="float"> 0.0 </parameter>
+  <parameter name="Crit2_DeltaPhi_MV_InnLayer_max" type="float"> 5.0 </parameter>
+  <parameter name="Crit2_DeltaTheta_MV_min" type="float"> 0.0 </parameter>
+  <parameter name="Crit2_DeltaTheta_MV_max" type="float"> 1.5 </parameter>
+  <parameter name="Crit3_NoZigZag_MV_min" type="float"> -1.0 </parameter>
+  <parameter name="Crit3_NoZigZag_MV_max" type="float"> 1.0 </parameter>
+  <parameter name="Crit3_PT_MV_min" type="float"> 0.35 </parameter>
+  <parameter name="Crit3_PT_MV_max" type="float"> 999999 </parameter>   
+  <parameter name="Criteria" type="StringVec">
+    Crit2_DeltaPhi_MV
+    Crit2_DeltaTheta_MV
+    Crit3_NoZigZag_MV
+  </parameter>
+  
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+  
+</processor>
+
+
+
+<processor name="MyFPCCDSiliconTracking_MarlinTrk" type="FPCCDSiliconTracking_MarlinTrk">
+  <!--Each ladder's FPCCD Pixel size(unit:mm)-->
+  <parameter name="PixelSizeVec" type="float"> 0.016 0.064 0.040 0.040 0.040 </parameter>
+  <!--AttachRemainingHitsForVXD-->
+  <parameter name="AttachRemainingHitsForVXD" type="int"> 2 </parameter>
+  <!--parameter name="LayerCombinations" type="IntVec"> 
+  5 3 1  5 3 0  5 2 1  5 2 0
+  4 3 1  4 3 0  4 2 1  4 2 0    
+  </parameter-->
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+</processor>
+
+
+
+<processor name="MyTruthTracker" type="TruthTracker">
+  <!--Creates Track Collection from MC Truth. Can handle composite spacepoints as long as they consist of two TrackerHits-->
+  <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+  <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+  <!--Use Energy Loss in Fit-->
+  <parameter name="EnergyLossOn" type="bool">true </parameter>
+  <!--Fit the Tracks with MarlinTrk, otherwise take track parameters from MCParticle-->
+  <parameter name="FitTracksWithMarlinTrk" type="bool">true </parameter>
+  <!--Transverse Momentum Threshold MC particles which will produce tracks GeV-->
+  <parameter name="MCpThreshold" type="float">0.1 </parameter>
+  <!--Use MultipleScattering in Fit-->
+  <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+  <!--Name of the output track collection-->
+
+  <!-- FIXME: for testing write out 'cheated' MarlinTrkTracks -->
+  <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track"> TruthTracks </parameter>
+
+  <!--Name of the MCParticle-Track Relations collection for output tracks-->
+  <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation">TruthTracksMCP </parameter>
+  <!--Smooth All Mesurement Sites in Fit-->
+  <parameter name="SmoothOn" type="bool"> true </parameter>
+  <!--Name of the tracker hit input collections-->
+  <parameter name="TrackerHitsInputCollections" type="StringVec" lcioInType="TrackerHit">VXDTrackerHits SITTrackerHits FTDPixelTrackerHits FTDSpacePoints TPCTrackerHits SETSpacePoints  </parameter>
+  <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits. Have to be in same order as TrackerHitsInputCollections!!!-->
+  <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">VXDTrackerHitRelations SITTrackerHitRelations FTDPixelTrackerHitRelations FTDSpacePointRelations TPCTrackerHitRelations SETSpacePointRelations  </parameter>
+  <!--Fit the Tracks with MarlinTrk using iterative approach. If 3 consecutive hits fail to be included then the  current fit is written out and a new fit started. Use instead of FitTracksWithMarlinTrk.-->
+  <parameter name="UseIterativeFitting" type="bool">  true </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+<!--################################################ -->
+<processor name="MyBeamCalClusterReco" type="BeamCalClusterReco">
+  <!--BeamCalClusterReco takes a list of beamcal background files from the ReadBeamCalprocessor, adds NumberOfBX of them together and puts the signal hits from thelcio input file on top of that, and then clustering is attempted.-->
+  <!--Name of BeamCal Collection-->
+  <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BCAL </parameter>
+  <!--Flag to create the TEfficiency for fast tagging library-->
+  <parameter name="CreateEfficiencyFile" type="bool"> true </parameter>
+  <!--Energy in a Cluster to consider it an electron-->
+  <parameter name="ETCluster" type="FloatVec">0.5 0.5  </parameter>
+  <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
+  <parameter name="ETPad" type="FloatVec"> 0.01 0.3  </parameter>
+  <!--The name of the rootFile which will contain the TEfficiency objects-->
+  <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
+  <!--Background simulation method-->
+  <parameter name="BackgroundMethod" type="string">Parametrised </parameter>
+  <!--Root Inputfile(s)-->
+  <parameter name="InputFileBackgrounds" type="StringVec">
+    ${BeamCalBackgroundFile}
+  </parameter>
+  <!--Name of the MCParticle Collection-->
+  <parameter name="MCParticle Collection Name, only needed and used to estimate efficiencies" type="string" lcioInType="MCParticle">MCParticle </parameter>
+  <!--Minimum number of pads in a single tower to be considered for signal-->
+  <parameter name="MinimumTowerSize" type="int">6 </parameter>
+  <parameter name="LinearCalibrationFactor" type="double"> 72. </parameter>
+  <!--Number of Bunch Crossings of Background-->
+  <parameter name="NumberOfBX" type="int">1 </parameter>
+  <!--Number of Event that should be printed to PDF File-->
+  <parameter name="PrintThisEvent" type="int">1 </parameter>
+  <!--Name of the Reconstructed Cluster collection-->
+  <parameter name="RecoClusterCollectionname" type="string" lcioOutType="Cluster">BCalClusters </parameter>
+  <!--Name of the Reconstructed Particle collection-->
+  <parameter name="RecoParticleCollectionname" type="string" lcioOutType="ReconstructedParticle">BCalRecoParticle </parameter>
+  <!--If not using ConstPadCuts, each pad SigmaCut*variance is considered for clusters-->
+  <parameter name="SigmaCut" type="double">2 </parameter>
+  <!--Layer (inclusive) from which on we start looking for signal clusters-->
+  <parameter name="StartLookingInLayer" type="int">2 </parameter>
+  <!--Rings from which onwards the outside Thresholds are used-->
+  <parameter name="StartingRing" type="FloatVec">0 1  </parameter>
+  <!--Use the cuts for the pads specified in ETPad, if false, the variance in each pad is used times SigmaPad Factor-->
+  <parameter name="UseConstPadCuts" type="bool">False </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">WARNING </parameter>
+</processor>
+
+
+<!--########## AddClusterProperties ###################################### -->
+<processor name="BCalAddClusterProperties" type="AddClusterProperties">
+  <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle"> BCalRecoParticle </parameter>
+  <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> BCalClusters </parameter>
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string">MESSAGE </parameter>
+</processor>

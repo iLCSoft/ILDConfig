@@ -1,0 +1,96 @@
+
+
+<group name="HcalDigi">
+
+  <!--### the Hcal barrel ###-->
+  <!-- digitisation -->
+  <processor name="MyHcalBarrelDigi" type="RealisticCaloDigiScinPpd">
+    <parameter name="inputHitCollections"> HcalBarrelRegCollection </parameter>
+    <parameter name="outputHitCollections"> HcalBarrelCollectionDigi </parameter>
+    <parameter name="outputRelationCollections"> HcalBarrelRelationsSimDigi </parameter>
+    <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
+    <parameter name="timingCut"> 1  </parameter>
+    <!-- the ave energy deposition of a MIP in the scint -->
+    <parameter name="calibration_mip">${HcalBarrelMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!-- reconstruction -->
+  <processor name="MyHcalBarrelReco" type="RealisticCaloRecoScinPpd">
+    <parameter name="inputHitCollections"> HcalBarrelCollectionDigi </parameter>
+    <parameter name="inputRelationCollections"> HcalBarrelRelationsSimDigi </parameter>
+    <parameter name="outputHitCollections"> HcalBarrelCollectionRec </parameter>
+    <parameter name="outputRelationCollections"> HcalBarrelRelationsSimRec </parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter> 
+    <parameter name="ppd_npix"> 2000 </parameter> 
+    <parameter name="calibration_layergroups"> 100 </parameter>
+    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+    <parameter name="calibration_factorsMipGev">${HcalBarrelEnergyFactors}</parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!--### the Hcal endcaps ###-->
+  <!-- digitisation -->
+  <processor name="MyHcalEndcapDigi" type="RealisticCaloDigiScinPpd">
+    <parameter name="inputHitCollections"> HcalEndcapsCollection </parameter>
+    <parameter name="outputHitCollections"> HcalEndcapsCollectionDigi </parameter>
+    <parameter name="outputRelationCollections"> HcalEndcapsRelationsSimDigi </parameter>
+    <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
+    <parameter name="timingCut"> 1  </parameter>
+    <!-- the ave energy deposition of a MIP in the scint -->
+    <parameter name="calibration_mip">${HcalEndcapMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!-- reconstruction -->
+  <processor name="MyHcalEndcapReco" type="RealisticCaloRecoScinPpd">
+    <parameter name="inputHitCollections"> HcalEndcapsCollectionDigi </parameter>
+    <parameter name="inputRelationCollections"> HcalEndcapsRelationsSimDigi </parameter>
+    <parameter name="outputHitCollections"> HcalEndcapsCollectionRec </parameter>
+    <parameter name="outputRelationCollections"> HcalEndcapsRelationsSimRec </parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter> 
+    <parameter name="ppd_npix"> 2000 </parameter> 
+    <parameter name="calibration_layergroups"> 100 </parameter>
+    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+    <parameter name="calibration_factorsMipGev">${HcalEndcapEnergyFactors}</parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!--### the Hcal ring ###-->
+  <!-- digitisation -->
+  <processor name="MyHcalRingDigi" type="RealisticCaloDigiScinPpd">
+    <parameter name="inputHitCollections"> HcalEndcapRingCollection </parameter>
+    <parameter name="outputHitCollections"> HcalEndcapRingCollectionDigi </parameter>
+    <parameter name="outputRelationCollections"> HcalEndcapRingRelationsSimDigi </parameter>
+    <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
+    <parameter name="timingCut"> 1  </parameter>
+    <!-- the ave energy deposition of a MIP in the scint -->
+    <parameter name="calibration_mip">${HcalRingMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!-- reconstruction -->
+  <processor name="MyHcalRingReco" type="RealisticCaloRecoScinPpd">
+    <parameter name="inputHitCollections"> HcalEndcapRingCollectionDigi </parameter>
+    <parameter name="inputRelationCollections"> HcalEndcapRingRelationsSimDigi </parameter>
+    <parameter name="outputHitCollections"> HcalEndcapRingCollectionRec </parameter>
+    <parameter name="outputRelationCollections"> HcalEndcapRingRelationsSimRec </parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter> 
+    <parameter name="ppd_npix"> 2000 </parameter> 
+    <parameter name="calibration_layergroups"> 100 </parameter>
+    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+    <parameter name="calibration_factorsMipGev">${HcalRingEnergyFactors}</parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+
+</group>

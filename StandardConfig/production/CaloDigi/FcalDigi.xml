@@ -1,0 +1,73 @@
+
+
+<group name="FcalDigi">
+
+  <processor name="MySimpleBCalDigi" type="SimpleFCalDigi">
+    <!--Performs simple digitization of sim calo hits...-->
+
+    <!--ID of calorimeter: lcal, fcal, bcal-->
+    <parameter name="CaloID" type="string">bcal </parameter>
+
+    <!--name of the part of the cellID that holds the layer-->
+    <parameter name="CellIDLayerString" type="string"> layer </parameter>
+
+    <!--Calibration coefficients for LCAL-->
+    <parameter name="CalibrFCAL" type="FloatVec">1.</parameter>
+    <!--LCAL Collection Names-->
+    <parameter name="FCALCollections" type="StringVec">BeamCalCollection</parameter>
+    <!--LCAL Collection of real Hits-->
+    <parameter name="FCALOutputCollection" type="string">BCAL</parameter>
+    <!--Threshold for LCAL Hits in GeV-->
+    <parameter name="FcalThreshold" type="float">1e-06 </parameter>
+    <!--MuonHit Relation Collection-->
+    <parameter name="RelationOutputCollection" type="string">RelationBCalHit </parameter>
+  </processor>
+
+
+  <!--######  SimpleLCalDigi ##########################################-->
+
+  <processor name="MySimpleLCalDigi" type="SimpleFCalDigi">
+    <!--Performs simple digitization of sim calo hits...-->
+
+    <!--ID of calorimeter: lcal, fcal, bcal-->
+    <parameter name="CaloID" type="string">lcal </parameter>
+
+    <!--name of the part of the cellID that holds the layer-->
+    <parameter name="CellIDLayerString" type="string"> layer </parameter>
+
+    <!--Calibration coefficients for LCAL-->
+    <parameter name="CalibrFCAL" type="FloatVec">89.0</parameter>
+    <!--LCAL Collection Names-->
+    <parameter name="FCALCollections" type="StringVec"> LumiCalCollection  </parameter>
+    <!--LCAL Collection of real Hits-->
+    <parameter name="FCALOutputCollection" type="string">LCAL </parameter>
+    <!--Threshold for LCALHits in GeV-->
+    <parameter name="FcalThreshold" type="float">0e-04 </parameter>
+    <!--LCALHit Relation Collection-->
+    <parameter name="RelationOutputCollection" type="string">RelationLcalHit </parameter>
+  </processor>
+
+  <!--######  SimpleLHCALDigi ##########################################-->
+
+  <processor name="MySimpleLHCalDigi" type="SimpleFCalDigi">
+    <!--Performs simple digitization of sim calo hits...-->
+
+    <!--ID of calorimeter: lcal, fcal, bcal-->
+    <parameter name="CaloID" type="string">lhcal </parameter>
+
+    <!--name of the part of the cellID that holds the layer-->
+    <parameter name="CellIDLayerString" type="string"> layer </parameter>
+
+    <!--Calibration coefficients for LHCAL-->
+    <parameter name="CalibrFCAL" type="FloatVec">150</parameter>
+    <!--LHCAL Collection Names-->
+    <parameter name="FCALCollections" type="StringVec"> LHCalCollection</parameter>
+    <!--LHCAL Collection of real Hits-->
+    <parameter name="FCALOutputCollection" type="string">LHCAL </parameter>
+    <!--Threshold for LHCAL Hits in GeV-->
+    <parameter name="FcalThreshold" type="float">1e-06 </parameter>
+    <!--LHCALHit Relation Collection-->
+    <parameter name="RelationOutputCollection" type="string">RelationLHcalHit </parameter>
+  </processor>
+  
+</group>

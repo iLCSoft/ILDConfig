@@ -1,0 +1,274 @@
+
+<group name="HighLevelReco">
+
+  <!--########## Add4MomCovMatrixCharged ###################################### -->
+  <!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
+  <processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+    <!--Name of the PandoraPFOs collection-->
+    <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
+    <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
+  </processor>
+
+  <!--########## AddClusterProperties ###################################### -->
+  <processor name="MyAddClusterProperties" type="AddClusterProperties">
+    <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <parameter name="ClusterCollection" type="string" lcioInType="Cluster">PandoraClusters </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+
+
+  <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
+    <!--Performs Shower profile extraction-->
+    <!--Debugging?-->
+    <parameter name="Debug" type="int">0 </parameter>
+    <!--Name of the PFO collection-->
+    <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+    <!--Name of the Cluster collection-->
+    <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+    <!-- Radiation Length of Ecal-->
+    <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
+    <!-- Radiation Length of Hcal-->
+    <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
+    <!-- Moliere radius of Ecal-->
+    <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
+    <!-- Moliere radius of Hcal-->
+    <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
+  </processor>
+
+
+  <processor name="MyPi0Finder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="Pi0" />
+    <parameter name="GammaGammaResonanceMass" value="0.1349766" />
+    <parameter name="MaxDeltaMgg" value="0.04" />
+    <parameter name="GammaMomentumCut" value="0.5" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidatePi0s" />
+  </processor>
+
+
+  <processor name="MyEtaFinder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="Eta" />
+    <parameter name="GammaGammaResonanceMass" value="0.547862" />
+    <parameter name="MaxDeltaMgg" value="0.14" />
+    <parameter name="GammaMomentumCut" value="1.0" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidateEtas" />
+  </processor>
+
+
+  <processor name="MyEtaPrimeFinder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="EtaPrime" />
+    <parameter name="GammaGammaResonanceMass" value="0.95778" />
+    <parameter name="MaxDeltaMgg" value="0.19" />
+    <parameter name="GammaMomentumCut" value="2.0" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidateEtaPrimes" />
+  </processor>
+
+
+  <processor name="MyGammaGammaSolutionFinder" type="GammaGammaSolutionFinder">
+    <parameter name="InputParticleCollectionName1" value="GammaGammaCandidatePi0s" />
+    <parameter name="InputParticleCollectionName2" value="GammaGammaCandidateEtas" />
+    <parameter name="InputParticleCollectionName3" value="GammaGammaCandidateEtaPrimes" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaParticles" />
+  </processor>
+
+
+  <processor name="MyDistilledPFOCreator" type="DistilledPFOCreator">
+    <parameter name="InputParticleCollectionName1" value="PandoraPFOsWithoutIsoLep" />
+    <parameter name="InputParticleCollectionName2" value="GammaGammaParticles" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="DistilledPFOs" />
+  </processor>
+
+
+  <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+    <!--Performs particle identification-->
+    <!--Debugging?-->
+    <parameter name="Debug" type="int">1 </parameter>
+    <!--Boundaries for energy binning-->
+    <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+    <!--Name of files containing pdfs for charged particles-->
+    <parameter name="FilePDFName" type="StringVec"> ${PidPDFFile} </parameter>
+    <!-- Whether MVA low momentum mu/pi is used or not-->
+    <parameter name="UseLowMomentumMuPiSeparation" type="bool">
+      true
+    </parameter>
+    <parameter name="FileWeightFormupiSeparationName" type="StringVec"> ${PidWeightFiles} </parameter>
+    
+    <!--dE/dx parameters for each particle-->
+    <parameter name="dEdxParameter_electron" type="FloatVec">
+      -2.40638e-03 7.10337e-01 2.87718e-01 -1.71591e+00 0.0
+    </parameter>
+    <parameter name="dEdxParameter_muon" type="FloatVec">
+      8.11408e-02 9.92207e-01 7.58509e+05 -1.70167e-01 4.63670e-04
+    </parameter>
+    <parameter name="dEdxParameter_pion" type="FloatVec">
+      8.10756e-02 -1.45051e+06 -3.09843e+04 2.84056e-01 3.38131e-04
+    </parameter>
+    <parameter name="dEdxParameter_kaon" type="FloatVec">
+      7.96117e-02 4.13335e+03 1.13577e+06 1.80555e-01 -3.15083e-04
+    </parameter>
+    <parameter name="dEdxParameter_proton" type="FloatVec">
+      7.78772e-02 4.49300e+04 9.13778e+04 1.50088e-01 -6.64184e-04
+    </parameter>
+
+    <!--dE/dx normalization-->
+    <parameter name="dEdxNormalization" type="float">
+      1.350e-7
+    </parameter>
+
+    <!--dE/dx error factor-->
+    <parameter name="dEdxErrorFactor" type="float">
+      7.55
+    </parameter>
+
+    <!-- Method: Maximum Likelihood(0) or Bayesian(1)-->
+    <parameter name="UseBayesian" type="int">
+      0
+    </parameter>
+
+    <!--Name of the PFO collection-->
+    <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+  </processor>
+
+
+  <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
+    <!--links RecontructedParticles to the MCParticle based on number of hits used-->
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> WARNING0  </parameter> 
+    <!--  Input collections: mcparticles, pfos, clusters and tracks 
+          PFOs already connect to tracks and clusters, so what we do in this processor is to connect
+          tracks and clusters to mcparticles ... 
+          The values given here are the defaults, so they don't really need to be
+          specified -->
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
+    <!--Name of the ReconstructedParticles input collection-->
+    <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+    <!--Name of the Cluster collection -->
+    <parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters </parameter>
+    <!--Name of the Tracks input collection-->
+    <parameter name="TrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
+    
+    <!-- Don't change any of these hit related collections if you're not very sure you know what you are doing.
+         In any case, the ones listed here are the defaults, so they can be removed from
+         this steering -->
+    <!--  Simulated tracker hits (has the conection to MCParticles -->
+    <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">
+      VXDCollection 
+      SITCollection 
+      FTD_PIXELCollection 
+      FTD_STRIPCollection 
+      TPCCollection 
+      SETCollection  
+    </parameter>
+    <!--  Connections from tracker hits (connected to tracks) to sim tracker hits (connects to MC particle) -->
+    <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">
+      VXDTrackerHitRelations 
+      SITTrackerHitRelations
+      FTDPixelTrackerHitRelations 
+      FTDSpacePointRelations 
+      TPCTrackerHitRelations 
+      SETSpacePointRelations  
+    </parameter>
+    <!-- same for the calos: Simulated calo hits (has the connection to MCParticles) -->
+    <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
+      BeamCalCollection
+      EcalBarrelCollection
+      EcalEndcapsCollection
+      EcalEndcapRingCollection
+      HcalBarrelRegCollection
+      HcalEndcapsCollection
+      HcalEndcapRingCollection
+      LHCalCollection
+      LumiCalCollection
+      YokeBarrelCollection
+      YokeEndcapsCollection
+    </parameter> 
+    <!-- Connections from calo hist (connected to clusters) tp sim calo hits  (connects to MC particle) -->
+    <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
+      RelationCaloHit
+      RelationLHcalHit
+      RelationMuonHit
+      RelationLcalHit
+      RelationBCalHit
+    </parameter> 
+    
+    <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
+    <parameter name="KeepDaughtersPDG" type="IntVec"> 22 111 310 13 211 321</parameter>
+    
+    <!--Names of the output collections -->
+    <!--Name of the skimmed MCParticle  output collection-->
+    <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
+    
+    <!-- links between tracks or clusters and mcparticles. The two sets differ
+         in what the weight means. These four will only be output if the
+         name is given here in the steering -->
+    <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthMarlinTrkTracksLink </parameter>  
+    <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> MarlinTrkTracksMCTruthLink </parameter>
+    <parameter name="MCTruthClusterLinkName" type="string" lcioOutType="LCRelation"> MCTruthClusterLink </parameter>
+    <parameter name="ClusterMCTruthLinkName" type="string" lcioOutType="LCRelation"> ClusterMCTruthLink </parameter>
+
+
+    <!-- Links PFO <-> MCParticles. Only RecoMCTruthLink is output by default,
+         to also get the reverse link, MCTruthRecoLinkName must be given here -->
+    <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
+    <parameter name="MCTruthRecoLinkName" type="string" lcioOutType="LCRelation"> MCTruthRecoLink </parameter>
+    <!-- set to true to get the weights in RecoMCTruthLink to include both weights to
+         tracks and clusters. False implies that only the true particle that
+         gives most contributions to the track of the PFO (charged PFOs), or
+         to the cluster (neutral ones) is linked to the PFO -->
+    <parameter name="FullRecoRelation" type="bool"> true </parameter>
+    <!-- further options -->
+    <!--true: use relations for TrackerHits, false : use getRawHits -->
+    <parameter name="UseTrackerHitRelations" type="bool"> true </parameter>
+    <!--If Using Particle Gun Ignore Gen Stat-->
+    <parameter name="UsingParticleGun" type="bool"> false </parameter>
+  </processor>
+
+
+  <processor name="VertexFinder" type="LcfiplusProcessor">
+    <!-- run primary and secondary vertex finders -->
+    <parameter name="Algorithms" type="stringVec"> PrimaryVertexFinder BuildUpVertex </parameter>
+    <parameter name="ReadSubdetectorEnergies" type="int" value="1"/> <!-- true for ILD -->
+    <parameter name="UpdateVertexRPDaughters" type="int" value="1"/> <!-- false for non-updative PandoraPFOs -->
+    <parameter name="TrackHitOrdering" type="int" value="1"/> <!-- Track hit ordering: 0=ILD-LOI,SID-DBD, 1=ILD-DBD -->
+    <parameter name="PrintEventNumber" type="int" value="0"/> <!-- 0 for not printing event number, n for printing every n events -->
+    <!-- specify input collection names -->
+    <parameter name="PFOCollection" type="string" value="PandoraPFOs" />
+    <parameter name="PrimaryVertexCollectionName" type="string" value="PrimaryVertex" />
+    <parameter name="BuildUpVertexCollectionName" type="string" value="BuildUpVertex" />
+    <parameter name="BuildUpVertex.V0VertexCollectionName" type="string" value="BuildUpVertex_V0" />
+    <!-- parameters for primary vertex finder -->
+    <parameter name="PrimaryVertexFinder.TrackMaxD0" type="double" value="20." />
+    <parameter name="PrimaryVertexFinder.TrackMaxZ0" type="double" value="20." />
+    <parameter name="PrimaryVertexFinder.TrackMinVtxFtdHits" type="int" value="1" />
+    <parameter name="PrimaryVertexFinder.Chi2Threshold" type="double" value="25." />
+    <!-- parameters for secondary vertex finder -->
+    <parameter name="BuildUpVertex.TrackMaxD0" type="double" value="10." />
+    <parameter name="BuildUpVertex.TrackMaxZ0" type="double" value="20." />
+    <parameter name="BuildUpVertex.TrackMinPt" type="double" value="0.1" />
+    <parameter name="BuildUpVertex.TrackMaxD0Err" type="double" value="0.1" />
+    <parameter name="BuildUpVertex.TrackMaxZ0Err" type="double" value="0.1" />
+    <parameter name="BuildUpVertex.TrackMinTpcHits" type="int" value="10000" />
+    <parameter name="BuildUpVertex.TrackMinFtdHits" type="int" value="10000" />
+    <parameter name="BuildUpVertex.TrackMinVxdHits" type="int" value="10000" />
+    <parameter name="BuildUpVertex.TrackMinVxdFtdHits" type="int" value="0" />
+    <parameter name="BuildUpVertex.PrimaryChi2Threshold" type="double" value="25." />
+    <parameter name="BuildUpVertex.SecondaryChi2Threshold" type="double" value="9." />
+    <parameter name="BuildUpVertex.MassThreshold" type="double" value="10." />
+    <parameter name="BuildUpVertex.MinDistFromIP" type="double" value="0.3" />
+    <parameter name="BuildUpVertex.MaxChi2ForDistOrder" type="double" value="1.0" />
+    <parameter name="BuildUpVertex.AssocIPTracks" type="int" value="1" />
+    <parameter name="BuildUpVertex.AssocIPTracksMinDist" type="double" value="0." />
+    <parameter name="BuildUpVertex.AssocIPTracksChi2RatioSecToPri" type="double" value="2.0" />
+    <parameter name="BuildUpVertex.UseV0Selection" type="int" value="1" />
+  </processor>
+
+</group>

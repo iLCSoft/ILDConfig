@@ -1,0 +1,471 @@
+
+<group name="TrackingReco">
+
+  <processor name="MyClupatraProcessor" type="ClupatraProcessor">
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+
+    <!--ClupatraProcessor : nearest neighbour clustering seeded pattern recognition-->
+    <!--the maximum chi2-distance for which a hit is considered for merging -->
+    <parameter name="Chi2Cut" type="float">100 </parameter>
+    <!--optionally create some debug collection with intermediate track segments and used and unused hits-->
+    <parameter name="CreateDebugCollections" type="bool"> false true  </parameter>
+    <!--Cut for distance between hits in mm-->
+    <parameter name="DistanceCut" type="float">40 </parameter>
+    <!--allowed fraction of hits in same pad row per track-->
+    <parameter name="DuplicatePadRowFraction" type="float">0.1 </parameter>
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool"> true </parameter>
+    <!--the maximum delta Chi2 for which a hit is added to a track segement-->
+    <parameter name="MaxDeltaChi2" type="float">35 </parameter>
+    <!--the maximum number of layers without finding a hit before hit search search is stopped -->
+    <parameter name="MaxStepWithoutHit" type="int">6 </parameter>
+    <!--minimum fraction of layers that have a given multiplicity, when forcing a cluster into sub clusters-->
+    <parameter name="MinLayerFractionWithMultiplicity" type="float">0.5 </parameter>
+    <!--minimum number of layers that have a given multiplicity, when forcing a cluster into sub clusters-->
+    <parameter name="MinLayerNumberWithMultiplicity" type="int">3 </parameter>
+    <!--minimum number of hits per cluster-->
+    <parameter name="MinimumClusterSize" type="int">6 </parameter>
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">false true </parameter>
+    <!--number of bins in z over total length of TPC - hits from different z bins are nver merged-->
+    <parameter name="NumberOfZBins" type="int">150 </parameter>
+    <!--Name of the output collection-->
+    <parameter name="OutputCollection" type="string" lcioOutType="Track">ClupatraTracks </parameter>
+    <!--Name of the output collection that has the individual track segments-->
+    <parameter name="SegmentCollectionName" type="string" lcioOutType="Track">ClupatraTrackSegments </parameter>
+
+    <!--number of pad rows used in initial seed clustering-->
+    <parameter name="PadRowRange" type="int">15 </parameter>
+    
+    <!--try to pick up hits from Si-trackers-->
+    <parameter name="pickUpSiHits" type="bool">false </parameter>
+    <!--name of the SIT hit collections - used to extend TPC tracks if (pickUpSiHits==true)-->
+    <parameter name="SITHitCollection" type="string">SITTrackerHits </parameter>
+    <!--name of the VXD hit collections - used to extend TPC tracks if (pickUpSiHits==true)-->
+    <parameter name="VXDHitCollection" type="string">VXDTrackerHits </parameter>
+    
+    <!--Smooth All Mesurement Sites in Fit-->
+    <parameter name="SmoothOn" type="bool">false </parameter>
+    <!--Name of the tpc hit input collections-->
+    <parameter name="TPCHitCollection" type="string" lcioInType="TrackerHit">TPCTrackerHits </parameter>
+    
+    <!--maximum radial distance [mm] from outer field cage of last hit, such that the track is considered to end at the end -->
+    <parameter name="TrackEndsOuterCentralDist" type="float">25 </parameter>
+    <!--maximum distance in z [mm] from endplate of last hit, such that the track is considered to end at the end -->
+    <parameter name="TrackEndsOuterForwardDist" type="float">40 </parameter>
+    <!--minimum curvature omega of a track segment for being considered a curler-->
+    <parameter name="TrackIsCurlerOmega" type="float">0.001 </parameter>
+    <!--maximum radial distance [mm] from inner field cage of first hit, such that the track is considered to start at the beginning -->
+    <parameter name="TrackStartsInnerDist" type="float">25 </parameter>
+
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">MESSAGE DEBUG5 </parameter-->
+  </processor>
+
+
+
+  <processor name="MyCellsAutomatonMV" type="DDCellsAutomatonMV">
+    <!--ForwardTracking reconstructs tracks through the FTDs-->
+    
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+    
+    <!--Name of the Cellular Automaton Tracking output collection-->
+    <parameter name="CATrackCollection" type="string" lcioOutType="Track"> CATracks </parameter>
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <!--Number of divisions in Phi-->
+    <parameter name="NDivisionsInPhi" type="int"> 160 </parameter>
+    <!--Number of divisions in Theta-->
+    <parameter name="NDivisionsInTheta" type="int"> 80 </parameter>
+    <!--Number of divisions in Phi in  order to create mini-vectors-->
+    <parameter name="NDivisionsInPhiMV" type="int"> 80 </parameter>
+    <!--Number of divisions in Theta  in  order to create mini-vectors-->
+    <parameter name="NDivisionsInThetaMV" type="int"> 80 </parameter>
+    <!--VXD Hit Collections-->
+    <parameter name="VTXHitCollectionName" type="StringVec"> VXDTrackerHits </parameter>
+    <!--SIT Hit Collections-->
+    <parameter name="SITHitCollectionName" type="StringVec"> SITTrackerHits </parameter>
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <!--Smooth All Measurement Sites in Fit-->
+    <parameter name="SmoothOn" type="bool">true </parameter>
+    <!--Cut on minimum PT-->
+    <parameter name="PTCut" type="double"> 0.0 </parameter>
+    <!--Use SIT-->
+    <parameter name="UseSIT" type="int"> 0 </parameter>
+    <!--Make a hit at IP-->
+    <parameter name="IPhit" type="int"> 1 </parameter>
+    <!--The chi2 probability value below which tracks will be cut-->
+    <parameter name="Chi2ProbCut" type="double">0.005 </parameter>
+    <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
+    <parameter name="HelixFitMax" type="double"> 100 </parameter>
+    <!--the maximum chi2/Ndf that is allowed as result of a Kalman fit-->
+    <parameter name="kalFitMax" type="double"> 10 </parameter>
+    <!--The minimum number of hits to create a track-->
+    <parameter name="HitsPerTrackMin" type="int"> 2 </parameter>
+    <!--Maximal number of hits for which a track with n hits is better than one with n-1hits-->
+    <parameter name="NHitsChi2" type="int"> 6 </parameter>
+    <!-- TrackState to use for initialization of the fit: -1: refit from hits [default], 1: AtIP, 2: AtFirstHit, 3: AtLastHit, 4:AtCalo -->
+    <parameter name="InitialTrackState" type="int"> 1</parameter>
+    <!--Fit direction: -1: backward [default], +1: forward-->
+    <parameter name="FitDirection" type="int"> +1 </parameter>
+    <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
+    <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
+    <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
+    <!--parameter name="TakeBestVersionOfTrack" type="bool">true </parameter-->
+    <!--If the automaton has more connections than this it will be redone with the next parameters-->
+    <parameter name="MaxConnectionsAutomaton" type="int"> 10000000 </parameter>
+    <!--Maximal number of hits allowed on a sector-->
+    <parameter name="MaxHitsPerSector" type="int">1000 </parameter>
+    <!--The maximum distance between two hits in adjacent layers in order to form a minivector-->
+    <parameter name="MaxDistance" type="double"> 5.0 </parameter>
+    <!--The difference in polar angle (in degrees)  between two hits in adjacent layers in order to form a minivector-->
+    <parameter name="MVHitsThetaDifference" type="double"> 0.1 </parameter>
+    <!--The difference in polar angle (in degrees)  between two hits in the INNER layer in order to form a minivector-->
+    <parameter name="MVHitsThetaDifferenceInner" type="double"> 0.1 </parameter>
+    <!--The difference in polar angle (in degrees)  between two hits in SIT-->
+    <parameter name="MVHitsThetaDifferenceSIT" type="double"> 3.5 </parameter>
+    <!--The maximum step between layers-->
+    <parameter name="StepMax" type="int"> 4 </parameter>
+    <!--The last layer that can be connected directly with the IP-->
+    <parameter name="LastLayerToIP" type="int"> 4 </parameter>
+   
+    <parameter name="Crit2_3DAngle_MV_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_3DAngle_MV_max" type="float"> 15.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_max" type="float"> 150.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_InnLayer_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_DeltaPhi_MV_InnLayer_max" type="float"> 5.0 </parameter>
+    <parameter name="Crit2_DeltaTheta_MV_min" type="float"> 0.0 </parameter>
+    <parameter name="Crit2_DeltaTheta_MV_max" type="float"> 150.0 </parameter>
+    <parameter name="Crit3_NoZigZag_MV_min" type="float"> -1.0 </parameter>
+    <parameter name="Crit3_NoZigZag_MV_max" type="float"> 1.0 </parameter>
+    <parameter name="Crit3_PT_MV_min" type="float"> 0.1 </parameter>
+    <parameter name="Crit3_PT_MV_max" type="float"> 999999 </parameter>   
+    <parameter name="Criteria" type="StringVec">
+      Crit2_DeltaPhi_MV
+      Crit2_DeltaTheta_MV
+      Crit3_PT_MV
+    </parameter>
+   
+    <!--Name of the vertex detector element-->
+    <parameter name="VXDName" type="string">VXD </parameter>
+    <!--Name of the inner tracker detector element-->
+    <parameter name="InnerTrackerName" type="string">SIT </parameter>
+    <!--Name of the outer tracker detector element-->
+    <parameter name="OuterTrackerName" type="string">SET </parameter>
+
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+   
+  </processor> 
+
+
+  <processor name="MyExtrToSIT" type="ExtrToSIT">
+    <!--ExtrToSIT refits an input track collection, producing a new collection of tracks.-->
+
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <!--Name of the input track collection-->
+    <!--parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> MarlinTrkTracks </parameter-->
+    <!--parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> TruthTracks </parameter-->
+    <parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> CATracks </parameter>
+    <!--Name of the SITTrackerHit collection-->
+    <!--parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter-->
+    <parameter name="digitisedSITHits" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter>
+    <!--Name of the VTXTrackerHit collection-->
+    <parameter name="digitisedVXDHits" type="string" lcioInType="TrackerHit"> VXDTrackerHits </parameter>
+    <!--Name of the MCParticle-Track Relations collection for input tracks-->
+    <!--parameter name="InputTrackRelCollection" type="string" lcioInType="LCRelation"> MarlinTrkTracksMCP </parameter-->
+    <!--parameter name="InputTrackRelCollection" type="string" lcioInType="LCRelation"> TruthTracksMCP </parameter-->
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <!--maximum allowable chi2 increment when moving from one site to another-->
+    <parameter name="Max_Chi2_Incr" type="double"> 100 </parameter>
+    <!--minimum acceptable no of hits for the TPC tracks-->
+    <parameter name="TPCHitsCut" type="int"> 100 </parameter>
+    <!--Which layer should the seed be propagated to-->
+    <parameter name="PropagateToLayer" type="double"> 0 </parameter>
+    <!--maximum acceptable chi2/ndof for the TPC tracks-->
+    <parameter name="Chi2NDoFCut" type="int"> 100 </parameter>
+    <!--maximum acceptable Z0 at IP-->
+    <parameter name="Z0Cut" type="float"> 25 </parameter>
+    <!--maximum acceptable D0 at IP-->
+    <parameter name="D0Cut" type="float"> 2500000 </parameter>
+    <!--times d0(Z0) acceptable from track extrapolation point-->
+    <parameter name="SearchSigma" type="double"> 10.0 </parameter>
+    <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple or NoSelection-->
+    <parameter name="BestSubsetFinder" type="string"> SubsetSimple </parameter>
+    <!--Name of the output track collection-->
+    <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track"> SiTracks </parameter>
+    <!--Name of the MCParticle-Track Relations collection for output tracks-->
+    <parameter name="OutputTrackRelCollection" type="string" lcioOutType="LCRelation"> SiTracksMCP </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+  </processor>
+
+
+
+  <processor name="MyForwardTracking" type="ForwardTracking">
+    <!--ForwardTracking reconstructs tracks through the FTDs-->
+
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+
+    <!--Name of the Forward Tracking output collection-->
+    <parameter name="ForwardTrackCollection" type="string" lcioOutType="Track">ForwardTracks </parameter>
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <!--FTD Hit Collections-->
+    <parameter name="FTDHitCollections" type="StringVec">FTDPixelTrackerHits FTDSpacePoints</parameter>
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <!--Smooth All Measurement Sites in Fit-->
+    <parameter name="SmoothOn" type="bool">false </parameter>
+    <!--The chi2 probability value below which tracks will be cut-->
+    <parameter name="Chi2ProbCut" type="double">0.0 </parameter>
+    <!--the maximum chi2/Ndf that is allowed as result of a helix fit-->
+    <parameter name="HelixFitMax" type="double">500 </parameter>
+    <!--The maximum distance of overlapping hits-->
+    <parameter name="OverlappingHitsDistMax" type="double">3.5 </parameter>
+    <!--The minimum number of hits to create a track-->
+    <parameter name="HitsPerTrackMin" type="int">3 </parameter>
+    <!--The method used to find the best non overlapping subset of tracks. Available are: SubsetHopfieldNN and SubsetSimple-->
+    <parameter name="BestSubsetFinder" type="string">SubsetSimple </parameter>
+    <!--Whether when adding hits to a track only the track with highest quality should be further processed-->
+    <parameter name="TakeBestVersionOfTrack" type="bool">true </parameter>
+    <!--If the automaton has more connections than this it will be redone with the next parameters-->
+    <parameter name="MaxConnectionsAutomaton" type="int">100000 </parameter>
+    <!--Maximal number of hits allowed on a sector-->
+    <parameter name="MaxHitsPerSector" type="int">1000 </parameter>
+    
+    <parameter name="Crit2_DeltaPhi_min" type="float">0 0</parameter>
+    <parameter name="Crit2_DeltaPhi_max" type="float">30 0.8</parameter>
+    <parameter name="Crit2_DeltaRho_min" type="float">20</parameter>
+    <parameter name="Crit2_DeltaRho_max" type="float">150</parameter>
+    <parameter name="Crit2_RZRatio_min" type="float">1.002</parameter>
+    <parameter name="Crit2_RZRatio_max" type="float">1.08</parameter>
+    <parameter name="Crit2_StraightTrackRatio_min" type="float">0.9 0.99</parameter>
+    <parameter name="Crit2_StraightTrackRatio_max" type="float">1.02 1.01</parameter>
+    
+    <parameter name="Crit3_3DAngle_min" type="float">0 0</parameter>
+    <parameter name="Crit3_3DAngle_max" type="float">10 0.35</parameter>
+    <parameter name="Crit3_ChangeRZRatio_min" type="float">0.995 0.999</parameter>
+    <parameter name="Crit3_ChangeRZRatio_max" type="float">1.015 1.001</parameter>
+    <parameter name="Crit3_IPCircleDist_min" type="float">0 0</parameter>
+    <parameter name="Crit3_IPCircleDist_max" type="float">20 1.5</parameter>
+    <parameter name="Crit3_PT_min" type="float">0.1</parameter>
+    <parameter name="Crit3_PT_max" type="float">99999999</parameter>
+    
+    <parameter name="Crit4_3DAngleChange_min" type="float">0.8 0.99</parameter>
+    <parameter name="Crit4_3DAngleChange_max" type="float">1.3 1.01</parameter>
+    <parameter name="Crit4_DistToExtrapolation_min" type="float">0 0</parameter>
+    <parameter name="Crit4_DistToExtrapolation_max" type="float">1.0 0.05</parameter>
+    
+    <parameter name="Criteria" type="StringVec">
+      Crit2_DeltaPhi
+      Crit2_DeltaRho
+      Crit2_RZRatio
+      Crit2_StraightTrackRatio
+      
+      Crit3_3DAngle
+      Crit3_ChangeRZRatio
+      Crit3_IPCircleDist
+      Crit3_PT
+      
+      Crit4_DistToExtrapolation
+      Crit4_3DAngleChange
+    </parameter>
+    
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+    
+  </processor>
+
+
+  <processor name="MyTrackSubsetProcessor" type="TrackSubsetProcessor">
+    <!--TrackSubsetProcessor takes tracks from multiple sources and outputs them (or modified versions, or a subset of them) as one track collection.-->
+    <!--Remove short tracks from the list that have a longer track sharing the same hits-->
+    <parameter name="RemoveShortTracks" type="bool">true </parameter>
+
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool">true </parameter>
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool">true </parameter>
+    <!--The parameter omega for the HNN. Controls the influence of the quality indicator.-->
+    <parameter name="Omega" type="double">0.75 </parameter>
+    <!--Smooth All Measurement Sites in Fit-->
+    <parameter name="SmoothOn" type="bool">false </parameter>
+    <!--A vector of the input track collections-->
+    <parameter name="TrackInputCollections" type="StringVec">ForwardTracks SiTracks  </parameter>
+    <!--Name of the output track collection-->
+    <parameter name="TrackOutputCollection" type="string" lcioOutType="Track">SubsetTracks </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+
+
+  <processor name="MyFullLDCTracking_MarlinTrk" type="FullLDCTracking_MarlinTrk">
+    <!--Performs full tracking in ILD detector-->
+    <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
+    <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+
+    <!--Cut on Opening Angle for forced merging of Si and TPC segments-->
+    <parameter name="AngleCutForForcedMerging" type="float">0.05 </parameter>
+    <!--Cut on Opening Angle for merging Si and TPC segments-->
+    <parameter name="AngleCutForMerging" type="float">0.1 </parameter>
+    <!--Assign ETD Hits-->
+    <parameter name="AssignETDHits" type="int">0 </parameter>
+    <!--Assign left over FTD hits-->
+    <parameter name="AssignFTDHits" type="int">1 </parameter>
+    <!--Assign SET Hits-->
+    <parameter name="AssignSETHits" type="int"> 1 </parameter>
+    <!--Assign left over SIT hits-->
+    <parameter name="AssignSITHits" type="int">1 </parameter>
+    <!--Assign left over TPC hits-->
+    <parameter name="AssignTPCHits" type="int">0 </parameter>
+    <!--Assign left over VTX hits-->
+    <parameter name="AssignVTXHits" type="int">1 </parameter>
+    <!--Cut on fit Chi2-->
+    <parameter name="Chi2FitCut" type="float">100 </parameter>
+    <!--Cut on the number of the Si hits for tracks with no TPC hits-->
+    <parameter name="CutOnSiHits" type="int">4 </parameter>
+    <!--Cut on the number of the TPC hits for tracks with no Si hits-->
+    <parameter name="CutOnTPCHits" type="int">10 </parameter>
+    <!--Cut on the track parameter D0-->
+    <parameter name="CutOnTrackD0" type="float">500 </parameter>
+    <!--Cut on the track parameter Z0-->
+    <parameter name="CutOnTrackZ0" type="float">500 </parameter>
+    <!--Cut on D0 difference for forced merging of Si and TPC segments-->
+    <parameter name="D0CutForForcedMerging" type="float">50 </parameter>
+    <!--Cut on D0 difference for merging of Si and TPC segments-->
+    <parameter name="D0CutForMerging" type="float">500 </parameter>
+    <!--Cut on D0 difference for merging TPC segments-->
+    <parameter name="D0CutToMergeTPCSegments" type="float">100 </parameter>
+    <!--Activate debugging?-->
+    <parameter name="Debug" type="int">0 </parameter>
+    <!--Cut on dP/P difference for merging TPC segments-->
+    <parameter name="DeltaPCutToMergeTPCSegments" type="float">0.1 </parameter>
+    <!--Use Energy Loss in Fit-->
+    <parameter name="EnergyLossOn" type="bool"> true </parameter>
+    <!--Cut on distance between track and FTD hits-->
+    <parameter name="FTDHitToTrackDistance" type="float">2 </parameter>
+    <!--FTD Pixel Hit Collection Name-->
+    <parameter name="FTDPixelHitCollectionName" type="string" lcioInType="TrackerHitPlane"> FTDPixelTrackerHits </parameter>
+    <!--FTD FTDSpacePoint Collection Name-->
+    <parameter name="FTDSpacePointCollection" type="string" lcioInType="TrackerHit"> FTDSpacePoints </parameter>
+    <!--Forbid overlap in Z for combining TPC segments with tracks having Si hits-->
+    <parameter name="ForbidOverlapInZComb" type="int">0 </parameter>
+    <!--Forbid overlap in Z for the merged TPC segments-->
+    <parameter name="ForbidOverlapInZTPC" type="int">0 </parameter>
+    <!--Force merging of Si and TPC segments?-->
+    <parameter name="ForceSiTPCMerging" type="int">0 </parameter>
+    <!--Force merging of TPC Segments?-->
+    <parameter name="ForceTPCSegmentsMerging" type="int"> 0 </parameter>
+    <!--Value used for the initial d0 variance of the trackfit-->
+    <parameter name="InitialTrackErrorD0" type="float">1e+06 </parameter>
+    <!--Value used for the initial omega variance of the trackfit-->
+    <parameter name="InitialTrackErrorOmega" type="float"> 0.00001 </parameter>
+    <!--Value used for the initial phi0 variance of the trackfit-->
+    <parameter name="InitialTrackErrorPhi0" type="float">100 </parameter>
+    <!--Value used for the initial tanL variance of the trackfit-->
+    <parameter name="InitialTrackErrorTanL" type="float">100 </parameter>
+    <!--Value used for the initial z0 variance of the trackfit-->
+    <parameter name="InitialTrackErrorZ0" type="float">1e+06 </parameter>
+    <!--LDC track collection name-->
+    <parameter name="LDCTrackCollection" type="string" lcioOutType="Track">MarlinTrkTracks </parameter>
+    <!--Maximum Chi-squared value allowed when assigning a hit to a track-->
+    <parameter name="MaxChi2PerHit" type="double"> 200 </parameter>
+    <!--Use MultipleScattering in Fit-->
+    <parameter name="MultipleScatteringOn" type="bool"> true </parameter>
+    <!--number of hits for outward extrapolation-->
+    <parameter name="NHitsExtrapolation" type="int">35 </parameter>
+    <!--Cut on Omega difference for forced merging of Si and TPC segments-->
+    <parameter name="OmegaCutForForcedMerging" type="float">0.15 </parameter>
+    <!--Cut on Omega difference for merging Si and TPC segments-->
+    <parameter name="OmegaCutForMerging" type="float">0.25 </parameter>
+    <!--Cut on Pt of tracks for merging TPC segments-->
+    <parameter name="PtCutToMergeTPCSegments" type="float">1.2 </parameter>
+    <!--Run MarlinTrk Diagnostics. MarlinTrk must be compiled with MARLINTRK_DIAGNOSTICS_ON defined-->
+    <parameter name="RunMarlinTrkDiagnostics" type="bool">false </parameter>
+    <!--SET Hit Collection Name-->
+    <parameter name="SETHitCollection" type="string" lcioInType="TrackerHit">SETSpacePoints </parameter>
+    <!--Cut on distance between track and SET hits-->
+    <parameter name="SETHitToTrackDistance" type="float">50 </parameter>
+    <!--SIT Hit Collection Name-->
+    <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter>
+    <!--Cut on distance between track and SIT hits-->
+    <parameter name="SITHitToTrackDistance" type="float">2 </parameter>
+    <!--Si Track Collection-->
+    <parameter name="SiTracks" type="string" lcioInType="Track">SubsetTracks </parameter>
+    <!--Si Track to Collection-->
+    <parameter name="SiTracksMCPRelColl" type="string" lcioInType="LCRelation">SubsetTracksMCTruthLink </parameter>
+    <!--Smooth All Mesurement Sites in Fit-->
+    <parameter name="SmoothOn" type="bool">true </parameter>
+    <!--TPC Hit Collection Name-->
+    <parameter name="TPCHitCollection" type="string" lcioInType="TrackerHit">TPCTrackerHits </parameter>
+    <!--Cut on distance between track and TPC hits-->
+    <parameter name="TPCHitToTrackDistance" type="float">15 </parameter>
+    <!--TPC Track Collection-->
+    <parameter name="TPCTracks" type="string" lcioInType="Track">ClupatraTracks </parameter>
+    <!--TPC Track to MCP Relation Collection Name-->
+    <parameter name="TPCTracksMCPRelColl" type="string" lcioInType="LCRelation">TPCTracksMCTruthLink </parameter>
+    <!--VTX Hit Collection Name-->
+    <parameter name="VTXHitCollection" type="string" lcioInType="TrackerHit">VXDTrackerHits </parameter>
+    <!--Cut on distance between track and VTX hits-->
+    <parameter name="VTXHitToTrackDistance" type="float">1.5 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+    <!--Cut on Z0 difference for forced merging of Si and TPC segments-->
+    <parameter name="Z0CutForForcedMerging" type="float">200 </parameter>
+    <!--Cut on Z0 difference for merging of Si and TPC segments-->
+    <parameter name="Z0CutForMerging" type="float">1000 </parameter>
+    <!--Cut on Z0 difference for merging TPC segments-->
+    <parameter name="Z0CutToMergeTPCSegments" type="float">5000 </parameter>
+    <!--Cut on cos theta between the two momentum vectors when considering merger of high Pt tracks-->
+    <parameter name="cosThetaCutHighPtMerge" type="float">0.99 </parameter>
+    <!--cut on cos theta between the two momentum vectors when considering merger of high Pt tracks for softer dp/p cut-->
+    <parameter name="cosThetaCutSoftHighPtMerge" type="float">0.998 </parameter>
+    <!--cut on 3D distance between hit and helix extrapolation when considering merger of high Pt tracks-->
+    <parameter name="hitDistanceCutHighPtMerge" type="float">25 </parameter>
+    <!--cut on maximum fraction of outliers when considering merger of high Pt tracks-->
+    <parameter name="maxFractionOfOutliersCutHighPtMerge" type="float">0.95 </parameter>
+    <!--cut for max 3D distance between any hit and helix extrapolation when considering merger of high Pt tracks-->
+    <parameter name="maxHitDistanceCutHighPtMerge" type="float">50 </parameter>
+    <!--cut on dp/p when considering merger of high Pt tracks-->
+    <parameter name="momDiffCutHighPtMerge" type="float">0.01 </parameter>
+    <!--softer cut on dp/p when considering merger of high Pt tracks-->
+    <parameter name="momDiffCutSoftHighPtMerge" type="float">0.25 </parameter>
+  </processor>
+
+
+  <processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
+    <!--Energy Loss Error for TPC-->
+    <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
+    <!--LDC Track collectoin name-->
+    <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+  </processor>
+
+
+  <processor name="MyV0Finder" type="V0Finder">
+    <parameter name="TrackCollection" type="string"> MarlinTrkTracks</parameter>
+    <parameter name="MassRangeGamma"  type="float">  0.01 </parameter>
+    <parameter name="MassRangeK0S"    type="float">  0.02 </parameter>
+    <parameter name="MassRangeL0"     type="float">  0.02 </parameter>
+  </processor>
+
+
+  <processor name="MyKinkFinder" type="KinkFinder">
+    <parameter name="DebugPrinting" type="int"> 0</parameter>
+    <parameter name="TrackCollection" type="string"> MarlinTrkTracks</parameter>
+  </processor>
+  
+</group>
+

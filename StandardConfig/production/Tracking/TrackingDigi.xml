@@ -1,0 +1,201 @@
+
+
+<group name="TrackingDigi">
+
+  <processor name="MySplitCollectionByLayer" type="SplitCollectionByLayer">
+    <!--split a hit collection based on the layer number of the hits -->
+    <!--Name of the input collection with hits-->
+    <parameter name="InputCollection" type="string">FTDCollection </parameter>
+    <!--Name of the output collection with start and end layer number-->
+    <parameter name="OutputCollections" type="StringVec">FTD_PIXELCollection 0 1 FTD_STRIPCollection 2 6  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+
+  <processor name="VXDPlanarDigiProcessor_CMOSVXD5" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> VXD </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool">false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float"> 0.003 0.003 0.003 0.003 0.003 0.003 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float"> 0.003 0.003 0.003 0.003 0.003 0.003  </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+
+
+  <processor name="SITPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> SIT </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool"> false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float">0.007 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float">0.007 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SITTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">SITTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+
+
+  <processor name="FTDPixelPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> FTD </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool">false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float">0.003 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float">0.003 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit"> FTD_PIXELCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDPixelTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">FTDPixelTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+
+
+  <processor name="FTDStripPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> FTD </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool">true </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float">0.007 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float">0.0 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">FTD_STRIPCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDStripTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">FTDStripTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+
+
+  <processor name="FTDDDSpacePointBuilder" type="DDSpacePointBuilder">
+    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+    <!--Name of sub detector-->
+    <parameter name="SubDetectorName" type="string"> FTD </parameter>
+    <!--The length of the strips of the subdetector in mm-->
+    <parameter name="StripLength" type="Double"> 2.500000000e+02 </parameter>
+    <!--Name of the SpacePoint SimTrackerHit relation collection-->
+    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> FTDSpacePointRelations </parameter>
+    <!--SpacePointsCollection-->
+    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> FTDSpacePoints </parameter>
+    <!--TrackerHitCollection-->  
+    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> FTDStripTrackerHits </parameter>
+    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> FTDStripTrackerHitRelations </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+
+
+  <processor name="SETDDSpacePointBuilder" type="DDSpacePointBuilder">
+    <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
+    <!--Name of sub detector-->
+    <parameter name="SubDetectorName" type="string"> SET </parameter>
+    <!--The length of the strips of the subdetector in mm-->
+    <parameter name="StripLength" type="Double"> 9.200000000e+01 </parameter>
+    <!--Name of the SpacePoint SimTrackerHit relation collection-->
+    <parameter name="SimHitSpacePointRelCollection" type="string" lcioOutType="LCRelation"> SETSpacePointRelations </parameter>
+    <!--SpacePointsCollection-->
+    <parameter name="SpacePointsCollection" type="string" lcioOutType="TrackerHit"> SETSpacePoints </parameter>
+    <!--TrackerHitCollection-->  
+    <parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHitPlane"> SETTrackerHits </parameter>
+    <!--The name of the input collection of the relations of the TrackerHits to SimHits-->
+    <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation"> SETTrackerHitRelations </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+  
+
+  <processor name="MyTPCDigiProcessor" type="DDTPCDigiProcessor">
+    <!--Produces TPC TrackerHit collection from SimTrackerHit collection, smeared in RPhi and Z. A search is made for adjacent hits on a pad row, if they are closer in z and r-phi than the steering parameters _doubleHitResRPhi (default value 2.0 mm) and _doubleHitResZ (default value 5.0 mm) they are considered to overlap. Clusters of hits smaller than _maxMerge (default value 3) are merged into a single tracker hit, with the position given as the average poision of the hits in phi and in z. Clusters which have _maxMerge hits or more are determined to be identifiable as multiple hits, and are not added to the tracker hit collection. This of course means that good hits caught up in a cluster of background hits will be lossed.-->
+
+    <!--R-Phi Diffusion Coefficent in TPC-->
+    <parameter name="DiffusionCoeffRPhi" type="float">0.025 </parameter>
+    <!--Z Diffusion Coefficent in TPC-->
+    <parameter name="DiffusionCoeffZ" type="float">0.08 </parameter>
+    <!--Defines the minimum distance for two seperable hits in RPhi-->
+    <parameter name="DoubleHitResolutionRPhi" type="float">2 </parameter>
+    <!--Defines the minimum distance for two seperable hits in Z-->
+    <parameter name="DoubleHitResolutionZ" type="float">5 </parameter>
+    <!--Defines spatial slice in RP-->
+    <parameter name="HitSortingBinningRPhi" type="float">2 </parameter>
+    <!--Defines spatial slice in Z-->
+    <parameter name="HitSortingBinningZ" type="float">5 </parameter>
+    <!--Defines the maximum number of adjacent hits which can be merged-->
+    <parameter name="MaxClusterSizeForMerge" type="int">3 </parameter>
+    <!--Number of Effective electrons per pad in TPC-->
+    <parameter name="N_eff" type="int">22 </parameter>
+    <!--Pad Phi Resolution constant in TPC-->
+    <parameter name="PointResolutionPadPhi" type="float">0.9 </parameter>
+    <!--R-Phi Resolution constant in TPC-->
+    <parameter name="PointResolutionRPhi" type="float">0.05 </parameter>
+    <!--TPC Z Resolution Coefficent independent of diffusion-->
+    <parameter name="PointResolutionZ" type="float">0.4 </parameter>
+    <!--whether or not to use hits without proper cell ID (pad row)-->
+    <parameter name="RejectCellID0" type="int">1 </parameter>
+    <!--Name of the LowPt SimTrackerHit collection Produced by Mokka TPC Driver TPC0X-->
+    <parameter name="TPCLowPtCollectionName" type="string" lcioInType="SimTrackerHit">TPCLowPtCollection </parameter>
+    <!--Name of the default pad-row based SimTrackerHit collection-->
+    <parameter name="TPCPadRowHitCollectionName" type="string" lcioInType="SimTrackerHit">TPCCollection </parameter>
+    <!--Name of the additional space point collection which provides additional guide hits between pad row centers.-->
+    <parameter name="TPCSpacePointCollectionName" type="string" lcioInType="SimTrackerHit">TPCSpacePointCollection </parameter>
+    <!--Name of the Output TrackerHit collection-->
+    <parameter name="TPCTrackerHitsCol" type="string" lcioOutType="TrackerHit"> TPCTrackerHits </parameter>
+    <!--Name of the Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">TPCTrackerHitRelations </parameter>
+
+    <!--Gap size in mm of the gaps between the endplace modules in Phi-->
+    <parameter name="TPCEndPlateModuleGapPhi" type="float"> 1. </parameter>
+    <!--Gap size in mm of the gaps between the endplace modules in R-->
+    <parameter name="TPCEndPlateModuleGapR" type="float">1. </parameter>
+    <!--Number of modules in the rings of the TPC endplate-->
+    <parameter name="TPCEndPlateModuleNumbers" type="IntVec">14 18 23 28 32 37 42 46  </parameter>
+    <!--Phi0s of modules in the rings of the TPC endplate-->
+    <parameter name="TPCEndPlateModulePhi0s" type="FloatVec">
+      0  0.17453292519943298  0.030350516853376176  0.2108457469509264  0.11998920441304516  0.1600004647682326  0.02051011203843622  0.062176216344090166
+    </parameter>
+
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string"> MESSAGE </parameter-->
+  </processor>  
+  
+</group>
+
+
