@@ -1,7 +1,21 @@
+<!-- 
+  Top level Marlin steering file defining the ILD reconstruction chain.
+  Mandatory parameters :
+    * --constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
+    * --constant.DetectorModel : the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
+    * --global.LCIOInputFiles : The input lcio input file(s)
+  
+  Optional parameters :
+    * --constant.OverlayEnergy : the center of mass energy for the overlay background. Must be one of these values : 250, 350, 500, 1000. By default, nothing is run (Empty) 
+    * --constant.PandoraSettingsFile : The pandora settings file to use (default is PandoraSettings/PandoraSettingsDefault.xml)
+    * --constant.PidPDFFile : A single root file name for the PID likelihood processor
+    * --constant.PidWeightFiles : A list (space separated) of XML files containing weights for low momentum pi/mu separation (from TMVA)
+
+  Author : Remi Ete, DESY
+-->
+
 
 <marlin>
-  
-  
   <constants>
     <!-- ***** Global constant for reconstruction ***** -->
     <!-- The lcgeo directory where to look for the ILD model -->
@@ -66,16 +80,27 @@
   
   <!-- ***** Execute section ***** -->
   <execute>
+    <!-- Initialization processors -->
     <group name="Init" />
+    <!-- Overlay background (if any) -->
     <group name="BgOverlay" />
+    <!-- Tracking digitizers -->
     <group name="TrackingDigi" />
+    <!-- Tracking reconstruction -->
     <group name="TrackingReco" />
+    <!-- Ecal digitizers -->
     <group name="EcalDigi" />
+    <!-- Hcal digitizers -->
     <group name="HcalDigi" />
+    <!-- Fcal digitizers -->
     <group name="FcalDigi" />
+    <!-- Muon digitizer(s) -->
     <group name="MuonDigi" />
+    <!-- Particle flow reconstruction -->
     <group name="ParticleFlow" />
+    <!-- High level reconstruction -->
     <group name="HighLevelReco" />
+    <!-- Output processors -->
     <group name="Output" />
   </execute>
   
