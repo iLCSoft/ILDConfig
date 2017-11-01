@@ -21,7 +21,7 @@
     <!-- The lcgeo directory where to look for the ILD model -->
     <constant name="lcgeo_DIR" value="/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-04/lcgeo/v00-13-04" />
     <!-- ILD detector model -->
-    <constant name="DetectorName" value="ILD_l4_v02" />
+    <constant name="DetectorName" value="ILD_l4_o1_v02" />
     <!-- The full compact file name -->
     <constant name="CompactFile" value="${lcgeo_DIR}/ILD/compact/${DetectorName}/${DetectorName}.xml" />
     <!-- ILD calibration file -->
