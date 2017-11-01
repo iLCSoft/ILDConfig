@@ -17,18 +17,22 @@ They can also be used as a mini-test after installation of a new (complete) ilcs
 release.
 
 For more information on the iLCSoft tools refer to the [iLCSoft Portal](http://ilcsoft.desy.de)
-or directly to the [source code documentation](http://ilcsoft.desy.de/v01-19-01/package_doc.html) of the individual packages.
+or directly to the [source code documentation](http://ilcsoft.desy.de/v01-19-04/package_doc.html) of the individual packages.
 
+## *) If you are using DESY Green Ubuntu Desktops (particular the Dell OptiPlex 760 and the new Dell OptiPlex 3020 Micro)
+### And you want to run CEDViewer, before doing ssh to the remote computer (NAF2) you need to execute:
+
+        export LIBGL_ALWAYS_INDIRECT=1 # On your LOCAL computer
 
 ## 1. initialize the current ilcsoft release, e.g.
    
    
-   source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-01/init_ilcsoft.sh
+        source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-04/init_ilcsoft.sh
 
 
 ## 2. run the lcgeo/ddsim simulation example 
 
-    ddsim --inputFiles ./bbudsc_3evt.stdhep --outputFile=./bbudsc_3evt.slcio --compactFile $lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml --steeringFile=./ddsim_steer.py
+    ddsim --inputFiles ./bbudsc_3evt.stdhep --outputFile=./bbudsc_3evt.slcio --compactFile $lcgeo_DIR/ILD/compact/ILD_l4_v02/ILD_l4_v02.xml --steeringFile=./ddsim_steer.py
 
 
 this creates the file:    bbudsc_3evt.slcio
@@ -39,7 +43,7 @@ You can now examine the collections in the file:
 
 ## 3. create a gear file for this model 
 
-	convertToGear default $lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml gear_ILD_l1_v01_dd4hep.xml
+	convertToGear default $lcgeo_DIR/ILD/compact/ILD_l4_v02/ILD_l4_v02.xml gear_ILD_l4_v02_dd4hep.xml
 
   This creates a gear file for the ILD model and is currently still needed when running with 
   DD4hep/lcgeo as some processors have not yet been updated
@@ -48,8 +52,8 @@ You can now examine the collections in the file:
 ## 4. reconstruct these events:
 
 	Marlin bbudsc_3evt_stdreco_dd4hep.xml \
-	--global.GearXMLFile=gear_ILD_l1_v01_dd4hep.xml \
-	--InitDD4hep.DD4hepXMLFile=$lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml
+	--global.GearXMLFile=gear_ILD_l4_v02_dd4hep.xml \
+	--InitDD4hep.DD4hepXMLFile=$lcgeo_DIR/ILD/compact/ILD_l4_v02/ILD_l4_v02.xml
 
 creates:   bbudsc_3evt_REC.slcio 
 and        bbudsc_3evt_DST.slcio
@@ -59,6 +63,10 @@ We can now for example dump the details of the 2nd event in the DST file:
 	dumpevent bbudsc_3evt_DST.slcio 2 | less
 
 
+## *) If you are using DESY Green Ubuntu Desktops (particular the Dell OptiPlex 760 and the new Dell OptiPlex 3020 Micro)
+### And you want to run the following event display, on this remote computer (NAF2) you need to execute:
+
+        unset LIBGL_ALWAYS_INDIRECT # On the REMOTE computer
 
 ## 5. view the result in the event display
  
@@ -75,19 +83,19 @@ view REC or DST events:
 
 ### b) or start both, glced and Marlin in one go:
 
-	ced2go   -d gear_ILD_l1_v01_dd4hep.xml  bbudsc_3evt_REC.slcio
+	ced2go   -d gear_ILD_l4_v02_dd4hep.xml  bbudsc_3evt_REC.slcio
 
 
 ### c) start CED with DD4hep geometry
 
 Displays also the tracking surfaces: 
 	
-	ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l1_v01/ILD_l1_v01.xml bbudsc_3evt_REC.slcio
+	ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l4_v02/ILD_l4_v02.xml bbudsc_3evt_REC.slcio
 
 
 ## 6. create a ROOT TTree for analysis
 
-	Marlin lctuple.xml --global.GearXMLFile=gear_ILD_l1_v01_dd4hep.xml
+	Marlin lctuple.xml --global.GearXMLFile=gear_ILD_l4_v02_dd4hep.xml
 
 creates: bbudsc_3evt_REC_lctuple.root
 which you can analyze with ROOT in the usual way - or run some examples:
