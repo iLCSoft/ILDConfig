@@ -366,7 +366,7 @@
     <!--Forbid overlap in Z for the merged TPC segments-->
     <parameter name="ForbidOverlapInZTPC" type="int">0 </parameter>
     <!--Force merging of Si and TPC segments?-->
-    <parameter name="ForceSiTPCMerging" type="int">0 </parameter>
+    <parameter name="ForceSiTPCMerging" type="int">1 </parameter>
     <!--Force merging of TPC Segments?-->
     <parameter name="ForceTPCSegmentsMerging" type="int"> 0 </parameter>
     <!--Value used for the initial d0 variance of the trackfit-->
