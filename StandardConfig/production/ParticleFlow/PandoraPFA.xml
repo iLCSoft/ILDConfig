@@ -35,7 +35,13 @@
     <parameter name="HCalToHadGeVCalibration">1.02821419758</parameter>
     <parameter name="DigitalMuonHits" type="int">0</parameter>
     <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter> 
-    <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter>
+    <parameter name="SoftwareCompensationWeights" type="FloatVec">1.53608 0.0020365 -3.84416e-05 -0.0932101 -0.00354252 2.32054e-05 0.924933 1.25159 -0.0447545</parameter>
+    <parameter name="SoftwareCompensationEnergyDensityBins" type="FloatVec">0  2  5  7.5  9.5  13  16  20  23.5  28</parameter>
+    <parameter name="FinalEnergyDensityBin" type="float">30</parameter>
+    <parameter name="MaxClusterEnergyToApplySoftComp" type="float">100</parameter>
+    <parameter name="MinCleanHitEnergy" type="float">0.5</parameter>
+    <parameter name="MinCleanHitEnergyFraction" type="float">0.01</parameter>
+    <parameter name="MinCleanCorrectedHitEnergy" type="float">0.1</parameter>
 
     <!--Whether to calculate track states manually, rather than copy stored fitter values-->
     <parameter name="UseOldTrackStateCalculation" type="int"> 0 1  </parameter> <!-- !!!FIXME, workaround for some missing TS AtCalo face - this should really be: 0 -->
