@@ -46,7 +46,7 @@ if __name__ == "__main__":
     print " - lcgeo directory     : {0}".format(parsed.lcgeo_DIR)
     print " - input steering file : {0}".format(parsed.steeringFile)
     
-    for detectorModel in detectorModels:
+    for detectorModel in parsed.detectorModels:
         # compact file
         compactFile = os.path.join(parsed.lcgeo_DIR, "ILD/compact", detectorModel, detectorModel + ".xml")
         fpath, fname = os.path.split(parsed.steeringFile)
