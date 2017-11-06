@@ -4,6 +4,19 @@
   
   <!--######  My RealisticCaloDigi ################################-->
   <!--#### ECAL ####-->
+  
+  <!-- Merge collection odd/even of ECal hits in case of ecal hybrid model simulation -->
+  <!-- Does nothing in case the input collections do not exist (in case of ecal non-hybrid simulations) -->
+  <processor name="MergeCollectionsEcalBarrelHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEven ECalBarrelSiHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelCollection </parameter>
+  </processor>
+
+  <processor name="MergeCollectionsEcalEndcapHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEven ECalEndcapSiHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsCollection </parameter>
+  </processor>
+  
   <!--### the Ecal barrel ###-->
   <!--digitisation -->
   <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiSilicon">
