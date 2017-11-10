@@ -2,27 +2,6 @@
 
 <group name="BgOverlay">
   
-  <!--Pairs of collection to be merged-->
-  <parameter name="CollectionMap" type="StringVec">
-    BeamCalCollection                     BeamCalCollection                     
-    EcalBarrelCollection                  EcalBarrelCollection           
-    EcalEndcapsCollection                 EcalEndcapsCollection           
-    EcalEndcapRingCollection              EcalEndcapRingCollection              
-    FTDCollection                         FTDCollection                   
-    HcalBarrelRegCollection               HcalBarrelRegCollection               
-    HcalEndcapRingCollection              HcalEndcapRingCollection             
-    HcalEndcapsCollection                 HcalEndcapsCollection                 
-    LumiCalCollection                     LumiCalCollection  
-    LHCalCollection                       LHCalCollection
-    MCParticle                            MCParticle                            
-    YokeBarrelCollection                  YokeBarrelCollection                  
-    YokeEndcapsCollection                 YokeEndcapsCollection                  
-    SETCollection                         SETCollection                         
-    SITCollection                         SITCollection                         
-    TPCCollection                         TPCCollection                         
-    VXDCollection                         VXDCollection                         
-  </parameter>
-
   <!--Overlay each event with this number of background events. (default 0)-->
   <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
 
@@ -33,12 +12,10 @@
   <parameter name="NSkipEventsRandom" type="int">0</parameter>
 
 
-
-
   <processor name="BgOverlayWW" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">0.211 </parameter>
+    <parameter name="expBG" type="double">${ExpBackgroundWW}</parameter>
     <!--Name of the lcio input file(s)-->
     <parameter name="InputFileNames" type="StringVec"> 
       ${OverlayWWFiles}
@@ -48,7 +25,7 @@
   <processor name="BgOverlayWB" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">0.24605 </parameter>
+    <parameter name="expBG" type="double">${ExpBackgroundWB}</parameter>
     <!--Name of the lcio input file(s)-->
     <parameter name="InputFileNames" type="StringVec"> 
       ${OverlayWBFiles}
@@ -58,7 +35,7 @@
   <processor name="BgOverlayBW" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">0.243873 </parameter>
+    <parameter name="expBG" type="double">${ExpBackgroundBW}</parameter>
     <!--Name of the lcio input file(s)-->
     <parameter name="InputFileNames" type="StringVec"> 
       ${OverlayBWFiles}
@@ -68,10 +45,20 @@
   <processor name="BgOverlayBB" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">0.35063 </parameter>
+    <parameter name="expBG" type="double">${ExpBackgroundBB}</parameter>
     <!--Name of the lcio input file(s)-->
     <parameter name="InputFileNames" type="StringVec"> 
       ${OverlayBBFiles}
+    </parameter>
+  </processor>
+  
+  <processor name="PairBgOverlay" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Overlay each event with this number of background events. (default 0)-->
+    <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> 
+      ${OverlayPairFiles}
     </parameter>
   </processor>
 
