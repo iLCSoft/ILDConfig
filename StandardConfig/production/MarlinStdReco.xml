@@ -1,17 +1,23 @@
 <!-- 
   Top level Marlin steering file defining the ILD reconstruction chain.
   
+  !! WARNING !! This file may have been generated from 'Marlin -n MarlinstdReco.xml'. 
+  In this case you will find that : 
+  - no <include ref="..."> element is present
+  - some values differ between the constants section and the actual values in the global section or the processor parameter (e.g the compact file).
+    In this case, please refer to values in the global section or the processor parameters and not the constants section ! 
+  
   Mandatory parameters :
-    * --constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
-    * --constant.DetectorModel : the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
-    * --global.LCIOInputFiles : The input lcio input file(s)
+    * global.LCIOInputFiles : The input lcio input file(s)
   
   Optional parameters :
-    * --constant.OverlayEnergy : the center of mass energy for the overlay background. Must be one of these values : 250, 350, 500, 1000. By default, nothing is run (Empty) 
-    * --constant.OverlayWWFiles (OverlayWBFiles, OverlayBWFiles or OverlayBBFiles) : The gamma gamma overlay background files names. These input file names become madatory as soon as the constant OverlayEnergy is set
-    * --constant.PandoraSettingsFile : The pandora settings file to use (default is PandoraSettings/PandoraSettingsDefault.xml)
-    * --constant.PidPDFFile : A single root file name for the PID likelihood processor
-    * --constant.PidWeightFiles : A list (space separated) of XML files containing weights for low momentum pi/mu separation (from TMVA)
+    * constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
+    * constant.DetectorModel : the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
+    * constant.RunOverlay : whether to run the background overlay. If set to true, you must ensure the next variables are correctly set 
+    * constant.OverlayWWFiles (OverlayWBFiles, OverlayBWFiles or OverlayBBFiles) : The gamma gamma overlay background files names. These input file names become madatory as soon as the constant OverlayEnergy is set
+    * constant.PandoraSettingsFile : The pandora settings file to use (default is PandoraSettings/PandoraSettingsDefault.xml)
+    * constant.PidPDFFile : A single root file name for the PID likelihood processor
+    * constant.PidWeightFiles : A list (space separated) of XML files containing weights for low momentum pi/mu separation (from TMVA)
 
   Author : Remi Ete, DESY
 -->
@@ -29,18 +35,27 @@
     <!-- ILD calibration file -->
     <constant name="CalibrationFile" value="Calibration/Calibration_${DetectorName}.xml" />
   
-    <!-- CMS energy for overlay background -->
-    <!-- WARNING : By setting this energy, you must ensure that the overlay files are set in the following  -->
-    <constant name="OverlayEnergy" value="Empty" />
+    <!-- Whether to run the overlay background -->
+    <!-- WARNING : By setting this to true (or True), you must ensure that the overlay files are set in the following constants or in the processors directly -->
+    <constant name="RunOverlay" value="false" />
+    
+    <!-- Overlay : expected background values. Default values based on 500 GeV case -->
+    <constant name="ExpBackgroundWW" value="0.211" />
+    <constant name="ExpBackgroundWB" value="0.24605" />
+    <constant name="ExpBackgroundBW" value="0.243873" />
+    <constant name="ExpBackgroundBB" value="0.35063" />
   
     <!-- ***** Input files constants ***** -->
     <!-- Pandora settings file -->
     <constant name="PandoraSettingsFile" value="PandoraSettings/PandoraSettingsDefault.xml" />
-    <!-- Overlay background files. Must be specified if the OverlayEnergy constant is set (not Empty) -->
-    <constant name="OverlayWWFiles">  </constant>
-    <constant name="OverlayWBFiles">  </constant>
-    <constant name="OverlayBWFiles">  </constant>
-    <constant name="OverlayBBFiles">  </constant>
+    
+    <!-- Overlay background files. Must be specified if the RunOverlay constant is set to true -->
+    <constant name="OverlayWWFiles"> undefined.slcio </constant>
+    <constant name="OverlayWBFiles"> undefined.slcio </constant>
+    <constant name="OverlayBWFiles"> undefined.slcio </constant>
+    <constant name="OverlayBBFiles"> undefined.slcio </constant>
+    <constant name="OverlayPairFiles"> undefined.slcio </constant>
+    
     <!-- Special Beamcal overlay background file -->
     <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCal_bg_E500-TDR_ws.root" />
     <!-- Particle identification PDF root file -->
@@ -68,7 +83,7 @@
       HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_20GeVP_clusterinfo.weights.xml
     </constant>
     
-    <!-- Calibration constants from external file -->
+    <!-- Geometry model dependant calibration constants from external file -->
     <include ref="${CalibrationFile}" />
     
     <!-- Output files constants -->
@@ -84,8 +99,10 @@
   <execute>
     <!-- Initialization processors -->
     <group name="Init" />
-    <!-- Overlay background (if any) -->
-    <group name="BgOverlay" />
+    <!-- Overlay background, if any (see constant RunOverlay) -->
+    <if condition="${RunOverlay}">
+      <group name="BgOverlay" />
+    </if>
     <!-- Tracking digitizers -->
     <group name="TrackingDigi" />
     <!-- Tracking reconstruction -->
@@ -122,7 +139,7 @@
   <include ref="Init/Init.xml" />
 
   <!-- Overlay background -->
-  <include ref="Overlay/Overlay${OverlayEnergy}.xml" />
+  <include ref="Overlay/Overlay.xml" />
   
   <!-- Tracking related : digitization, reconstruction -->
   <include ref="Tracking/TrackingDigi.xml" />
