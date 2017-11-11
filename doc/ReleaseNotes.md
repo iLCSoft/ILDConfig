@@ -1,3 +1,100 @@
+# v01-19-05
+
+* 2017-10-17 Ete Remi ([PR#25](https://github.com/iLCSoft/ILDConfig/pull/25))
+  - FCAL MIP thresholds updated (BCAL, LCAL, LHCAL) using ILD_l4_model and a 0.5 cut from MIP peak
+
+* 2017-10-17 Ete Remi ([PR#23](https://github.com/iLCSoft/ILDConfig/pull/23))
+  - Removed software compensation weights from Pandora settings file
+  - Added software compensation input parameters in DDMarlinPandora processor : 
+    - SoftwareCompensationWeights : the sc weights
+    - SoftwareCompensationEnergyDensityBins : the energy density bins
+    - FinalEnergyDensityBin : the final energy density value
+
+* 2017-10-12 Frank Gaede ([PR#24](https://github.com/iLCSoft/ILDConfig/pull/24))
+  - set ForceSiTPCMerging=1 in FillLDCTracking
+
+* 2017-10-28 Frank Gaede ([PR#26](https://github.com/iLCSoft/ILDConfig/pull/26))
+  - switch back to using SiliconTracking rather than CellsAutomatonMV
+        - this fixes the degraded impact parameter resolution at 20 deg 
+        - reason is that no link is made from the VXD to the FTD and no SiTracks are created at this angle, which results in a large number of tracks having no VXD hits ...
+
+* 2017-08-31 Ete Remi ([PR#13](https://github.com/iLCSoft/ILDConfig/pull/13))
+  - new calibration and software compensation for ILD_l4_v02
+       - Updated calibration constants in main Marlin file: bbudsc_3evt_stdreco_dd4hep.xml
+       - Updated software compensation parameters in all Pandora settings files
+       - Added calibration report files for easy comparison with incoming re-calibrations
+
+* 2017-09-26 Bo Li ([PR#20](https://github.com/iLCSoft/ILDConfig/pull/20))
+  - The calibration constants of SDHCAL are re-calculated for ILD detector model.
+
+* 2017-09-26 Shaojun Lu ([PR#19](https://github.com/iLCSoft/ILDConfig/pull/19))
+  - Fix ILD DDCellsAutomatonMV inputs.
+      - Added the inputs in the steering file from ILD_l4_v02 (VXD, SIT and SET) for the tracker detector elements.
+
+* 2017-11-02 Ete Remi ([PR#29](https://github.com/iLCSoft/ILDConfig/pull/29))
+  - Fixed a bug in GenerateSteeringFiles.py (detectorModels arg option)
+  - Updated README.md
+
+* 2017-11-02 Ete Remi ([PR#28](https://github.com/iLCSoft/ILDConfig/pull/28))
+  - Complete re-structure of lcgeo_current steering files in a new "production" directory : 
+     - Main Marlin steering file split into many sub-steering files (Digit, Tracking, PFA, HLR, etc ...)
+     - Tidy up of directory by removing un-used steering files
+  - Added utility python script to generate simpler steering file per detector flavor
+
+* 2017-11-02 Shaojun Lu ([PR#27](https://github.com/iLCSoft/ILDConfig/pull/27))
+  - Update "lcgeo_current/README.md" for ILD_l4_v02 and ilcsoft_v01-19-04
+      -  added additional documentation for DESY Green Ubuntu Desktops users.
+
+* 2017-11-11 Ete Remi ([PR#32](https://github.com/iLCSoft/ILDConfig/pull/32))
+  - Added GEAR file generator to quickly produce gear files for the current detector models
+  - Updated Overlay processors : 
+    - All processors unified in one include : Overlay.xml. All the others are deleted
+    - Pair background overlay processor added
+    - Overlay run under condition : react on true/false of the constant RunOverlay
+    - Remove collection mapping as all the collection have to be overlaid in production mode 
+  - Top level marlin steering file : 
+    - Comments in file header updated
+    - Externalized background overlay settings in the constants section (expBG and file names)
+  - Removed HighLevelReco/execute.xml (unused)
+
+* 2017-08-23 Bo Li ([PR#11](https://github.com/iLCSoft/ILDConfig/pull/11))
+  - Added example of steering file for sdhcal digitizer
+
+* 2017-11-08 Ete Remi ([PR#30](https://github.com/iLCSoft/ILDConfig/pull/30))
+  - Added MergeCollection processors for hybrid ecal reconstruction : 
+    - Merge collection of odd/even ecal hits in a unique collection, one for the barrel, one for the endcap
+    - No effect on non-hybrid reconstruction, as the odd/even input collections do not exist in this case
+
+* 2017-11-09 Shaojun Lu ([PR#31](https://github.com/iLCSoft/ILDConfig/pull/31))
+  - merged all ILD CalorimeterHit which include the information after ILD calorimeters reconstruction.
+  - added ILD CalorimeterHits into the LCTuple
+      - named as "scpox, scpoy, scpoz", sc... for SimCalorimeterHits after simulation
+      - named as "capox,capoy,capoz, catim", ca... for CalorimeterHits after reconstruction
+
+* 2017-09-14 Frank Gaede ([PR#17](https://github.com/iLCSoft/ILDConfig/pull/17))
+  - update bbudsc_3evt_stdreco_dd4hep.xml:
+       - reduce InitialTrackErrorOmega for FullLDCTracking
+        - update doc for bbudsc_3evt_stdreco_dd4hep.xml
+        - use ILD_l4_v02 as default model
+
+* 2017-09-14 Ete Remi ([PR#15](https://github.com/iLCSoft/ILDConfig/pull/15))
+  - Software compensation weights re-tuned
+
+* 2017-08-29 Frank Gaede ([PR#12](https://github.com/iLCSoft/ILDConfig/pull/12))
+  - bug fix for RecoMCTruthLinker information in REC/DST files
+           - replace PandoraClustersHack w/ PandoraClusters
+              in all relevant steering files
+
+* 2017-09-29 Shaojun Lu ([PR#22](https://github.com/iLCSoft/ILDConfig/pull/22))
+  - Change ILD default central silicon tracking reconstruction.
+      - Mini-vectors are created connecting two hits in neighbouring vertex barrel layers.
+      - Cellular automaton is used to produce tracks from these mini-vectors which has been implemented into MarlinProcessor "DDCellsAutomatonMV".
+      - It shows better tracking efficiency for the ILD. ILD will use it together with MarlinProcessor "ExtrToSIT" as default ILDConfig to replace MarlonProcessor "SiliconTracking_MarlinTrk".
+
+* 2017-09-29 Ete Remi ([PR#21](https://github.com/iLCSoft/ILDConfig/pull/21))
+  - Updated sdhcal Pandora settings file for SDHCAL reconstruction
+  - Updated sdhcal Marlin steering file for SDHCAL reconstruction
+
 # v01-19-04
 
 * 2017-07-26 Frank Gaede ([PR#10](https://github.com/iLCSoft/ILDConfig/pull/10))
