@@ -83,6 +83,11 @@
     <processor name="MyKinkFinder"/>
     
     <!-- ========== calorimeter digitization and PFA ======= -->
+
+    <!-- merge ECal collections from even and odd layers first -->
+    <processor name="MergeCollectionsEcalBarrelHits" />
+    <processor name="MergeCollectionsEcalEndcapHits" />
+
     <!-- Realistic digitisation for Ecal -->
     <processor name="MyEcalBarrelDigi"/>
     <processor name="MyEcalBarrelReco"/>
@@ -1211,7 +1216,18 @@
   </processor>
 
   <!--######  My RealisticCaloDigi ################################-->
+
   <!--#### ECAL ####-->
+  <processor name="MergeCollectionsEcalBarrelHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEven ECalBarrelSiHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelCollection </parameter>
+  </processor>
+
+  <processor name="MergeCollectionsEcalEndcapHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEven ECalEndcapSiHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsCollection </parameter>
+  </processor>
+
   <!--### the Ecal barrel ###-->
   <!--digitisation -->
   <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiSilicon">
