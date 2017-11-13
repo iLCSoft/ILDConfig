@@ -126,7 +126,6 @@
   <!-- ***** Global section ***** -->
   <global>
     <parameter name="LCIOInputFiles"> </parameter>
-    <parameter name="GearXMLFile" value="Gear/gear_${DetectorModel}.xml"/>
     <parameter name="MaxRecordNumber" value="0"/>
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
