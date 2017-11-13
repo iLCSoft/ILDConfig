@@ -58,7 +58,7 @@ if __name__ == "__main__":
             "-n",
             parsed.steeringFile,
             "--constant.lcgeo_DIR={0}".format(parsed.lcgeo_DIR), 
-            "--constant.DetectorName={0}".format(detectorModel),
+            "--constant.DetectorModel={0}".format(detectorModel),
             "--global.OutputSteeringFile={0}".format(outputSteeringFile)]
         
         print "Running Marlin:"
