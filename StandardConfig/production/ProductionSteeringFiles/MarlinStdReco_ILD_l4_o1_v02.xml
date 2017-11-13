@@ -25,13 +25,13 @@
     <constants>
         <!-- ***** Global constant for reconstruction ***** -->
         <!-- The lcgeo directory where to look for the ILD model -->
-        <constant name="lcgeo_DIR" value="/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05-pre04/lcgeo/v00-15-01" />
+        <constant name="lcgeo_DIR" value="/afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-05-pre04/lcgeo/v00-15-01" />
         <!-- ILD detector model -->
-        <constant name="DetectorName" value="ILD_l4_o1_v02" />
+        <constant name="DetectorModel" value="ILD_l4_o1_v02" />
         <!-- The full compact file name -->
-        <constant name="CompactFile" value="${lcgeo_DIR}/ILD/compact/${DetectorName}/${DetectorName}.xml" />
+        <constant name="CompactFile" value="${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml" />
         <!-- ILD calibration file -->
-        <constant name="CalibrationFile" value="Calibration/Calibration_${DetectorName}.xml" />
+        <constant name="CalibrationFile" value="Calibration/Calibration_${DetectorModel}.xml" />
         <!-- Whether to run the overlay background -->
         <!-- WARNING : By setting this to true (or True), you must ensure that the overlay files are set in the following constants or in the processors directly -->
         <constant name="RunOverlay" value="false" />
@@ -161,7 +161,7 @@
     <!-- ***** Global section ***** -->
     <global>
         <parameter name="LCIOInputFiles" />
-        <parameter name="GearXMLFile" value="Gear/gear_${DetectorName}.xml" />
+        <parameter name="GearXMLFile" value="Gear/gear_${DetectorModel}.xml" />
         <parameter name="MaxRecordNumber" value="0" />
         <parameter name="SkipNEvents" value="0" />
         <parameter name="SupressCheck" value="false" />
