@@ -42,10 +42,7 @@
     <constant name="RunOverlay500GeV" value="false" />    
     <constant name="RunOverlay1000GeV" value="false" />
     
-    <!-- ***** Input files constants ***** -->
-    <!-- Pandora settings file -->
-    <constant name="PandoraSettingsFile" value="PandoraSettings/PandoraSettingsDefault.xml" />
-    
+    <!-- ***** Input files constants ***** -->    
     <!-- Special Beamcal overlay background file -->
     <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCal_bg_E500-TDR_ws.root" />
     <!-- Particle identification PDF root file -->

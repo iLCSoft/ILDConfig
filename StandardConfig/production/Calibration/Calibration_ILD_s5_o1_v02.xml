@@ -26,3 +26,6 @@
 <constant name="EcalTechnology" value="SiWEcal" />
 <!-- Hcal technology : AHcal or SDHcal -->
 <constant name="HcalTechnology" value="AHcal" /> 
+
+<!-- Pandora settings file -->
+<constant name="PandoraSettingsFile" value="PandoraSettings/PandoraSettingsDefault.xml" />
