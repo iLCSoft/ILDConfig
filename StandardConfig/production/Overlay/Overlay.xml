@@ -1,6 +1,6 @@
 
 
-<group name="BgOverlay">
+<group name="BgOverlay250GeV">
   
   <!--Overlay each event with this number of background events. (default 0)-->
   <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
@@ -12,54 +12,210 @@
   <parameter name="NSkipEventsRandom" type="int">0</parameter>
 
 
-  <processor name="BgOverlayWW" type="Overlay">
+  <processor name="BgOverlayWW250GeV" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">${ExpBackgroundWW}</parameter>
+    <parameter name="expBG" type="double"> -1 </parameter>
     <!--Name of the lcio input file(s)-->
-    <parameter name="InputFileNames" type="StringVec"> 
-      ${OverlayWWFiles}
-    </parameter>
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
   </processor>
   
-  <processor name="BgOverlayWB" type="Overlay">
+  <processor name="BgOverlayWB250GeV" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">${ExpBackgroundWB}</parameter>
+    <parameter name="expBG" type="double"> -1 </parameter>
     <!--Name of the lcio input file(s)-->
-    <parameter name="InputFileNames" type="StringVec"> 
-      ${OverlayWBFiles}
-    </parameter>
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
   </processor>
   
-  <processor name="BgOverlayBW" type="Overlay">
+  <processor name="BgOverlayBW250GeV" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">${ExpBackgroundBW}</parameter>
+    <parameter name="expBG" type="double"> -1 </parameter>
     <!--Name of the lcio input file(s)-->
-    <parameter name="InputFileNames" type="StringVec"> 
-      ${OverlayBWFiles}
-    </parameter>
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
   </processor>
   
-  <processor name="BgOverlayBB" type="Overlay">
+  <processor name="BgOverlayBB250GeV" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
-    <parameter name="expBG" type="double">${ExpBackgroundBB}</parameter>
+    <parameter name="expBG" type="double"> -1 </parameter>
     <!--Name of the lcio input file(s)-->
-    <parameter name="InputFileNames" type="StringVec"> 
-      ${OverlayBBFiles}
-    </parameter>
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
   </processor>
   
-  <processor name="PairBgOverlay" type="Overlay">
+  <processor name="PairBgOverlay250GeV" type="Overlay">
     <!--Opens a second (chain of) lcio file(s) and overlays events...-->
     <!--Overlay each event with this number of background events. (default 0)-->
     <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
     <!--Name of the lcio input file(s)-->
-    <parameter name="InputFileNames" type="StringVec"> 
-      ${OverlayPairFiles}
-    </parameter>
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+
+</group>
+
+
+<group name="BgOverlay350GeV">
+  
+  <!--Overlay each event with this number of background events. (default 0)-->
+  <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
+
+  <!--Overlay each event with the content of one run.-->
+  <parameter name="runOverlay" type="bool">false </parameter>
+
+  <!--Maximum number of events to skip between overlayd events (choosen from flat intervall [0,NSkipEventsRandom] )-->
+  <parameter name="NSkipEventsRandom" type="int">0</parameter>
+
+
+  <processor name="BgOverlayWW350GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayWB350GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayBW350GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayBB350GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="PairBgOverlay350GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Overlay each event with this number of background events. (default 0)-->
+    <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+
+</group>
+
+
+
+<group name="BgOverlay500GeV">
+  
+  <!--Overlay each event with this number of background events. (default 0)-->
+  <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
+
+  <!--Overlay each event with the content of one run.-->
+  <parameter name="runOverlay" type="bool">false </parameter>
+
+  <!--Maximum number of events to skip between overlayd events (choosen from flat intervall [0,NSkipEventsRandom] )-->
+  <parameter name="NSkipEventsRandom" type="int">0</parameter>
+
+
+  <processor name="BgOverlayWW500GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double">0.211</parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayWB500GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double">0.24605</parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayBW500GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double">0.243873</parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayBB500GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double">0.35063</parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="PairBgOverlay500GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Overlay each event with this number of background events. (default 0)-->
+    <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+
+</group>
+
+
+<group name="BgOverlay1000GeV">
+  
+  <!--Overlay each event with this number of background events. (default 0)-->
+  <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
+
+  <!--Overlay each event with the content of one run.-->
+  <parameter name="runOverlay" type="bool">false </parameter>
+
+  <!--Maximum number of events to skip between overlayd events (choosen from flat intervall [0,NSkipEventsRandom] )-->
+  <parameter name="NSkipEventsRandom" type="int">0</parameter>
+
+
+  <processor name="BgOverlayWW1000GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayWB1000GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayBW1000GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="BgOverlayBB1000GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+    <parameter name="expBG" type="double"> -1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+  </processor>
+  
+  <processor name="PairBgOverlay1000GeV" type="Overlay">
+    <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+    <!--Overlay each event with this number of background events. (default 0)-->
+    <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
+    <!--Name of the lcio input file(s)-->
+    <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
   </processor>
 
 </group>
