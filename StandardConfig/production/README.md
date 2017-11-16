@@ -42,6 +42,7 @@ In addition, you may find the following sub-directories :
 - *Gear* : The geometry files of the (deprecated) GEAR package of the detector geometries currently under study
 - *PandoraSettings* : A directory containin the PandoraPFA steering files
 - *RootMacros* : A set of root macros for quick checks of output files
+- *Documentation* : Additional documentation on ILDConfig
 
 Most of these directories are used by the top-level Marlin steering file *MarlinStdReco.xml* as include sources. Please to not move them except if you know what you are doing ...
 
@@ -70,12 +71,12 @@ optional arguments:
 
 By default, the detector models are the ones under studies (12 models). You can choose one model or many by using the --detectorModels option. The option --lcgeo_DIR allows you to set a particular lcgeo version to use. By default, the environment variable lcgeo_DIR (defined after sourcing a particular ilcsoft version) is used. The --steeringFile option is the top-level Marlin steering file to process (by default MarlinStdReco.xml).
 
-You can, for example generate the 4 flavors of option 4 with large and small TPC radius by running the following command :
+You can, for example generate the 4 flavors of option 5 with large and small TPC radius by running the following command :
 
 ```shell
 $ mkdir GeneratedFiles
 $ python GenerateSteeringFiles.py \
-  --detectorModels ILD_l4_o1_v02 ILD_l4_o2_v02 ILD_s4_o1_v02 ILD_s4_o2_v02 \
+  --detectorModels ILD_l5_o1_v02 ILD_l5_o2_v02 ILD_s5_o1_v02 ILD_s5_o2_v02 \
   --outputDirectory ./GeneratedFiles
 ```
 
@@ -83,7 +84,7 @@ This will produces 4 files :
 
 ```shell
 $ ls GeneratedFiles
-MarlinStdReco_ILD_l4_o1_v02.xml  MarlinStdReco_ILD_l4_o2_v02.xml  MarlinStdReco_ILD_s4_o1_v02.xml  MarlinStdReco_ILD_s4_o2_v02.xml
+MarlinStdReco_ILD_l5_o1_v02.xml  MarlinStdReco_ILD_l5_o2_v02.xml  MarlinStdReco_ILD_s5_o1_v02.xml  MarlinStdReco_ILD_s5_o2_v02.xml
 ```
 
 ## Running the reconstruction chain
@@ -91,7 +92,7 @@ MarlinStdReco_ILD_l4_o1_v02.xml  MarlinStdReco_ILD_l4_o2_v02.xml  MarlinStdReco_
 ### 1. Initialize the current ilcsoft release
    
 ```shell
-source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-05-pre03/init_ilcsoft.sh
+source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-05/init_ilcsoft.sh
 ```
 
 
@@ -101,7 +102,7 @@ source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-05-pre03/init_ilc
 $ ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l4_v02/ILD_l4_v02.xml \
+  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
   --steeringFile DDSim/ddsim_steer.py
 ```
 
@@ -120,14 +121,14 @@ With the default top-level steering file :
 ```shell
 Marlin MarlinStdReco.xml \
 	--constant.lcgeo_DIR=$lcgeo_DIR \
-  --constant.DetectorModel=ILD_l4_o1_v02 \
+  --constant.DetectorModel=ILD_l5_o1_v02 \
   --global.LCIOInputFiles=bbudsc_3evt.slcio
 ```
 
-With one of the generated files (e.g for ILD_l4_o1_v02) :
+With one of the generated files (e.g for ILD_l5_o1_v02) :
 
 ```shell
-Marlin GeneratedFiles/MarlinStdReco_ILD_l4_o1_v02.xml \
+Marlin GeneratedFiles/MarlinStdReco_ILD_l5_o1_v02.xml \
   --global.LCIOInputFiles=bbudsc_3evt.slcio
 ```
 
@@ -156,7 +157,7 @@ $ Marlin MarlinStdRecoViewerDST.xml
 - start both, glced and Marlin in one go:
 ```shell
 # Option -s 1 to display also tracking surfaces
-$ ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l4_o1_v02/ILD_l4_o1_v02.xml StandardReco_REC.slcio
+$ ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l4_o5_v02.xml StandardReco_REC.slcio
 ```
 
 ### 5. Create a ROOT TTree for analysis
