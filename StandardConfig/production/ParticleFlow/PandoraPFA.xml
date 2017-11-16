@@ -23,22 +23,22 @@
     <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
     <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
     <!-- Calibration constants -->
-    <parameter name="ECalToMipCalibration">149.254</parameter>
-    <parameter name="HCalToMipCalibration">35.3357</parameter>
-    <parameter name="MuonToMipCalibration">10.3093</parameter>
+    <parameter name="ECalToMipCalibration">${PandoraEcalToMip}</parameter>
+    <parameter name="HCalToMipCalibration">${PandoraHcalToMip}</parameter>
+    <parameter name="MuonToMipCalibration">${PandoraMuonToMip}</parameter>
     <parameter name="ECalMipThreshold" type="float">0.5</parameter>
     <parameter name="HCalMipThreshold" type="float">0.3</parameter>
-    <parameter name="ECalToEMGeVCalibration">1.0</parameter>
-    <parameter name="HCalToEMGeVCalibration">1.0</parameter>
-    <parameter name="ECalToHadGeVCalibrationBarrel">1.20700253651</parameter>
-    <parameter name="ECalToHadGeVCalibrationEndCap">1.20700253651</parameter>
-    <parameter name="HCalToHadGeVCalibration">1.02821419758</parameter>
+    <parameter name="ECalToEMGeVCalibration">${PandoraEcalToEMScale}</parameter>
+    <parameter name="HCalToEMGeVCalibration">${PandoraHcalToEMScale}</parameter>
+    <parameter name="ECalToHadGeVCalibrationBarrel">${PandoraEcalToHadBarrelScale}</parameter>
+    <parameter name="ECalToHadGeVCalibrationEndCap">${PandoraEcalToHadEndcapScale}</parameter>
+    <parameter name="HCalToHadGeVCalibration">${PandoraHcalToHadScale}</parameter>
     <parameter name="DigitalMuonHits" type="int">0</parameter>
     <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter> 
-    <parameter name="SoftwareCompensationWeights" type="FloatVec">1.53608 0.0020365 -3.84416e-05 -0.0932101 -0.00354252 2.32054e-05 0.924933 1.25159 -0.0447545</parameter>
+    <parameter name="SoftwareCompensationWeights" type="FloatVec"> ${PandoraSoftwareCompensationWeights} </parameter>
     <parameter name="SoftwareCompensationEnergyDensityBins" type="FloatVec">0  2  5  7.5  9.5  13  16  20  23.5  28</parameter>
     <parameter name="FinalEnergyDensityBin" type="float">30</parameter>
-    <parameter name="MaxClusterEnergyToApplySoftComp" type="float">100</parameter>
+    <parameter name="MaxClusterEnergyToApplySoftComp" type="float">1000</parameter>
     <parameter name="MinCleanHitEnergy" type="float">0.5</parameter>
     <parameter name="MinCleanHitEnergyFraction" type="float">0.01</parameter>
     <parameter name="MinCleanCorrectedHitEnergy" type="float">0.1</parameter>
