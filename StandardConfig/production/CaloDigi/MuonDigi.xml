@@ -9,7 +9,7 @@
     <parameter name="CellIDLayerString" type="string"> layer </parameter>
     
     <!--Calibration coefficients for MUON-->
-    <parameter name="CalibrMUON" type="FloatVec">56.7</parameter>
+    <parameter name="CalibrMUON" type="FloatVec">${MuonCalibration}</parameter>
     <!-- maximum hit energy for a MUON hit -->
     <parameter name="MaxHitEnergyMUON" type="float">2.0</parameter>
     <!--MUON Collection Names-->
