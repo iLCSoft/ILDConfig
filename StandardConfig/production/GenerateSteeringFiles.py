@@ -19,6 +19,13 @@ radius = ["l", "s"]
 shortOptions = ["1", "2"]
 longOptions = ["1", "2", "3", "4"]
 
+defaultLCGeoDir = ""
+
+try:
+    defaultLCGeoDir = os.environ["lcgeo_DIR"]
+except:
+    defaultLCGeoDir = "/path/to/lcgeo_DIR"
+
 detectorModels = []
 detectorModels.extend( ["ILD_{0}4_o{1}_v02".format(r, o) for r in radius for o in shortOptions] )
 detectorModels.extend( ["ILD_{0}5_o{1}_v02".format(r, o) for r in radius for o in longOptions] )
@@ -26,8 +33,8 @@ detectorModels.extend( ["ILD_{0}5_o{1}_v02".format(r, o) for r in radius for o i
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Steering file generate:", formatter_class=argparse.RawTextHelpFormatter, add_help=True)
     
-    parser.add_argument("--lcgeo_DIR", action="store", default=os.environ["lcgeo_DIR"],
-                            help="The path to lcgeo directory (default taken from env vars)", required = False)
+    parser.add_argument("--lcgeo_DIR", action="store", default=defaultLCGeoDir,
+                            help="The path to lcgeo directory (default is {0})".format(defaultLCGeoDir), required = False)
                             
     parser.add_argument("--detectorModels", action="store", default=detectorModels, nargs='+',
                             help="The detector models to process", required = False)
