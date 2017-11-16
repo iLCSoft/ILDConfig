@@ -1,5 +1,39 @@
 # v01-19-05
 
+* 2017-11-16 Ete Remi ([PR#36](https://github.com/ilcsoft/ILDconfig/pull/36))
+  - Updated SDHcal reconstruction config
+    - Updated digitizer config to match the new version. See PR  [iLCSoft/MarlinReco/30](https://github.com/iLCSoft/MarlinReco/pull/30)
+    - Updated SDHcal calibration constants
+    - Moved Pandora settings file constant definition to Calibration directory files, as it is calorimeter dependant 
+  - Removed GearXMLFile parameter as it is not needed anymore
+  - Added Documentation for : 
+    - DST content
+    - how to run bg overlay
+    - ILD MC production settings
+  - Set ILD_l5_o1_v02 as default model in steering files and documentation
+
+* 2017-11-15 Ete Remi ([PR#35](https://github.com/ilcsoft/ILDconfig/pull/35))
+  - Setup overlay config for each center of mass energy into processor groups : 
+    - added condition to execute a given overlay group by using a constant
+    - removed file names and expBG configuration from constants section
+    - set expBG values for 500 GeV to known values
+    - set expBG values for 250, 350 and 1000 GeV to -1 (not communicated yet)
+  
+  Example to run at 500 GeV : 
+  ```shell
+  Marlin --constant.RunOverlay500GeV=true \
+  --BgOverlayWW500GeV.InputFileNames=WWfile.slcio \
+  --BgOverlayWB500GeV.InputFileNames=WBfile.slcio \
+  --BgOverlayBW500GeV.InputFileNames=BWfile.slcio \
+  --BgOverlayBB500GeV.InputFileNames=BBfile.slcio \
+  --PairBgOverlay500GeV.InputFileNames=Pairfile.slcio \
+  ./ProductionSteeringFiles/MarlinStdReco_ILD_l5_o1_v02.xml
+  ```
+
+* 2017-11-13 Ete Remi ([PR#33](https://github.com/ilcsoft/ILDconfig/pull/33))
+  - Added Gear files for current detector models
+  - New directory *ProductionSteeringFiles* containing Marlin XML generated files for production (generated from v01-19-05-pre04 from cvmfs)
+
 * 2017-10-17 Ete Remi ([PR#25](https://github.com/iLCSoft/ILDConfig/pull/25))
   - FCAL MIP thresholds updated (BCAL, LCAL, LHCAL) using ILD_l4_model and a 0.5 cut from MIP peak
 
