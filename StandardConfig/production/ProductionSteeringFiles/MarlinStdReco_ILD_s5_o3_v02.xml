@@ -9,13 +9,12 @@
   
   Mandatory parameters :
     * global.LCIOInputFiles : The input lcio input file(s)
+    * constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
   
   Optional parameters :
-    * constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
     * constant.DetectorModel : the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
-    * constant.RunOverlay : whether to run the background overlay. If set to true, you must ensure the next variables are correctly set 
-    * constant.OverlayWWFiles (OverlayWBFiles, OverlayBWFiles or OverlayBBFiles) : The gamma gamma overlay background files names. These input file names become madatory as soon as the constant OverlayEnergy is set
-    * constant.PandoraSettingsFile : The pandora settings file to use (default is PandoraSettings/PandoraSettingsDefault.xml)
+    * constant.RunOverlay250GeV (350, 500 or 1000 GeV) : whether to run the background overlay. If set to true, you must ensure that the overlay background files are correctly set 
+    * constant.PandoraSettingsFile : The pandora settings file to use
     * constant.PidPDFFile : A single root file name for the PID likelihood processor
     * constant.PidWeightFiles : A list (space separated) of XML files containing weights for low momentum pi/mu separation (from TMVA)
 
@@ -39,8 +38,6 @@
         <constant name="RunOverlay500GeV" value="false" />
         <constant name="RunOverlay1000GeV" value="false" />
         <!-- ***** Input files constants ***** -->
-        <!-- Pandora settings file -->
-        <constant name="PandoraSettingsFile" value="PandoraSettings/PandoraSettingsDefault.xml" />
         <!-- Special Beamcal overlay background file -->
         <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCal_bg_E500-TDR_ws.root" />
         <!-- Particle identification PDF root file -->
@@ -70,6 +67,7 @@
         <constant name="PandoraHcalToHadScale">1.02821419758</constant>
         <constant name="EcalTechnology" value="ScEcal" />
         <constant name="HcalTechnology" value="AHcal" />
+        <constant name="PandoraSettingsFile" value="PandoraSettings/PandoraSettingsDefault.xml" />
         <!-- Output files constants -->
         <constant name="OutputBaseName" value="StandardReco" />
         <constant name="AIDAFileName" value="${OutputBaseName}_AIDA" />
@@ -168,7 +166,6 @@
     <!-- ***** Global section ***** -->
     <global>
         <parameter name="LCIOInputFiles" />
-        <parameter name="GearXMLFile" value="Gear/gear_${DetectorModel}.xml" />
         <parameter name="MaxRecordNumber" value="0" />
         <parameter name="SkipNEvents" value="0" />
         <parameter name="SupressCheck" value="false" />
