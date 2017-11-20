@@ -48,24 +48,24 @@
         <constant name="EcalBarrelMip">0.0001575</constant>
         <constant name="EcalEndcapMip">0.0001575</constant>
         <constant name="EcalRingMip">0.0001575</constant>
-        <constant name="HcalBarrelMip">0.0004925</constant>
-        <constant name="HcalEndcapMip">0.0004725</constant>
+        <constant name="HcalBarrelMip">0.0005025</constant>
+        <constant name="HcalEndcapMip">0.0004775</constant>
         <constant name="HcalRingMip">0.0004875</constant>
-        <constant name="EcalBarrelEnergyFactors">0.00648596690341 0.0131746235626</constant>
+        <constant name="EcalBarrelEnergyFactors">0.00639206743282 0.0129838902153</constant>
         <constant name="EcalEndcapEnergyFactors">0.00677453657324 0.0137607808509</constant>
-        <constant name="EcalRingEnergyFactors">0.00600726928777 0.012202268788</constant>
-        <constant name="HcalBarrelEnergyFactors">0.0282939686687</constant>
-        <constant name="HcalEndcapEnergyFactors">0.0300448694145</constant>
-        <constant name="HcalRingEnergyFactors">0.0359436163529</constant>
+        <constant name="EcalRingEnergyFactors">0.00677453657324 0.0137607808509</constant>
+        <constant name="HcalBarrelEnergyFactors">0.0224062724556</constant>
+        <constant name="HcalEndcapEnergyFactors">0.022836107584</constant>
+        <constant name="HcalRingEnergyFactors">0.0268922571442</constant>
         <constant name="MuonCalibration">56.7</constant>
-        <constant name="PandoraEcalToMip">149.254</constant>
-        <constant name="PandoraHcalToMip">35.3357</constant>
-        <constant name="PandoraMuonToMip">10.3093</constant>
+        <constant name="PandoraEcalToMip">153.846</constant>
+        <constant name="PandoraHcalToMip">41.841</constant>
+        <constant name="PandoraMuonToMip">10.5263</constant>
         <constant name="PandoraEcalToEMScale">1.0</constant>
         <constant name="PandoraHcalToEMScale">1.0</constant>
-        <constant name="PandoraEcalToHadBarrelScale">1.20700253651</constant>
+        <constant name="PandoraEcalToHadBarrelScale">1.06504826673</constant>
         <constant name="PandoraEcalToHadEndcapScale">1.20700253651</constant>
-        <constant name="PandoraHcalToHadScale">1.02821419758</constant>
+        <constant name="PandoraHcalToHadScale">1.04116630643</constant>
         <constant name="PandoraSoftwareCompensationWeights">1.67738 -0.0324571 0.000211756 -0.0652524 0.00258787 -4.47897e-05 0.057609 0.0659326 -0.0757052</constant>
         <constant name="EcalTechnology" value="SiWEcal" />
         <constant name="HcalTechnology" value="AHcal" />
