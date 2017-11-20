@@ -24,7 +24,7 @@
     <constants>
         <!-- ***** Global constant for reconstruction ***** -->
         <!-- The lcgeo directory where to look for the ILD model -->
-        <constant name="lcgeo_DIR" value="/afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-05-pre05/lcgeo/v00-15-01" />
+        <constant name="lcgeo_DIR" value="/path/to/lcgeo_DIR" />
         <!-- ILD detector model -->
         <constant name="DetectorModel" value="ILD_l5_o1_v02" />
         <!-- The full compact file name -->
