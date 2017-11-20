@@ -111,6 +111,7 @@
         <processor name="FTDPixelPlanarDigiProcessor" condition="" />
         <processor name="FTDStripPlanarDigiProcessor" condition="" />
         <processor name="FTDDDSpacePointBuilder" condition="" />
+        <processor name="SETPlanarDigiProcessor" condition="" />
         <processor name="SETDDSpacePointBuilder" condition="" />
         <processor name="MyTPCDigiProcessor" condition="" />
         <!-- Tracking reconstruction -->
@@ -504,6 +505,26 @@
         <parameter name="TrackerHitSimHitRelCollection" type="string" lcioInType="LCRelation">FTDStripTrackerHitRelations</parameter>
         <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
         <parameter name="Verbosity" type="string">MESSAGE</parameter>
+    </processor>
+    <processor name="SETPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+        <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+        <parameter name="ForceHitsOntoSurface" type="bool">true</parameter>
+        <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+        <parameter name="SubDetectorName" type="string">SET</parameter>
+        <!--whether hits are 1D strip hits-->
+        <parameter name="IsStrip" type="bool">true</parameter>
+        <!--resolution in direction of u-->
+        <parameter name="ResolutionU" type="float">0.007</parameter>
+        <!--resolution in direction of v-->
+        <parameter name="ResolutionV" type="float">0</parameter>
+        <!--Name of the Input SimTrackerHit collection-->
+        <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SETCollection</parameter>
+        <!--Name of TrackerHit SimTrackHit relation collection-->
+        <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SETTrackerHitRelations</parameter>
+        <!--Name of the TrackerHit output collection-->
+        <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">SETTrackerHits</parameter>
+        <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+        <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
     </processor>
     <processor name="SETDDSpacePointBuilder" type="DDSpacePointBuilder">
         <!--SpacePointBuilder combine si-strip measurements into 3D spacepoints (1TrackerHitPlanar+1TrackHitPlanar = 1 TrackerHit), that can be used by reconstruction-->
