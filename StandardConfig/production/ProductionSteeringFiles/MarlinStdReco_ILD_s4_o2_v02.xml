@@ -165,7 +165,7 @@
         <parameter name="SupressCheck" value="false" />
         <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">MESSAGE</parameter>
         <parameter name="RandomSeed" value="1234567890" />
-        <parameter name="OutputSteeringFile" value="ProductionSteeringFiles/MarlinStdReco_ILD_s4_o2_v02.xml" />
+        <parameter name="OutputSteeringFile" value="" />
     </global>
     <!-- Init processors : histograming, logging, geometry ... -->
     <processor name="MyAIDAProcessor" type="AIDAProcessor">
