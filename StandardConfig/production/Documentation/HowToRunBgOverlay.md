@@ -70,7 +70,7 @@ ddsim \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.01968 0 \
   --vertexOffset 0 0 0 0 \
-  --steeringFile DDSim/ddsim_steer.py
+  --steeringFile ddsim_steer.py
 ```
 
 For run the WB (virtual-beam) simulation, e.g, for one file :
@@ -82,7 +82,7 @@ ddsim \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.0186 0 \
   --vertexOffset 0 0 -0.04222 0 \
-  --steeringFile DDSim/ddsim_steer.py
+  --steeringFile ddsim_steer.py
 ```
 
 For run the BW (beam-virtual) simulation, e.g, for one file :
@@ -94,7 +94,7 @@ ddsim \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.0186 0 \
   --vertexOffset 0 0 0.04222 0 \
-  --steeringFile DDSim/ddsim_steer.py
+  --steeringFile ddsim_steer.py
 ```
 
 For run the BB (beam-beam) simulation, e.g, for one file :
@@ -106,7 +106,7 @@ ddsim \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.016988 0 \
   --vertexOffset 0 0 0 0 \
-  --steeringFile DDSim/ddsim_steer.py
+  --steeringFile ddsim_steer.py
 ```
 
 2. Running the Overlay Bg for pair background samples
@@ -123,7 +123,7 @@ ddsim \
   --inputFiles /nfs/dust/ilc/user/berggren/blub/E500-TDR_ws.PBeamstr-seeablepairs.GGuineaPig-v1-4-4.I230001.0001.slcio \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E500-TDR_ws.PBeamstr-seeablepairs.GGuineaPig-v1-4-4.I230001.0001.simulated.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
-  --steeringFile DDSim/ddsim_steer.py \
+  --steeringFile ddsim_steer.py \
   --lcio.mcParticleCollectionName MCParticles
 ```
 
@@ -138,14 +138,14 @@ ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
-  --steeringFile DDSim/ddsim_steer.py
+  --steeringFile ddsim_steer.py
 ```
 
 and get the simulation output file as *bbudsc_3evt.slcio*, to be used as input for the reconstruction.
 
 ## Running the reconstruction with the overlay background
 
-To run the reconstruction with the background overlay, you need to specify which CMS energy you want to use and where the simulated background files are located. The expected number of background events for each CMS energy can be found in the *Overlay/Overlay.xml* steering file. Assuming that all the produced background samples located in the directory 
+To run the reconstruction with the background overlay, you need to specify which CMS energy you want to use and where the simulated background files are located. The expected number of background events for each CMS energy can be found in the *Overlay* directory in different files. Assuming that all the produced background samples located in the directory 
 
 */nfs/dust/ilc/group/ild/eteremi/SIM/bg/*
 
@@ -157,12 +157,13 @@ Marlin MarlinStdReco.xml \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --global.LCIOInputFiles=bbudsc_3evt.slcio \
   --constant.OutputBaseName=bbudsc_3evt \
-  --constant.RunOverlay500GeV=true \
-  --BgOverlayWW500GeV.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pW.I39212.01.stdhep.slcio \
-  --BgOverlayWB500GeV.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pB.I39213.01.stdhep.slcio \
-  --BgOverlayBW500GeV.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pW.I39214.01.stdhep.slcio \
-  --BgOverlayBB500GeV.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I39215.01.stdhep.slcio \
-  --PairBgOverlay500GeV.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E500-TDR_ws.PBeamstr-seeablepairs.GGuineaPig-v1-4-4.I230001.0001.simulated.slcio
+  --constant.RunOverlay=true \
+  --constant.CMSEnergy=500 \
+  --BgOverlayWW.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pW.I39212.01.stdhep.slcio \
+  --BgOverlayWB.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pB.I39213.01.stdhep.slcio \
+  --BgOverlayBW.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pW.I39214.01.stdhep.slcio \
+  --BgOverlayBB.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I39215.01.stdhep.slcio \
+  --PairBgOverlay.InputFileNames=sv01-19-05_lcgeo.mILD_l5_o1_v02.E500-TDR_ws.PBeamstr-seeablepairs.GGuineaPig-v1-4-4.I230001.0001.simulated.slcio
 ```
 
 This outputs the following output files : 
