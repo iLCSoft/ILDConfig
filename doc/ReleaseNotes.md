@@ -1,3 +1,27 @@
+# v01-19-05-p01
+
+* 2017-11-22 Ete Remi ([PR#42](https://github.com/ilcsoft/ILDConfig/pull/42))
+  - Re-generate production steering files, with OutputSteeringFile parameter empty
+
+* 2017-11-29 Ete Remi ([PR#46](https://github.com/ilcsoft/ILDConfig/pull/46))
+  - Moved Init and Output processors back in the top-level steering file
+  - OverlayBg : 
+    - Only one group of processors kept
+    - Moved back to top-level steering file
+    - Expected background values written in different constants file
+    - To run overlay background use the constant RunOverlay=true/false and CMSEnergy=500 (250, 350, or 1000) to select the correct parameters
+  - DDSim directory removed : 
+    - ddsim_steer.py moved back into top-level directory (to make ILCDirac happy)
+    - ddsim_steer_default.py removed (not used)
+  - Generated steering files removed, as ILCDirac can now run on the top-level steering file 
+  - Updated documentation on background overlay
+  - Updated README.md file
+
+* 2017-11-29 Ete Remi ([PR#43](https://github.com/ilcsoft/ILDConfig/pull/43))
+  - Switch from SimpleMuonDigi to DDSimpleMuonDigi processor. 
+  - Updated steering file configuration to run DDSimpleMuonDigi (detector names from lcgeo)
+
+
 # v01-19-05
 
 * 2017-11-16 Ete Remi ([PR#36](https://github.com/ilcsoft/ILDconfig/pull/36))
