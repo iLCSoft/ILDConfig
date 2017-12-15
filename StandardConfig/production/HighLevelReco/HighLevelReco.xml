@@ -81,7 +81,7 @@
 
 
   <processor name="MyDistilledPFOCreator" type="DistilledPFOCreator">
-    <parameter name="InputParticleCollectionName1" value="PandoraPFOsWithoutIsoLep" />
+    <parameter name="InputParticleCollectionName1" value="PandoraPFOs" />
     <parameter name="InputParticleCollectionName2" value="GammaGammaParticles" />
     <parameter name="Printing" value="0" />
     <parameter name="OutputParticleCollectionName" value="DistilledPFOs" />
