@@ -225,6 +225,9 @@
       ${RECOutputFile}
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <parameter name="DropCollectionNames" type="StringVec"> 
+      ${AdditionalDropCollectionsREC} 
+    </parameter>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
   </processor>
   <processor name="DSTOutput" type="LCIOOutputProcessor">
@@ -242,6 +245,9 @@
       LCRelation
       Track 
       LCFloatVec      
+    </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">
+      PandoraPFANewStartVertices
     </parameter>
     <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
     <parameter name="KeepCollectionNames" type="StringVec"> 
