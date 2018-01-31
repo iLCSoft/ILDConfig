@@ -31,3 +31,8 @@
 
 <!-- Pandora settings file -->
 <constant name="PandoraSettingsFile" value="PandoraSettings/PandoraSettingsDefault.xml" />
+
+<!-- Additonal collection names to drop from the REC file -->
+<constant name="DropCollectionsECal">ECalBarrelSiHitsEven ECalBarrelSiHitsOdd ECalEndcapSiHitsEven ECalEndcapSiHitsOdd</constant>
+<constant name="DropCollectionsHCal">HCalBarrelRPCHits HCalEndcapRPCHits HCalECRingRPCHits</constant>
+<constant name="AdditionalDropCollectionsREC">${DropCollectionsECal} ${DropCollectionsHCal}</constant>
