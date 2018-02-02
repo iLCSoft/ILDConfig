@@ -159,10 +159,6 @@
   <group name="BgOverlay">
     <!--Overlay each event with this number of background events. (default 0)-->
     <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
-    <!--Overlay each event with the content of one run.-->
-    <parameter name="runOverlay" type="bool">false </parameter>
-    <!--Maximum number of events to skip between overlayd events (choosen from flat intervall [0,NSkipEventsRandom] )-->
-    <parameter name="NSkipEventsRandom" type="int">0</parameter>
     
     <processor name="BgOverlayWW" type="Overlay">
       <!--Opens a second (chain of) lcio file(s) and overlays events...-->
