@@ -1088,8 +1088,15 @@
     <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
     <!--LDC Track collectoin name-->
     <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+    <!--add smearing or not  on:1 off:0 (use natural fluctuation only)-->
+    <parameter name="isSmearing" type="bool"> 0 </parameter>
+    <!--dEdx smearing factor  (0.035 for l5, 0.044 for s5)-->
+    <parameter name="smearingFactor" type="float"> 0.035 </parameter>
+    <!--dEdx angular correction parameters-->
+    <parameter name="AngularCorrectionParameters" type="FloatVec"> 0.635762 -0.0573237 </parameter>
+    <!--dEdx number of hits correction parameters-->
+    <parameter name="NumberofHitsCorrectionParameters" type="float"> 1.468 </parameter>
   </processor>
-
 
 
   <processor name="MyForwardTracking" type="ForwardTracking">
@@ -1835,10 +1842,10 @@
     <!--Boundaries for energy binning-->
     <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
     <!--Name of files containing pdfs for charged particles-->
-    <parameter name="FilePDFName" type="StringVec"> LikelihoodPID_Histogram_v01.root </parameter>
+    <parameter name="FilePDFName" type="StringVec"> LikelihoodPID_Standard_l5_v01.root </parameter>
     <!-- Whether MVA low momentum mu/pi is used or not-->
     <parameter name="UseLowMomentumMuPiSeparation" type="bool">
-      true
+      1
     </parameter>
     <parameter name="FileWeightFormupiSeparationName" type="StringVec">
       ./weightFiles_forLowMomentumMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
@@ -1884,14 +1891,23 @@
       1.350e-7
     </parameter>
 
-    <!--dE/dx error factor-->
+    <!--dE/dx error factor(7.55 for l5, 8.53 for s5)-->
     <parameter name="dEdxErrorFactor" type="float">
       7.55
     </parameter>
 
-    <!-- Method: Maximum Likelihood(0) or Bayesian(1)-->
+    <!-- Method: Maximum Likelihood(0), Bayesian(1), or risk based Bayesian(2)-->
     <parameter name="UseBayesian" type="int">
-      0
+      2
+    </parameter>
+
+    <!-- Cost Matrix for risk based Bayesian(2)-->
+    <parameter name="CostMatrix" type="std::vector< std::float >">
+      1.0e-50 1.0 1.5 1.0 1.5
+      1.0 1.0e-50 3.0 1.0 1.0
+      1.0 1.0 1.0e-50 1.0 3.0
+      1.0 1.0 4.0 1.0e-50 2.0
+      1.0 1.0 5.0 1.0 1.0e-50     
     </parameter>
 
     <!--Name of the PFO collection-->
