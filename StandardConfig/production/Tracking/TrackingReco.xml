@@ -417,6 +417,14 @@
     <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
     <!--LDC Track collectoin name-->
     <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+    <!--add smearing or not  on:1 off:0 (use natural fluctuation only)-->
+    <parameter name="isSmearing" type="bool"> 0 </parameter>
+    <!--dEdx smearing factor  (0.035 for l5, 0.044 for s5)-->
+    <parameter name="smearingFactor" type="float"> 0.035 </parameter>
+    <!--dEdx angular correction parameters-->
+    <parameter name="AngularCorrectionParameters" type="FloatVec"> 0.635762 -0.0573237 </parameter>
+    <!--dEdx number of hits correction parameters-->
+    <parameter name="NumberofHitsCorrectionParameters" type="float"> 1.468 </parameter>
   </processor>
 
 

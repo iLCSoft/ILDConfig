@@ -45,8 +45,8 @@
     <!-- ***** Input files constants ***** -->    
     <!-- Special Beamcal overlay background file -->
     <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCal_bg_E500-TDR_ws.root" />
-    <!-- Particle identification PDF root file -->
-    <constant name="PidPDFFile" value="HighLevelReco/PIDFiles/LikelihoodPID_Histogram_v01.root" />
+    <!-- Particle identification PDF root file for l5 detector -->
+    <constant name="PidPDFFile" value="HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root" />
     <!-- Particle identification BDT weights file for low momemtum mu/pi separation -->
     <constant name="PidWeightFiles">
       HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_02GeVP_clusterinfo.weights.xml
