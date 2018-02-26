@@ -4,7 +4,7 @@
 <constant name="EcalBarrelMip">0.0001525</constant>
 <constant name="EcalEndcapMip">0.0001525</constant>
 <constant name="EcalRingMip">0.0001525</constant>
-<constant name="SDHcalEnergyFactors">0.0490334 0.106432 0.522787</constant>
+<constant name="SDHcalEnergyFactors">0.0367023 0.0745279 0.363042</constant>
 <constant name="EcalBarrelEnergyFactors">0.00616736103247 0.0125274552256</constant>
 <constant name="EcalEndcapEnergyFactors">0.0064868449976 0.0131764071919</constant>
 <constant name="EcalRingEnergyFactors">0.0064868449976 0.0131764071919</constant>
@@ -14,9 +14,9 @@
 <constant name="PandoraMuonToMip">10.3093</constant>
 <constant name="PandoraEcalToEMScale">1.0</constant>
 <constant name="PandoraHcalToEMScale">1.0</constant>
-<constant name="PandoraEcalToHadBarrelScale">1.07522318318</constant>
-<constant name="PandoraEcalToHadEndcapScale">1.07522318318</constant>
-<constant name="PandoraHcalToHadScale">1.02821419758</constant>
+<constant name="PandoraEcalToHadBarrelScale">1.20499007655</constant>
+<constant name="PandoraEcalToHadEndcapScale">1.20499007655</constant>
+<constant name="PandoraHcalToHadScale">0.992344768925</constant>
 <constant name="PandoraSoftwareCompensationWeights">1.66803 -0.031982 0.000192898 -0.0612971 0.00256256 -4.35641e-05 0.0558589 0.0601767 -0.0758029</constant>
 
 <!-- Ecal technology : SiWEcal or ScEcal -->
