@@ -7,7 +7,7 @@
 <constant name="EcalBarrelEnergyFactors">0.0061295924012 0.0124507376742</constant>
 <constant name="EcalEndcapEnergyFactors">0.00649356022242 0.0131900474958</constant>
 <constant name="EcalRingEnergyFactors">0.00649356022242 0.0131900474958</constant>
-<constant name="SDHcalEnergyFactors">0.0490334 0.106432 0.522787</constant>
+<constant name="SDHcalEnergyFactors">0.0367023 0.0745279 0.363042</constant>
 <constant name="MuonCalibration">56.7</constant>
 <constant name="PandoraEcalToMip">153.846</constant>
 <constant name="PandoraHcalToMip">42.1941</constant>
@@ -31,6 +31,7 @@
 <constant name="DropCollectionsECal">ECalBarrelScHitsEven ECalBarrelScHitsOdd ECalEndcapScHitsEven ECalEndcapScHitsOdd</constant>
 <constant name="DropCollectionsHCal">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection</constant>
 <constant name="AdditionalDropCollectionsREC">${DropCollectionsECal} ${DropCollectionsHCal}</constant>
+<<<<<<< c939fc077325e089ec52813dc83cd72d05c24b71
 
 <!-- dEdX error factor depends on large/small detector flavor -->
 <constant name="dEdXErrorFactor">8.53</constant>
@@ -59,3 +60,5 @@
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_s5_19GeVP_clusterinfo.weights.xml
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_s5_20GeVP_clusterinfo.weights.xml
 </constant>
+=======
+>>>>>>> Updated calibration parameters of SDHCAL

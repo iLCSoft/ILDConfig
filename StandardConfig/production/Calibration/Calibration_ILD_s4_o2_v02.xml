@@ -4,7 +4,7 @@
 <constant name="EcalBarrelMip">0.0001575</constant>
 <constant name="EcalEndcapMip">0.0001575</constant>
 <constant name="EcalRingMip">0.0001575</constant>
-<constant name="SDHcalEnergyFactors">0.0490334 0.106432 0.522787</constant>
+<constant name="SDHcalEnergyFactors">0.0367023 0.0745279 0.363042</constant>
 <constant name="EcalBarrelEnergyFactors">0.00639206743282 0.0129838902153</constant>
 <constant name="EcalEndcapEnergyFactors">0.00677453657324 0.0137607808509</constant>
 <constant name="EcalRingEnergyFactors">0.00677453657324 0.0137607808509</constant>

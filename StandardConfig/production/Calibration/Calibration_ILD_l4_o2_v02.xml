@@ -4,7 +4,7 @@
 <constant name="EcalBarrelMip">0.0001575</constant>
 <constant name="EcalEndcapMip">0.0001575</constant>
 <constant name="EcalRingMip">0.0001575</constant>
-<constant name="SDHcalEnergyFactors">0.0490334 0.106432 0.522787</constant>
+<constant name="SDHcalEnergyFactors">0.0367023 0.0745279 0.363042</constant>
 <constant name="EcalBarrelEnergyFactors">0.00641222630095 0.0130248379264</constant>
 <constant name="EcalEndcapEnergyFactors">0.0066862777075 0.0135815049851</constant>
 <constant name="EcalRingEnergyFactors">0.0066862777075 0.0135815049851</constant>
@@ -30,6 +30,7 @@
 <!-- Additonal collection names to drop from the REC file -->
 <constant name="DropCollectionsHCal">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection</constant>
 <constant name="AdditionalDropCollectionsREC">${DropCollectionsHCal}</constant>
+<<<<<<< c939fc077325e089ec52813dc83cd72d05c24b71
 
 <!-- dEdX error factor depends on large/small detector flavor -->
 <constant name="dEdXErrorFactor">7.55</constant>
@@ -58,3 +59,5 @@
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_19GeVP_clusterinfo.weights.xml
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_20GeVP_clusterinfo.weights.xml
 </constant>
+=======
+>>>>>>> Updated calibration parameters of SDHCAL
