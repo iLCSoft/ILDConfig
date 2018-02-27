@@ -22,7 +22,7 @@ do
     echo "-- ERROR - DDSim ${detector}: 3 events test failed"
     exit $ddsimStatus
   else
-    echo "-- DDSim ${detector}: passing !"
+    echo "-- DDSim ${detector}: test passing !"
   fi
   
   if [ ! -f "bbudsc_3evt_SIM_test_${detector}.slcio" ]
