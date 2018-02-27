@@ -223,7 +223,7 @@
     </parameter>
     <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
     <parameter name="KeepCollectionNames" type="StringVec"> 
-      MCParticlesSkimmed 
+      MCParticle
       MarlinTrkTracks
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
