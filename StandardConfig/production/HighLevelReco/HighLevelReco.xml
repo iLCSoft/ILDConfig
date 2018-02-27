@@ -180,20 +180,21 @@
     <!-- same for the calos: Simulated calo hits (has the connection to MCParticles) -->
     <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
       BeamCalCollection
-      EcalBarrelCollection
-      EcalEndcapsCollection
-      EcalEndcapRingCollection
-      HcalBarrelRegCollection
-      HcalEndcapsCollection
-      HcalEndcapRingCollection
       LHCalCollection
       LumiCalCollection
+      ${ECalSimHitCollections}
+      ${HCalSimHitCollections}
       YokeBarrelCollection
       YokeEndcapsCollection
     </parameter> 
     <!-- Connections from calo hist (connected to clusters) tp sim calo hits  (connects to MC particle) -->
     <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
-      RelationCaloHit
+      EcalBarrelRelationsSimRec
+      EcalEndcapRingRelationsSimRec
+      EcalEndcapsRelationsSimRec
+      HcalBarrelRelationsSimRec
+      HcalEndcapRingRelationsSimRec
+      HcalEndcapsRelationsSimRec
       RelationLHcalHit
       RelationMuonHit
       RelationLcalHit
