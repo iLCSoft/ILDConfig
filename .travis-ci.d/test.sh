@@ -30,7 +30,7 @@ do
     ls -lthr
     echo "-- ERROR - DDSim ${detector}: No output file found (bbudsc_3evt_SIM_test_${detector}.slcio)"
   fi
-fi
+done
 
 
 
