@@ -59,3 +59,7 @@
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_s5_19GeVP_clusterinfo.weights.xml
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_s5_20GeVP_clusterinfo.weights.xml
 </constant>
+
+<!-- SimCalorimeterHit collection names. Necessary to deal with hybrid reconstruction -->
+<constant name="ECalSimHitCollections">ECalBarrelSiHitsEven ECalBarrelSiHitsOdd ECalEndcapSiHitsEven ECalEndcapSiHitsOdd EcalEndcapRingCollection</constant>
+<constant name="HCalSimHitCollections">HCalBarrelRPCHits HCalECRingRPCHits HCalEndcapRPCHits</constant>
