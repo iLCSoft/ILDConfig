@@ -36,3 +36,6 @@
 <constant name="DropCollectionsECal">ECalBarrelSiHitsEven ECalBarrelSiHitsOdd ECalEndcapSiHitsEven ECalEndcapSiHitsOdd</constant>
 <constant name="DropCollectionsHCal">HCalBarrelRPCHits HCalEndcapRPCHits HCalECRingRPCHits</constant>
 <constant name="AdditionalDropCollectionsREC">${DropCollectionsECal} ${DropCollectionsHCal}</constant>
+
+<!-- dEdX error factor depends on large/small detector flavor -->
+<constant name="dEdXErrorFactor">8.53</constant>
