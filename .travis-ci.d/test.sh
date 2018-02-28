@@ -16,7 +16,7 @@ do
 
   ddsimStatus=$?
 
-  if [[ ddsimStatus != 0 ]]
+  if [[ $ddsimStatus != 0 ]]
   then
     cat travis-ci.log
     echo "-- ERROR - DDSim ${detector}: 3 events test failed"
