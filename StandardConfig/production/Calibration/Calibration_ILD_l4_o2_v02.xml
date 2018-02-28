@@ -30,3 +30,6 @@
 <!-- Additonal collection names to drop from the REC file -->
 <constant name="DropCollectionsHCal">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection</constant>
 <constant name="AdditionalDropCollectionsREC">${DropCollectionsHCal}</constant>
+
+<!-- dEdX error factor depends on large/small detector flavor -->
+<constant name="dEdXErrorFactor">7.55</constant>
