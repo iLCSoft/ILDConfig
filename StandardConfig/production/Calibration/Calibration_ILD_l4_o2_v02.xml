@@ -14,9 +14,9 @@
 <constant name="PandoraMuonToMip">10.3093</constant>
 <constant name="PandoraEcalToEMScale">1.0</constant>
 <constant name="PandoraHcalToEMScale">1.0</constant>
-<constant name="PandoraEcalToHadBarrelScale">1.07045526314</constant>
-<constant name="PandoraEcalToHadEndcapScale">1.07045526314</constant>
-<constant name="PandoraHcalToHadScale">1.02821419758</constant>
+<constant name="PandoraEcalToHadBarrelScale">1.20499007655</constant>
+<constant name="PandoraEcalToHadEndcapScale">1.20499007655</constant>
+<constant name="PandoraHcalToHadScale">0.992344768925</constant>
 <constant name="PandoraSoftwareCompensationWeights">1.78321 -0.0515853 0.000555338 -0.0858048 0.00546042 -0.000151165 0.0601101 0.069058 -0.113743</constant>
 
 <!-- Ecal technology : SiWEcal or ScEcal -->

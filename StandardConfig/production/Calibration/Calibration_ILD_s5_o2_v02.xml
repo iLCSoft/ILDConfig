@@ -14,9 +14,9 @@
 <constant name="PandoraMuonToMip">10.3093</constant>
 <constant name="PandoraEcalToEMScale">1.0</constant>
 <constant name="PandoraHcalToEMScale">1.0</constant>
-<constant name="PandoraEcalToHadBarrelScale">1.08978523647</constant>
-<constant name="PandoraEcalToHadEndcapScale">1.08978523647</constant>
-<constant name="PandoraHcalToHadScale">1.0518169704</constant>
+<constant name="PandoraEcalToHadBarrelScale">1.20499007655</constant>
+<constant name="PandoraEcalToHadEndcapScale">1.20499007655</constant>
+<constant name="PandoraHcalToHadScale">0.992344768925</constant>
 <constant name="PandoraSoftwareCompensationWeights">1.45525 -0.0243366 0.000133654 -0.0529633 0.00148587 -2.11343e-05 0.136194 0.151678 -0.0514051</constant>
 
 <!-- Ecal technology : SiWEcal or ScEcal -->
@@ -31,7 +31,6 @@
 <constant name="DropCollectionsECal">ECalBarrelScHitsEven ECalBarrelScHitsOdd ECalEndcapScHitsEven ECalEndcapScHitsOdd</constant>
 <constant name="DropCollectionsHCal">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection</constant>
 <constant name="AdditionalDropCollectionsREC">${DropCollectionsECal} ${DropCollectionsHCal}</constant>
-<<<<<<< c939fc077325e089ec52813dc83cd72d05c24b71
 
 <!-- dEdX error factor depends on large/small detector flavor -->
 <constant name="dEdXErrorFactor">8.53</constant>
@@ -60,5 +59,3 @@
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_s5_19GeVP_clusterinfo.weights.xml
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_s5_20GeVP_clusterinfo.weights.xml
 </constant>
-=======
->>>>>>> Updated calibration parameters of SDHCAL
