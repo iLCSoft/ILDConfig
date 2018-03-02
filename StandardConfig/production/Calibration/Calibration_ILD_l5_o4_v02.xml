@@ -31,7 +31,6 @@
 <constant name="DropCollectionsECal">ECalBarrelSiHitsEven ECalBarrelSiHitsOdd ECalEndcapSiHitsEven ECalEndcapSiHitsOdd</constant>
 <constant name="DropCollectionsHCal">HcalBarrelRegCollection HcalEndcapRingCollection HcalEndcapsCollection</constant>
 <constant name="AdditionalDropCollectionsREC">${DropCollectionsECal} ${DropCollectionsHCal}</constant>
-<<<<<<< c939fc077325e089ec52813dc83cd72d05c24b71
 
 <!-- dEdX error factor depends on large/small detector flavor -->
 <constant name="dEdXErrorFactor">7.55</constant>
@@ -60,5 +59,3 @@
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_19GeVP_clusterinfo.weights.xml
   HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_20GeVP_clusterinfo.weights.xml
 </constant>
-=======
->>>>>>> Updated calibration parameters of SDHCAL
