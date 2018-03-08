@@ -13,6 +13,8 @@
     <parameter name="ETCluster" type="FloatVec">0.5 0.5  </parameter>
     <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
     <parameter name="ETPad" type="FloatVec"> 0.01 0.3  </parameter>
+    <!--Flag to create the TEfficiency for fast tagging library"-->
+    <parameter name="CreateEfficiencyFile" type="bool">false</parameter>
     <!--The name of the rootFile which will contain the TEfficiency objects-->
     <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
     <!--Background simulation method-->
