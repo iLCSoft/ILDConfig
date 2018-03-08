@@ -44,7 +44,7 @@
     
     <!-- ***** Input files constants ***** -->    
     <!-- Special Beamcal overlay background file -->
-    <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCal_bg_E500-TDR_ws.root" />
+    <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCal_bg_E500-TDR-ILD_l5_v02.root" />
     
     <!-- Geometry model dependant calibration constants from external file -->
     <include ref="${CalibrationFile}" />
