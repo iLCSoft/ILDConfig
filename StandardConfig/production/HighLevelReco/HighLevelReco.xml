@@ -272,6 +272,7 @@
     <parameter name="BuildUpVertex.AssocIPTracksMinDist" type="double" value="0." />
     <parameter name="BuildUpVertex.AssocIPTracksChi2RatioSecToPri" type="double" value="2.0" />
     <parameter name="BuildUpVertex.UseV0Selection" type="int" value="1" />
+    <parameter name="BuildUpVertex.UseAVF" type="bool" value="0" />
   </processor>
 
 </group>
