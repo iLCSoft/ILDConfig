@@ -8,9 +8,10 @@
     <!--Name of the MCParticle Collection-->
     <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticle </parameter>
     <!--Name of BeamCal Collection-->
-    <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BeamCalCollection</parameter>
-    <!--Collection of CalorimeterHits from the BeamCal,only created when input are SimCalorimeterHits-->
-    <parameter name="BeamCalHitsOutCollection" type="string" lcioOutType="CalorimeterHit">BeamCalCaloHits</parameter>
+    <!-- <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BeamCalCollection</parameter> -->
+    <parameter name="BeamCalCollectionName" type="string">BCAL</parameter>
+    <!--The Name of the DD4hep Readout belonging to the Detector the reconstruction is for, by default the name of the input collection-->
+    <parameter name="ReadoutName" type="string">BeamCalCollection</parameter>
     <!--Name of the Reconstructed Particle collection-->
     <parameter name="RecoParticleCollectionname" type="string" lcioOutType="ReconstructedParticle">BCalRecoParticle</parameter>
     <!--Name of the Reconstructed Cluster collection-->
@@ -34,11 +35,11 @@
     <!--If not using ConstPadCuts, each pad SigmaCut*variance is considered for clusters-->
     <parameter name="SigmaCut" type="double">2 </parameter>
     <!--Rings from which onwards the outside Thresholds are used-->
-    <parameter name="StartingRing" type="FloatVec">0 1  </parameter>
+    <parameter name="StartingRing" type="FloatVec">0 </parameter>
     <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
-    <parameter name="ETPad" type="FloatVec"> 0.000125 0.00375  </parameter>
+    <parameter name="ETPad" type="FloatVec">5e-5 </parameter>
     <!--Energy in a Cluster to consider it an electron-->
-    <parameter name="ETCluster" type="FloatVec">0.06 0.06  </parameter>
+    <parameter name="ETCluster" type="FloatVec">0.06 </parameter>
     <!--Minimum number of pads in a single tower to be considered for signal-->
     <parameter name="MinimumTowerSize" type="int">6 </parameter>
     <!--Layer (inclusive) from which on we start looking for signal clusters-->
