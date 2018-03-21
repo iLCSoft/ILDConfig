@@ -170,6 +170,9 @@
       <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
       <!--Name of the lcio input file(s)-->
       <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+      <!--List of collections to exclude for merging-->
+      <!--Exclude BeamCalCollection because overlay is treated in the BeamCalReco itself-->
+      <parameter name="ExcludeCollections" type="StringVec">BeamCalCollection </parameter>
     </processor>
   </group>
   
