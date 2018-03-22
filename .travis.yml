@@ -27,6 +27,7 @@ install:
   - mkdir Package
   - mv !(Package) Package
   - shopt -u dotglob
+  - export PKGDIR=${PWD}/Package
 
 # command to run tests
 script:
