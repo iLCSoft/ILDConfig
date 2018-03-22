@@ -369,6 +369,8 @@
     <parameter name="SITHitCollection" type="string" lcioInType="TrackerHit"> SITTrackerHits </parameter>
     <!--Cut on distance between track and SIT hits-->
     <parameter name="SITHitToTrackDistance" type="float">2 </parameter>
+    <!--Minimum Chi-squared P value allowed for Silicon Tracks.-->
+    <parameter name="MinChi2ProbForSiliconTracks" type="double">0.00001 </parameter>
     <!--Si Track Collection-->
     <parameter name="SiTracks" type="string" lcioInType="Track">SubsetTracks </parameter>
     <!--Si Track to Collection-->
