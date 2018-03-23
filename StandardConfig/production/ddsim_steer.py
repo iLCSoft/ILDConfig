@@ -86,26 +86,26 @@ SIM.action.tracker = ('Geant4TrackerWeightedAction', {'HitPositionCombination': 
 ## Configuration for the magnetic field (stepper) 
 ################################################################################
 ## --- used in v01-19-05 :
-##SIM.field.delta_chord = 1e-05
-##SIM.field.delta_intersection = 1e-05
-##SIM.field.delta_one_step = .5e-03*mm
-##SIM.field.eps_max = 1e-04
-##SIM.field.eps_min = 1e-05
-##SIM.field.equation = "Mag_UsualEqRhs"
-##SIM.field.largest_step = 10.*m
-##SIM.field.min_chord_step = 1.e-2*mm
-##SIM.field.stepper = "HelixSimpleRunge"
+SIM.field.delta_chord = 1e-05
+SIM.field.delta_intersection = 1e-05
+SIM.field.delta_one_step = .5e-03*mm
+SIM.field.eps_max = 1e-04
+SIM.field.eps_min = 1e-05
+SIM.field.equation = "Mag_UsualEqRhs"
+SIM.field.largest_step = 10.*m
+SIM.field.min_chord_step = 1.e-2*mm
+SIM.field.stepper = "HelixSimpleRunge"
 
 ## ---  default values in ddsim
-SIM.field.delta_chord = 0.25
-SIM.field.delta_intersection = 0.001
-SIM.field.delta_one_step = 0.01
-SIM.field.eps_max = 0.001
-SIM.field.eps_min = 5e-05
-SIM.field.equation = "Mag_UsualEqRhs"
-SIM.field.largest_step = 10000.0
-SIM.field.min_chord_step = 0.01
-SIM.field.stepper = "G4ClassicalRK4"
+##SIM.field.delta_chord = 0.25
+##SIM.field.delta_intersection = 0.001
+##SIM.field.delta_one_step = 0.01
+##SIM.field.eps_max = 0.001
+##SIM.field.eps_min = 5e-05
+##SIM.field.equation = "Mag_UsualEqRhs"
+##SIM.field.largest_step = 10000.0
+##SIM.field.min_chord_step = 0.01
+##SIM.field.stepper = "G4ClassicalRK4"
 
 ################################################################################
 ## Configuration for sensitive detector filters
