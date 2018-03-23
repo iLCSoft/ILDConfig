@@ -1,0 +1,69 @@
+
+<group name="BeamCalReco">
+  
+  <!--################################################ -->
+  <processor name="MyBeamCalClusterReco" type="BeamCalClusterReco">
+    <!--BeamCalClusterReco takes a list of beamcal background files from the ReadBeamCalprocessor, adds NumberOfBX of them together and puts the signal hits from thelcio input file on top of that, and then clustering is attempted.-->
+    <!--Name of the MCParticle Collection-->
+    <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticle </parameter>
+    <!--Name of BeamCal Collection-->
+    <!-- <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit">BeamCalCollection</parameter> -->
+    <parameter name="BeamCalCollectionName" type="string">BCAL</parameter>
+    <!--The Name of the DD4hep Readout belonging to the Detector the reconstruction is for, by default the name of the input collection-->
+    <parameter name="ReadoutName" type="string">BeamCalCollection</parameter>
+    <!--Name of the Reconstructed Particle collection-->
+    <parameter name="RecoParticleCollectionname" type="string" lcioOutType="ReconstructedParticle">BCalRecoParticle</parameter>
+    <!--Name of the Reconstructed Cluster collection-->
+    <parameter name="RecoClusterCollectionname" type="string" lcioOutType="Cluster">BCalClusters</parameter>
+    <!--The Name of the Detector the reconstruction is for-->
+    <parameter name="DetectorName" type="int">BeamCal </parameter>
+    <!--The ID where the SubClusterEnergy will be added: LumiCal=3, BeamCal=5 in DDPFOCreator.hh-->
+    <parameter name="SubClusterEnergyID" type="int">5 </parameter>
+    <!--The ID of the first layer of the detector BeamCal 1: LumiCal: 0-->
+    <parameter name="DetectorStartingLayerID" type="int">1 </parameter>
+    <!--Background simulation method-->
+    <parameter name="BackgroundMethod" type="string">Parametrised </parameter>
+    <!--Root Inputfile(s)-->
+    <parameter name="InputFileBackgrounds" type="StringVec">${BeamCalBackgroundFile}</parameter>
+    <!--Number of Bunch Crossings of Background-->
+    <parameter name="NumberOfBX" type="int">1 </parameter>
+    <!--Use the cuts for the pads specified in ETPad. 
+        If false, the standard deviation of each pad times the SigmaCut Factor is used, 
+        the first entry in ETPad is used as a minimum energy to consider a pad at all-->
+    <parameter name="UseConstPadCuts" type="bool">false </parameter>
+    <!--If not using ConstPadCuts, each pad SigmaCut*variance is considered for clusters-->
+    <parameter name="SigmaCut" type="double">2 </parameter>
+    <!--Rings from which onwards the outside Thresholds are used-->
+    <parameter name="StartingRing" type="FloatVec">0 </parameter>
+    <!--Energy in a Pad, after subtraction of background required to consider it for signal-->
+    <parameter name="ETPad" type="FloatVec">5e-5 </parameter>
+    <!--Energy in a Cluster to consider it an electron-->
+    <parameter name="ETCluster" type="FloatVec">0.06 </parameter>
+    <!--Minimum number of pads in a single tower to be considered for signal-->
+    <parameter name="MinimumTowerSize" type="int">6 </parameter>
+    <!--Layer (inclusive) from which on we start looking for signal clusters-->
+    <parameter name="StartLookingInLayer" type="int">2 </parameter>
+    <!--How many layers are used for shower fitting-->
+    <parameter name="NShowerCountingLayers" type="int">3 </parameter>
+    <!--Multiply deposit energy by this factor to account for sampling fraction-->
+    <parameter name="LinearCalibrationFactor" type="double">72. </parameter>
+    <!--Weighting constant to use in logarithmic weighting of hits, if negative energy weighting is used-->
+    <parameter name="LogWeightingConstant" type="double">-1. </parameter>
+    <!--Maximum Distance between primary tower and neighbours to put into one cluster-->
+    <parameter name="MaxPadDistance" type="double">1e10 </parameter>
+    <!--Use Chi2 selection criteria to detect high energy electron in the signal.-->
+    <parameter name="UseChi2Selection" type="double">false </parameter>
+    <!--Limit on square norm of tower energy chi2/ndf, where chi2 = (E_dep - E_bg)^2/sig^2.
+			  Reasonable value for pregenerated bkg is 5., for parametrised is 2.-->
+    <parameter name="TowerChi2ndfLimit" type="double">2. </parameter>
+    <!--Flag to create the TEfficiency for fast tagging library-->
+    <parameter name="CreateEfficiencyFile" type="bool"> false </parameter>
+    <!--The name of the rootFile which will contain the TEfficiency objects-->
+    <parameter name="EfficiencyFilename" type="string">TaggingEfficiency.root </parameter>
+    <!--Number of Event that should be printed to PDF File-->
+    <parameter name="PrintThisEvent" type="int">1 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+
+</group>
