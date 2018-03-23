@@ -41,6 +41,8 @@
     <constant name="CMSEnergy" value="Unknown" />
     <!-- The background overlay parameters file to include -->
     <constant name="OverlayParametersFile" value="Overlay/OverlayParameters${CMSEnergy}GeV.xml" />
+    <!--Whether to run the BeamCal reconstruction-->
+    <constant name="RunBeamCalReco" value="false" />
     
     <!-- ***** Input files constants ***** -->    
     <!-- Special Beamcal overlay background file -->
@@ -87,6 +89,12 @@
     <group name="MuonDigi" />
     <!-- Particle flow reconstruction -->
     <group name="ParticleFlow" />
+    
+    <!--BeamCal reconstruction-->
+    <if condition="${RunBeamCalReco}">
+      <group name="BeamCalReco" />
+    </if>
+
     <!-- High level reconstruction -->
     <group name="HighLevelReco" />
     
@@ -188,6 +196,9 @@
   
   <!-- Particle Flow reconstruction : PandoraPFA -->
   <include ref="ParticleFlow/PandoraPFA.xml" />
+  
+  <!-- Standalone BeamCal reconstruction -->
+  <include ref="HighLevelReco/BeamCalReco.xml" />
 
   <!-- Post reconstruction related : PID, Vertexing, Particle finding, cluster topology -->
   <include ref="HighLevelReco/HighLevelReco.xml" />
