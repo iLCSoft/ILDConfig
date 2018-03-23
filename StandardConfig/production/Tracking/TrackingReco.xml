@@ -415,18 +415,34 @@
 
 
   <processor name="MyCompute_dEdxProcessor" type="Compute_dEdxProcessor">
-    <!--Energy Loss Error for TPC-->
-    <parameter name="EnergyLossErrorTPC" type="float">0.05 </parameter>
     <!--LDC Track collectoin name-->
     <parameter name="LDCTrackCollection" type="string"> MarlinTrkTracks </parameter>
+    <!--If set, the calculated dEdx value will be attached to its corresponding track (default: true).-->
+    <parameter name="Write_dEdx" type="bool"> true </parameter>
+    <!--Energy Loss Error for TPC-->
+    <parameter name="EnergyLossErrorTPC" type="float">0.054 </parameter>
+    <!--Lower truncation fraction, default: 0.08 (8%)-->
+    <parameter name="LowerTruncationFraction" type="float">0.08 </parameter>
+    <!--Upper truncation fraction, default: 0.3 (30%)-->
+    <parameter name="UpperTruncationFraction" type="float">0.3 </parameter>
     <!--add smearing or not on:1 off:0 (use natural fluctuation only)-->
-    <parameter name="isSmearing" type="bool"> 1 </parameter>
+    <parameter name="isSmearing" type="bool"> true </parameter>
     <!--dEdx smearing factor  (0.035 for l5, 0.044 for s5)-->
-    <parameter name="smearingFactor" type="float"> 0.035 </parameter>
-    <!--dEdx angular correction parameters-->
-    <parameter name="AngularCorrectionParameters" type="FloatVec"> 0.635762 -0.0573237 </parameter>
+    <parameter name="smearingFactor" type="float"> ${dEdXSmearingFactor} </parameter>
     <!--dEdx number of hits correction parameters-->
     <parameter name="NumberofHitsCorrectionParameters" type="float"> 1.468 </parameter>
+    <!--dEdx angular correction parameters-->
+    <parameter name="AngularCorrectionParameters" type="FloatVec"> 0.635762 -0.0573237 </parameter>
+    <!--scaling exponents of the dE/dx error for path length and number of hits, respectively-->
+    <parameter name="dEdxErrorScalingExponents" type="FloatVec"> -0.34 -0.45 </parameter>
+    <!--ID of the track length calculation: 1 - hit-to-hit distance; 2 - hit-to-hit path length of projected hits; 3 - path over hit row-->
+    <parameter name="dxStrategy" type="int"> 1 </parameter>
+    <!--If set, an AIDA root file will be generated with Bethe-Bloch histograms (dE/dx over momentum) for each dx strategy (default: false).-->
+    <parameter name="StrategyCompHist" type="bool"> false </parameter>
+    <!--If set, the Bethe-Bloch histograms will have a sqrt(nHits) weighting (default: false).-->
+    <parameter name="StrategyCompHistWeight" type="bool"> false </parameter>
+    <!--File names of the generated dx strategy comparison histograms (if chosen). The respective strategy number and '.png' is added.-->
+    <parameter name="StrategyCompHistFiles" type="string"> dEdx_Histo_Strategy </parameter>
   </processor>
 
 

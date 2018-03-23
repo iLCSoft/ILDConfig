@@ -35,6 +35,9 @@
 <!-- dEdX error factor depends on large/small detector flavor -->
 <constant name="dEdXErrorFactor">7.55</constant>
 
+<!-- dEdX smearing factor depends on large/small detector flavor -->
+<constant name="dEdXSmearingFactor">0.035</constant>
+
 <!-- Particle identification PDF root file for l5(l4) detector -->
 <constant name="PidPDFFile" value="HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root" />
 <!-- Particle identification BDT weights file for low momemtum mu/pi separation -->
