@@ -12,7 +12,7 @@
     <parameter name="CellIDLayerString" type="string"> layer </parameter>
 
     <!--Calibration coefficients for LCAL-->
-    <parameter name="CalibrFCAL" type="FloatVec">72.</parameter>
+    <parameter name="CalibrFCAL" type="FloatVec">${BeamCalCalibrationFactor}</parameter>
     <!--LCAL Collection Names-->
     <parameter name="FCALCollections" type="StringVec">BeamCalCollection</parameter>
     <!--LCAL Collection of real Hits-->
