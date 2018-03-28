@@ -6,6 +6,7 @@
     <!--Track cut on distance from BarrelTracker inner r to id whether track can form pfo-->
     <parameter name="MaxBarrelTrackerInnerRDistance" type="float">105.0 </parameter>
     <parameter name="PandoraSettingsXmlFile" type="String"> ${PandoraSettingsFile} </parameter>
+    <parameter name="UseDD4hepField" type="bool">true</parameter>
     <!-- Collection names -->
     <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
     <parameter name="ECalCaloHitCollections" type="StringVec">EcalBarrelCollectionRec EcalBarrelCollectionGapHits EcalEndcapsCollectionRec EcalEndcapsCollectionGapHits EcalEndcapRingCollectionRec</parameter>
