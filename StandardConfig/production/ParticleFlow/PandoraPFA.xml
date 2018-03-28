@@ -15,7 +15,7 @@
     <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
     <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
     <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
-    <parameter name="RelCaloHitCollections" type="StringVec">EcalBarrelRelationsSimRec EcalEndcapsRelationsSimRec EcalEndcapRingRelationsSimRec HcalBarrelRelationsSimRec HcalEndcapsRelationsSimRec HcalEndcapRingRelationsSimRec RelationMuonHit</parameter>
+    <parameter name="RelCaloHitCollections" type="StringVec">EcalBarrelRelationsSimRec EcalEndcapsRelationsSimRec EcalEndcapRingRelationsSimRec HcalBarrelRelationsSimRec HcalEndcapsRelationsSimRec HcalEndcapRingRelationsSimRec RelationMuonHit RelationLHcalHit RelationLcalHit</parameter>
     <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCP</parameter>
     <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
     <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
