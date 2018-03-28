@@ -63,5 +63,14 @@
 </constant>
 
 <!-- SimCalorimeterHit collection names. Necessary to deal with hybrid reconstruction -->
-<constant name="ECalSimHitCollections">EcalBarrelCollection EcalEndcapRingCollection EcalEndcapsCollection</constant>
-<constant name="HCalSimHitCollections">HCalBarrelRPCHits HCalECRingRPCHits HCalEndcapRPCHits</constant>
+<constant name="ECalBarrelSimHitCollections">EcalBarrelCollection</constant>
+<constant name="ECalEndcapSimHitCollections">EcalEndcapsCollection</constant>
+<constant name="ECalRingSimHitCollections">EcalEndcapRingCollection</constant>
+
+<constant name="HCalBarrelSimHitCollections">HCalBarrelRPCHits</constant>
+<constant name="HCalEndcapSimHitCollections">HCalEndcapRPCHits</constant>
+<constant name="HCalRingSimHitCollections">HCalECRingRPCHits</constant>
+
+<constant name="ECalSimHitCollections">${ECalBarrelSimHitCollections} ${ECalEndcapSimHitCollections} ${ECalRingSimHitCollections}</constant>
+<constant name="HCalSimHitCollections">${HCalBarrelSimHitCollections} ${HCalEndcapSimHitCollections} ${HCalRingSimHitCollections}</constant>
+
