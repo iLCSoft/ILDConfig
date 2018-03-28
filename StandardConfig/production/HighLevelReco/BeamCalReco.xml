@@ -46,7 +46,7 @@
     <!--How many layers are used for shower fitting-->
     <parameter name="NShowerCountingLayers" type="int">3 </parameter>
     <!--Multiply deposit energy by this factor to account for sampling fraction-->
-    <parameter name="LinearCalibrationFactor" type="double">72. </parameter>
+    <parameter name="LinearCalibrationFactor" type="double">${BeamCalCalibrationFactor}</parameter>
     <!--Weighting constant to use in logarithmic weighting of hits, if negative energy weighting is used-->
     <parameter name="LogWeightingConstant" type="double">-1. </parameter>
     <!--Maximum Distance between primary tower and neighbours to put into one cluster-->
