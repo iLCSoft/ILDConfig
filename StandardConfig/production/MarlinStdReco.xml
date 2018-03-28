@@ -42,7 +42,7 @@
     <!-- The background overlay parameters file to include -->
     <constant name="OverlayParametersFile" value="Overlay/OverlayParameters${CMSEnergy}GeV.xml" />
     <!--Whether to run the BeamCal reconstruction-->
-    <constant name="RunBeamCalReco" value="false" />
+    <constant name="RunBeamCalReco" value="true" />
     
     <!-- ***** Input files constants ***** -->    
     <!-- Special Beamcal overlay background file -->
