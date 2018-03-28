@@ -255,23 +255,21 @@
     <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
     <!--Names of mc particle collection-->
     <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
-    <!-- Turn on calibration helper information-->
-    <parameter name="CollectCalibrationDetails" type="int"> 1 </parameter>
-    <!--ECal Collection ADC Names-->
-    <parameter name="ECalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">EcalBarrelCollection EcalEndcapsCollection  EcalEndcapRingCollection</parameter>
+    <!--Flag to look for quarks with mother Z-->
+    <parameter name="LookForQuarksWithMotherZ" type="int">0 </parameter>
+    <!--MC pfo selection radius-->
+    <parameter name="MCPfoSelectionRadius" type="float">500. </parameter>
+    <!--MC pfo selection momentum-->
+    <parameter name="MCPfoSelectionMomentum" type="float">0.01 </parameter>
+    <!--MC pfo selection neutron and proton low energy cut-off-->
+    <parameter name="MCPfoSelectionLowEnergyNPCutOff" type="float">1.2 </parameter>
+    <!--Set the debug print level-->
+    <parameter name="Printing" type="int">0 </parameter>
+    <!--Name of the output root file-->
+    <parameter name="RootFile" type="string"> ${PfoOutputFile} </parameter>
+    
+    <!--Name of the ECal collection of calo hits used to form clusters-->
     <parameter name="ECalCollections" type="StringVec" lcioInType="CalorimeterHit">EcalBarrelCollectionRec EcalBarrelCollectionGapHits EcalEndcapsCollectionRec EcalEndcapsCollectionGapHits EcalEndcapRingCollectionRec</parameter>
-    <!--Name of the ECAL barrel collection used to form clusters-->
-    <parameter name="ECalBarrelCollections" type="StringVec" lcioInType="CalorimeterHit">EcalBarrelCollectionRec EcalBarrelCollectionGapHits</parameter>
-    <!--Name of the ECAL EndCap collection used to form clusters-->
-    <parameter name="ECalEndcapCollections" type="StringVec" lcioInType="CalorimeterHit">EcalEndcapsCollectionRec EcalEndcapsCollectionGapHits EcalEndcapRingCollectionRec</parameter>
-    <!--HCal Collection ADC Names-->
-    <parameter name="HCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">HcalBarrelRegCollection HcalEndcapsCollection HcalEndcapRingCollection</parameter>
-    <!--Name of the HCAL barrel collection used to form clusters-->
-    <parameter name="HCalBarrelCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">HcalBarrelRegCollection</parameter>
-    <!--Name of the HCAL EndCap collection used to form clusters-->
-    <parameter name="HCalEndCapCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">HcalEndcapsCollection</parameter>
-    <!--Name of the HCAL EndCap collection used to form clusters-->
-    <parameter name="HCalOtherCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">HcalEndcapRingCollection</parameter>
     <!--Name of the HCAL collection used to form clusters-->
     <parameter name="HCalCollections" type="StringVec" lcioInType="CalorimeterHit">HcalBarrelCollectionRec HcalEndcapsCollectionRec HcalEndcapRingCollectionRec </parameter>
     <!--Name of the MUON collection used to form clusters-->
@@ -282,10 +280,32 @@
     <parameter name="LHCalCollections" type="StringVec" lcioInType="CalorimeterHit">LHCAL</parameter>
     <!--Name of the LCAL collection used to form clusters-->
     <parameter name="LCalCollections" type="StringVec" lcioInType="CalorimeterHit">LCAL</parameter>
-    <!--Set the debug print level-->
-    <parameter name="Printing" type="int">0 </parameter>
-    <!--Name of the output root file-->
-    <parameter name="RootFile" type="string"> ${PfoOutputFile} </parameter>
+
+    <!--Whether to collect calibration details-->
+    <parameter name="CollectCalibrationDetails" type="int"> 1 </parameter>
+    <!--Name of the ECal collection post ddsim, pre digitisation-->
+    <parameter name="ECalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalSimHitCollections}</parameter>
+    <!--Name of the HCal Barrel collection post ddsim, pre digitisation-->
+    <parameter name="HCalBarrelCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${HCalBarrelSimHitCollections}</parameter>
+    <!--Name of the HCal EndCap collection post ddsim, pre digitisation-->
+    <parameter name="HCalEndCapCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${HCalEndcapSimHitCollections}</parameter>
+    <!--Name of the HCAL Other collection used to form clusters-->
+    <parameter name="HCalOtherCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${HCalRingSimHitCollections}</parameter>
+    <!--Name of the ECal Barrel collection post ddsim, pre digitisation-->
+    <parameter name="ECalBarrelCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalBarrelSimHitCollections}</parameter>
+    <!--Name of the ECAL EndCap collection post ddsim, pre digitisation-->
+    <parameter name="ECalEndCapCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalEndcapSimHitCollections}</parameter>
+    <!--Name of the ECAL Other collection post ddsim, pre digitisation-->
+    <parameter name="ECalOtherCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalRingSimHitCollections}</parameter>
+    <!--Name of the Muon collection post ddsim, pre digitisation-->
+    <parameter name="MuonCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">YokeBarrelCollection YokeEndcapsCollection</parameter>
+    <!--Name of the BeamCal collection post ddsim, pre digitisation-->
+    <parameter name="BCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">BeamCalCollection</parameter>
+    <!--Name of the LHCal collection post ddsim, pre digitisation-->
+    <parameter name="LHCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">LHCalCollection</parameter>
+    <!--Name of the LCal collection post ddsim, pre digitisation-->
+    <parameter name="LCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">LumiCalCollection</parameter>
+
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
   </processor>
