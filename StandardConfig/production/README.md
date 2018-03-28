@@ -27,16 +27,17 @@ Currently you can find the following sub-directories for usual processors :
 - *CaloDigi* : The calorimeter digitizer (Ecal, Hcal, Fcal and Muon system) processors
 - *ParticleFlow* : The PandoraPFA processor(s)
 - *HighLevelReco* : The high level reconstruction (PID, vertexing, cluster shape, MC truth linker) processors
+- *BeamCalReco* : The BeamCal reconstruction settings
 
 In addition, you may find the following sub-directories :
 
 - *Overlay* : The gamma gamma overlay and pair background settings (as constants)
-- *Calibration* : The calibration constants for the different detector flavors currently under study. Each calibration file also defines two constants *EcalTechnology* and *HcalTechnology* defining which Ecal and Hcal technologies have to be used for the reconstruction. These two constants allow to choose which digitizers to process. 
+- *Calibration* : The calibration constants for the different detector flavors currently under study. Constants are mainly related to energy calibration, dEdX, and particle identification.
 - *Examples* : Example scripts to run 3 ttbar events simulation and reconstruction
 - *Gear* : The geometry files of the (deprecated) GEAR package of the detector geometries currently under study
-- *PandoraSettings* : A directory containin the PandoraPFA steering files
+- *PandoraSettings* : A directory containing the PandoraPFA steering files
 - *RootMacros* : A set of root macros for quick checks of output files
-- *Documentation* : Additional documentation on ILDConfig on overlay background and production parameters mainly
+- *Documentation* : Additional documentation on ILDConfig on overlay background and production parameters
 
 Most of these directories are used by the top-level Marlin steering file *MarlinStdReco.xml* as include sources. Please to not move them except if you know what you are doing.
 
@@ -83,6 +84,16 @@ This will create the 4 following files :
 - *bbudsc_3evt_DST.slcio* : Output file file containing the collections suited for physics analysis (PFO, cluster, rec hits, etc ...)
 - *bbudsc_3evt_PfoAnalysis.root* : A root file with a simple analysis of produced PFO. It is mainly used to study single particle performance and calibration or JER performances
 
+For single particles reconstruction you may also want to switch of the BeamCal reconstruction (time consuming) if you don't shoot in this region and/or if you have time processing constraints. To do this you can add the argument `--constant.RunBeamCalReco=false`. Example:
+
+```shell
+Marlin MarlinStdReco.xml \
+	--constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.DetectorModel=ILD_l5_o1_v02 \
+  --constant.OutputBaseName=bbudsc_3evt \
+  --constant.RunBeamCalReco=false \
+  --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio
+```
 
 ### 4. View the result in the event display
 
@@ -122,7 +133,7 @@ This will produce the file *bbudsc_3evt_LCTuple.root*
 
 ## Generating one/multiple steering files
 
-Even if the current top-level Marlin steering file *MarlinStdReco.xml* can be run as it is, it's sometimes more convenient to have a (almost) standalone steering file. The python script *GenerateSteeringFiles.py* helps you to generate a new steering file from the default top level one. The help command is the following :
+Even if the current top-level Marlin steering file *MarlinStdReco.xml* can be run as it is, it's sometimes more convenient to have a (almost) standalone steering file without includes. The python script *GenerateSteeringFiles.py* helps you to generate a new steering file from the default top level one. The help command is the following :
 
 ```shell
 python GenerateSteeringFiles.py --help
@@ -142,7 +153,7 @@ optional arguments:
   --steeringFile STEERINGFILE
                         The input template steering file
 ```
-By default, the detector models are the ones under studies (12 models). You can choose one model or many by using the --detectorModels option. The option --lcgeo_DIR allows you to set a particular lcgeo version to use. By default, the environment variable lcgeo_DIR (defined after sourcing a particular ilcsoft version) is used. The --steeringFile option is the top-level Marlin steering file to process (by default MarlinStdReco.xml).
+By default, the detector models are the ones under studies. You can choose one model or many by using the --detectorModels option. The option --lcgeo_DIR allows you to set a particular lcgeo version to use. By default, the environment variable lcgeo_DIR (defined after sourcing a particular ilcsoft version) is used. The --steeringFile option is the top-level Marlin steering file to process (by default MarlinStdReco.xml).
 
 You can, for example generate the 4 flavors of option 5 with large and small TPC radius by running the following command :
 
