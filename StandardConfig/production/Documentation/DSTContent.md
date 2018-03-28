@@ -17,25 +17,20 @@ Reconstructed particles :
 - GammaGammaCandidatePi0s (ReconstructedParticle)
 - GammaGammaParticles (ReconstructedParticle)
 - PandoraClusters (Cluster)
-- PandoraPFANewStartVertices (Vertex)
 - PandoraPFOs (ReconstructedParticle)
 - V0RecoParticles (ReconstructedParticle)
+- BCalRecoParticle (ReconstructedParticle)
+- BCalClusters (Cluster)
 
 MC infos :
 - MCParticlesSkimmed (MCParticle)
 - MCTruthMarlinTrkTracksLink (LCRelation)
 - MarlinTrkTracksMCTruthLink (LCRelation)
 - RecoMCTruthLink (LCRelation)
+- MCTruthRecoLink (LCRelation)
+- ClusterMCTruthLink (LCRelation)
+- MCTruthClusterLink (LCRelation)
 
 Tracking :
 - MarlinTrkTracks (Track)
-
-
-## Possible collections to add
-
-MC infos :
-- ClusterMCTruthLink (LCRelation)
-- MCTruthClusterLink (LCRelation) - difference ???
-
-More collections that are not yet produced ?
 
