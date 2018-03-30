@@ -1,3 +1,15 @@
+# v01-19-07
+
+* 2018-03-30 Remi Ete ([PR#76](https://github.com/iLCSoft/ILDConfig/pull/76))
+  - PandoraPFA.xml
+     - switch back to fixed BField values read from steering file instead of DD4hep B field
+
+* 2018-03-28 Remi Ete ([PR#74](https://github.com/iLCSoft/ILDConfig/pull/74))
+  - BeamCal calibration:
+     - moved calibration constant of BeamCal in a Marlin constant
+     - use Marlin constant in the BeamCal digitizer and the BeamCalClusterReco
+     - energy calibration constant updated to 79.6 (old was 72)
+
 # v01-19-05-p01
 
 * 2017-11-22 Ete Remi ([PR#42](https://github.com/ilcsoft/ILDConfig/pull/42))
