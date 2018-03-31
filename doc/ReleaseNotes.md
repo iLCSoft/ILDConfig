@@ -1,8 +1,11 @@
-# v01-19-07
+# v01-19-06-p01
 
 * 2018-03-30 Remi Ete ([PR#76](https://github.com/iLCSoft/ILDConfig/pull/76))
   - PandoraPFA.xml
      - switch back to fixed BField values read from steering file instead of DD4hep B field
+
+# v01-19-06
+
 
 * 2018-03-28 Remi Ete ([PR#74](https://github.com/iLCSoft/ILDConfig/pull/74))
   - BeamCal calibration:
