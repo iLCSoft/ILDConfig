@@ -8,7 +8,7 @@ cd /Package/StandardConfig/production
 ##
 ## Test DDSim for our current detector models
 ##
-for detector in ILD_l5_v02 ILD_s5_v02
+for detector in ILD_l5_v02
 do
   echo "-- Running DDSim ${detector} ..."
   ddsim \
@@ -41,9 +41,9 @@ done
 ##
 ## Test Marlin reconstruction for our current detector models 
 ##
-for largeOrSmall in l5 s5
+for largeOrSmall in l5
 do
-  for detectorOption in o1 o2
+  for detectorOption in o1
   do
     simDetector="ILD_${largeOrSmall}_v02"
     recDetector="ILD_${largeOrSmall}_${detectorOption}_v02"
