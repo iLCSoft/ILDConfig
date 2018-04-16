@@ -37,25 +37,25 @@ Here is the table for the vertex displacement/smearing and expected bacground ev
   <tr>
     <td> WW </td>
     <td> 0 </td>
-    <td> 0.01968 </td>
+    <td> 0.1968 </td>
     <td> 0.211 </td>
   </tr>
   <tr>
     <td> WB </td>
     <td> -0.04222 </td>
-    <td> 0.0186 </td>
+    <td> 0.186 </td>
     <td> 0.24605 </td>
   </tr>
   <tr>
     <td> BW </td>
     <td> +0.04222 </td>
-    <td> 0.0186 </td>
+    <td> 0.186 </td>
     <td> 0.243873 </td>
   </tr>
   <tr>
     <td> BB </td>
     <td> 0 </td>
-    <td> 0.016988 </td>
+    <td> 0.16988 </td>
     <td> 0.35063 </td>
   </tr>
 </table>
@@ -68,7 +68,7 @@ ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pW.I39212.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pW.I39212.01.stdhep.ddsim.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
-  --vertexSigma  0 0 0.01968 0 \
+  --vertexSigma  0 0 0.1968 0 \
   --vertexOffset 0 0 0 0 \
   --steeringFile ddsim_steer.py
 ```
@@ -80,7 +80,7 @@ ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pB.I39213.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pB.I39213.01.stdhep.ddsim.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
-  --vertexSigma  0 0 0.0186 0 \
+  --vertexSigma  0 0 0.186 0 \
   --vertexOffset 0 0 -0.04222 0 \
   --steeringFile ddsim_steer.py
 ```
@@ -92,7 +92,7 @@ ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pW.I39214.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pW.I39214.01.stdhep.ddsim.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
-  --vertexSigma  0 0 0.0186 0 \
+  --vertexSigma  0 0 0.186 0 \
   --vertexOffset 0 0 0.04222 0 \
   --steeringFile ddsim_steer.py
 ```
@@ -104,7 +104,7 @@ ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I39215.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I39215.01.stdhep.ddsim.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
-  --vertexSigma  0 0 0.016988 0 \
+  --vertexSigma  0 0 0.16988 0 \
   --vertexOffset 0 0 0 0 \
   --steeringFile ddsim_steer.py
 ```
@@ -129,7 +129,7 @@ ddsim \
 
 3. Running the main simulation
 
-We first need to simulate events from a physics process. Here we use our usual 3 events ttbar test sample. We assume to be in the ILDConfig *StandardConfig/production* directory.
+We first need to simulate events from a physics process. Here we use our usual 3 events ttbar test sample. We assume to be in the ILDConfig *StandardConfig/production* directory.  Note that the vertex offset and sigma for L and R electron/positron is same as W.
 
 First run the simulation as usual :
 
@@ -138,6 +138,8 @@ ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt.slcio \
   --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --vertexSigma  0 0 0.1968 0 \
+  --vertexOffset 0 0 0 0 \
   --steeringFile ddsim_steer.py
 ```
 
