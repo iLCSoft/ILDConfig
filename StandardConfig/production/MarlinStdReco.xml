@@ -39,8 +39,8 @@
     <constant name="RunOverlay" value="false" />
     <!-- The center of mass energy (unit GeV). Mainly used for background overlay -->
     <constant name="CMSEnergy" value="Unknown" />
-    <!-- The background overlay parameters file to include -->
-    <constant name="OverlayParametersFile" value="Overlay/OverlayParameters${CMSEnergy}GeV.xml" />
+    <!-- The energy dependant parameters file to include -->
+    <constant name="EnergyParametersFile" value="Config/Parameters${CMSEnergy}GeV.xml" />
     <!--Whether to run the BeamCal reconstruction-->
     <constant name="RunBeamCalReco" value="true" />
     <!--The BeamCal calibration constant, sim hit energy to calibrated calo hit energy-->
