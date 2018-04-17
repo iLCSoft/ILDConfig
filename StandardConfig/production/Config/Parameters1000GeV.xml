@@ -1,0 +1,11 @@
+
+<!--Overlay background settings-->
+<constant name="ExpectedBgWW" value="Parameter not yet provided. Please update me !" />
+<constant name="ExpectedBgWB" value="Parameter not yet provided. Please update me !" />
+<constant name="ExpectedBgBW" value="Parameter not yet provided. Please update me !" />
+<constant name="ExpectedBgBB" value="Parameter not yet provided. Please update me !" />
+
+<!--Beam size (unit mm)-->
+<constant name="BeamSizeX" value="Parameter not yet provided. Please update me !" />
+<constant name="BeamSizeY" value="Parameter not yet provided. Please update me !" />
+<constant name="BeamSizeZ" value="Parameter not yet provided. Please update me !" />

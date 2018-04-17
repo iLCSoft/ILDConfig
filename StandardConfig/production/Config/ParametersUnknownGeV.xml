@@ -1,0 +1,11 @@
+
+<!--Overlay background settings-->
+<constant name="ExpectedBgWW" value="Undefined energy for overlay background" />
+<constant name="ExpectedBgWB" value="Undefined energy for overlay background" />
+<constant name="ExpectedBgBW" value="Undefined energy for overlay background" />
+<constant name="ExpectedBgBB" value="Undefined energy for overlay background" />
+
+<!--Beam size (unit mm)-->
+<constant name="BeamSizeX" value="0" />
+<constant name="BeamSizeY" value="0" />
+<constant name="BeamSizeZ" value="0" />
