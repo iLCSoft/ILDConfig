@@ -53,8 +53,8 @@
     <!-- Geometry model dependant calibration constants from external file -->
     <include ref="${CalibrationFile}" />
     
-    <!-- Parameters for background overlay -->
-    <include ref="${OverlayParametersFile}" />
+    <!-- Energy dependant parameters -->
+    <include ref="${EnergyParametersFile}" />
     
     <!-- Output files constants -->
     <constant name="OutputBaseName" value="StandardReco" />
