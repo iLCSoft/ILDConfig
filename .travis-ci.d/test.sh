@@ -41,9 +41,9 @@ done
 ##
 ## Test Marlin reconstruction for our current detector models 
 ##
-for largeOrSmall in l5
+for largeOrSmall in l5 s5
 do
-  for detectorOption in o1
+  for detectorOption in o1 o2
   do
     simDetector="ILD_${largeOrSmall}_v02"
     recDetector="ILD_${largeOrSmall}_${detectorOption}_v02"
@@ -54,6 +54,7 @@ do
     	--constant.lcgeo_DIR=$lcgeo_DIR \
       --constant.DetectorModel=${recDetector} \
       --constant.OutputBaseName=${outputBaseName} \
+      --constant.RunBeamCalReco=false \
       --global.LCIOInputFiles=bbudsc_3evt_SIM_test_${simDetector}.slcio > travis-ci.log 2>&1
     
     marlinStatus=$?
