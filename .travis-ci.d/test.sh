@@ -8,7 +8,7 @@ cd /Package/StandardConfig/production
 ##
 ## Test DDSim for our current detector models
 ##
-for detector in ILD_l5_v02
+for detector in ILD_l5_v02 ILD_s5_v02
 do
   echo "-- Running DDSim ${detector} ..."
   ddsim \
