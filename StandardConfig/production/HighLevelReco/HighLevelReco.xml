@@ -275,4 +275,44 @@
     <parameter name="BuildUpVertex.UseAVF" type="bool" value="0" />
   </processor>
 
+
+  <!--########## add TOF estimators for 0, 10 and 50 ps resolution  ###################################### -->
+
+  <processor name="TOFEstimators0ps" type="TOFEstimators">
+    <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
+    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
+    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Name of the ReconstructedParticle collection-->
+    <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <!--Assumed time resolution per hit in ps-->
+    <parameter name="TimeResolution" type="float">0 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+  <processor name="TOFEstimators10ps" type="TOFEstimators">
+    <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
+    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
+    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Name of the ReconstructedParticle collection-->
+    <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <!--Assumed time resolution per hit in ps-->
+    <parameter name="TimeResolution" type="float">10. </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+  <processor name="TOFEstimators50ps" type="TOFEstimators">
+    <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
+    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
+    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Name of the ReconstructedParticle collection-->
+    <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <!--Assumed time resolution per hit in ps-->
+    <parameter name="TimeResolution" type="float">50 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+
+
+
+
 </group>
