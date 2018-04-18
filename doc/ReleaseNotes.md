@@ -1,3 +1,34 @@
+# v02-00
+
+* 2018-04-12 Ete Remi ([PR#78](https://github.com/ilcsoft/ILDConfig/pull/78))
+  - TravisCI
+      - Restrict simulation and reconstruction to ILD_l5_o1_v02 to avoid timeout in TravisCI
+  - MarlinStdReco.xml
+      - Changed default `DetectorModel` constant to none causing error if user don't specify it
+
+* 2018-04-18 Ete Remi ([PR#82](https://github.com/ilcsoft/ILDConfig/pull/82))
+  - Removed the full lcgeo_current directory as it is not maintained anymore. Bye bye Mokka world !
+
+* 2018-04-18 Ete Remi ([PR#81](https://github.com/ilcsoft/ILDConfig/pull/81))
+  - Overlay settings moved to Config directory
+  - Created new constants, energy dependant, for beam size parameters
+  - High level reco: vertexing
+     - Get beam size parameters depending on the CMS energy
+     - Use beamspot smearing only if a CMS energy is specified with `--constant.CMSEnergy=...`
+  - TravisCI test
+     - Run simulation for ILD_l/s5_v02 and reconstruction for ILD_l/s5_o1/o2_v02
+     - Switch off BeamCalReco to avoid TravisCI timeout and test failure
+  - Fixed wrong HCal sim calo hit collection names in Calibration file for ILD_s5_o2_v02 model
+
+* 2018-04-16 Akiya Miyamoto ([PR#79](https://github.com/ilcsoft/ILDConfig/pull/79))
+  - Background overlay documentation :
+     - Fixed wrong sigmaZ value (cm to mm)
+     - Added sigmaZ value to ddsim command line of signal simulation
+
+* 2018-04-17 Frank Gaede ([PR#80](https://github.com/ilcsoft/ILDConfig/pull/80))
+  - add TOF estimators for 0, 10 and 50 ps resolution
+  - add numbers for vertex fit constraints from GuineaPig (500 GeV)
+
 # v01-19-06-p01
 
 * 2018-03-30 Remi Ete ([PR#76](https://github.com/iLCSoft/ILDConfig/pull/76))
