@@ -31,7 +31,7 @@ Currently you can find the following sub-directories for usual processors :
 
 In addition, you may find the following sub-directories :
 
-- *Overlay* : The gamma gamma overlay and pair background settings (as constants)
+- *Config* : Specific configuration files that may depends on CMS energy or detector models
 - *Calibration* : The calibration constants for the different detector flavors currently under study. Constants are mainly related to energy calibration, dEdX, and particle identification.
 - *Examples* : Example scripts to run 3 ttbar events simulation and reconstruction
 - *Gear* : The geometry files of the (deprecated) GEAR package of the detector geometries currently under study
@@ -84,7 +84,7 @@ This will create the 4 following files :
 - *bbudsc_3evt_DST.slcio* : Output file file containing the collections suited for physics analysis (PFO, cluster, rec hits, etc ...)
 - *bbudsc_3evt_PfoAnalysis.root* : A root file with a simple analysis of produced PFO. It is mainly used to study single particle performance and calibration or JER performances
 
-For single particles reconstruction you may also want to switch of the BeamCal reconstruction (time consuming) if you don't shoot in this region and/or if you have time processing constraints. To do this you can add the argument `--constant.RunBeamCalReco=false`. Example:
+For single particles reconstruction you may also want to switch off the BeamCal reconstruction (time consuming) if you don't shoot in this region and/or if you have time processing constraints. To do this you can add the argument `--constant.RunBeamCalReco=false`. Example:
 
 ```shell
 Marlin MarlinStdReco.xml \
