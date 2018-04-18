@@ -147,7 +147,7 @@ and get the simulation output file as *bbudsc_3evt.slcio*, to be used as input f
 
 ## Running the reconstruction with the overlay background
 
-To run the reconstruction with the background overlay, you need to specify which CMS energy you want to use and where the simulated background files are located. The expected number of background events for each CMS energy can be found in the *Overlay* directory in different files. Assuming that all the produced background samples located in the directory 
+To run the reconstruction with the background overlay, you need to specify which CMS energy you want to use and where the simulated background files are located. The expected number of background events for each CMS energy can be found in the *Config* directory in different files. Assuming that all the produced background samples located in the directory 
 
 */nfs/dust/ilc/group/ild/eteremi/SIM/bg/*
 
@@ -174,4 +174,6 @@ This outputs the following output files :
 - bbudsc_3evt_REC.slcio : the REC file with all reconstructed collections
 - bbudsc_3evt_DST.slcio : the DSL file with the collection suitable for physics analysis only
 - bbudsc_3evt_PfoAnalysis.root : A root file with useful information on reconstructed particles for monitoring, calibration and uds performance
+
+Note that the ee pair background overlay is not performed in the BeamCal as the BeamCal reconstruction already take this into account.
 
