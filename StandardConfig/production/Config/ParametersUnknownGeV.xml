@@ -6,6 +6,7 @@
 <constant name="ExpectedBgBB" value="0" />
 
 <!--Beam size (unit mm)-->
+<constant name="LCFIPlusBeamspotConstraint" value="false" />
 <constant name="BeamSizeX" value="0" />
 <constant name="BeamSizeY" value="0" />
 <constant name="BeamSizeZ" value="0" />

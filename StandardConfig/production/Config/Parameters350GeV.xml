@@ -6,6 +6,7 @@
 <constant name="ExpectedBgBB" value="Parameter not yet provided. Please update me !" />
 
 <!--Beam size (unit mm)-->
+<constant name="LCFIPlusBeamspotConstraint" value="true" />
 <constant name="BeamSizeX" value="Parameter not yet provided. Please update me !" />
 <constant name="BeamSizeY" value="Parameter not yet provided. Please update me !" />
 <constant name="BeamSizeZ" value="Parameter not yet provided. Please update me !" />

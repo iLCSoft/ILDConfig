@@ -255,7 +255,7 @@
     <parameter name="PrimaryVertexFinder.TrackMaxZ0" type="double" value="20." />
     <parameter name="PrimaryVertexFinder.TrackMinVtxFtdHits" type="int" value="1" />
     <parameter name="PrimaryVertexFinder.Chi2Threshold" type="double" value="25." />
-    <parameter name="PrimaryVertexFinder.BeamspotConstraint" type="bool" value="1" />
+    <parameter name="PrimaryVertexFinder.BeamspotConstraint" type="bool" value="${LCFIPlusBeamspotConstraint}" />
     <parameter name="PrimaryVertexFinder.BeamspotSmearing" type="bool" value="0" />
     <!-- parameters for secondary vertex finder -->
     <parameter name="BuildUpVertex.TrackMaxD0" type="double" value="10." />
