@@ -68,9 +68,9 @@
 <constant name="ECalEndcapSimHitCollections">ECalEndcapSiHitsEven ECalEndcapSiHitsOdd</constant>
 <constant name="ECalRingSimHitCollections">EcalEndcapRingCollection</constant>
 
-<constant name="HCalBarrelSimHitCollections">HcalBarrelRegCollection</constant>
-<constant name="HCalEndcapSimHitCollections">HcalEndcapsCollection</constant>
-<constant name="HCalRingSimHitCollections">HcalEndcapRingCollection</constant>
+<constant name="HCalBarrelSimHitCollections">HCalBarrelRPCHits</constant>
+<constant name="HCalEndcapSimHitCollections">HCalEndcapRPCHits</constant>
+<constant name="HCalRingSimHitCollections">HCalECRingRPCHits</constant>
 
 <constant name="ECalSimHitCollections">${ECalBarrelSimHitCollections} ${ECalEndcapSimHitCollections} ${ECalRingSimHitCollections}</constant>
 <constant name="HCalSimHitCollections">${HCalBarrelSimHitCollections} ${HCalEndcapSimHitCollections} ${HCalRingSimHitCollections}</constant>
