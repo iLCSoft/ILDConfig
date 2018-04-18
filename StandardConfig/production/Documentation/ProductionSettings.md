@@ -71,6 +71,6 @@ Examples on how to simulate background events with these parameters can be found
 ## 2. Reconstruction parameters
 
 To reconstruct events we assume we have 1 source of physics event (e+e- collision) and a set of background (all backgrounds being WW, WB, BW, BB and pair).
-The number of background events to be overlaid on the physics event is the only reconstruction parameter in this case. All these values can be found in the *Overlay* directory and depend on the CMS energy.
+The number of background events to be overlaid on the physics event is the only reconstruction parameter in this case. All these values can be found in the *Config* directory and depend on the CMS energy.
 
 Examples on how to run the reconstruction with the background overlay can be found in the document [HowToRunBgOverlay.md](HowToRunBgOverlay.md) in the same directory.
