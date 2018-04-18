@@ -8,10 +8,10 @@ ILDConfig is distributed under the [GPLv3 License](http://www.gnu.org/licenses/g
 
 ## StandardConfig
 
-- ./lcgeo_current
-	- current example/standard configuration files for running ddsim and ILDConfig
+- ./production
+	- current example/standard configuration files for running simulation (ddsim) and reconstruction (Marlin) for ILD
 	
-See [./StandardConfig/lcgeo_current/README.md](./StandardConfig/lcgeo_current/README.md) for details.
+See [./StandardConfig/production/README.md](./StandardConfig/production/README.md) for details.
 Following the examples in this file is the quickest way to get started with running iLCSoft for ILD.
 
 ## LCFIPlusConfig
