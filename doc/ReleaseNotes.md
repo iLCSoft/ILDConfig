@@ -1,3 +1,9 @@
+# v02-00-01
+
+* 2018-05-18 Ete Remi ([PR#83](https://github.com/ilcsoft/ILDConfig/pull/83))
+  - PfoAnalysis processor config :
+     - Switch off the calibration details, saving time and nasty printouts in log files for production
+
 # v02-00
 
 * 2018-04-12 Ete Remi ([PR#78](https://github.com/ilcsoft/ILDConfig/pull/78))
