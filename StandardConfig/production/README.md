@@ -47,7 +47,7 @@ Most of these directories are used by the top-level Marlin steering file *Marlin
 ### 1. Initialize the current ilcsoft release
    
 ```shell
-source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v01-19-06/init_ilcsoft.sh
+source /afs/desy.de/project/ilcsoft/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
 ```
 
 ### 2. Run the lcgeo/ddsim simulation: the 3 ttbar example 
