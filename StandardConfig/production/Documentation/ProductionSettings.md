@@ -18,7 +18,7 @@ There are 4 types of collision events, depending on the nature of the incoming p
 
 Additionally there is background from incoherent e+e- pairs coming from Beamstrahlung, simply denoted by *pair* in the following. In this special case, the vertex position of the individual pairs is computed by the generator (GuineaPig).
 
-### 250 GeV parameters
+### 250 GeV vertex parameters for 250-SetA beam
 
 <table>
   <tr> <th> Process </th><th> Vertex z offset (mm) </th><th> Vertex z sigma (mm) </th></tr>
@@ -30,7 +30,7 @@ Additionally there is background from incoherent e+e- pairs coming from Beamstra
   <caption>Vertex parameters for the different processes at 250 GeV center of mass energy</caption>
 </table>
 
-### 350 GeV parameters
+### 350 GeV vertex parameters for 350-TDR_ws beam
 
 <table>
   <tr> <th> Process </th><th> Vertex z offset (mm) </th><th> Vertex z sigma (mm) </th></tr>
@@ -42,7 +42,7 @@ Additionally there is background from incoherent e+e- pairs coming from Beamstra
   <caption>Vertex parameters for the different processes at 350 GeV center of mass energy</caption>
 </table>
 
-### 500 GeV parameters
+### 500 GeV vertex parameters for 500-TDR_ws beam
 
 <table>
   <tr> <th> Process </th><th> Vertex z offset (mm) </th><th> Vertex z sigma (mm) </th></tr>
@@ -54,15 +54,15 @@ Additionally there is background from incoherent e+e- pairs coming from Beamstra
   <caption>Vertex parameters for the different processes at 500 GeV center of mass energy</caption>
 </table>
 
-### 1 TeV parameters
+### 1000 GeV vertex parameters for 1000-B1b_ws beam
 
 <table>
   <tr> <th> Process </th><th> Vertex z offset (mm) </th><th> Vertex z sigma (mm) </th></tr>
-  <tr> <td> e+e- / WW         </td><td> n.c                    </td><td> n.c             </td></tr>
-  <tr> <td> e- gamma / WB     </td><td> n.c	                   </td><td> n.c             </td></tr>
-  <tr> <td> e+ gamma / BW     </td><td> n.c                    </td><td> n.c             </td></tr>
-  <tr> <td> gamma gamma / BB  </td><td> n.c                    </td><td> n.c             </td></tr>
-  <tr> <td> pair              </td><td> n.c                    </td><td> n.c             </td></tr>
+  <tr> <td> e+e- / WW         </td><td> 0                    </td><td> 0.1468          </td></tr>
+  <tr> <td> e- gamma / WB     </td><td> -0.0352	             </td><td> 0.1389          </td></tr>
+  <tr> <td> e+ gamma / BW     </td><td> +0.0357              </td><td> 0.1394          </td></tr>
+  <tr> <td> gamma gamma / BB  </td><td> 0                    </td><td> 0.1260          </td></tr>
+  <tr> <td> pair              </td><td> 0                    </td><td> 0               </td></tr>
   <caption>Vertex parameters for the different processes at 1 TeV center of mass energy</caption>
 </table>
 
