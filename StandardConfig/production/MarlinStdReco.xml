@@ -46,10 +46,7 @@
     <!--The BeamCal calibration constant, sim hit energy to calibrated calo hit energy-->
     <constant name="BeamCalCalibrationFactor">79.6</constant>
     
-    <!-- ***** Input files constants ***** -->    
-    <!-- Special Beamcal overlay background file -->
-    <constant name="BeamCalBackgroundFile" value="HighLevelReco/BeamCalBackground/BeamCalBackground-E500-B3.5-RealisticNominalAntiDid.root" />
-    
+    <!-- ***** Input files constants ***** -->        
     <!-- Geometry model dependant calibration constants from external file -->
     <include ref="${CalibrationFile}" />
     

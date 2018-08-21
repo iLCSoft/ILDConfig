@@ -79,3 +79,6 @@
 
 <constant name="ECalSimHitCollections">${ECalBarrelSimHitCollections} ${ECalEndcapSimHitCollections} ${ECalRingSimHitCollections}</constant>
 <constant name="HCalSimHitCollections">${HCalBarrelSimHitCollections} ${HCalEndcapSimHitCollections} ${HCalRingSimHitCollections}</constant>
+
+<!-- BeamCal background map -->
+<constant name="BeamCalBackgroundFile">HighLevelReco/BeamCalBackground/BeamCalBackground-E${CMSEnergy}-B3.5-RealisticNominalAntiDid.root</constant>
