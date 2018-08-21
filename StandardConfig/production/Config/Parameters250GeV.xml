@@ -5,8 +5,8 @@
 <constant name="ExpectedBgBW" value="Parameter not yet provided. Please update me !" />
 <constant name="ExpectedBgBB" value="Parameter not yet provided. Please update me !" />
 
-<!--Beam size (unit mm)-->
+<!--Beam size (unit mm). Values from ILC TDR, Vol1 p11: 250 GeV baseline-->
 <constant name="LCFIPlusBeamspotConstraint" value="true" />
-<constant name="BeamSizeX" value="Parameter not yet provided. Please update me !" />
-<constant name="BeamSizeY" value="Parameter not yet provided. Please update me !" />
+<constant name="BeamSizeX" value="729.e-6" />
+<constant name="BeamSizeY" value="7.7e-6" />
 <constant name="BeamSizeZ" value="Parameter not yet provided. Please update me !" />
