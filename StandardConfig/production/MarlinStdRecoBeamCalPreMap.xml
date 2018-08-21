@@ -1,0 +1,68 @@
+<!-- 
+  Marlin steering file to produce a pre-background root file map for the BeamCal reconstruction.
+  The output file after running Marlin with this steering file serves as input for the 
+  binary FCalClusterer/bin/BCBackgroundPar.
+  Example usage: 
+  Marlin 
+    --constant.lcgeo_DIR=$lcgeo_DIR 
+    --constant.DetectorModel=ILD_l5_v08 
+    --constant.OutputPreMapFile=OutputPreMap.root
+    --global.LCIOInputFiles=file.slcio
+    MarlinstdRecoBeamCalPreMap.xml
+    
+  @author: Remi Ete, DESY
+-->
+
+<marlin>
+  
+  <constants>
+    <!-- ***** Global constant for reconstruction ***** -->
+    <!-- The lcgeo directory where to look for the ILD model -->
+    <constant name="lcgeo_DIR" value="/path/to/lcgeo_DIR" />
+    <!-- ILD detector model -->
+    <constant name="DetectorModel" value="None_Please_specify_one" />
+    <!-- The full compact file name -->
+    <constant name="CompactFile" value="${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml" />
+    <!-- Output file name -->
+    <constant name="OutputPreMapFile" value="BeamCalPreMap.root" />
+  </constants>
+  
+  <execute>
+    <processor name="InitDD4hep"/>
+    <processor name="MyBeamCalPreMapProducer"/>
+  </execute>
+
+  <global>
+    <parameter name="LCIOInputFiles">  </parameter>
+    <parameter name="MaxRecordNumber" value="0" />  
+    <parameter name="SkipNEvents" value="0" />  
+    <parameter name="SupressCheck" value="false" />  
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
+    <parameter name="RandomSeed" value="0" />
+  </global>
+  
+  
+  <processor name="InitDD4hep" type="InitializeDD4hep">
+    <!--InitializeDD4hep reads a compact xml file and initializes the DD4hep::LCDD object-->
+    <!--Name of the DD4hep compact xml file to load-->
+    <parameter name="DD4hepXMLFile" type="string"> ${CompactFile} </parameter>
+  </processor>
+
+  <!-- ReadBeamCal reads the simulation for the pairs and creates two std::vector<double> in a tree,
+   which can then be used later on for Overlay, calculation of fluctiuations, etc. The output 
+   root file can read again using FCalClusterer/bin/BCBackgroundPar to produce the final Overlay 
+   background map. -->
+  <processor name="MyBeamCalPreMapProducer" type="ReadBeamCal">
+    <!--Name of BeamCal Collection-->
+    <parameter name="BeamCalCollectionName" type="string" lcioInType="SimCalorimeterHit"> BeamCalCollection </parameter>
+    <!--Root OutputFile -->
+    <parameter name="OutputFileBackground" type="string"> ${OutputPreMapFile} </parameter>
+    <!--Probability [0,100%] for particle to be added to event. Allows the scaling of the background to smaller background rate-->
+    <parameter name="ProbabilityFactor" type="double"> 100 </parameter>
+    <!--The ID of the first layer of the detector BeamCal 1: LumiCal: 0-->
+    <parameter name="DetectorStartingLayerID" type="int"> 1 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string"> WARNING </parameter>
+  </processor>
+
+</marlin>
