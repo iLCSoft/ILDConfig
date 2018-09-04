@@ -1,3 +1,37 @@
+# v02-00-02
+
+* 2018-08-24 Frank Gaede ([PR#91](https://github.com/ilcsoft/ILDconfig/pull/91))
+  - add missing (Sim)CalorimterHit collections to the event display steering file MarlinStdRecoViewer.xml
+
+* 2018-08-21 Ete Remi ([PR#90](https://github.com/ilcsoft/ILDconfig/pull/90))
+  - Added BeamCal maps for BeamReco at 1 TeV (l5 and s5)
+  - Added missing BeamCal for BeamReco at 500 GeV for s5 model (4T)
+  - Filled numbers for 1 TeV
+     - Expected background rates for gg_lowpt overlay (BB, BW, WB and WW)
+     - Beam size for LCFIPlus vertex fit constraint (x, y and z)
+  - Filled numbers for 250 GeV 
+     - Beam size for LCFIPlus vertex fit constraint (x, y **but not z**), from [ILC new 250 GeV baseline](https://arxiv.org/pdf/1711.00568.pdf)
+  - Filled numbers for 350 GeV 
+     - Beam size for LCFIPlus vertex fit constraint (x, y **but not z**), taken from [ILC TDR](https://arxiv.org/ftp/arxiv/papers/1306/1306.6327.pdf)
+  - Changed numbers for 500 GeV
+     - Beam size for LCFIPlus vertex fit constraint (x, y), taken from [ILC TDR](https://arxiv.org/ftp/arxiv/papers/1306/1306.6327.pdf)
+  - Make BeamCal map file dependant on CMS energy and detector model
+     - Moved constant `BeamCalBackgroundFile` into calibration files
+
+* 2018-08-21 Akiya Miyamoto ([PR#87](https://github.com/ilcsoft/ILDconfig/pull/87))
+  Missing 1 TeV vertex parameters, reported by Mikael and agreeded at the ILD Coftware Conveners meeting on 4 July, were added. In addition, ILC machine parameter names corresponding to the vertex parameters are included .
+
+* 2018-07-19 Shaojun Lu ([PR#89](https://github.com/ilcsoft/ILDconfig/pull/89))
+  - Do not apply senDetFilter for TPC.
+    - because the TPC sensitive driver need every G4Step information to find out when the track cross the boundary.
+
+* 2018-06-06 Ete Remi ([PR#85](https://github.com/ilcsoft/ILDconfig/pull/85))
+  - Added symbolic link for calibration constants of v03,4,5,6 models pointing on the v02 model ones
+
+* 2018-06-06 Shaojun Lu ([PR#84](https://github.com/ilcsoft/ILDconfig/pull/84))
+  - Update documentation for users to use the correct version of ILCSoft.
+     - the processor "TOFEstimators" is available in ILCSoft v02-00-01.
+
 # v02-00-01
 
 * 2018-05-18 Ete Remi ([PR#83](https://github.com/ilcsoft/ILDConfig/pull/83))
