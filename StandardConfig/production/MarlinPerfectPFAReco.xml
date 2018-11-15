@@ -2,11 +2,23 @@
   Reconstruction using Perfect particle flow settings from PandoraPFA.
   Use a REC file from standard ILD reconstruction as input to run this steering file.
   
-  Mandatory parameters :
-    * global.LCIOInputFiles : The input lcio input file(s)
-    * constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
-    * constant.DetectorModel : the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
+  Mandatory parameters:
+    * global.LCIOInputFiles: the input lcio input file(s)
+    * constant.lcgeo_DIR: the lcgeo directory must point on the one sourced in your current ilcsoft
+    * constant.DetectorModel: the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
 
+  Optional parameters:
+    * constant.RunTrueJet: whether to run TrueJet processors (default is false)
+
+  Example usage:
+  
+    Marlin Marlin MarlinPerfectPFAReco.xml \
+      --constant.lcgeo_DIR=$lcgeo_DIR \
+      --constant.DetectorModel=ILD_l5_o1_v02 \
+      --constant.OutputBaseName=PerfectJetStudy \
+      --global.LCIOInputFiles=my_rec_file.slcio \
+      --constant.RunTrueJet=true
+  
   Author : Remi Ete, DESY
 -->
 
@@ -26,6 +38,8 @@
     <constant name="CalibrationFile" value="${ILDConfig_DIR}/Calibration/Calibration_${DetectorModel}.xml" />
     <!-- The center of mass energy (unit GeV). Mainly used for background overlay -->
     <constant name="CMSEnergy" value="Unknown" />
+    <!-- Whether to run true jet maker. False by default -->
+    <constant name="RunTrueJet" value="false"/>
     
     <!-- ***** Input files constants ***** -->        
     <!-- Geometry model dependant calibration constants from external file -->
@@ -51,6 +65,12 @@
 
     <!-- High level reconstruction -->
     <group name="HighLevelReco" />
+    
+    <!-- Make true jets from standard reco and perfect reco -->
+    <if condition="${RunTrueJet}">
+      <processor name="StandardTrueJet"/>
+      <processor name="PerfectTrueJet"/>
+    </if>
     
     <!-- Output processors -->
     <processor name="MyLCIOOutputProcessor" />
@@ -292,6 +312,38 @@
       <parameter name="Verbosity" type="string">MESSAGE </parameter>
     </processor>
   </group>
+  
+  <!-- TrueJet for standard particle flow reconstruction -->
+  <processor name="StandardTrueJet" type="TrueJet">
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticlesSkimmed</parameter>
+    <parameter name="RecoParticleCollection" type="string"  lcioInType="ReconstructedParticle">PandoraPFOs</parameter>
+    <parameter name="RecoMCTruthLink" type="string" lcioInType="LCRelation"> RecoMCTruthLink </parameter>
+    <parameter name="TrueJets" type="string"  lcioOutType="ReconstructedParticle">TrueJets</parameter>
+    <parameter name="FinalColourNeutrals" type="string"  lcioOutType="ReconstructedParticle">FinalColourNeutrals</parameter>
+    <parameter name="InitialColourNeutrals" type="string"  lcioOutType="ReconstructedParticle">InitialColourNeutrals</parameter>
+    <parameter name="TrueJetPFOLink" type="string" lcioOutType="LCRelation"> TrueJetPFOLink </parameter>
+    <parameter name="TrueJetMCParticleLink" type="string" lcioOutType="LCRelation">TrueJetMCParticleLink </parameter>
+    <parameter name="InitialElementonLink" type="string" lcioOutType="LCRelation">InitialElementonLink</parameter>
+    <parameter name="InitialColourNeutralLink" type="string" lcioOutType="LCRelation">InitialColourNeutralLink</parameter>
+    <parameter name="FinalElementonLink" type="string" lcioOutType="LCRelation">FinalElementonLink</parameter>
+    <parameter name="FinalColourNeutralLink" type="string" lcioOutType="LCRelation">FinalColourNeutralLink</parameter>
+  </processor>
+  
+  <!-- TrueJet for perfect particle flow reconstruction -->
+  <processor name="PerfectTrueJet" type="TrueJet">
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticlesSkimmed</parameter>
+    <parameter name="RecoParticleCollection" type="string"  lcioInType="ReconstructedParticle">PerfectPandoraPFOs</parameter>
+    <parameter name="RecoMCTruthLink" type="string" lcioInType="LCRelation"> PerfectRecoMCTruthLink </parameter>
+    <parameter name="TrueJets" type="string"  lcioOutType="ReconstructedParticle">PerfectTrueJets</parameter>
+    <parameter name="FinalColourNeutrals" type="string"  lcioOutType="ReconstructedParticle">PerfectFinalColourNeutrals</parameter>
+    <parameter name="InitialColourNeutrals" type="string"  lcioOutType="ReconstructedParticle">PerfectInitialColourNeutrals</parameter>
+    <parameter name="TrueJetPFOLink" type="string" lcioOutType="LCRelation"> PerfectTrueJetPFOLink </parameter>
+    <parameter name="TrueJetMCParticleLink" type="string" lcioOutType="LCRelation">PerfectTrueJetMCParticleLink </parameter>
+    <parameter name="InitialElementonLink" type="string" lcioOutType="LCRelation">PerfectInitialElementonLink</parameter>
+    <parameter name="InitialColourNeutralLink" type="string" lcioOutType="LCRelation">PerfectInitialColourNeutralLink</parameter>
+    <parameter name="FinalElementonLink" type="string" lcioOutType="LCRelation">PerfectFinalElementonLink</parameter>
+    <parameter name="FinalColourNeutralLink" type="string" lcioOutType="LCRelation">PerfectFinalColourNeutralLink</parameter>
+  </processor>
   
   <!-- Write reconstruction output -->
   <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
