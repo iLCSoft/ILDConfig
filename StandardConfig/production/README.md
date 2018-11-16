@@ -120,6 +120,8 @@ Marlin MarlinStdRecoViewerDST.xml \
 ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml bbudsc_3evt_REC.slcio
 ```
 
+Note that this command works only for REC files and not DST viewer.
+
 ### 5. Create a ROOT TTree for analysis
 
 ```shell
