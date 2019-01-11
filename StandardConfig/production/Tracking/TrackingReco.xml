@@ -69,6 +69,10 @@
     <!--Pattern recognition in silicon trackers-->
     <!--Name of the track fitting system to be used (KalTest, DDKalTest, aidaTT, ... )-->
     <parameter name="TrackSystemName" type="string">DDKalTest </parameter>
+    <!--Use simple updated triplets searching core bin. (default is false for backward compatible)-->
+    <parameter name="AplySimpleUpdatedCoreBin" type="bool">true </parameter>
+    <!--Use simple AttachHitToTrack for merging split track segments. (default is false for backward compatible)-->
+    <parameter name="UseSimpleAttachHitToTrack" type="bool">true </parameter>
     <!--Angle Cut For Merging-->
     <parameter name="AngleCutForMerging" type="float">0.1 </parameter>
     <!--Check for Delta rays hits in hit-to-track assignment-->
@@ -121,6 +125,7 @@
       6 3 1  6 3 0  6 2 1  6 2 0 
       5 3 1  5 3 0  5 2 1  5 2 0
       4 3 1  4 3 0  4 2 1  4 2 0    
+      3 2 1  3 2 0  2 1 0
     </parameter>
     <!--Combinations of Hits in FTD-->
     <parameter name="LayerCombinationsFTD" type="IntVec"> 
