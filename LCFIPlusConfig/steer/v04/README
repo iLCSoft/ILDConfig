@@ -4,7 +4,7 @@ This directory includes some example steering files for analyses with such IDR s
 
 1) revertexing.xml
 This example can be used for revertexing on samples that have a PFO collection.
-Set input SLCIO files, GEAR file and output SLCIO file name.
+Set input SLCIO files, and output SLCIO file name.
 Note that the Vertex collection names have "_NewVtx" suffixes in this example.
 This is because we can not modify the existing vertex collections.
 Use these new vertex collections at the other parts in your steering files.
@@ -12,7 +12,7 @@ Use these new vertex collections at the other parts in your steering files.
 2) jetclusteringAndFlavourtagging_2/4/6Jets_NewVtx.xml
 This example can be used for jet clustering and flavour tagging on samples
 that have vertex collections created above ("_NewVtx").
-Set input SLCIO files, GEAR file.
+Set input SLCIO files.
 In addition, MVA weight files, prefix, and vtxprob files must be set, which can be
 found in LCFIPlusConfig/lcfiweights and LCFIPlusConfig/vtxprob.
 Note that the weight files in 6q500_v04_p00_ildl5 and 6q500_v04_p00_ilds5 were prepared
