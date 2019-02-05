@@ -9,9 +9,6 @@
 	<parameter name="LCIOInputFiles"> 
 __INPUTFILES__
         </parameter>
-	<parameter name="GearXMLFile"> 
-__GEARFILE__
-        </parameter>  
 	<parameter name="MaxRecordNumber" value="0" />  
 	<parameter name="SkipNEvents" value="0" />  
 	<parameter name="SupressCheck" value="false" />  
