@@ -103,19 +103,19 @@
     
     <!--dE/dx parameters for each particle-->
     <parameter name="dEdxParameter_electron" type="FloatVec">
-      -2.40638e-03 7.10337e-01 2.87718e-01 -1.71591e+00 0.0
+      -1.05423291e-02 -1.31395131e+01 -5.32208575e+00 -1.76464796e+00 -8.30708630e-07
     </parameter>
     <parameter name="dEdxParameter_muon" type="FloatVec">
-      8.11408e-02 9.92207e-01 7.58509e+05 -1.70167e-01 4.63670e-04
+      7.01870474e-02 1.68983376e+04 1.07831642e+10 4.44841020e-01 3.23462127e-04
     </parameter>
     <parameter name="dEdxParameter_pion" type="FloatVec">
-      8.10756e-02 -1.45051e+06 -3.09843e+04 2.84056e-01 3.38131e-04
+      7.27657527e-02 -4.19124055e+07 -9.62074286e+05 4.52784712e-01 3.71502054e-04
     </parameter>
     <parameter name="dEdxParameter_kaon" type="FloatVec">
-      7.96117e-02 4.13335e+03 1.13577e+06 1.80555e-01 -3.15083e-04
+      7.87945081e-02 6.48362810e+03 1.49405917e+06 2.65291325e-01 3.96700223e-04
     </parameter>
     <parameter name="dEdxParameter_proton" type="FloatVec">
-      7.78772e-02 4.49300e+04 9.13778e+04 1.50088e-01 -6.64184e-04
+      7.94922564e-02 3.85992430e+04 7.92966101e+04 2.32913411e-01 3.01126698e-04
     </parameter>
 
     <!--dE/dx normalization-->
