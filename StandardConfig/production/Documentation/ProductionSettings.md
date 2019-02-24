@@ -20,13 +20,22 @@ Additionally there is background from incoherent e+e- pairs coming from Beamstra
 
 ### 250 GeV vertex parameters for 250-SetA beam
 
+
+ee      3.7 +- 313         0.1 +-  3.14     -0.87 +- 202.0
+
+ge      6.0 +- 337         0.1 +- 4.15      38.0 +- 191.0
+
+eg      4.1 +- 337         0.0 +- 4.11     -38.9 +- 191.5
+
+gg      3.7 +- 323         0.2 +- 7.81        0.0 +- 170.9
+
 <table>
   <tr> <th> Process </th><th> Vertex z offset (mm) </th><th> Vertex z sigma (mm) </th></tr>
-  <tr> <td> e+e- / WW         </td><td> n.c                    </td><td> n.c             </td></tr>
-  <tr> <td> e- gamma / WB     </td><td> n.c	                   </td><td> n.c             </td></tr>
-  <tr> <td> e+ gamma / BW     </td><td> n.c                    </td><td> n.c             </td></tr>
-  <tr> <td> gamma gamma / BB  </td><td> n.c                    </td><td> n.c             </td></tr>
-  <tr> <td> pair              </td><td> n.c                    </td><td> n.c             </td></tr>
+  <tr> <td> e+e- / WW         </td><td>  0                      </td><td> 0.202           </td></tr>
+  <tr> <td> e- gamma / WB     </td><td> -0.0389                 </td><td> 0.191           </td></tr>
+  <tr> <td> e+ gamma / BW     </td><td>  0.0380                 </td><td> 0.191           </td></tr>
+  <tr> <td> gamma gamma / BB  </td><td>  0                      </td><td> 0.171           </td></tr>
+  <tr> <td> pair              </td><td>  0                      </td><td> 0               </td></tr>
   <caption>Vertex parameters for the different processes at 250 GeV center of mass energy</caption>
 </table>
 
