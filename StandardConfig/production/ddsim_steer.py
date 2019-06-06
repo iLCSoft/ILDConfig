@@ -243,7 +243,8 @@ SIM.part.saveProcesses = ['Decay']
 ################################################################################
 ## Configuration for the PhysicsList 
 ################################################################################
-SIM.physics.decays = True
+# this needs to be set to False if any standard physics list is used:
+SIM.physics.decays = False
 SIM.physics.list = "QGSP_BERT" # "FTFP_BERT"
 
 ##  location of particle.tbl file containing extra particles and their lifetime information
