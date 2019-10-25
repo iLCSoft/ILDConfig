@@ -6,7 +6,7 @@
 #
 ######################################################################
 from DDSim.DD4hepSimulation import DD4hepSimulation
-from SystemOfUnits import m, mm, GeV, MeV, rad
+from g4units import m, mm, GeV, MeV, rad
 import os
 
 SIM = DD4hepSimulation()
