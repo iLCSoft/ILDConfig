@@ -22,7 +22,7 @@
     <!--The ID of the first layer of the detector BeamCal 1: LumiCal: 0-->
     <parameter name="DetectorStartingLayerID" type="int">1 </parameter>
     <!--Background simulation method-->
-    <parameter name="BackgroundMethod" type="string">Parametrised </parameter>
+    <parameter name="BackgroundMethod" type="string">Gaussian </parameter>
     <!--Root Inputfile(s)-->
     <parameter name="InputFileBackgrounds" type="StringVec">${BeamCalBackgroundFile}</parameter>
     <!--Number of Bunch Crossings of Background-->
