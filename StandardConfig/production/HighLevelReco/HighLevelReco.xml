@@ -37,6 +37,11 @@
     <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
   </processor>
 
+  <processor name="MyPhotonCorrectionProcessor" type="photonCorrectionProcessor">
+    <parameter name="inputCollection" type="string"> PandoraPFOs </parameter>
+    <parameter name="modifyPFOenergies"> true </parameter>
+    <parameter name="useCorrectorDefaultSet"> 1 </parameter>
+  </processor>
 
   <processor name="MyPi0Finder" type="GammaGammaCandidateFinder">
     <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
