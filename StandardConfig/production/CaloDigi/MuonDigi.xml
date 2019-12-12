@@ -18,9 +18,9 @@
     <!--MUON Collection of real Hits-->
     <parameter name="MUONOutputCollection" type="string">MUON </parameter>
     <!--Threshold for MUON Hits in GeV-->
-    <parameter name="MuonThreshold" type="float">1e-06 </parameter>
+    <parameter name="MuonThreshold" type="float">1e-03 </parameter>
     <!-- Energy threshold for timing information for Muon Hits in GeV -->
-    <parameter name="MuonTimeThreshold" type="float">1e-06 </parameter>
+    <parameter name="MuonTimeThreshold" type="float">1e-03 </parameter>
     <!--The muon detector name for barrel region-->
     <parameter name="DetectorNameBarrel" type="string"> YokeBarrel </parameter>
     <!--The muon detector name for endcap region-->
