@@ -238,6 +238,8 @@
     <parameter name="KeepCollectionNames" type="StringVec"> 
       MCParticle
       MarlinTrkTracks
+      MarlinTrkTracksProton
+      MarlinTrkTracksKaon
       MCTruthMarlinTrkTracksLink
       MarlinTrkTracksMCTruthLink
       RecoMCTruthLink
