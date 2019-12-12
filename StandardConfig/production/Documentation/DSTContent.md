@@ -33,4 +33,6 @@ MC infos :
 
 Tracking :
 - MarlinTrkTracks (Track)
+- MarlinTrkTracksKaon (Track)
+- MarlinTrkTracksProton (Track)
 
