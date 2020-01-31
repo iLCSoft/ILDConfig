@@ -374,6 +374,15 @@
     <!--Assumed time resolution per hit in ps-->
     <parameter name="TimeResolution" type="float">50 </parameter>
   </processor>
+  <processor name="TOFEstimators100ps" type="TOFEstimators">
+    <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
+    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
+    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Name of the ReconstructedParticle collection-->
+    <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <!--Assumed time resolution per hit in ps-->
+    <parameter name="TimeResolution" type="float">100 </parameter>
+  </processor>
 
 </group>
 
