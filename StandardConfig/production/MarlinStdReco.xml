@@ -257,7 +257,7 @@
     <!--Names of mc particle collection-->
     <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
     <!--Flag to look for quarks with mother Z-->
-    <parameter name="LookForQuarksWithMotherZ" type="int">0 </parameter>
+    <parameter name="LookForQuarksWithMotherZ" type="int">2 </parameter>
     <!--MC pfo selection radius-->
     <parameter name="MCPfoSelectionRadius" type="float">500. </parameter>
     <!--MC pfo selection momentum-->
