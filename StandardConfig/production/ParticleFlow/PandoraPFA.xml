@@ -69,6 +69,11 @@
     <!--Decides whether to create gaps in the geometry (ILD-specific)-->
     <!---SHOULD BE TRUE FOR ILD BUT INNER/OUTER SYMMETRIES ARE NOT COMPATIBLE -->
     <parameter name="CreateGaps" type="bool">false</parameter>
+    
+    <!-- RE: Fix for driver Yoke05_Barrel in lcgeo. See PR #241 iLCSoft/lcgeo -->
+    <!-- The layers are oriented in (0,1,0) before placement in the stave/module -->
+    <parameter name="YokeBarrelNormalVector" type="FloatVec">0 1 0 </parameter>
+    
     <!--The name of the DDTrackCreator implementation-->
     <parameter name="TrackCreatorName" type="string">DDTrackCreatorILD </parameter>
     <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> SILENT </parameter>
