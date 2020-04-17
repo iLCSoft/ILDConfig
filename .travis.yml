@@ -25,8 +25,14 @@ before_install:
   - sudo /etc/init.d/autofs stop
   - sudo cvmfs_config setup
   - sudo mkdir -p /cvmfs/clicdp.cern.ch
+  - sudo mkdir -p /cvmfs/geant4.cern.ch
+  - sudo mkdir -p /cvmfs/sft.cern.ch
   - sudo mount -t cvmfs clicdp.cern.ch /cvmfs/clicdp.cern.ch
+  - sudo mount -t cvmfs geant4.cern.ch /cvmfs/geant4.cern.ch
+  - sudo mount -t cvmfs sft.cern.ch /cvmfs/sft.cern.ch
   - ls /cvmfs/clicdp.cern.ch
+  - ls /cvmfs/geant4.cern.ch
+  - ls /cvmfs/sft.cern.ch/lcg
 
 # command to install dependencies
 install:
@@ -38,7 +44,7 @@ install:
 
 # command to run tests
 script:
-  - docker run -it --name CI_container -e SIM_MODEL=$SIM_MODEL -e REC_MODEL=$REC_MODEL -v $PKGDIR:/Package -v /cvmfs/clicdp.cern.ch:/cvmfs/clicdp.cern.ch -d clicdp/slc6-build /bin/bash
+  - docker run -it --name CI_container -e SIM_MODEL=$SIM_MODEL -e REC_MODEL=$REC_MODEL -v $PKGDIR:/Package -v /cvmfs:/cvmfs -d clicdp/cc7-lcg /bin/bash
   - docker exec -it CI_container /bin/bash -c "./Package/.travis-ci.d/test.sh";
 
 # Don't send e-mail notifications
