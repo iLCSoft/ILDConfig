@@ -18,13 +18,15 @@ int sub(int cellid){
 
 void draw_simhits( const char* FILEN ) {
   
-  TFile f(FILEN) ;
+  auto* f = TFile::Open(FILEN) ;
   
-  c1 = new TCanvas("C1","Some example plots from LCTuple",1000 , 1000 );
+  auto* c1 = new TCanvas("C1","Some example plots from LCTuple",1000 , 1000 );
   c1->Divide(1,2);
   c1->cd(1) ;
   
   int max = 100000 ;
+
+  auto* MyLCTuple = static_cast<TTree*>(f->Get("MyLCTuple"));
   
   MyLCTuple->Draw("r(scpox,scpoy):scpoz","r(scpox,scpoy)<5500.&abs(scpoz)<5000.","",max) ;
   

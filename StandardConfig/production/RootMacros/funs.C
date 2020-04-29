@@ -80,7 +80,7 @@ Double_t rms90(TH1 *h) {
   Double_t rms2 = TMath::Abs(sumwx2/sumw -x*x); 
   Double_t result = TMath::Sqrt(rms2);
 
-  printf("RMS of central 90% = %g, RMS total = %g\n, Mean90 = %g , Mean total = %g \n " ,
+  printf("RMS of central 90%% = %g, RMS total = %g\n, Mean90 = %g , Mean total = %g \n " ,
 	 result, h->GetRMS() , x , h->GetMean() );
   
   return result ;
