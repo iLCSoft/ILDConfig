@@ -7,7 +7,7 @@
 <constant name="SDHcalEnergyFactors">0.0367023 0.0745279 0.363042</constant>
 <constant name="EcalBarrelEnergyFactors">0.0063520964756 0.012902699188</constant>
 <constant name="EcalEndcapEnergyFactors">0.0067218419842 0.013653744940</constant>
-<constant name="EcalRingEnergyFactors">0.0067218419842 0.013653744940</constant>
+<constant name="EcalRingEnergyFactors">0.0066536339 0.0135151972</constant>
 <constant name="MuonCalibration">56.7</constant>
 <constant name="PandoraEcalToMip">153.846</constant>
 <constant name="PandoraHcalToMip">43.29</constant>
