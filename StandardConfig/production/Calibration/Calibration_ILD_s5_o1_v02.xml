@@ -41,7 +41,8 @@
 <constant name="dEdXErrorFactor">8.53</constant>
 
 <!-- dEdX smearing factor depends on large/small detector flavor -->
-<constant name="dEdXSmearingFactor">0.044</constant>
+<!-- ATN: This value has been rescaled from the large model value -->
+<constant name="dEdXSmearingFactor">0.036</constant>
 
 <!-- Particle identification PDF root file for s5(s4) detector -->
 <constant name="PidPDFFile" value="HighLevelReco/PIDFiles/LikelihoodPID_Standard_s5_v01.root" />
