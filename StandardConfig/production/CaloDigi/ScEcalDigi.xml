@@ -2,75 +2,107 @@
 
 <group name="EcalDigi">
 
-  <processor name="MergeCollectionsEcalBarrelHits" type="MergeCollections">
-    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEven ECalBarrelSiHitsOdd </parameter>
-    <parameter name="OutputCollection" type="string"> EcalBarrelCollection </parameter>
-  </processor>
-
-  <processor name="MergeCollectionsEcalEndcapHits" type="MergeCollections">
-    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEven ECalEndcapSiHitsOdd </parameter>
-    <parameter name="OutputCollection" type="string"> EcalEndcapsCollection </parameter>
-  </processor>
-
   <!--### the Ecal barrel ###-->
   <!--digitisation -->
-  <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiSilicon">
-    <parameter name="inputHitCollections"> EcalBarrelCollection </parameter>
-    <parameter name="outputHitCollections"> EcalBarrelCollectionDigi </parameter>
-    <parameter name="outputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
+  <processor name="MyEcalBarrelDigiEven" type="RealisticCaloDigiSilicon">
+    <parameter name="inputHitCollections"> ECalBarrelSiHitsEven </parameter>
+    <parameter name="outputHitCollections"> ECalBarrelSiHitsEvenDigi </parameter>
+    <parameter name="outputRelationCollections"> ECalBarrelSiHitsEvenDigiRelations </parameter>
     <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <parameter name="calibration_mip">${EcalBarrelMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <processor name="MyEcalBarrelDigiOdd" type="RealisticCaloDigiSilicon">
+    <parameter name="inputHitCollections"> ECalBarrelSiHitsOdd </parameter>
+    <parameter name="outputHitCollections"> ECalBarrelSiHitsOddDigi </parameter>
+    <parameter name="outputRelationCollections"> ECalBarrelSiHitsOddDigiRelations </parameter>
+    <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
+    <parameter name="timingCut"> 1  </parameter>
+    <parameter name="calibration_mip">${EcalBarrelMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
-  <processor name="MyEcalBarrelReco" type="RealisticCaloRecoSilicon">
-    <parameter name="inputHitCollections"> EcalBarrelCollectionDigi </parameter>
-    <parameter name="inputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
-    <parameter name="outputHitCollections"> EcalBarrelCollectionRec </parameter>
-    <parameter name="outputRelationCollections"> EcalBarrelRelationsSimRec </parameter>
+  <processor name="MyEcalBarrelRecoEven" type="RealisticCaloRecoSilicon">
+    <parameter name="inputHitCollections"> ECalBarrelSiHitsEvenDigi </parameter>
+    <parameter name="inputRelationCollections"> ECalBarrelSiHitsEvenDigiRelations </parameter>
+    <parameter name="outputHitCollections"> ECalBarrelSiHitsEvenRec </parameter>
+    <parameter name="outputRelationCollections"> ECalBarrelSiHitsEvenRecRelations </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalBarrelEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
-  <!-- gap filling -->
-  <processor name="MyEcalBarrelGapFiller" type="BruteForceEcalGapFiller">
-    <parameter name="inputHitCollection"> EcalBarrelCollectionRec </parameter>
-    <parameter name="outputHitCollection"> EcalBarrelCollectionGapHits </parameter>
+  <processor name="MyEcalBarrelRecoOdd" type="RealisticCaloRecoSilicon">
+    <parameter name="inputHitCollections"> ECalBarrelSiHitsOddDigi </parameter>
+    <parameter name="inputRelationCollections"> ECalBarrelSiHitsOddDigiRelations </parameter>
+    <parameter name="outputHitCollections"> ECalBarrelSiHitsOddRec </parameter>
+    <parameter name="outputRelationCollections"> ECalBarrelSiHitsOddRecRelations </parameter>
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
+    <parameter name="calibration_factorsMipGev">${EcalBarrelEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
-    <parameter name="CellIDModuleString"> module </parameter>
-    <parameter name="CellIDStaveString"> stave </parameter>
-    <parameter name="expectedInterModuleDistance"> 7.0 </parameter>
   </processor>
   <!--### the Ecal endcaps ###-->
   <!-- digitisation -->
-  <processor name="MyEcalEndcapDigi" type="RealisticCaloDigiSilicon">
-    <parameter name="inputHitCollections"> EcalEndcapsCollection </parameter>
-    <parameter name="outputHitCollections"> EcalEndcapsCollectionDigi </parameter>
-    <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
+  <processor name="MyEcalEndcapDigiEven" type="RealisticCaloDigiSilicon">
+    <parameter name="inputHitCollections"> ECalEndcapSiHitsEven </parameter>
+    <parameter name="outputHitCollections"> ECalEndcapSiHitsEvenDigi </parameter>
+    <parameter name="outputRelationCollections"> ECalEndcapSiHitsEvenDigiRelations </parameter>
     <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <parameter name="calibration_mip">${EcalEndcapMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <processor name="MyEcalEndcapDigiOdd" type="RealisticCaloDigiSilicon">
+    <parameter name="inputHitCollections"> ECalEndcapSiHitsOdd </parameter>
+    <parameter name="outputHitCollections"> ECalEndcapSiHitsOddDigi </parameter>
+    <parameter name="outputRelationCollections"> ECalEndcapSiHitsOddDigiRelations </parameter>
+    <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
+    <parameter name="timingCut"> 1  </parameter>
+    <parameter name="calibration_mip">${EcalEndcapMip}</parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter>
+    <parameter name="ppd_npix"> 2000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
-  <processor name="MyEcalEndcapReco" type="RealisticCaloRecoSilicon">
-    <parameter name="inputHitCollections"> EcalEndcapsCollectionDigi </parameter>
-    <parameter name="inputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
-    <parameter name="outputHitCollections"> EcalEndcapsCollectionRec </parameter>
-    <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimRec </parameter>
+  <processor name="MyEcalEndcapRecoEven" type="RealisticCaloRecoSilicon">
+    <parameter name="inputHitCollections"> ECalEndcapSiHitsEvenDigi </parameter>
+    <parameter name="inputRelationCollections"> ECalEndcapSiHitsEvenDigiRelations </parameter>
+    <parameter name="outputHitCollections"> ECalEndcapSiHitsEvenRec </parameter>
+    <parameter name="outputRelationCollections"> ECalEndcapSiHitsEvenRecRelations </parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter> 
+    <parameter name="ppd_npix"> 2000 </parameter> 
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalEndcapEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
-  <!-- gap filling -->
-  <processor name="MyEcalEndcapGapFiller" type="BruteForceEcalGapFiller">
-    <parameter name="inputHitCollection"> EcalEndcapsCollectionRec </parameter>
-    <parameter name="outputHitCollection"> EcalEndcapsCollectionGapHits </parameter>
+  <processor name="MyEcalEndcapRecoOdd" type="RealisticCaloRecoSilicon">
+    <parameter name="inputHitCollections"> ECalEndcapSiHitsOddDigi </parameter>
+    <parameter name="inputRelationCollections"> ECalEndcapSiHitsOddDigiRelations </parameter>
+    <parameter name="outputHitCollections"> ECalEndcapSiHitsOddRec </parameter>
+    <parameter name="outputRelationCollections"> ECalEndcapSiHitsOddRecRelations </parameter>
+    <parameter name="ppd_mipPe"> 15 </parameter> 
+    <parameter name="ppd_npix"> 2000 </parameter> 
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
+    <parameter name="calibration_factorsMipGev">${EcalEndcapEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
-    <parameter name="CellIDModuleString"> module </parameter>
-    <parameter name="CellIDStaveString"> stave </parameter>
-    <parameter name="expectedInterModuleDistance"> 7.0 </parameter>
   </processor>
   <!--### the Ecal endcap rings ###-->
   <!-- digitisation -->
@@ -92,6 +124,55 @@
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalRingEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  
+  <processor name="MyDDStripSplitter" type="DDStripSplitter">
+    <parameter name="ECALcollections_oddLayers"> ECalBarrelSiHitsOddRec ECalEndcapSiHitsOddRec </parameter>
+    <parameter name="ECALcollections_evenLayers"> ECalBarrelSiHitsEvenRec ECalEndcapSiHitsEvenRec </parameter>
+    <parameter name="saveIntersectionCollection"> false </parameter>
+    <parameter name="saveCheckRootHistograms"> false </parameter>
+  </processor>
+  
+  <!-- Merge even and odd collections -->
+  <processor name="MergeEcalBarrelHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEven ECalBarrelSiHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelCollection </parameter>
+  </processor>
+  <processor name="MergeEcalEndcapHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEven ECalEndcapSiHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsCollection </parameter>
+  </processor>
+  <processor name="MergeEcalBarrelDigiHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEvenDigi ECalBarrelSiHitsOddDigi </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelCollectionDigi </parameter>
+  </processor>
+  <processor name="MergeEcalEndcapDigiHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEvenDigi ECalEndcapSiHitsOddDigi </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsCollectionDigi </parameter>
+  </processor>
+  <processor name="MergeEcalBarrelRecHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEvenRec ECalBarrelSiHitsOddRec </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelCollectionRec </parameter>
+  </processor>
+  <processor name="MergeEcalEndcapRecHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEvenRec ECalEndcapSiHitsOddRec </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsCollectionRec </parameter>
+  </processor>
+  <processor name="MergeEcalBarrelRelDigiHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEvenDigiRelations ECalBarrelSiHitsOddDigiRelations </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelRelationsSimDigi </parameter>
+  </processor>
+  <processor name="MergeEcalEndcapRelDigiHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEvenDigiRelations ECalEndcapSiHitsOddDigiRelations </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsRelationsSimDigi </parameter>
+  </processor>
+  <processor name="MergeEcalBarrelRelRecHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEvenRecRelations ECalBarrelSiHitsOddRecRelations </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelRelationsSimRec </parameter>
+  </processor>
+  <processor name="MergeEcalEndcapRelRecHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEvenDigiRelations ECalEndcapSiHitsOddDigiRelations </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsRelationsSimRec </parameter>
   </processor>
 
 </group>
