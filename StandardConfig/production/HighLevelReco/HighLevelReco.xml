@@ -51,112 +51,14 @@
     <parameter name="nominalEnergy" type="float">200 </parameter>
     <!--produce validation plots-->
     <parameter name="validationPlots" type="bool">false </parameter>
-    <!--extra correction factor for endcap-->
-    <parameter name="costhCorr_endcap_scale" type="float">1.002 </parameter>
-    <!--barrel cos(theta) correction: gaus1: mean-->
-    <parameter name="costhCorr_gaus1_mean" type="float">0.235 </parameter>
-    <!--barrel cos(theta) correction: gaus1: norm (constant)-->
-    <parameter name="costhCorr_gaus1_norm_const" type="float">-0.09 </parameter>
-    <!--barrel cos(theta) correction: gaus1: norm (log(e) coeff)-->
-    <parameter name="costhCorr_gaus1_norm_logen" type="float">0 </parameter>
-    <!--barrel cos(theta) correction: gaus1: sigma-->
-    <parameter name="costhCorr_gaus1_sigm" type="float">0.007256 </parameter>
-    <!--barrel cos(theta) correction: gaus2: mean-->
-    <parameter name="costhCorr_gaus2_mean" type="float">0.588 </parameter>
-    <!--barrel cos(theta) correction: gaus2: norm (constant)-->
-    <parameter name="costhCorr_gaus2_norm_const" type="float">-0.0369648 </parameter>
-    <!--barrel cos(theta) correction: gaus2: norm (log(e) coeff)-->
-    <parameter name="costhCorr_gaus2_norm_logen" type="float">0 </parameter>
-    <!--barrel cos(theta) correction: gaus2: sigm-->
-    <parameter name="costhCorr_gaus2_sigm" type="float">0.0121604 </parameter>
-    <!--barrel cos(theta) correction: gaus3: mean-->
-    <parameter name="costhCorr_gaus3_mean" type="float">0.774 </parameter>
-    <!--barrel cos(theta) correction: gaus3: norm (constant)-->
-    <parameter name="costhCorr_gaus3_norm" type="float">-0.0422968 </parameter>
-    <!--barrel cos(theta) correction: gaus3: sigm-->
-    <parameter name="costhCorr_gaus3_sigm" type="float">0.009 </parameter>
-    <!--across endcap module correction: gaus1 mean-->
-    <parameter name="endcap_gaus1_mean" type="float">855 </parameter>
-    <!--across endcap module correction: gaus1 norm-->
-    <parameter name="endcap_gaus1_norm" type="float">-0.025 </parameter>
-    <!--across endcap module correction: gaus1 sigma-->
-    <parameter name="endcap_gaus1_sigm" type="float">23 </parameter>
-    <!--across endcap module correction: gaus2 mean-->
-    <parameter name="endcap_gaus2_mean" type="float">1489 </parameter>
-    <!--across endcap module correction: gaus2 norm-->
-    <parameter name="endcap_gaus2_norm" type="float">-0.07 </parameter>
-    <!--across endcap module correction: gaus2 sigma-->
-    <parameter name="endcap_gaus2_sigm" type="float">18 </parameter>
-    <!--overall energy correction: constant term-->
-    <parameter name="energyLin_const" type="float">0.987 </parameter>
-    <!--overall energy correction: log(e) coefficient-->
-    <parameter name="energyLin_logen" type="float">0.01426 </parameter>
-    <!--barrel phi correction: gaussian depth-->
-    <parameter name="phiBarrelCorr_depth" type="float">-0.0933687 </parameter>
-    <!--barrel phi correction: central position (constant)-->
-    <parameter name="phiBarrelCorr_pos_const" type="float">0.412249 </parameter>
-    <!--barrel phi correction: central position (log(e) coeff)-->
-    <parameter name="phiBarrelCorr_pos_logen" type="float">0.0142289 </parameter>
-    <!--barrel phi correction: gaussian width (left side)-->
-    <parameter name="phiBarrelCorr_width1" type="float">0.01345 </parameter>
-    <!--barrel phi correction: gaussian width (right side)-->
-    <parameter name="phiBarrelCorr_width2" type="float">0.0408156 </parameter>
-    <!--phiBias barrel_par0_1-->
-    <parameter name="phiBias_barrel_p0_1" type="float">2.36517e-05 </parameter>
-    <!--phiBias barrel_par0_2-->
-    <parameter name="phiBias_barrel_p0_2" type="float">0.00013209 </parameter>
-    <!--phiBias barrel_par0_3-->
-    <parameter name="phiBias_barrel_p0_3" type="float">-3.86883 </parameter>
-    <!--phiBias barrel_par0_4-->
-    <parameter name="phiBias_barrel_p0_4" type="float">-0.167809 </parameter>
-    <!--phiBias barrel_par1_1-->
-    <parameter name="phiBias_barrel_p1_1" type="float">2.28614e-05 </parameter>
-    <!--phiBias barrel_par1_2-->
-    <parameter name="phiBias_barrel_p1_2" type="float">6.03495e-05 </parameter>
-    <!--phiBias barrel_par2_1-->
-    <parameter name="phiBias_barrel_p2_1" type="float">0.419 </parameter>
-    <!--phiBias barrel_par2_2-->
-    <parameter name="phiBias_barrel_p2_2" type="float">0.00728 </parameter>
-    <!--phiBias barrel_par3_1-->
-    <parameter name="phiBias_barrel_p3_1" type="float">0.025 </parameter>
-    <!--phiBias barrel_par4_1-->
-    <parameter name="phiBias_barrel_p4_1" type="float">0 </parameter>
-    <!--phiBias barrel_par5_1-->
-    <parameter name="phiBias_barrel_p5_1" type="float">2.86667e-05 </parameter>
-    <!--phiBias barrel_par5_2-->
-    <parameter name="phiBias_barrel_p5_2" type="float">2.49371e-05 </parameter>
-    <!--phiBias barrel_par5_3-->
-    <parameter name="phiBias_barrel_p5_3" type="float">-7.71684e-06 </parameter>
-    <!--phiBias barrel_par6_1-->
-    <parameter name="phiBias_barrel_p6_1" type="float">-1.48118e-05 </parameter>
-    <!--phiBias barrel_par6_2-->
-    <parameter name="phiBias_barrel_p6_2" type="float">-5.63786e-06 </parameter>
-    <!--phiBias barrel_par7_1-->
-    <parameter name="phiBias_barrel_p7_1" type="float">-9.38376e-06 </parameter>
-    <!--phiBias barrel_par7_2-->
-    <parameter name="phiBias_barrel_p7_2" type="float">-4.96296e-06 </parameter>
-    <!--phiBias barrel_par7_3-->
-    <parameter name="phiBias_barrel_p7_3" type="float">2.91262e-06 </parameter>
-    <!--thetaBias barrel_par0_1-->
-    <parameter name="thetaBias_barrel_p0_1" type="float">-0.000166568 </parameter>
-    <!--thetaBias barrel_par0_2-->
-    <parameter name="thetaBias_barrel_p0_2" type="float">-7.119e-05 </parameter>
-    <!--thetaBias barrel_par1_1-->
-    <parameter name="thetaBias_barrel_p1_1" type="float">0.000223618 </parameter>
-    <!--thetaBias barrel_par1_2-->
-    <parameter name="thetaBias_barrel_p1_2" type="float">-3.95915e-05 </parameter>
-    <!--thetaBias endcap_par0_1-->
-    <parameter name="thetaBias_endcap_p0_1" type="float">0.000129478 </parameter>
-    <!--thetaBias endcap_par0_2-->
-    <parameter name="thetaBias_endcap_p0_2" type="float">-3.73863e-05 </parameter>
-    <!--thetaBias endcap_par1_1-->
-    <parameter name="thetaBias_endcap_p1_1" type="float">-0.000847783 </parameter>
-    <!--thetaBias endcap_par1_2-->
-    <parameter name="thetaBias_endcap_p1_2" type="float">0.000153646 </parameter>
-    <!--thetaBias endcap_par2_1-->
-    <parameter name="thetaBias_endcap_p2_1" type="float">0.000806605 </parameter>
-    <!--thetaBias endcap_par2_2-->
-    <parameter name="thetaBias_endcap_p2_2" type="float">-0.000132608 </parameter>
+    <!-- the parameters for the various corrections -->
+    <parameter name="energyCor_Linearise"> 0.987 0.01426 </parameter>
+    <parameter name="energyCorr_barrelPhi"> 0.412249 0.0142289 -0.0933687 0.01345 0.0408156 </parameter>
+    <parameter name="energyCorr_costh"> -0.09 0. 0.235 0.007256 -0.0369648 0. 0.588 0.0121604 -0.0422968 0.774 0.009 1.002 </parameter>
+    <parameter name="energyCorr_endcap"> -0.025 855. 23. -0.07 1489. 18. </parameter>
+    <parameter name="phiCorr_barrel"> 2.36517e-05 1.32090e-04 -3.86883e+00 -1.67809e-01 2.28614e-05 6.03495e-05 0.419 0.00728 0.025 0.00 2.86667e-05 2.49371e-05 -7.71684e-06 -1.48118e-05 -5.63786e-06 -9.38376e-06 -4.96296e-06 2.91262e-06  </parameter>
+    <parameter name="thetaCorr_barrel"> -0.000166568 -7.119e-05 0.000223618 -3.95915e-05 </parameter>
+    <parameter name="thetaCorr_endcap"> 0.000129478 -3.73863e-05 -0.000847783 0.000153646 0.000806605 -0.000132608 </parameter>
   </processor>
 
   <processor name="MyPi0Finder" type="GammaGammaCandidateFinder">
