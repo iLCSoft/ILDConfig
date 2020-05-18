@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='ASCII'?>
 
 <!-- Calibration constants -->
-<constant name="EcalBarrelMip">0.0001575</constant>
-<constant name="EcalEndcapMip">0.0001575</constant>
+<constant name="EcalBarrelMip">0.0003</constant>
+<constant name="EcalEndcapMip">0.0003</constant>
 <constant name="EcalRingMip">0.0001575</constant>
 <constant name="HcalBarrelMip">0.0004925</constant>
 <constant name="HcalEndcapMip">0.0004725</constant>
 <constant name="HcalRingMip">0.0004875</constant>
-<constant name="EcalBarrelEnergyFactors">0.00638915356629 0.0129779714224</constant>
-<constant name="EcalEndcapEnergyFactors">0.00668706922431 0.013583112754</constant>
+<constant name="EcalBarrelEnergyFactors"> 0.0057 0.0114 </constant>
+<constant name="EcalEndcapEnergyFactors"> 0.0057 0.0114 </constant>
 <constant name="EcalRingEnergyFactors">0.00668706922431 0.013583112754</constant>
 <constant name="HcalBarrelEnergyFactors">0.0287783798145</constant>
 <constant name="HcalEndcapEnergyFactors">0.0285819096797</constant>
