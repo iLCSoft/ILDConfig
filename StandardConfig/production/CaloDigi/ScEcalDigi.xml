@@ -36,6 +36,8 @@
     <parameter name="inputRelationCollections"> ECalBarrelScHitsEvenDigiRelations </parameter>
     <parameter name="outputHitCollections"> ECalBarrelScHitsEvenRec </parameter>
     <parameter name="outputRelationCollections"> ECalBarrelScHitsEvenRecRelations </parameter>
+    <parameter name="ppd_mipPe"> 10 </parameter>
+    <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalBarrelEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
@@ -45,6 +47,8 @@
     <parameter name="inputRelationCollections"> ECalBarrelScHitsOddDigiRelations </parameter>
     <parameter name="outputHitCollections"> ECalBarrelScHitsOddRec </parameter>
     <parameter name="outputRelationCollections"> ECalBarrelScHitsOddRecRelations </parameter>
+    <parameter name="ppd_mipPe"> 10 </parameter>
+    <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalBarrelEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
@@ -86,8 +90,8 @@
     <parameter name="inputRelationCollections"> ECalEndcapScHitsEvenDigiRelations </parameter>
     <parameter name="outputHitCollections"> ECalEndcapScHitsEvenRec </parameter>
     <parameter name="outputRelationCollections"> ECalEndcapScHitsEvenRecRelations </parameter>
-    <parameter name="ppd_mipPe"> 10 </parameter> 
-    <parameter name="ppd_npix"> 10000 </parameter> 
+    <parameter name="ppd_mipPe"> 10 </parameter>
+    <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalEndcapEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
@@ -97,8 +101,8 @@
     <parameter name="inputRelationCollections"> ECalEndcapScHitsOddDigiRelations </parameter>
     <parameter name="outputHitCollections"> ECalEndcapScHitsOddRec </parameter>
     <parameter name="outputRelationCollections"> ECalEndcapScHitsOddRecRelations </parameter>
-    <parameter name="ppd_mipPe"> 10 </parameter> 
-    <parameter name="ppd_npix"> 10000 </parameter> 
+    <parameter name="ppd_mipPe"> 10 </parameter>
+    <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="calibration_factorsMipGev">${EcalEndcapEnergyFactors}</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
