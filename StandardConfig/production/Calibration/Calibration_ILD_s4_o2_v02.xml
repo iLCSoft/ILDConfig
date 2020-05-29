@@ -18,6 +18,7 @@
 <constant name="PandoraEcalToHadEndcapScale">1.31</constant>
 <constant name="PandoraHcalToHadScale">0.98</constant>
 <constant name="PandoraSoftwareCompensationWeights">1.67738 -0.0324571 0.000211756 -0.0652524 0.00258787 -4.47897e-05 0.057609 0.0659326 -0.0757052</constant>
+<constant name="ApplyPhotonPFOCorrections" value="false" />
 
 <!-- Ecal technology : SiWEcal or ScEcal -->
 <constant name="EcalTechnology" value="SiWEcal" />
