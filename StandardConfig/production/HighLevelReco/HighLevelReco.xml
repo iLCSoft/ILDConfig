@@ -44,9 +44,9 @@
     <!--name of input PFO collection-->
     <parameter name="inputCollection" type="string">PandoraPFOs </parameter>
     <!--apply the corrected energies to the PFOs-->
-    <parameter name="modifyPFOenergies" type="bool">true </parameter>
+    <parameter name="modifyPFOenergies" type="bool"> ${ApplyPhotonPFOCorrections} </parameter>
     <!--apply the corrected direction to the PFOs-->
-    <parameter name="modifyPFOdirection" type="bool">true </parameter>
+    <parameter name="modifyPFOdirection" type="bool"> ${ApplyPhotonPFOCorrections} </parameter>
     <!--nominal photon energy (for validation plots)-->
     <parameter name="nominalEnergy" type="float">200 </parameter>
     <!--produce validation plots-->
