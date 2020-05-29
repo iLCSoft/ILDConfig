@@ -151,7 +151,7 @@
     <parameter name="isBarrelHits"> false </parameter>
     <parameter name="splitEcalCollection">   ECalEndcapScHitsSplit </parameter>
     <parameter name="unsplitEcalCollection"> ECalEndcapScHitsUnSplit </parameter>
-    <parameter name="splitEcalRelCol"> EcalEndcapRelationsSimRec </parameter>
+    <parameter name="splitEcalRelCol"> EcalEndcapsRelationsSimRec </parameter>
   </processor>
   
   <!-- Merge even and odd collections -->
