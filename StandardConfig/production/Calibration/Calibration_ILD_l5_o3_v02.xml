@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='ASCII'?>
 
 <!-- Calibration constants -->
-<constant name="EcalBarrelMip">0.0003</constant>
-<constant name="EcalEndcapMip">0.0003</constant>
+<constant name="EcalBarrelMip"> 0.0002629 </constant>
+<constant name="EcalEndcapMip"> 0.0002655 </constant>
 <constant name="EcalRingMip">0.0001575</constant>
 <constant name="HcalBarrelMip">0.0004925</constant>
 <constant name="HcalEndcapMip">0.0004725</constant>
