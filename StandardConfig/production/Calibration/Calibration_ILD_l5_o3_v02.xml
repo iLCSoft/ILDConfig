@@ -7,8 +7,8 @@
 <constant name="HcalBarrelMip">0.0004925</constant>
 <constant name="HcalEndcapMip">0.0004725</constant>
 <constant name="HcalRingMip">0.0004875</constant>
-<constant name="EcalBarrelEnergyFactors"> 0.00763 0.01526 </constant>
-<constant name="EcalEndcapEnergyFactors"> 0.00806 0.01612 </constant>
+<constant name="EcalBarrelEnergyFactors"> 0.00758 0.01515 </constant>
+<constant name="EcalEndcapEnergyFactors"> 0.00810 0.01619 </constant>
 <constant name="EcalRingEnergyFactors">0.00668706922431 0.013583112754</constant>
 <constant name="HcalBarrelEnergyFactors">0.0287783798145</constant>
 <constant name="HcalEndcapEnergyFactors">0.0285819096797</constant>
