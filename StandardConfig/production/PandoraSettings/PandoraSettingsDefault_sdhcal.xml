@@ -56,6 +56,8 @@
         <ReplacementCaloHitListName>MuonRemovedCaloHits</ReplacementCaloHitListName>
         <ReplaceCurrentClusterList>false</ReplaceCurrentClusterList>
         <ReplaceCurrentPfoList>false</ReplaceCurrentPfoList>
+        <!-- Default is 30. See https://github.com/iLCSoft/ILDConfig/pull/119 -->
+        <MaxClusterCaloHits> 100 </MaxClusterCaloHits>
     </algorithm>
 
     <!-- Standalone photon clustering -->
