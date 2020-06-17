@@ -58,6 +58,8 @@
         <ReplaceCurrentPfoList>false</ReplaceCurrentPfoList>
         <!-- Default is 30. See https://github.com/iLCSoft/ILDConfig/pull/119 -->
         <MaxClusterCaloHits> 100 </MaxClusterCaloHits>
+        <!-- Default is 7 GeV. See https://github.com/iLCSoft/ILDConfig/pull/119 -->
+        <MinTrackCandidateEnergy> 4 </MinTrackCandidateEnergy>
     </algorithm>
 
     <!-- Standalone photon clustering -->
