@@ -17,8 +17,8 @@
 <constant name="PandoraEcalToMip">153.846</constant>
 <constant name="PandoraHcalToMip">30.7692</constant>
 <constant name="PandoraMuonToMip">10.5263</constant>
-<constant name="PandoraEcalToEMScale">1.0</constant>
-<constant name="PandoraHcalToEMScale">1.0</constant>
+<constant name="PandoraEcalToEMScale">1.032</constant>
+<constant name="PandoraHcalToEMScale">1.030</constant>
 <constant name="PandoraEcalToHadBarrelScale">1.16859530376</constant>
 <constant name="PandoraEcalToHadEndcapScale">1.16859530376</constant>
 <constant name="PandoraHcalToHadScale">1.0518169704</constant>
