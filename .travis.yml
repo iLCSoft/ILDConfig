@@ -7,6 +7,7 @@ env:
     - SIM_MODEL=ILD_s5_v02 REC_MODEL=ILD_s5_o1_v02
     - SIM_MODEL=ILD_l5_v02 REC_MODEL=ILD_l5_o2_v02
     - SIM_MODEL=ILD_s5_v02 REC_MODEL=ILD_s5_o2_v02
+    - SIM_MODEL=ILD_l5_v02 REC_MODEL=ILD_l5_o3_v02
 
 services:
   - docker
