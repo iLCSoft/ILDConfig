@@ -213,6 +213,7 @@
     <parameter name="DropCollectionNames" type="StringVec"> 
       ${AdditionalDropCollectionsREC} 
     </parameter>
+    <parameter name="CompressionLevel" type="int" value="6"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
   </processor>
   <processor name="DSTOutput" type="LCIOOutputProcessor">
@@ -248,6 +249,7 @@
       ClusterMCTruthLink
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <parameter name="CompressionLevel" type="int" value="6"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
   </processor>
   <processor name="MyPfoAnalysis" type="PfoAnalysis">
