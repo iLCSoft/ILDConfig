@@ -1,0 +1,11 @@
+This directory includes some example steering files for analyses with the 250GeV samples produced in 2020....
+
+1) jetclusteringAndFlavourtagging_2/4Jets.xml
+This example can be used for jet clustering and flavour tagging.
+Set input SLCIO files.
+In addition, MVA weight files, prefix, and vtxprob files must be set, which can be
+found in LCFIPlusConfig/lcfiweights and LCFIPlusConfig/vtxprob.
+
+Note that the weight files in 2q250_vvH_v04_p00_ildl5, 2q250_vvH_gg_v04_p00_ildl5 were prepared
+with vvH followed by H to bb/cc/qq/gg at 250GeV, w/ beam background, 
+and 4q250_ZZ_v04_p00_ildl5 was prepared with ZZ followed by ZZ to 4b/4c/4q at 250GeV, w/ beam background.
