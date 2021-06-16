@@ -34,3 +34,5 @@ This will result in a a new folder with a few files. To use these weights you an
 There are additional input weights for the `LCFIPlus` flavor tagging that live in the `LCFIPlusConfig/vtxprob` directory. These can be configured via
 - `--constant.LCFIPlusD0ProbFile` the value that will be passed to the `LCFIPlus.FlavorTag.D0ProbFileName` parameter
 - `--constant.LCFIPlusZ0ProbFile` the value that will be passed to the `LCFIPlus.FlavorTag.Z0ProbFileName` parameter
+
+## Isolated lepton tagger weights
