@@ -14,8 +14,8 @@ Marlin MarlinStdRecoMiniDST.xml \
 Note that the job might take hours (or even a day), depending on the number of events of input file and/or multiplicity of the physics process.
 
 # Configuring the mini-DST creation process
-The mini-DST creation process runs a few high level reconstruction algorithms that need additional inputs in the form of weights, e.g. to `LCFIPlus` or also to run isolated lepton taggers.
-In order to make an example easy to run `ILDConfig` ships some default inputs for these in the `production` folder.
+The mini-DST creation process runs a few high level reconstruction algorithms that need additional inputs in the form of weights or configuration, e.g. to `LCFIPlus` or also to run isolated lepton taggers.
+In order to make an example easy to run `ILDConfig` comes with some default inputs for these in the `production` folder.
 The following sections describe how to change these settings in a bit more detail.
 For the default values and some more configuration parameters please have a look at the `MarlinStdRecoMiniDST.xml` steering file.
 
@@ -36,3 +36,8 @@ There are additional input weights for the `LCFIPlus` flavor tagging that live i
 - `--constant.LCFIPlusZ0ProbFile` the value that will be passed to the `LCFIPlus.FlavorTag.Z0ProbFileName` parameter
 
 ## Isolated lepton tagger weights
+The isolated lepton tagging weights are shipped in `ILDConfig/IsolatedLeptonTagging`.
+Here different weight folders are present and these folders are the input parameters for the `IsolatedLeptonTaggingProcessor`.
+The following configuration parameters can be used to change the default values
+- `--constant.ElectronIsolationWeightsDir` point this to the direction containing the electron isolation weights
+- `--constant.MuonIsolationWeightsDir` point this to the direction containing the muon isolation weights
