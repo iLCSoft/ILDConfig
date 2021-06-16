@@ -35,30 +35,6 @@ function clear_outputs() {
   done
 }
 
-# Unpack the the tarball for the LCFIPlus weights.
-# Args: ILDConfig_DIR - the directory to the ILDConfig that should be used
-#       weights - the name of the weights tarball WITHOUT the .tar.gz
-#       output_DIR (optional) - the output directory where the weights will be unpacked to.
-#           Defaults to the directory of the weights tarball
-function prepare_lcfiweights() {
-  local ildconfig_dir=${1}
-  local weights=${2}
-  local lcfiweights=${ildconfig_dir}/LCFIPlusConfig/lcfiweights
-  if [ $# -eq 3 ]; then
-    local outdir=${3}
-  else
-    local outdir=${lcfiweights}
-  fi
-
-  # Just in case
-  mkdir -p ${outdir}
-
-  if [ ! -d ${outdir}/${weights} ]; then
-    echo "Unpacking LCFIPlus weights for test to: ${outdir}/${weights}"
-    tar -xf ${lcfiweights}/${weights}.tar.gz -C ${outdir}
-  fi
-}
-
 while [ $# != 0 ]; do
   case "$1" in
     -h|--help)
@@ -83,9 +59,6 @@ while [ $# != 0 ]; do
   esac
 done
 
-# Use the currently checked out version
-ILDConfig_DIR=$(realpath ../../)
-
 DDSIM_CMD="ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt_SIM.slcio \
@@ -104,14 +77,10 @@ LCTUPLE_CMD="Marlin MarlinStdRecoLCTuple.xml \
 
 MINIDST_CMD="Marlin MarlinStdRecoMiniDST.xml \
   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
-  --constant.OutputFile=bbudsc_3evt_miniDST.slcio \
-  --constant.ILDConfig_DIR=${ILDConfig_DIR}"
+  --constant.OutputFile=bbudsc_3evt_miniDST.slcio"
 
 clear_outputs
 run_cmd ddsim.out ${DDSIM_CMD}
 run_cmd marlin.out ${MARLIN_CMD}
 run_cmd lctuple.out ${LCTUPLE_CMD}
-
-# Unpack the weights that are used by the default in the miniDST steering file
-prepare_lcfiweights ${ILDConfig_DIR} 4q250_ZZ_v4_p00_ildl5
 run_cmd minidst.out ${MINIDST_CMD}
