@@ -21,6 +21,10 @@
   <processor name="EF5"/>
   <processor name="JC6FT"/>
   <processor name="EF6"/>
+  <if condition="${RundEdxCorrections}">
+    <processor name="ComputeCorrectAngulardEdX"/>
+    <processor name="LikelihoodPID"/>
+  </if>
   <processor name="LCIOOutputProcessor"/>
 </execute>
 
@@ -36,6 +40,9 @@
 
 <constants>
   <constant name="OutputFile" value="mini-DST.slcio"/>
+  <constant name="ProductionDir" value="."/>
+  <constant name="RundEdxCorrections" value="true"/>
+
   <constant name="LCFIPlusConfig_DIR" value="./LCFIPlusConfig"/>
   <constant name="LCFIPlusVertexPrefix" value="ildl5_4q250_ZZ"/>
   <constant name="LCFIPlusD0ProbFile" value="${LCFIPlusConfig_DIR}/vtxprob/d0probv2_${LCFIPlusVertexPrefix}.root"/>
@@ -938,4 +945,49 @@
   <parameter name="CompressionLevel" type="int" value="6"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
 </processor>
+
+<processor name="ComputeCorrectAngulardEdX" type="AngularCorrection_dEdxProcessor">
+  <!-- description not set by author -->
+  <!--parameter for new angular correction dedx= uncorrected_dedx  / f, with f= pol3(lambda)-->
+  <!-- Parameters for 2020 DST (and all generated with v02-02 and v02-02-01 -->
+  <parameter name="AngularCorrectionParameters" type="FloatVec"> 0.970205 0.0007506 4.41781e-8 5.8222e-8 </parameter>
+  <!--LDC track collection name-->
+  <parameter name="LDCTrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
+  <!--parameters used in the outdated angular correction outdated_dedx= uncorrected_dedx / f, with f = 1. / ( 1.0+[1]*cos(theta)*cos(theta)/[0] )-->
+</processor>
+
+<!-- Post reconstruction related : PID, Vertexing, Particle finding, cluster topology -->
+<processor name="LikelihoodPID" type="LikelihoodPIDProcessor">
+  <!--Performs particle identification-->
+  <!--Debugging?-->
+  <parameter name="Debug" type="int">0</parameter>
+  <!--Boundaries for energy binning-->
+  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07</parameter>
+  <!--Name of files containing pdfs for charged particles-->
+  <parameter name="FilePDFName" type="StringVec"> ${ProductionDir}/HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root </parameter>
+  <!--Whether MVA low momentum mu/pi is used or not-->
+  <parameter name="UseLowMomentumMuPiSeparation" type="bool">true</parameter>
+  <!--The BDTG weights files for low momentum mu/pi separation-->
+  <parameter name="FileWeightFormupiSeparationName" type="StringVec">${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_02GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_03GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_04GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_05GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_06GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_07GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_08GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_09GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_10GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_11GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_12GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_13GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_14GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_15GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_16GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_17GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_18GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_19GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_20GeVP_clusterinfo.weights.xml </parameter>
+  <!--dE/dx parameters for each particle-->
+  <!-- Parameters for 2020 DST (and all generated with v02-02 and v02-02-01 -->
+  <parameter name="dEdxParameter_electron" type="FloatVec"> -0.00232937 -3.88424e+13 -37881.1 -1.56837 0 </parameter>
+  <parameter name="dEdxParameter_muon" type="FloatVec"> 0.0717375 -16596.5 -4.84028e+07 0.356728 0.000371431 </parameter>
+  <parameter name="dEdxParameter_pion" type="FloatVec"> 0.0733683 51678.4 8.19644e+07 0.453505 0.000404984 </parameter>
+  <parameter name="dEdxParameter_kaon" type="FloatVec"> 0.0792784 3798.12 4.06952e+07 0.450671 0.00050169 </parameter>
+  <parameter name="dEdxParameter_proton" type="FloatVec"> 0.0770318 1053.24 4.95076e+06 0.281489 0.000168616 </parameter>
+  <!--dE/dx normalization-->
+  <parameter name="dEdxNormalization" type="float">1.350e-7</parameter>
+  <!--dE/dx error factor(7.55 for l5, 8.53 for s5)-->
+  <parameter name="dEdxErrorFactor" type="float">7.55</parameter>
+  <!-- Method: Maximum Likelihood(0), Bayesian(1), or risk based Bayesian(2)-->
+  <parameter name="UseBayesian" type="int">2</parameter>
+  <!-- Cost Matrix for risk based Bayesian(2)-->
+  <parameter name="CostMatrix" type="FloatVec">1.0e-50 1.0 1.5 1.0 1.5 1.0 1.0e-50 3.0 1.0 1.0 1.0 1.0 1.0e-50 1.0 3.0 1.0 1.0 4.0 1.0e-50 2.0 1.0 1.0 5.0 1.0 1.0e-50</parameter>
+  <!--Version to be added to the name of the calculated methods-->
+  <parameter name="PIDMethodsToRun_version" type="string"> v2 </parameter>
+  <!--Name of the PFO collection-->
+  <parameter name="RecoParticleCollection" type="string"> PandoraPFOs </parameter>
+</processor>
+
 </marlin>
