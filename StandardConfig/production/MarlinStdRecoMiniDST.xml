@@ -36,12 +36,16 @@
 
 <constants>
   <constant name="OutputFile" value="mini-DST.slcio"/>
-  <constant name="ILDConfig_DIR" value="./"/>
+  <constant name="LCFIPlusConfig_DIR" value="./LCFIPlusConfig"/>
   <constant name="LCFIPlusVertexPrefix" value="ildl5_4q250_ZZ"/>
-  <constant name="LCFIPlusD0ProbFile" value="${ILDConfig_DIR}/LCFIPlusConfig/vtxprob/d0probv2_${LCFIPlusVertexPrefix}.root"/>
-  <constant name="LCFIPlusZ0ProbFile" value="${ILDConfig_DIR}/LCFIPlusConfig/vtxprob/z0probv2_${LCFIPlusVertexPrefix}.root"/>
+  <constant name="LCFIPlusD0ProbFile" value="${LCFIPlusConfig_DIR}/vtxprob/d0probv2_${LCFIPlusVertexPrefix}.root"/>
+  <constant name="LCFIPlusZ0ProbFile" value="${LCFIPlusConfig_DIR}/vtxprob/z0probv2_${LCFIPlusVertexPrefix}.root"/>
   <constant name="LCFIPlusWeightsPrefix" value="4q250_v04_p00_ildl5"/>
-  <constant name="LCFIPlusWeightsDir" value="${ILDConfig_DIR}/LCFIPlusConfig/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
+  <constant name="LCFIPlusWeightsDir" value="${LCFIPlusConfig_DIR}/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
+
+  <constant name="IsolatedLeptonTagging_DIR" value="./IsolatedLeptonTagging"/>
+  <constant name="ElectronIsolationWeightsDir" value="${IsolatedLeptonTagging_DIR}/weights/e1e1h_gg_qqqq_250"/>
+  <constant name="MuonIsolationWeightsDir" value="${IsolatedLeptonTagging_DIR}/weights/e2e2h_gg_qqqq_250"/>
 </constants>
 
 <processor name="InitDD4hep" type="InitializeDD4hep">
@@ -92,21 +96,13 @@
   <parameter name="CutOnTheISOMuonMVA" type="float">0.7 </parameter>
   <!--Directory of Weights for the Isolated Electron MVA Classification-->
   <parameter name="DirOfISOElectronWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/MarlinReco/v01-30/Analysis/IsolatedLeptonTagging/weights/e1e1h_gg_qqqq_250
+  ${ElectronIsolationWeightsDir}
   </parameter>
   <!--Directory of Weights for the Isolated Muon MVA Classification-->
   <parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/MarlinReco/v01-30/Analysis/IsolatedLeptonTagging/weights/e2e2h_gg_qqqq_250
+  ${MuonIsolationWeightsDir}
   </parameter>
-  <!--parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_sl6/v02-01/MarlinReco/v01-26/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_500.mILD_l5_o1_v02
-</parameter-->
-  <!--parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_sl6/v02-01/MarlinReco/v01-26/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_woIP_woYoke_500.mILD_l5_o1_v02
-</parameter-->
-  <!--parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_sl6/v02-01/MarlinReco/v01-26/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_woYoke_500.mILD_l5_o1_v02
-</parameter-->
+
   <!--Name of the PandoraPFOs collection-->
   <parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
   <!--Name of the Primary Vertex collection-->
@@ -159,21 +155,12 @@
   <parameter name="CutOnTheISOMuonMVA" type="float"> 2 </parameter>
   <!--Directory of Weights for the Isolated Electron MVA Classification-->
   <parameter name="DirOfISOElectronWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/MarlinReco/v01-30/Analysis/IsolatedLeptonTagging/weights/e1e1h_gg_qqqq_250
+  ${ElectronIsolationWeightsDir}
   </parameter>
   <!--Directory of Weights for the Isolated Muon MVA Classification-->
   <parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/MarlinReco/v01-30/Analysis/IsolatedLeptonTagging/weights/e2e2h_gg_qqqq_250
+  ${MuonIsolationWeightsDir}
   </parameter>
-  <!--parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_sl6/v02-01/MarlinReco/v01-26/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_500.mILD_l5_o1_v02
-</parameter-->
-  <!--parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_sl6/v02-01/MarlinReco/v01-26/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_woIP_woYoke_500.mILD_l5_o1_v02
-</parameter-->
-  <!--parameter name="DirOfISOMuonWeights" type="string">
-  /cvmfs/ilc.desy.de/sw/x86_64_gcc82_sl6/v02-01/MarlinReco/v01-26/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_woYoke_500.mILD_l5_o1_v02
-</parameter-->
   <!--Name of the PandoraPFOs collection-->
   <parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PFOsminusmu </parameter>
   <!--Name of the Primary Vertex collection-->
