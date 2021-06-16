@@ -41,3 +41,10 @@ Here different weight folders are present and these folders are the input parame
 The following configuration parameters can be used to change the default values
 - `--constant.ElectronIsolationWeightsDir` point this to the direction containing the electron isolation weights
 - `--constant.MuonIsolationWeightsDir` point this to the direction containing the muon isolation weights
+
+## dEdx corrections
+The miniDST also runs a recalculation of the dEdx calculations taking into account an angular dependency (see [here](https://github.com/iLCSoft/MarlinReco/pull/91) for a few more details).
+After that it re-runs the LikelihoodPID processor to use the corrected dEdx to calculate the PID likelihoods.
+This requires a few more weights which are by default in `ILDConfig/StandardConfig/production/`.
+- `--constant.RundEdxCorrections=false` can be used to completely disable this
+- `--constant.ProductionDir` can be used to change this directory.
