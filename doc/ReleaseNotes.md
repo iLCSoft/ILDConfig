@@ -1,3 +1,23 @@
+# v02-02-02
+
+* 2021-06-16 tmadlener ([PR#126](https://github.com/iLCSoft/iLDConfig/pull/126))
+  - Rename the `mini-DST-maker.xml` steering file to `MarlinStdRecoMiniDST` and make it a bit easier to configure from the outside
+    - Add short description of some available configuration parameters to the miniDST README. 
+  - Add processors to run angular dEdx correction (see iLCSoft/MarlinReco#91). Make it possible to disable this via a parameter.
+  - Unpack a default LCFIPlus weights tarball to make it possible to run the miniDST workflow with a minimal default configuration.
+  - Copy the `IsolatedLeptonTagger` weights to `ILDConfig` from `MarlinReco/Analysis/IsolatedLeptonTagging`
+    - Consider removing them from `MarlinReco/Analysis/IsolatedLeptonTagging` as they are "configuration" parameters that should be in `ILDConfig`
+    - Easier to use in the miniDST creation example
+  - Add `run_standard_workflow.sh` for testing of iLCSoft installations
+    - Runs 3 evt SIM and RECO steps to produce DST files, which are then also used to make an LCTuple file as well as a mini-DST from it.
+
+* 2021-06-15 shkawada ([PR#125](https://github.com/iLCSoft/iLDConfig/pull/125))
+  - added mini-DST-maker.xml: for the mini-DST file production
+  - README_mini-DST.md: readme file for mini-DST-maker.xml
+
+* 2021-02-02 Remi Ete ([PR#124](https://github.com/iLCSoft/iLDConfig/pull/124))
+  - Updated dE/dx parameters in Likelihood PID processor
+
 # v02-00-02
 
 * 2018-08-24 Frank Gaede ([PR#91](https://github.com/ilcsoft/ILDconfig/pull/91))
