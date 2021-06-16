@@ -3,6 +3,9 @@ set -euo pipefail
 
 RUN_THE_THINGS=ON
 
+# Run a command and log the outputs if $RUN_THE_THINGS is set to "ON"
+# Args: logfile - the name of the logfile
+#       command - the command to run (with all its arguments)
 function run_cmd() {
   local logfile=${1}
   shift
@@ -12,34 +15,49 @@ function run_cmd() {
   fi
 }
 
+# Remove all the files that are produced by the standard workflow
 function clear_outputs() {
-
   local output_files=( bbudsc_3evt_AIDA.root \
     bbudsc_3evt_DST.slcio \
     bbudsc_3evt_LCTuple.root \
     bbudsc_3evt_PfoAnalysis.root \
     bbudsc_3evt_REC.slcio \
     bbudsc_3evt_SIM.slcio \
+    bbudsc_3evt_miniDST.slcio \
     MarlinStdRecoParsed.xml \
     ddsim.out \
     marlin.out \
-    lctuple.out )
+    lctuple.out \
+    minidst.out)
 
   for file in $output_files; do
     [ -f ${file} ] && rm ${file} || true
   done
 }
 
+# Unpack the the tarball for the LCFIPlus weights.
+# Args: ILDConfig_DIR - the directory to the ILDConfig that should be used
+#       weights - the name of the weights tarball WITHOUT the .tar.gz
+#       output_DIR (optional) - the output directory where the weights will be unpacked to.
+#           Defaults to the directory of the weights tarball
 function prepare_lcfiweights() {
-  local lcfiweights=$(pwd)/../../LCFIPlusConfig/lcfiweights
-  local weights=4q250_ZZ_v4_p00_ildl5
-  if [ ! -d ${lcfiweights}/${weights} ]; then
-    echo "Unpacking LCFIPlus weights for test"
-    tar -xzf ${lcfiweights}/${weights}.tar.gz
+  local ildconfig_dir=${1}
+  local weights=${2}
+  local lcfiweights=${ildconfig_dir}/LCFIPlusConfig/lcfiweights
+  if [ $# -eq 3 ]; then
+    local outdir=${3}
+  else
+    local outdir=${lcfiweights}
+  fi
+
+  # Just in case
+  mkdir -p ${outdir}
+
+  if [ ! -d ${outdir}/${weights} ]; then
+    echo "Unpacking LCFIPlus weights for test to: ${outdir}/${weights}"
+    tar -xf ${lcfiweights}/${weights}.tar.gz -C ${outdir}
   fi
 }
-
-UNUSED_ARGS=
 
 while [ $# != 0 ]; do
   case "$1" in
@@ -65,6 +83,9 @@ while [ $# != 0 ]; do
   esac
 done
 
+# Use the currently checked out version
+ILDConfig_DIR=$(realpath ../../)
+
 DDSIM_CMD="ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt_SIM.slcio \
@@ -81,16 +102,16 @@ LCTUPLE_CMD="Marlin MarlinStdRecoLCTuple.xml \
   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
   --MyAIDAProcessor.FileName=bbudsc_3evt_LCTuple"
 
-MINIDST_CMD="Marlin mini-DST-maker.xml \
+MINIDST_CMD="Marlin MarlinStdRecoMiniDST.xml \
   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
   --constant.OutputFile=bbudsc_3evt_miniDST.slcio \
-  --constant.LCFIPlusWeightsDir=$(pwd)/../../LCFIPlusConfig/lcfiweights/4q250_ZZ_v4_p00_ildl5"
-
+  --constant.ILDConfig_DIR=${ILDConfig_DIR}"
 
 clear_outputs
 run_cmd ddsim.out ${DDSIM_CMD}
 run_cmd marlin.out ${MARLIN_CMD}
 run_cmd lctuple.out ${LCTUPLE_CMD}
 
-prepare_lcfiweights
+# Unpack the weights that are used by the default in the miniDST steering file
+prepare_lcfiweights ${ILDConfig_DIR} 4q250_ZZ_v4_p00_ildl5
 run_cmd minidst.out ${MINIDST_CMD}

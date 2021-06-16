@@ -36,9 +36,12 @@
 
 <constants>
   <constant name="OutputFile" value="mini-DST.slcio"/>
-  <constant name="LCFIPlusWeightsDir" value="NONE_Please_specify_directory_with_unpacked_weights"/>
-  <!--The prefix is probably closely related to the weights dir -->
+  <constant name="ILDConfig_DIR" value="../../LCFIPlusConfig">
+  <constant name="LCFIPlusVertexPrefix" value="ildl5_4q250_ZZ">
+  <constant name="LCFIPlusD0ProbFile" value="${ILDConfig_DIR}/LCFIPlusConfig/vtxprob/d0probv2_${LCFIPlusVertexPrefix}.root"/>
+  <constant name="LCFIPlusZ0ProbFile" value="${ILDConfig_DIR}/LCFIPlusConfig/vtxprob/z0probv2_${LCFIPlusVertexPrefix}.root">
   <constant name="LCFIPlusWeightsPrefix" value="4q250_v04_p00_ildl5"/>
+  <constant name="LCFIPlusWeightsDir" value="${ILDConfig_DIR}/LCFIPlusConfig/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
 </constants>
 
 <processor name="InitDD4hep" type="InitializeDD4hep">
@@ -312,16 +315,12 @@
   <parameter name="PrimaryVertexCollectionName" type="string" value="PrimaryVertex" />
   <parameter name="FlavorTag.JetCollectionName" type="string" value="Refined2Jets" />
   <parameter name="MakeNtuple.AuxiliaryInfo" type="int" value="-1" />
-  <!--parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/lcfiweights"/--> <!-- e.g. lcfiweights/lcfiweights_6q500_v04_p00_ildl5 -->
-  <!--parameter name="FlavorTag.WeightsPrefix" type="string" value="6q500_v04_p00_ildl5" /--> <!-- e.g. 6q500_v04_p00_ildl5 -->
-  <parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/v020201/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
-  <parameter name="FlavorTag.WeightsPrefix" type="string" value="4q250_v04_p00_ildl5" />
+  <parameter name="FlavorTag.WeightsDirectory" type="string" value="${LCFIPlusWeightsDir}"/>
+  <parameter name="FlavorTag.WeightsPrefix" type="string" value="${LCFIPlusWeightsPrefix}" />
   <parameter name="FlavorTag.BookName" type="string" value="bdt" />
   <parameter name="FlavorTag.PIDAlgo" type="string" value="lcfiplus" />
-  <!--parameter name="FlavorTag.D0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/d0probv2_ildl5_6q500.root"/--> <!-- vtxprob/d0probv2_ildl5_6q500.root -->
-  <!--parameter name="FlavorTag.Z0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/z0probv2_ildl5_6q500.root"/--> <!-- vtxprob/z0probv2_ildl5_6q500.root -->
-  <parameter name="FlavorTag.D0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/d0probv2_ildl5_4q250_ZZ.root"/>
-  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/z0probv2_ildl5_4q250_ZZ.root"/>
+  <parameter name="FlavorTag.D0ProbFileName" type="string" value="${LCFIPlusD0ProbFile}"/>
+  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="${LCFIPlusZ0ProbFile}"/>
 
   <parameter name="FlavorTag.CategoryDefinition1" type="string">nvtx==0</parameter>
   <parameter name="FlavorTag.CategoryPreselection1" type="string">trk1d0sig!=0</parameter>
@@ -440,16 +439,12 @@
   <parameter name="FlavorTag.JetCollectionName" type="string" value="Refined3Jets" />
   <parameter name="MakeNtuple.AuxiliaryInfo" type="int" value="-1" />
 
-  <!--parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/lcfiweights"/--> <!-- e.g. lcfiweights/lcfiweights_6q500_v04_p00_ildl5 -->
-  <!--parameter name="FlavorTag.WeightsPrefix" type="string" value="6q500_v04_p00_ildl5" /--> <!-- e.g. 6q500_v04_p00_ildl5 -->
-  <parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/v020201/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
-  <parameter name="FlavorTag.WeightsPrefix" type="string" value="4q250_v04_p00_ildl5" />
+  <parameter name="FlavorTag.WeightsDirectory" type="string" value="${LCFIPlusWeightsDir}"/>
+  <parameter name="FlavorTag.WeightsPrefix" type="string" value="${LCFIPlusWeightsPrefix}" />
   <parameter name="FlavorTag.BookName" type="string" value="bdt" />
   <parameter name="FlavorTag.PIDAlgo" type="string" value="lcfiplus" />
-  <!--parameter name="FlavorTag.D0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/d0probv2_ildl5_6q500.root"/--> <!-- vtxprob/d0probv2_ildl5_6q500.root -->
-  <!--parameter name="FlavorTag.Z0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/z0probv2_ildl5_6q500.root"/--> <!-- vtxprob/z0probv2_ildl5_6q500.root -->
-  <parameter name="FlavorTag.D0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/d0probv2_ildl5_4q250_ZZ.root"/>
-  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/z0probv2_ildl5_4q250_ZZ.root"/>
+  <parameter name="FlavorTag.D0ProbFileName" type="string" value="${LCFIPlusD0ProbFile}"/>
+  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="${LCFIPlusZ0ProbFile}"/>
 
   <parameter name="FlavorTag.CategoryDefinition1" type="string">nvtx==0</parameter>
   <parameter name="FlavorTag.CategoryPreselection1" type="string">trk1d0sig!=0</parameter>
@@ -568,16 +563,12 @@
   <parameter name="FlavorTag.JetCollectionName" type="string" value="Refined4Jets" />
   <parameter name="MakeNtuple.AuxiliaryInfo" type="int" value="-1" />
 
-  <!--parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/lcfiweights"/--> <!-- e.g. lcfiweights/lcfiweights_6q500_v04_p00_ildl5 -->
-  <!--parameter name="FlavorTag.WeightsPrefix" type="string" value="6q500_v04_p00_ildl5" /--> <!-- e.g. 6q500_v04_p00_ildl5 -->
-  <parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/v020201/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
-  <parameter name="FlavorTag.WeightsPrefix" type="string" value="4q250_v04_p00_ildl5" />
+  <parameter name="FlavorTag.WeightsDirectory" type="string" value="${LCFIPlusWeightsDir}"/>
+  <parameter name="FlavorTag.WeightsPrefix" type="string" value="${LCFIPlusWeightsPrefix}" />
   <parameter name="FlavorTag.BookName" type="string" value="bdt" />
   <parameter name="FlavorTag.PIDAlgo" type="string" value="lcfiplus" />
-  <!--parameter name="FlavorTag.D0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/d0probv2_ildl5_6q500.root"/--> <!-- vtxprob/d0probv2_ildl5_6q500.root -->
-  <!--parameter name="FlavorTag.Z0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/z0probv2_ildl5_6q500.root"/--> <!-- vtxprob/z0probv2_ildl5_6q500.root -->
-  <parameter name="FlavorTag.D0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/d0probv2_ildl5_4q250_ZZ.root"/>
-  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/z0probv2_ildl5_4q250_ZZ.root"/>
+  <parameter name="FlavorTag.D0ProbFileName" type="string" value="${LCFIPlusD0ProbFile}"/>
+  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="${LCFIPlusZ0ProbFile}"/>
 
   <parameter name="FlavorTag.CategoryDefinition1" type="string">nvtx==0</parameter>
   <parameter name="FlavorTag.CategoryPreselection1" type="string">trk1d0sig!=0</parameter>
@@ -696,16 +687,12 @@
   <parameter name="FlavorTag.JetCollectionName" type="string" value="Refined5Jets" />
   <parameter name="MakeNtuple.AuxiliaryInfo" type="int" value="-1" />
 
-  <!--parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/lcfiweights"/--> <!-- e.g. lcfiweights/lcfiweights_6q500_v04_p00_ildl5 -->
-  <!--parameter name="FlavorTag.WeightsPrefix" type="string" value="6q500_v04_p00_ildl5" /--> <!-- e.g. 6q500_v04_p00_ildl5 -->
-  <parameter name="FlavorTag.WeightsDirectory" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/v020201/lcfiweights/4q250_ZZ_v4_p00_ildl5"/>
-  <parameter name="FlavorTag.WeightsPrefix" type="string" value="4q250_v04_p00_ildl5" />
+  <parameter name="FlavorTag.WeightsDirectory" type="string" value="${LCFIPlusWeightsDir}"/>
+  <parameter name="FlavorTag.WeightsPrefix" type="string" value="${LCFIPlusWeightsPrefix}" />
   <parameter name="FlavorTag.BookName" type="string" value="bdt" />
   <parameter name="FlavorTag.PIDAlgo" type="string" value="lcfiplus" />
-  <!--parameter name="FlavorTag.D0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/d0probv2_ildl5_6q500.root"/--> <!-- vtxprob/d0probv2_ildl5_6q500.root -->
-  <!--parameter name="FlavorTag.Z0ProbFileName" type="string" value="/afs/desy.de/user/s/skawada/sonas_work/mini-DST/vtxprob/z0probv2_ildl5_6q500.root"/--> <!-- vtxprob/z0probv2_ildl5_6q500.root -->
-  <parameter name="FlavorTag.D0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/d0probv2_ildl5_4q250_ZZ.root"/>
-  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/z0probv2_ildl5_4q250_ZZ.root"/>
+  <parameter name="FlavorTag.D0ProbFileName" type="string" value="${LCFIPlusD0ProbFile}"/>
+  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="${LCFIPlusZ0ProbFile}"/>
 
   <parameter name="FlavorTag.CategoryDefinition1" type="string">nvtx==0</parameter>
   <parameter name="FlavorTag.CategoryPreselection1" type="string">trk1d0sig!=0</parameter>
@@ -828,8 +815,8 @@
   <parameter name="FlavorTag.WeightsPrefix" type="string" value="${LCFIPlusWeightsPrefix}"/>
   <parameter name="FlavorTag.BookName" type="string" value="bdt" />
   <parameter name="FlavorTag.PIDAlgo" type="string" value="lcfiplus" />
-  <parameter name="FlavorTag.D0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/d0probv2_ildl5_4q250_ZZ.root"/>
-  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/LCFIPlusConfig/vtxprob/z0probv2_ildl5_4q250_ZZ.root"/>
+  <parameter name="FlavorTag.D0ProbFileName" type="string" value="${LCFIPlusD0ProbFile}"/>
+  <parameter name="FlavorTag.Z0ProbFileName" type="string" value="${LCFIPlusZ0ProbFile}"/>
 
   <parameter name="FlavorTag.CategoryDefinition1" type="string">nvtx==0</parameter>
   <parameter name="FlavorTag.CategoryPreselection1" type="string">trk1d0sig!=0</parameter>
