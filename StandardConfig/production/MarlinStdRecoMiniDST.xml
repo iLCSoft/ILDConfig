@@ -42,6 +42,7 @@
   <constant name="OutputFile" value="mini-DST.slcio"/>
   <constant name="ProductionDir" value="."/>
   <constant name="RundEdxCorrections" value="true"/>
+  <constant name="lcgeo_DIR" value=$lcgeo_DIR/>
 
   <constant name="LCFIPlusConfig_DIR" value="./LCFIPlusConfig"/>
   <constant name="LCFIPlusVertexPrefix" value="ildl5_4q250_ZZ"/>
@@ -56,7 +57,7 @@
 </constants>
 
 <processor name="InitDD4hep" type="InitializeDD4hep">
-  <parameter name="DD4hepXMLFile" type="string"> $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml </parameter>
+  <parameter name="DD4hepXMLFile" type="string"> ${lcgeo_DIR}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml </parameter>
   <parameter name="Verbosity"> SILENT </parameter>
 </processor>
 

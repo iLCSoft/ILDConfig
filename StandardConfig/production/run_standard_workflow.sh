@@ -77,7 +77,8 @@ LCTUPLE_CMD="Marlin MarlinStdRecoLCTuple.xml \
 
 MINIDST_CMD="Marlin MarlinStdRecoMiniDST.xml \
   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
-  --constant.OutputFile=bbudsc_3evt_miniDST.slcio"
+  --constant.OutputFile=bbudsc_3evt_miniDST.slcio \
+  --constant.lcgeo_DIR=$lcgeo_DIR"
 
 clear_outputs
 run_cmd ddsim.out ${DDSIM_CMD}
