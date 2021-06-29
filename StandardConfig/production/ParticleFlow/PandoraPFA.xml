@@ -16,7 +16,7 @@
     <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
     <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
     <parameter name="RelCaloHitCollections" type="StringVec">EcalBarrelRelationsSimRec EcalEndcapsRelationsSimRec EcalEndcapRingRelationsSimRec HcalBarrelRelationsSimRec HcalEndcapsRelationsSimRec HcalEndcapRingRelationsSimRec RelationMuonHit RelationLHcalHit RelationLcalHit</parameter>
-    <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCP</parameter>
+    <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
     <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
     <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
     <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
@@ -37,7 +37,7 @@
     <parameter name="ECalToHadGeVCalibrationEndCap">${PandoraEcalToHadEndcapScale}</parameter>
     <parameter name="HCalToHadGeVCalibration">${PandoraHcalToHadScale}</parameter>
     <parameter name="DigitalMuonHits" type="int">0</parameter>
-    <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter> 
+    <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter>
     <parameter name="SoftwareCompensationWeights" type="FloatVec"> ${PandoraSoftwareCompensationWeights} </parameter>
     <parameter name="SoftwareCompensationEnergyDensityBins" type="FloatVec">0  2  5  7.5  9.5  13  16  20  23.5  28</parameter>
     <parameter name="FinalEnergyDensityBin" type="float">30</parameter>
@@ -69,11 +69,11 @@
     <!--Decides whether to create gaps in the geometry (ILD-specific)-->
     <!---SHOULD BE TRUE FOR ILD BUT INNER/OUTER SYMMETRIES ARE NOT COMPATIBLE -->
     <parameter name="CreateGaps" type="bool">false</parameter>
-    
+
     <!-- RE: Fix for driver Yoke05_Barrel in lcgeo. See PR #241 iLCSoft/lcgeo -->
     <!-- The layers are oriented in (0,1,0) before placement in the stave/module -->
     <parameter name="YokeBarrelNormalVector" type="FloatVec">0 1 0 </parameter>
-    
+
     <!--The name of the DDTrackCreator implementation-->
     <parameter name="TrackCreatorName" type="string">DDTrackCreatorILD </parameter>
     <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> SILENT </parameter>
