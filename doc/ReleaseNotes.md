@@ -1,3 +1,17 @@
+# v02-02-03
+
+* 2021-07-28 YONAMINE Ryo ([PR#130](https://github.com/iLCSoft/ILDConfig/pull/130))
+  - Add a new weight/vtxprob set trained with 2f processes at 250 GeV (MC2020).
+
+* 2021-07-28 Daniel Heuchel ([PR#128](https://github.com/iLCSoft/ILDConfig/pull/128))
+  - Corrected Collection Name Track-MCTruth Link
+
+* 2021-07-28 Thomas Madlener ([PR#127](https://github.com/iLCSoft/ILDConfig/pull/127))
+  - Introduce the `lcgeo_DIR` constant into the mini-DST workflow. This makes it possible to set this value from the outside without having to rely on an envrionment variable being resolved automatically.
+
+* 2021-07-20 Thomas Madlener ([PR#129](https://github.com/iLCSoft/ILDConfig/pull/129))
+  - Update  the README to use the `v02-02-02` release
+
 # v02-02-02
 
 * 2021-06-16 tmadlener ([PR#126](https://github.com/iLCSoft/iLDConfig/pull/126))
