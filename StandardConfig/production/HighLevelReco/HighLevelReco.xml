@@ -306,43 +306,61 @@
 
 
   <!--########## add TOF estimators for 0, 10 and 50 ps resolution  ###################################### -->
-
+  ExtrapolateToEcal
+  TofMethod
+  TimeResolution
+  MaxEcalLayer
+  Verbosity
   <processor name="TOFEstimators0ps" type="TOFEstimators">
     <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
-    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
-    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Use only calorimeter hits up to MaxEcalLayer in TOF estimators-->
+    <parameter name="MaxEcalLayer" type="int" default="10">10 </parameter>
     <!--Name of the ReconstructedParticle collection-->
     <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
     <!--Assumed time resolution per hit in ps-->
-    <parameter name="TimeResolution" type="float">0 </parameter>
+    <parameter name="TimeResolution" type="double">0 </parameter>
+    <!-- Calculate track length/TOF  to/using ECal instead of SET -->
+    <parameter name="ExtrapolateToEcal" type="bool" default="true">true</parameter>
+    <!-- Choose method to estimate time of flight -->
+    <parameter name="TofMethod" options="closest, frankAvg, frankFit" type="string" default="closest">closest</parameter>
   </processor>
   <processor name="TOFEstimators10ps" type="TOFEstimators">
     <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
-    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
-    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Use only calorimeter hits up to MaxEcalLayer in TOF estimators-->
+    <parameter name="MaxEcalLayer" type="int" default="10">10 </parameter>
     <!--Name of the ReconstructedParticle collection-->
     <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
     <!--Assumed time resolution per hit in ps-->
-    <parameter name="TimeResolution" type="float">10. </parameter>
+    <parameter name="TimeResolution" type="double">10. </parameter>
+    <!-- Calculate track length/TOF  to/using ECal instead of SET -->
+    <parameter name="ExtrapolateToEcal" type="bool" default="true">true</parameter>
+    <!-- Choose method to estimate time of flight -->
+    <parameter name="TofMethod" options="closest, frankAvg, frankFit" type="string" default="closest">closest</parameter>
   </processor>
   <processor name="TOFEstimators50ps" type="TOFEstimators">
     <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
-    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
-    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Use only calorimeter hits up to MaxEcalLayer in TOF estimators-->
+    <parameter name="MaxEcalLayer" type="int" default="10">10 </parameter>
     <!--Name of the ReconstructedParticle collection-->
     <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
     <!--Assumed time resolution per hit in ps-->
-    <parameter name="TimeResolution" type="float">50 </parameter>
+    <parameter name="TimeResolution" type="double">50 </parameter>
+    <!-- Calculate track length/TOF  to/using ECal instead of SET -->
+    <parameter name="ExtrapolateToEcal" type="bool" default="true">true</parameter>
+    <!-- Choose method to estimate time of flight -->
+    <parameter name="TofMethod" options="closest, frankAvg, frankFit" type="string" default="closest">closest</parameter>
   </processor>
   <processor name="TOFEstimators100ps" type="TOFEstimators">
     <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
-    <!--Use only calorimeter hits up to MaxLayerNumber in TOF estimators-->
-    <parameter name="MaxLayerNumber" type="int">10 </parameter>
+    <!--Use only calorimeter hits up to MaxEcalLayer in TOF estimators-->
+    <parameter name="MaxEcalLayer" type="int" default="10">10 </parameter>
     <!--Name of the ReconstructedParticle collection-->
     <parameter name="ReconstructedParticleCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
     <!--Assumed time resolution per hit in ps-->
-    <parameter name="TimeResolution" type="float">100 </parameter>
+    <parameter name="TimeResolution" type="double">100 </parameter>
+    <!-- Calculate track length/TOF  to/using ECal instead of SET -->
+    <parameter name="ExtrapolateToEcal" type="bool" default="true">true</parameter>
+    <!-- Choose method to estimate time of flight -->
+    <parameter name="TofMethod" options="closest, frankAvg, frankFit" type="string" default="closest">closest</parameter>
   </processor>
-
 </group>
-
