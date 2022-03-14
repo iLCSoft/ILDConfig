@@ -306,11 +306,6 @@
 
 
   <!--########## add TOF estimators for 0, 10 and 50 ps resolution  ###################################### -->
-  ExtrapolateToEcal
-  TofMethod
-  TimeResolution
-  MaxEcalLayer
-  Verbosity
   <processor name="TOFEstimators0ps" type="TOFEstimators">
     <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
     <!--Use only calorimeter hits up to MaxEcalLayer in TOF estimators-->
