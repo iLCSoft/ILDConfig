@@ -305,6 +305,10 @@
   </processor>
 
 
+  <processor name="TrackLengthProcessor" type="TrackLengthProcessor">
+      <parameter name="ReconstructedParticleCollection" type="string" default="PandoraPFOs">PandoraPFOs</parameter>
+  </processor>
+
   <!--########## add TOF estimators for 0, 10 and 50 ps resolution  ###################################### -->
   <processor name="TOFEstimators0ps" type="TOFEstimators">
     <!--TOFEstimators compute some estimators for the time of flight from calorimeter hits-->
