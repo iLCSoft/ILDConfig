@@ -1,3 +1,16 @@
+# v02-03
+
+* 2022-06-29 Gerald Grenier ([PR#131](https://github.com/iLCSoft/ILDConfig/pull/131))
+  - Add Calibration files to be able to run standard Marlin reconstruction on ILD simulation with Videau geometry.
+  - For this first pass, files are only link to current ILD option 2 model from hybrid TESLA geometry.
+  - Verification that Marlin runs on both small and large ILD Videau geometry have been done.
+
+* 2022-04-20 Bohdan Dudar ([PR#133](https://github.com/iLCSoft/ILDConfig/pull/133))
+  - Added TrackLength processor in the HighLevelReco chain.
+
+* 2022-03-14 Bohdan Dudar ([PR#132](https://github.com/iLCSoft/ILDConfig/pull/132))
+  - All steering parameters of `TOFEstimators` are explicitly specified in the steering file w/o any modification to the behaviour
+
 # v02-02-03
 
 * 2021-07-28 YONAMINE Ryo ([PR#130](https://github.com/iLCSoft/ILDConfig/pull/130))
