@@ -1,0 +1,145 @@
+
+
+<group name="SiliconTrackingDigi">
+
+  <processor name="MySplitCollectionByLayer" type="SplitCollectionByLayer">
+    <!--split a hit collection based on the layer number of the hits -->
+    <!--Name of the input collection with hits-->
+    <parameter name="InputCollection" type="string">FTDCollection </parameter>
+    <!--Name of the output collection with start and end layer number-->
+    <parameter name="OutputCollections" type="StringVec">FTD_PIXELCollection 0 1 FTD_STRIPCollection 2 6  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> > -->
+  </processor>
+
+
+  <processor name="VXDPlanarDigiProcessor_CMOSVXD5" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> VXD </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool">false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float"> 0.003 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float"> 0.003  </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">VXDCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">VXDTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">VXDTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+
+  <processor name="SITPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> SIT </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool"> false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float">0.005 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float">0.005 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">SITCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">SITTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">SITTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+
+  <processor name="FTDPixelPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> FTD </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool">false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float">0.003 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float">0.003 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit"> FTD_PIXELCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDPixelTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">FTDPixelTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+
+  <processor name="FTDStripPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--Project hits onto the surface in case they are not yet on the surface (default: false)-->
+    <parameter name="ForceHitsOntoSurface" type="bool">true </parameter>
+
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> FTD </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool">false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float">0.007 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float">0.0 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">FTD_STRIPCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">FTDStripTrackerHitRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">FTDStripTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+  <processor name="OuterPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> OuterTrackers </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool"> false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float"> 0.007</parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float"> 0.09 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">OuterTrackerBarrelCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">OuterTrackerBarrelHitsRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">OTrackerHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+  <processor name="OuterEndcapPlanarDigiProcessor" type="DDPlanarDigiProcessor">
+    <!--PlanarDigiProcessor creates TrackerHits from SimTrackerHits, smearing them according to the input parameters.-->
+    <parameter name="SubDetectorName" type="string"> OuterTrackers </parameter>
+    <!--whether hits are 1D strip hits-->
+    <parameter name="IsStrip" type="bool"> false </parameter>
+    <!--resolution in direction of u-->
+    <parameter name="ResolutionU" type="float"> 0.007 </parameter>
+    <!--resolution in direction of v-->
+    <parameter name="ResolutionV" type="float"> 0.09 </parameter>
+    <!--Name of the Input SimTrackerHit collection-->
+    <parameter name="SimTrackHitCollectionName" type="string" lcioInType="SimTrackerHit">OuterTrackerEndcapCollection </parameter>
+    <!--Name of TrackerHit SimTrackHit relation collection-->
+    <parameter name="SimTrkHitRelCollection" type="string" lcioOutType="LCRelation">OuterTrackerEndcapHitsRelations </parameter>
+    <!--Name of the TrackerHit output collection-->
+    <parameter name="TrackerHitCollectionName" type="string" lcioOutType="TrackerHitPlane">OTrackerEndcapHits </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+  </processor>
+
+</group>
