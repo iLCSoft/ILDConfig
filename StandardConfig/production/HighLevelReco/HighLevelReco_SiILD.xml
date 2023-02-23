@@ -1,0 +1,265 @@
+
+<group name="HighLevelReco">
+
+  <!--########## Add4MomCovMatrixCharged ###################################### -->
+  <!--Set the convariance matrix in (P,E) for all charged pfos in PandoraPFOs Collection-->
+  <processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+    <!--Name of the PandoraPFOs collection-->
+    <parameter name="InputPandoraPFOsCollection" type="String">PandoraPFOs</parameter>
+    <!--Verbosity lower than MESSAGE4 will print out cov. matrix for each pfo-->
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE4 </parameter>
+  </processor>
+
+  <!--########## AddClusterProperties ###################################### -->
+  <processor name="MyAddClusterProperties" type="AddClusterProperties">
+    <parameter name="PFOCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <parameter name="ClusterCollection" type="string" lcioInType="Cluster">PandoraClusters </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">MESSAGE </parameter>
+  </processor>
+
+
+  <processor name="MyComputeShowerShapesProcessor" type="ComputeShowerShapesProcessor">
+    <!--Performs Shower profile extraction-->
+    <!--Debugging?-->
+    <parameter name="Debug" type="int">0 </parameter>
+    <!--Name of the PFO collection-->
+    <parameter name="PFOCollection" type="string"> PandoraPFOs </parameter>
+    <!--Name of the Cluster collection-->
+    <parameter name="ClusterCollectionName" type="string"> PandoraClusters </parameter>
+    <!-- Radiation Length of Ecal-->
+    <parameter name="RadiationLength_Ecal" type="float">3.50 </parameter>
+    <!-- Radiation Length of Hcal-->
+    <parameter name="RadiationLength_Hcal" type="float">17.57 </parameter>
+    <!-- Moliere radius of Ecal-->
+    <parameter name="MoliereRadius_Ecal" type="float">9.00 </parameter>
+    <!-- Moliere radius of Hcal-->
+    <parameter name="MoliereRadius_Hcal" type="float">17.19 </parameter>
+  </processor>
+
+  <processor name="MyphotonCorrectionProcessor" type="photonCorrectionProcessor">
+    <!--photonCorrectionProcessor applies an energy correction to photon-like PFOs-->
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+    <!--name of input PFO collection-->
+    <parameter name="inputCollection" type="string">PandoraPFOs </parameter>
+    <!--apply the corrected energies to the PFOs-->
+    <parameter name="modifyPFOenergies" type="bool"> ${ApplyPhotonPFOCorrections} </parameter>
+    <!--apply the corrected direction to the PFOs-->
+    <parameter name="modifyPFOdirection" type="bool"> ${ApplyPhotonPFOCorrections} </parameter>
+    <!--nominal photon energy (for validation plots)-->
+    <parameter name="nominalEnergy" type="float">200 </parameter>
+    <!--produce validation plots-->
+    <parameter name="validationPlots" type="bool">false </parameter>
+    <!-- the parameters for the various corrections -->
+    <parameter name="energyCor_Linearise"> 0.987 0.01426 </parameter>
+    <parameter name="energyCorr_barrelPhi"> 0.412249 0.0142289 -0.0933687 0.01345 0.0408156 </parameter>
+    <parameter name="energyCorr_costh"> -0.09 0. 0.235 0.007256 -0.0369648 0. 0.588 0.0121604 -0.0422968 0.774 0.009 1.002 </parameter>
+    <parameter name="energyCorr_endcap"> -0.025 855. 23. -0.07 1489. 18. </parameter>
+    <parameter name="phiCorr_barrel"> 2.36517e-05 1.32090e-04 -3.86883e+00 -1.67809e-01 2.28614e-05 6.03495e-05 0.419 0.00728 0.025 0.00 2.86667e-05 2.49371e-05 -7.71684e-06 -1.48118e-05 -5.63786e-06 -9.38376e-06 -4.96296e-06 2.91262e-06  </parameter>
+    <parameter name="thetaCorr_barrel"> -0.000166568 -7.119e-05 0.000223618 -3.95915e-05 </parameter>
+    <parameter name="thetaCorr_endcap"> 0.000129478 -3.73863e-05 -0.000847783 0.000153646 0.000806605 -0.000132608 </parameter>
+  </processor>
+
+  <processor name="MyV0Finder" type="V0Finder">
+    <parameter name="InputRecoParticleCollection" type="string"> PandoraPFOs </parameter>
+    <parameter name="TrackCollection" type="string"> MarlinTrkTracks </parameter>
+    <parameter name="MassRangeGamma"  type="float">  0.01 </parameter>
+    <parameter name="MassRangeK0S"    type="float">  0.1 </parameter>
+    <parameter name="MassRangeL0"     type="float">  0.1 </parameter>
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG </parameter>
+  </processor>
+
+  <processor name="MyPi0Finder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="Pi0" />
+    <parameter name="GammaGammaResonanceMass" value="0.1349766" />
+    <parameter name="MaxDeltaMgg" value="0.04" />
+    <parameter name="GammaMomentumCut" value="0.5" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidatePi0s" />
+  </processor>
+
+
+  <processor name="MyEtaFinder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="Eta" />
+    <parameter name="GammaGammaResonanceMass" value="0.547862" />
+    <parameter name="MaxDeltaMgg" value="0.14" />
+    <parameter name="GammaMomentumCut" value="1.0" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidateEtas" />
+  </processor>
+
+
+  <processor name="MyEtaPrimeFinder" type="GammaGammaCandidateFinder">
+    <parameter name="InputParticleCollectionName" value="PandoraPFOs" />
+    <parameter name="GammaGammaResonanceName" value="EtaPrime" />
+    <parameter name="GammaGammaResonanceMass" value="0.95778" />
+    <parameter name="MaxDeltaMgg" value="0.19" />
+    <parameter name="GammaMomentumCut" value="2.0" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaCandidateEtaPrimes" />
+  </processor>
+
+
+  <processor name="MyGammaGammaSolutionFinder" type="GammaGammaSolutionFinder">
+    <parameter name="InputParticleCollectionName1" value="GammaGammaCandidatePi0s" />
+    <parameter name="InputParticleCollectionName2" value="GammaGammaCandidateEtas" />
+    <parameter name="InputParticleCollectionName3" value="GammaGammaCandidateEtaPrimes" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="GammaGammaParticles" />
+  </processor>
+
+
+  <processor name="MyDistilledPFOCreator" type="DistilledPFOCreator">
+    <parameter name="InputParticleCollectionName1" value="PandoraPFOs" />
+    <parameter name="InputParticleCollectionName2" value="GammaGammaParticles" />
+    <parameter name="Printing" value="0" />
+    <parameter name="OutputParticleCollectionName" value="DistilledPFOs" />
+  </processor>
+
+
+  <processor name="MyLikelihoodPID" type="LikelihoodPIDProcessor">
+    <!--Performs particle identification-->
+    <!--Debugging?-->
+    <parameter name="Debug" type="int">1 </parameter>
+    <!--Boundaries for energy binning-->
+    <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07  </parameter>
+    <!--Name of files containing pdfs for charged particles-->
+    <parameter name="FilePDFName" type="StringVec"> ${PidPDFFile} </parameter>
+    <!--Whether MVA low momentum mu/pi is used or not-->
+    <parameter name="UseLowMomentumMuPiSeparation" type="bool"> true </parameter>
+    <!--The BDTG weights files for low momentum mu/pi separation-->
+    <parameter name="FileWeightFormupiSeparationName" type="StringVec"> ${PidWeightFiles} </parameter>
+
+    <!--dE/dx parameters for each particle-->
+    <parameter name="dEdxParameter_electron" type="FloatVec">
+      -1.28883368e-02  2.72959919e+01  1.10560871e+01 -1.74534200e+00 -9.84887586e-07
+    </parameter>
+    <parameter name="dEdxParameter_muon" type="FloatVec">
+      6.49143971e-02 1.55775592e+03 9.31848047e+08 2.32201725e-01 2.50492066e-04
+    </parameter>
+    <parameter name="dEdxParameter_pion" type="FloatVec">
+      6.54955215e-02  8.26239081e+06  1.92933904e+05 2.52743206e-01 2.26657525e-04
+    </parameter>
+    <parameter name="dEdxParameter_kaon" type="FloatVec">
+      7.52235689e-02 1.59710415e+04 1.79625604e+06 3.15315795e-01 2.30414997e-04
+    </parameter>
+    <parameter name="dEdxParameter_proton" type="FloatVec">
+      7.92251260e-02 6.38129720e+04 3.82995071e+04 2.80793601e-01 7.14371743e-04
+    </parameter>
+
+    <!--dE/dx normalization-->
+    <parameter name="dEdxNormalization" type="float"> 1.350e-7 </parameter>
+    <!--dE/dx error factor(7.55 for l5, 8.53 for s5)-->
+    <parameter name="dEdxErrorFactor" type="float"> ${dEdXErrorFactor} </parameter>
+    <!-- Method: Maximum Likelihood(0), Bayesian(1), or risk based Bayesian(2)-->
+    <parameter name="UseBayesian" type="int"> 2 </parameter>
+
+    <!-- Cost Matrix for risk based Bayesian(2)-->
+    <parameter name="CostMatrix" type="FloatVec">
+      1.0e-50 1.0 1.5 1.0 1.5
+      1.0 1.0e-50 3.0 1.0 1.0
+      1.0 1.0 1.0e-50 1.0 3.0
+      1.0 1.0 4.0 1.0e-50 2.0
+      1.0 1.0 5.0 1.0 1.0e-50
+    </parameter>
+
+    <!--Name of the PFO collection-->
+    <parameter name="RecoParticleCollection" type="string">PandoraPFOs</parameter>
+  </processor>
+
+
+  <processor name="MyRecoMCTruthLinker" type="RecoMCTruthLinker">
+    <!--links RecontructedParticles to the MCParticle based on number of hits used-->
+    <!--energy cut for Brems that are kept-->
+    <parameter name="BremsstrahlungEnergyCut" type="float">1 </parameter>
+    <!--Name of the updated calo-hit MCTruthLink output collection - not created if empty()-->
+    <parameter name="CalohitMCTruthLinkName" type="string" lcioOutType="LCRelation"> CalohitMCTruthLink </parameter>
+    <!--Name of the Clusters input collection-->
+    <parameter name="ClusterCollection" type="string" lcioInType="Cluster">PandoraClusters </parameter>
+    <!--Name of the clusterMCTruthLink output collection - not created if empty()-->
+    <parameter name="ClusterMCTruthLinkName" type="string" lcioOutType="LCRelation"> ClusterMCTruthLink </parameter>
+    <!--true: All reco <-> true relations are given, with weight = 10000*calo
+	weight+track weight (weights in permill). false: Only highest contributor
+	linked,and only to tracks, not clusters if there are any tracks-->
+    <parameter name="FullRecoRelation" type="bool">false </parameter>
+    <!--Work-around Mokka bug in vertex-is-not-endpoint-of-parent flag (logic inverted)-->
+    <parameter name="InvertedNonDestructiveInteractionLogic" type="bool"> false </parameter>
+    <!--PDG codes of particles of which the daughters will be kept in the skimmmed MCParticle collection-->
+    <!-- FIXME:Check if we really want to keep those -->
+    <parameter name="KeepDaughtersPDG" type="IntVec">22 111 310 13 211 321 3120 </parameter>
+    <!--Name of the MCParticle input collection-->
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
+    <!--Name of the skimmed MCParticle  output collection - not created if empty()-->
+    <parameter name="MCParticlesSkimmedName" type="string" lcioOutType="MCParticle"> MCParticlesSkimmed </parameter>
+    <!--Name of the MCTruthClusterLink output collection-->
+    <parameter name="MCTruthClusterLinkName" type="string" lcioOutType="LCRelation"> </parameter>
+    <!--Name of the MCTruthRecoLink output collection-->
+    <parameter name="MCTruthRecoLinkName" type="string" lcioOutType="LCRelation"> </parameter>
+    <!--Name of the trackMCTruthLink output collection-->
+    <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> </parameter>
+    <!--Name of the RecoMCTruthLink output collection - not created if empty()-->
+    <parameter name="RecoMCTruthLinkName" type="string" lcioOutType="LCRelation"> RecoMCTruthLink </parameter>
+    <!--Name of the ReconstructedParticles input collection-->
+    <parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> MergedRecoParticles </parameter>
+    <!--save photons from Brems-->
+    <parameter name="SaveBremsstrahlungPhotons" type="bool">false </parameter>
+    <!--Names of the SimCaloHits input collections-->
+    <parameter name="SimCaloHitCollections" type="StringVec" lcioInType="SimCalorimeterHit">
+      BeamCalCollection
+      LHCalCollection
+      LumiCalCollection
+      ${ECalSimHitCollections}
+      ${HCalSimHitCollections}
+      YokeBarrelCollection
+      YokeEndcapsCollection
+    </parameter>
+    <!--Name of the  lcrelation collections, that link the SimCalorimeterHit to CalorimeterHit-->
+    <parameter name="SimCalorimeterHitRelationNames" type="StringVec" lcioInType="LCRelation">
+      EcalBarrelRelationsSimRec
+      EcalEndcapRingRelationsSimRec
+      EcalEndcapsRelationsSimRec
+      HcalBarrelRelationsSimRec
+      HcalEndcapRingRelationsSimRec
+      HcalEndcapsRelationsSimRec
+      RelationLHcalHit
+      RelationMuonHit
+      RelationLcalHit
+      RelationBCalHit
+    </parameter>
+    <!--Names of the SimTrackerHits input collection-->
+    <parameter name="SimTrackerHitCollections" type="StringVec" lcioInType="SimTrackerHit">
+      VXDCollection
+      FTD_PIXELCollection
+      SITCollection
+      OuterTrackerBarrelCollection
+      FTD_STRIPCollection
+      OuterTrackerEndcapCollection
+    </parameter>
+    <!--Name of the Tracks input collection-->
+    <parameter name="TrackCollection" type="string" lcioInType="Track"> SiTracks </parameter>
+    <!--Name of the trackMCTruthLink output collection - not created if empty()-->
+    <parameter name="MCTruthTrackLinkName" type="string" lcioOutType="LCRelation"> MCTruthSiTracksLink </parameter>
+    <parameter name="TrackMCTruthLinkName" type="string" lcioOutType="LCRelation"> SiTracksMCTruthLink </parameter>
+    <!--Name of the lcrelation collections, that link the TrackerHits to their SimTrackerHits.-->
+    <parameter name="TrackerHitsRelInputCollections" type="StringVec" lcioInType="LCRelation">
+      VXDTrackerHitRelations
+      FTDPixelTrackerHitRelations
+      SITTrackerHitRelations
+      OuterTrackerBarrelHitsRelations
+      FTDStripTrackerHitRelations
+      OuterTrackerEndcapHitsRelations
+    </parameter>
+    <!--true: use relations for TrackerHits, false : use getRawHits -->
+    <parameter name="UseTrackerHitRelations" type="bool"> true </parameter>
+    <!--If Using Particle Gun Ignore Gen Stat-->
+    <parameter name="UsingParticleGun" type="bool"> false </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+    <!--energy cut for daughters that are kept from KeepDaughtersPDG-->
+    <parameter name="daughtersECutMeV" type="float"> 10 </parameter>
+  </processor>
+
+</group>
