@@ -12,11 +12,11 @@
       <!--Name of the TrackerHit relation collections-->
       <parameter name="RelationsNames" type="StringVec" lcioInType="LCRelation"> VXDTrackerHitRelations FTDPixelTrackerHitRelations FTDStripTrackerHitRelations SITTrackerHitRelations OuterTrackerBarrelHitsRelations OuterTrackerEndcapHitsRelations </parameter>
       <!--Silicon track Collection Name-->
-      <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track">SiTracksCT </parameter>
+      <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track"> SiTracksCT </parameter>
       <!--Debug hits Collection Name-->
       <parameter name="DebugHits" type="string" lcioOutType="TrackerHitPlane"> DebugHits </parameter>
       <!--Maximum number of track hits to try the inverted fit-->
-      <parameter name="MaxHitInvertedFit" type="int">0 </parameter>
+      <parameter name="MaxHitInvertedFit" type="int"> 6 </parameter>
       <!--Final minimum number of track clusters-->
       <parameter name="MinClustersOnTrackAfterFit" type="int">3 </parameter>
 
@@ -37,32 +37,32 @@
       <parameter name="Steps" type="StringVec">
         [VXDBarrel]
         @Collections : VXDTrackerHits
-        @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 10.0;
         @Flags : HighPTFit, VertexToTracker
         @Functions : CombineCollections, BuildNewTracks
         [VXDEncap]
         @Collections : FTDPixelTrackerHits
-        @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 0.0;
+        @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 0.0;
         @Flags : HighPTFit, VertexToTracker
         @Functions : CombineCollections, ExtendTracks
         [LowerCellAngle1]
         @Collections : VXDTrackerHits, FTDPixelTrackerHits
-        @Parameters : MaxCellAngle : 0.025; MaxCellAngleRZ : 0.025; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Parameters : MaxCellAngle : 0.025; MaxCellAngleRZ : 0.025; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 10.0;
         @Flags : HighPTFit, VertexToTracker, RadialSearch
         @Functions : CombineCollections, BuildNewTracks
         [LowerCellAngle2]
         @Collections :
-        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 10.0;
         @Flags : HighPTFit, VertexToTracker, RadialSearch
         @Functions : BuildNewTracks, SortTracks
         [Tracker]
         @Collections : SITTrackerHits, FTDStripTrackerHits, OTrackerHits, OTrackerEndcapHits
-        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.1; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.02; SlopeZRange: 10.0; HighPTCut: 0.0;
+        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.1; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 0.0;
         @Flags : HighPTFit, VertexToTracker, RadialSearch
-        @Functions : CombineCollections, BuildNewTracks
+        @Functions : CombineCollections, ExtendTracks
         [Displaced]
         @Collections : VXDTrackerHits, FTDPixelTrackerHits, SITTrackerHits, FTDStripTrackerHits, OTrackerHits, OTrackerEndcapHits
-        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 1000; MinClustersOnTrack : 5; MaxDistance : 0.015; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Parameters : MaxCellAngle : 0.1; MaxCellAngleRZ : 0.1; Chi2Cut : 1000; MinClustersOnTrack : 5; MaxDistance : 0.035; SlopeZRange: 10.0; HighPTCut: 10.0;
         @Flags : OnlyZSchi2cut, RadialSearch
         @Functions : CombineCollections, BuildNewTracks
       </parameter>
@@ -92,6 +92,9 @@
       <parameter name="maxSignificancePt" type="double">2 </parameter>
       <!--maximum significance separation in tanLambda-->
       <parameter name="maxSignificanceTheta" type="double">3 </parameter>
+
+      <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+      <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
     </processor>
 
 
