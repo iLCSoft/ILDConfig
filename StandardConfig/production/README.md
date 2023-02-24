@@ -173,9 +173,10 @@ ls GeneratedFiles
 
 ## Running the full reconstruction chain with all silicon ILD model
 
-In order to run the standard full reconstruction with the ILD_l5_v09 model, in the *MarlinStdReco.xml* file:
+In order to run the standard full reconstruction with the ILD_l5_v09 model, in the `MarlinStdReco.xml` file:
 
-- replace TrackingDigi and TrackingReco groups in the ```<execute>``` section by SiliconTrackingDigi and ConformalTrackingReco
-- include *Tracking/TrackingDigi_SiILD.xml*, *Tracking/ConformalTracking_SiILD.xml*, *HighLevelReco/HighLevelReco_SiILD.xml*, *ParticleFlow/PandoraPFA_SiILD.xml* files instead of the respective default ones
+- replace `TrackingDigi` and `TrackingReco` groups in the ```<execute>``` section by `SiliconTrackingDigi` and `ConformalTrackingReco`
+- include `Tracking/TrackingDigi_SiILD.xml`, `Tracking/ConformalTracking_SiILD.xml`, `HighLevelReco/HighLevelReco_SiILD.xml`, `ParticleFlow/PandoraPFA_SiILD.xml` files instead of the respective default ones
+- Make sure to pass the right compact file with the ILD_l5_v09 model definition.
 
 Then run the reconstruction as described above, providing the proper detector model.
