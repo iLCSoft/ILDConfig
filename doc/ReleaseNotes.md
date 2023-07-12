@@ -1,5 +1,11 @@
 # v02-03-02
 
+* 2023-02-24 Jan Klamka ([PR#134](https://github.com/iLCSoft/iLDConfig/pull/134))
+  - Digitisation including the hits from CLIC-like outer tracker and changes for the FTD, allowing for further use of the Conformal Tracking
+  - Conformal tracking with input collections from the new ILD_l5_v09 model, parameters setup as in CLIC config.
+
+# v02-03-02
+
 * 2023-02-24 Jan Klamka ([PR#134](https://github.com/iLCSoft/ILDConfig/pull/134))
   - Digitisation including the hits from CLIC-like outer tracker and changes for the FTD, allowing for further use of the Conformal Tracking
   - Conformal tracking with input collections from the new ILD_l5_v09 model, parameters setup as in CLIC config.
