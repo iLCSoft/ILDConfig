@@ -11,6 +11,11 @@ parser.add_argument(
     help="Compact detector file to use",
     default=f"{os.environ['K4GEO']}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml",
 )
+parser.add_argument(
+    "--outputFileBase",
+    help="Base name of all the produced output files",
+    default="StandardReco",
+)
 reco_args = parser.parse_known_args()[0]
 
 algList = []
@@ -135,11 +140,6 @@ CONSTANTS = {
     "BeamSizeX": "313.e-6",
     "BeamSizeY": "3.14e-6",
     "BeamSizeZ": "202.e-3",
-    "OutputBaseName": "StandardReco",
-    "AIDAFileName": "%(OutputBaseName)s_AIDA",
-    "RECOutputFile": "%(OutputBaseName)s_REC.slcio",
-    "DSTOutputFile": "%(OutputBaseName)s_DST.slcio",
-    "PfoOutputFile": "%(OutputBaseName)s_PfoAnalysis.root",
 }
 
 parseConstants(CONSTANTS)
@@ -154,7 +154,7 @@ MyAIDAProcessor.OutputLevel = INFO
 MyAIDAProcessor.ProcessorType = "AIDAProcessor"
 MyAIDAProcessor.Parameters = {
     "Compress": ["1"],
-    "FileName": ["%(AIDAFileName)s" % CONSTANTS],
+    "FileName": [f"{reco_args.outputFileBase}_AIDA"],
     "FileType": ["root"],
 }
 
@@ -1647,7 +1647,7 @@ MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
 MyLCIOOutputProcessor.Parameters = {
     "CompressionLevel": ["6"],
     "DropCollectionNames": ["%(AdditionalDropCollectionsREC)s" % CONSTANTS],
-    "LCIOOutputFile": ["%(RECOutputFile)s" % CONSTANTS],
+    "LCIOOutputFile": [f"{reco_args.outputFileBase}_REC.slcio"],
     "LCIOWriteMode": ["WRITE_NEW"],
 }
 
@@ -1681,7 +1681,7 @@ DSTOutput.Parameters = {
         "MCTruthClusterLink",
         "ClusterMCTruthLink",
     ],
-    "LCIOOutputFile": ["%(DSTOutputFile)s" % CONSTANTS],
+    "LCIOOutputFile": [f"{reco_args.outputFileBase}_DST.slcio"],
     "LCIOWriteMode": ["WRITE_NEW"],
 }
 
@@ -1724,7 +1724,7 @@ MyPfoAnalysis.Parameters = {
     "MuonCollectionsSimCaloHit": ["YokeBarrelCollection", "YokeEndcapsCollection"],
     "PfoCollection": ["PandoraPFOs"],
     "Printing": ["0"],
-    "RootFile": ["%(PfoOutputFile)s" % CONSTANTS],
+    "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
 }
 
 algList.append(MyAIDAProcessor)
