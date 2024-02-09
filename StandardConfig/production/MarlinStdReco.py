@@ -20,11 +20,24 @@ parser.add_argument(
 reco_args = parser.parse_known_args()[0]
 
 algList = []
+svcList = []
+
+
 evtsvc = k4DataSvc("EventDataSvc")
+svcList.append(evtsvc)
+
+from Configurables import GeoSvc
+
+geoSvc = GeoSvc("GeoSvc")
+geoSvc.detectors = [
+    reco_args.compactFile,
+]
+geoSvc.OutputLevel = INFO
+geoSvc.EnableGeant4Geo = False
+svcList.append(geoSvc)
 
 
 CONSTANTS = {
-    "CompactFile": reco_args.compactFile,
     "RunOverlay": str(reco_args.runOverlay).lower(),
     "CMSEnergy": "250",
     "RunBeamCalReco": "true",
@@ -151,11 +164,6 @@ MyAIDAProcessor.Parameters = {
     "FileName": ["%(AIDAFileName)s" % CONSTANTS],
     "FileType": ["root"],
 }
-
-InitDD4hep = MarlinProcessorWrapper("InitDD4hep")
-InitDD4hep.OutputLevel = INFO
-InitDD4hep.ProcessorType = "InitializeDD4hep"
-InitDD4hep.Parameters = {"DD4hepXMLFile": ["%(CompactFile)s" % CONSTANTS]}
 
 MyStatusmonitor = MarlinProcessorWrapper("MyStatusmonitor")
 MyStatusmonitor.OutputLevel = INFO
@@ -1727,7 +1735,6 @@ MyPfoAnalysis.Parameters = {
 }
 
 algList.append(MyAIDAProcessor)
-algList.append(InitDD4hep)
 algList.append(MyStatusmonitor)
 # algList.append(BgOverlayWW)
 # algList.append(BgOverlayWB)
@@ -1799,5 +1806,5 @@ algList.append(MyPfoAnalysis)
 from Configurables import ApplicationMgr
 
 ApplicationMgr(
-    TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=[evtsvc], OutputLevel=INFO
+    TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=svcList, OutputLevel=INFO
 )
