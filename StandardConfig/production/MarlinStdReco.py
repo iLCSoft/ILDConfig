@@ -4,17 +4,28 @@ from Gaudi.Configuration import *
 from Configurables import LcioEvent, MarlinProcessorWrapper, k4DataSvc
 from k4MarlinWrapper.parseConstants import *
 
+from k4FWCore.parseArgs import parser
+
+parser.add_argument(
+    "--compactFile",
+    help="Compact detector file to use",
+    default=f"{os.environ['K4GEO']}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml",
+)
+parser.add_argument(
+    "--runOverlay",
+    help="Whether to run Overlay or not",
+    action="store_true",
+    default=False,
+)
+reco_args = parser.parse_known_args()[0]
 
 algList = []
 evtsvc = k4DataSvc("EventDataSvc")
 
 
 CONSTANTS = {
-    "lcgeo_DIR": os.environ["lcgeo_DIR"],
-    "DetectorModel": "ILD_l5_o1_v02",
-    "CompactFile": "%(lcgeo_DIR)s/ILD/compact/%(DetectorModel)s/%(DetectorModel)s.xml",
-    "CalibrationFile": "Calibration/Calibration_%(DetectorModel)s.xml",
-    "EnergyParametersFile": "Config/Parameters%(CMSEnergy)sGeV.xml",
+    "CompactFile": reco_args.compactFile,
+    "RunOverlay": str(reco_args.runOverlay).lower(),
     "CMSEnergy": "250",
     "RunBeamCalReco": "true",
     "BeamCalCalibrationFactor": "79.6",
