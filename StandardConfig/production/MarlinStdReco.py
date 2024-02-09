@@ -7,6 +7,13 @@ from k4MarlinWrapper.parseConstants import *
 from k4FWCore.parseArgs import parser
 
 parser.add_argument(
+    "--inputFiles",
+    action="extend",
+    nargs="+",
+    metavar=["file1", "file2"],
+    help="One or multiple input files",
+)
+parser.add_argument(
     "--compactFile",
     help="Compact detector file to use",
     default=f"{os.environ['K4GEO']}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml",
@@ -146,7 +153,7 @@ parseConstants(CONSTANTS)
 
 read = LcioEvent()
 read.OutputLevel = INFO
-read.Files = ["None"]
+read.Files = reco_args.inputFiles
 algList.append(read)
 
 MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
