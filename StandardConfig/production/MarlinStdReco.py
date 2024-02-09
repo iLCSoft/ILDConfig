@@ -11,12 +11,6 @@ parser.add_argument(
     help="Compact detector file to use",
     default=f"{os.environ['K4GEO']}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml",
 )
-parser.add_argument(
-    "--runOverlay",
-    help="Whether to run Overlay or not",
-    action="store_true",
-    default=False,
-)
 reco_args = parser.parse_known_args()[0]
 
 algList = []
@@ -38,7 +32,6 @@ svcList.append(geoSvc)
 
 
 CONSTANTS = {
-    "RunOverlay": str(reco_args.runOverlay).lower(),
     "CMSEnergy": "250",
     "RunBeamCalReco": "true",
     "BeamCalCalibrationFactor": "79.6",
@@ -1736,11 +1729,14 @@ MyPfoAnalysis.Parameters = {
 
 algList.append(MyAIDAProcessor)
 algList.append(MyStatusmonitor)
+
+# TODO: input file specification for this
 # algList.append(BgOverlayWW)
 # algList.append(BgOverlayWB)
 # algList.append(BgOverlayBW)
 # algList.append(BgOverlayBB)
 # algList.append(PairBgOverlay)
+
 algList.append(MySplitCollectionByLayer)
 algList.append(VXDPlanarDigiProcessor_CMOSVXD5)
 algList.append(SITPlanarDigiProcessor)
