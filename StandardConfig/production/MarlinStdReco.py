@@ -1,7 +1,14 @@
 import os
+import sys
 from Gaudi.Configuration import *
 
-from Configurables import LcioEvent, MarlinProcessorWrapper, k4DataSvc
+from Configurables import (
+    LcioEvent,
+    MarlinProcessorWrapper,
+    k4DataSvc,
+    PodioInput,
+    EDM4hep2LcioTool,
+)
 from k4MarlinWrapper.parseConstants import *
 
 from k4FWCore.parseArgs import parser
@@ -151,10 +158,31 @@ CONSTANTS = {
 
 parseConstants(CONSTANTS)
 
-read = LcioEvent()
+
+def create_reader(input_files):
+    """Create the appropriate reader for the input files"""
+    if input_files[0].endswith(".slcio"):
+        if any(not f.endswith(".slcio") for f in input_files):
+            print("All input files need to have the same format (LCIO)")
+            sys.exit(1)
+
+        read = LcioEvent()
+        read.Files = reco_args.inputFiles
+    else:
+        if any(not f.endswith(".root") for f in input_files):
+            print("All input files need to have the same format (EDM4hep)")
+            sys.exit(1)
+        read = PodioInput("PodioInput")
+        global evtsvc
+        evtsvc.inputs = input_files
+
+    return read
+
+
+read = create_reader(reco_args.inputFiles)
 read.OutputLevel = INFO
-read.Files = reco_args.inputFiles
 algList.append(read)
+
 
 MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
 MyAIDAProcessor.OutputLevel = INFO
@@ -164,6 +192,15 @@ MyAIDAProcessor.Parameters = {
     "FileName": [f"{reco_args.outputFileBase}_AIDA"],
     "FileType": ["root"],
 }
+
+# We need to convert the inputs in case we have EDM4hep input
+if isinstance(read, PodioInput):
+    EDM4hep2LcioInput = EDM4hep2LcioTool("InputConversion")
+    EDM4hep2LcioInput.convertAll = True
+    # Adjust for the different naming conventions
+    EDM4hep2LcioInput.collNameMapping = {"MCParticles": "MCParticle"}
+    MyAIDAProcessor.EDM4hep2LcioTool = EDM4hep2LcioInput
+
 
 MyStatusmonitor = MarlinProcessorWrapper("MyStatusmonitor")
 MyStatusmonitor.OutputLevel = INFO
