@@ -7,7 +7,9 @@ from Configurables import (
     MarlinProcessorWrapper,
     k4DataSvc,
     PodioInput,
+    PodioOutput,
     EDM4hep2LcioTool,
+    Lcio2EDM4hepTool,
 )
 from k4MarlinWrapper.parseConstants import *
 
@@ -29,6 +31,13 @@ parser.add_argument(
     "--outputFileBase",
     help="Base name of all the produced output files",
     default="StandardReco",
+)
+parser.add_argument(
+    "--lcioOutput",
+    help="Choose whether to still create LCIO output (off by default)",
+    choices=["off", "on", "only"],
+    default="off",
+    type=str,
 )
 reco_args = parser.parse_known_args()[0]
 
@@ -1839,12 +1848,29 @@ algList.append(TOFEstimators0ps)
 algList.append(TOFEstimators10ps)
 algList.append(TOFEstimators50ps)
 algList.append(TOFEstimators100ps)
-algList.append(MyLCIOOutputProcessor)
-algList.append(DSTOutput)
+
+if reco_args.lcioOutput != "only":
+    lcioToEDM4hepOutput = Lcio2EDM4hepTool("OutputConversion")
+    # Take care of the different naming conventions
+    lcioToEDM4hepOutput.collNameMapping = {"MCParticle": "MCParticles"}
+    lcioToEDM4hepOutput.OutputLevel = INFO
+    # Attach the conversion to the last non-output processor that is always run
+    TOFEstimators100ps.Lcio2EDM4hepTool = lcioToEDM4hepOutput
+
+    edm4hepOutput = PodioOutput("EDM4hepOutput")
+    edm4hepOutput.filename = f"{reco_args.outputFileBase}_REC.edm4hep.root"
+    edm4hepOutput.outputCommands = ["keep *"]
+    algList.append(edm4hepOutput)
+
+
+if reco_args.lcioOutput in ("on", "only"):
+    algList.append(MyLCIOOutputProcessor)
+    algList.append(DSTOutput)
+
 algList.append(MyPfoAnalysis)
 
 from Configurables import ApplicationMgr
 
 ApplicationMgr(
-    TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=svcList, OutputLevel=INFO
+    TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
 )
