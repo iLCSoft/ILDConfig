@@ -121,6 +121,32 @@ Marlin MarlinStdReco.xml \
   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio
 ```
 
+### 3a. Run the reconstruction using Gaudi in Key4hep
+
+If you are in a Key4hep environment you can also run the reconstruction using
+the [k4MarlinWrapper](https://github.com/key4hep/k4MarlinWrapper) and the Gaudi
+based framework via
+
+```shell
+k4run ILDReconstruction.py --inputFiles=bbudsc_3evt_SIM.slcio
+```
+
+This will by default produce an [EDM4hep](https://github.com/key4hep/EDM4hep)
+output file with similar contents as the *REC* file described above.
+
+`MarlinStdReco.py` has a few command line options / flags
+- `--inputFiles` takes a list of input files to run over. It will automatically
+  detect whether these are LCIO or EDM4hep input files and instantiate the
+  appropriate reader (and a potentially necessary conversion). **It is not
+  possible to mix EDM4hep and LCIO input file**
+- `--compactFile` can be used to specify a compact detector file. This defaults
+  to `$lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml` (same as simulation)
+- `--outputFileBase` is the basename for all the output files that will be
+  created. Defaults to `StandardReco`
+- `--lcioOutput` can be set to either `on`, `off`, or `only` and steers whether
+  there is additional (or exclusive) LCIO output produced as well. Defaults to
+  `off`.
+
 ### 4. View the result in the event display
 
 Here two solutions :
