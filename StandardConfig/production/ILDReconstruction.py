@@ -39,6 +39,14 @@ parser.add_argument(
     default="off",
     type=str,
 )
+parser.add_argument(
+    "--cmsEnergy",
+    help="The center-of-mass energy to assume for reconstruction in GeV",
+    choices=(250, 350, 500, 1000),
+    type=int,
+    default=250,
+)
+
 reco_args = parser.parse_known_args()[0]
 
 algList = []
@@ -60,7 +68,7 @@ svcList.append(geoSvc)
 
 
 CONSTANTS = {
-    "CMSEnergy": "250",
+    "CMSEnergy": reco_args.cmsEnergy,
     "RunBeamCalReco": "true",
     "BeamCalCalibrationFactor": "79.6",
     "EcalBarrelMip": "0.0001575",
@@ -155,17 +163,15 @@ CONSTANTS = {
         "%(HCalRingSimHitCollections)s",
     ],
     "BeamCalBackgroundFile": "HighLevelReco/BeamCalBackground/BeamCalBackground-E%(CMSEnergy)s-B3.5-RealisticNominalAntiDid.root",
-    "ExpectedBgWW": "0.1256495436",
-    "ExpectedBgWB": "0.297459204",
-    "ExpectedBgBW": "0.29722665",
-    "ExpectedBgBB": "0.829787658",
-    "LCFIPlusBeamspotConstraint": "true",
-    "BeamSizeX": "313.e-6",
-    "BeamSizeY": "3.14e-6",
-    "BeamSizeZ": "202.e-3",
 }
 
 parseConstants(CONSTANTS)
+
+from k4FWCore.utils import import_from
+
+cms_energy_config = import_from(
+    f"Config/Parameters{reco_args.cmsEnergy}GeV.cfg"
+).PARAMETERS
 
 
 def create_reader(input_files):
@@ -222,7 +228,7 @@ BgOverlayWW.ProcessorType = "Overlay"
 BgOverlayWW.Parameters = {
     "InputFileNames": ["undefined.slcio"],
     "NumberOverlayEvents": ["0"],
-    "expBG": ["%(ExpectedBgWW)s" % CONSTANTS],
+    "expBG": [cms_energy_config["ExpectedBgWW"]],
 }
 
 BgOverlayWB = MarlinProcessorWrapper("BgOverlayWB")
@@ -231,7 +237,7 @@ BgOverlayWB.ProcessorType = "Overlay"
 BgOverlayWB.Parameters = {
     "InputFileNames": ["undefined.slcio"],
     "NumberOverlayEvents": ["0"],
-    "expBG": ["%(ExpectedBgWB)s" % CONSTANTS],
+    "expBG": [cms_energy_config["ExpectedBgWB"]],
 }
 
 BgOverlayBW = MarlinProcessorWrapper("BgOverlayBW")
@@ -240,7 +246,7 @@ BgOverlayBW.ProcessorType = "Overlay"
 BgOverlayBW.Parameters = {
     "InputFileNames": ["undefined.slcio"],
     "NumberOverlayEvents": ["0"],
-    "expBG": ["%(ExpectedBgBW)s" % CONSTANTS],
+    "expBG": [cms_energy_config["ExpectedBgBW"]],
 }
 
 BgOverlayBB = MarlinProcessorWrapper("BgOverlayBB")
@@ -249,7 +255,7 @@ BgOverlayBB.ProcessorType = "Overlay"
 BgOverlayBB.Parameters = {
     "InputFileNames": ["undefined.slcio"],
     "NumberOverlayEvents": ["0"],
-    "expBG": ["%(ExpectedBgBB)s" % CONSTANTS],
+    "expBG": [cms_energy_config["ExpectedBgBB"]],
 }
 
 PairBgOverlay = MarlinProcessorWrapper("PairBgOverlay")
@@ -1605,9 +1611,9 @@ VertexFinder.OutputLevel = INFO
 VertexFinder.ProcessorType = "LcfiplusProcessor"
 VertexFinder.Parameters = {
     "Algorithms": ["PrimaryVertexFinder", "BuildUpVertex"],
-    "BeamSizeX": ["%(BeamSizeX)s" % CONSTANTS],
-    "BeamSizeY": ["%(BeamSizeY)s" % CONSTANTS],
-    "BeamSizeZ": ["%(BeamSizeZ)s" % CONSTANTS],
+    "BeamSizeX": [cms_energy_config["BeamSizeX"]],
+    "BeamSizeY": [cms_energy_config["BeamSizeY"]],
+    "BeamSizeZ": [cms_energy_config["BeamSizeZ"]],
     "BuildUpVertex.AssocIPTracks": ["1"],
     "BuildUpVertex.AssocIPTracksChi2RatioSecToPri": ["2.0"],
     "BuildUpVertex.AssocIPTracksMinDist": ["0."],
@@ -1632,7 +1638,7 @@ VertexFinder.Parameters = {
     "PFOCollection": ["PandoraPFOs"],
     "PrimaryVertexCollectionName": ["PrimaryVertex"],
     "PrimaryVertexFinder.BeamspotConstraint": [
-        "%(LCFIPlusBeamspotConstraint)s" % CONSTANTS
+        cms_energy_config["LCFIPlusBeamspotConstraint"]
     ],
     "PrimaryVertexFinder.BeamspotSmearing": ["0"],
     "PrimaryVertexFinder.Chi2Threshold": ["25."],
