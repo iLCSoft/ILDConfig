@@ -108,6 +108,13 @@ CONSTANTS = {
 
 from k4FWCore.utils import import_from
 
+
+def import_with_constants(filename):
+    """Import a configuration bit using the approriate calibration constants for
+    the current run"""
+    return import_from(filename, global_vars={"CONSTANTS": CONSTANTS})
+
+
 det_calib_constants = import_from(
     f"Calibration/Calibration_{reco_args.detectorModel}.cfg"
 ).CONSTANTS
@@ -227,31 +234,31 @@ from Tracking.TrackingDigi import TrackingDigiSequence
 
 algList.extend(TrackingDigiSequence)
 
-TrackingRecoSequence = import_from(
-    "Tracking/TrackingReco.py", global_vars={"CONSTANTS": CONSTANTS}
+TrackingRecoSequence = import_with_constants(
+    "Tracking/TrackingReco.py"
 ).TrackingRecoSequence
 algList.extend(TrackingRecoSequence)
 
 
 ecal_technology = CONSTANTS["EcalTechnology"]
-EcalDigiSequence = import_from(
-    f"CaloDigi/{ecal_technology}Digi.py", global_vars={"CONSTANTS": CONSTANTS}
+EcalDigiSequence = import_with_constants(
+    f"CaloDigi/{ecal_technology}Digi.py",
 ).EcalDigiSequence
 algList.extend(EcalDigiSequence)
 
 hcal_technology = CONSTANTS["HcalTechnology"]
-HcalDigiSequence = import_from(
-    f"CaloDigi/{hcal_technology}Digi.py", global_vars={"CONSTANTS": CONSTANTS}
+HcalDigiSequence = import_with_constants(
+    f"CaloDigi/{hcal_technology}Digi.py",
 ).HcalDigiSequence
 algList.extend(HcalDigiSequence)
 
-FcalDigiSequence = import_from(
-    "CaloDigi/FcalDigi.py", global_vars={"CONSTANTS": CONSTANTS}
+FcalDigiSequence = import_with_constants(
+    "CaloDigi/FcalDigi.py",
 ).FcalDigiSequence
 algList.extend(FcalDigiSequence)
 
-MuonDigiSequence = import_from(
-    "CaloDigi/MuonDigi.py", global_vars={"CONSTANTS": CONSTANTS}
+MuonDigiSequence = import_with_constants(
+    "CaloDigi/MuonDigi.py",
 ).MuonDigiSequence
 algList.extend(MuonDigiSequence)
 
