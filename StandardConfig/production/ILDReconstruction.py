@@ -13,6 +13,32 @@ from Configurables import (
 )
 from k4MarlinWrapper.parseConstants import *
 
+DETECTOR_MODELS = (
+    "ILD_l2_v02",
+    "ILD_l4_o1_v02",
+    "ILD_l4_o2_v02",
+    "ILD_l5_o1_v02",
+    "ILD_l5_o1_v03",
+    "ILD_l5_o1_v04",
+    "ILD_l5_o1_v05",
+    "ILD_l5_o1_v06",
+    "ILD_l5_o2_v02",
+    "ILD_l5_o3_v02",
+    "ILD_l5_o4_v02",
+    "ILD_s2_v02",
+    "ILD_s4_o1_v02",
+    "ILD_s4_o2_v02",
+    "ILD_s5_o1_v02",
+    "ILD_s5_o1_v03",
+    "ILD_s5_o1_v04",
+    "ILD_s5_o1_v05",
+    "ILD_s5_o1_v06",
+    "ILD_s5_o2_v02",
+    "ILD_s5_o3_v02",
+    "ILD_s5_o4_v02",
+)
+
+
 from k4FWCore.parseArgs import parser
 
 parser.add_argument(
@@ -46,12 +72,19 @@ parser.add_argument(
     type=int,
     default=250,
 )
+parser.add_argument(
+    "--detectorModel",
+    help="Which detector model to run reconstruction for",
+    choices=DETECTOR_MODELS,
+    type=str,
+    default="ILD_l5_o1_v02",
+)
 
 reco_args = parser.parse_known_args()[0]
 
+
 algList = []
 svcList = []
-
 
 evtsvc = k4DataSvc("EventDataSvc")
 svcList.append(evtsvc)
@@ -68,106 +101,19 @@ svcList.append(geoSvc)
 
 
 CONSTANTS = {
-    "CMSEnergy": reco_args.cmsEnergy,
+    "CMSEnergy": str(reco_args.cmsEnergy),
     "RunBeamCalReco": "true",
     "BeamCalCalibrationFactor": "79.6",
-    "EcalBarrelMip": "0.0001575",
-    "EcalEndcapMip": "0.0001575",
-    "EcalRingMip": "0.0001575",
-    "HcalBarrelMip": "0.0004925",
-    "HcalEndcapMip": "0.0004725",
-    "HcalRingMip": "0.0004875",
-    "EcalBarrelEnergyFactors": ["0.0063520964756", "0.012902699188"],
-    "EcalEndcapEnergyFactors": ["0.0067218419842", "0.013653744940"],
-    "EcalRingEnergyFactors": ["0.0066536339", "0.0135151972"],
-    "HcalBarrelEnergyFactors": "0.0287783798145",
-    "HcalEndcapEnergyFactors": "0.0285819096797",
-    "HcalRingEnergyFactors": "0.0349940637704",
-    "MuonCalibration": "56.7",
-    "PandoraEcalToMip": "153.846",
-    "PandoraHcalToMip": "37.1747",
-    "PandoraMuonToMip": "10.5263",
-    "PandoraEcalToEMScale": "1.0",
-    "PandoraHcalToEMScale": "1.0",
-    "PandoraEcalToHadBarrelScale": "1.17344504717",
-    "PandoraEcalToHadEndcapScale": "1.17344504717",
-    "PandoraHcalToHadScale": "1.02821419758",
-    "PandoraSoftwareCompensationWeights": [
-        "1.59121",
-        "-0.0281982",
-        "0.000250616",
-        "-0.0424222",
-        "0.000335128",
-        "-2.06112e-05",
-        "0.148549",
-        "0.199618",
-        "-0.0697277",
-    ],
-    "ApplyPhotonPFOCorrections": "true",
-    "EcalTechnology": "SiWEcal",
-    "HcalTechnology": "AHcal",
-    "PandoraSettingsFile": "PandoraSettings/PandoraSettingsDefault.xml",
-    "DropCollectionsECal": [
-        "ECalBarrelScHitsEven",
-        "ECalBarrelScHitsOdd",
-        "ECalEndcapScHitsEven",
-        "ECalEndcapScHitsOdd",
-    ],
-    "DropCollectionsHCal": [
-        "HCalBarrelRPCHits",
-        "HCalEndcapRPCHits",
-        "HCalECRingRPCHits",
-    ],
-    "AdditionalDropCollectionsREC": [
-        "%(DropCollectionsECal)s",
-        "%(DropCollectionsHCal)s",
-    ],
-    "dEdXErrorFactor": "7.55",
-    "dEdXSmearingFactor": "0.029",
-    "PidPDFFile": "HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root",
-    "PidWeightFiles": [
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_02GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_03GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_04GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_05GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_06GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_07GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_08GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_09GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_10GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_11GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_12GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_13GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_14GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_15GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_16GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_17GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_18GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_19GeVP_clusterinfo.weights.xml",
-        "HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_20GeVP_clusterinfo.weights.xml",
-    ],
-    "ECalBarrelSimHitCollections": ["ECalBarrelSiHitsEven", "ECalBarrelSiHitsOdd"],
-    "ECalEndcapSimHitCollections": ["ECalEndcapSiHitsEven", "ECalEndcapSiHitsOdd"],
-    "ECalRingSimHitCollections": "EcalEndcapRingCollection",
-    "HCalBarrelSimHitCollections": "HcalBarrelRegCollection",
-    "HCalEndcapSimHitCollections": "HcalEndcapsCollection",
-    "HCalRingSimHitCollections": "HcalEndcapRingCollection",
-    "ECalSimHitCollections": [
-        "%(ECalBarrelSimHitCollections)s",
-        "%(ECalEndcapSimHitCollections)s",
-        "%(ECalRingSimHitCollections)s",
-    ],
-    "HCalSimHitCollections": [
-        "%(HCalBarrelSimHitCollections)s",
-        "%(HCalEndcapSimHitCollections)s",
-        "%(HCalRingSimHitCollections)s",
-    ],
-    "BeamCalBackgroundFile": "HighLevelReco/BeamCalBackground/BeamCalBackground-E%(CMSEnergy)s-B3.5-RealisticNominalAntiDid.root",
 }
 
-parseConstants(CONSTANTS)
-
 from k4FWCore.utils import import_from
+
+det_calib_constants = import_from(
+    f"Calibration/Calibration_{reco_args.detectorModel}.cfg"
+).CONSTANTS
+CONSTANTS.update(det_calib_constants)
+
+parseConstants(CONSTANTS)
 
 cms_energy_config = import_from(
     f"Config/Parameters{reco_args.cmsEnergy}GeV.cfg"
