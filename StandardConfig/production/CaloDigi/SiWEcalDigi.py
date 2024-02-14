@@ -128,7 +128,7 @@ MyEcalRingReco.Parameters = {
 }
 
 
-EcalDigiSequence = [
+SiWEcalDigiSequence = [
     MergeCollectionsEcalBarrelHits,
     MergeCollectionsEcalEndcapHits,
     MyEcalBarrelDigi,

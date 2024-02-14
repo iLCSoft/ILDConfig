@@ -99,4 +99,4 @@ MyDDMarlinPandora.Parameters = {
     "YokeBarrelNormalVector": ["0", "1", "0"],
 }
 
-ParticleFlowSequence = [MyDDMarlinPandora]
+PandoraPFASequence = [MyDDMarlinPandora]

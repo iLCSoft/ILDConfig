@@ -11,7 +11,7 @@ from Configurables import (
     EDM4hep2LcioTool,
     Lcio2EDM4hepTool,
 )
-from k4MarlinWrapper.parseConstants import *
+from k4MarlinWrapper.parseConstants import parseConstants
 
 DETECTOR_MODELS = (
     "ILD_l2_v02",
@@ -109,12 +109,6 @@ CONSTANTS = {
 from k4FWCore.utils import import_from
 
 
-def import_with_constants(filename):
-    """Import a configuration bit using the approriate calibration constants for
-    the current run"""
-    return import_from(filename, global_vars={"CONSTANTS": CONSTANTS})
-
-
 det_calib_constants = import_from(
     f"Calibration/Calibration_{reco_args.detectorModel}.cfg"
 ).CONSTANTS
@@ -122,9 +116,49 @@ CONSTANTS.update(det_calib_constants)
 
 parseConstants(CONSTANTS)
 
+
 cms_energy_config = import_from(
     f"Config/Parameters{reco_args.cmsEnergy}GeV.cfg"
 ).PARAMETERS
+
+
+def add_sequence(sequence: str, alg_list: list):
+    """Add a sequence to the list of algorithms.
+
+    This function dynamically imports a Python module based on the provided
+    sequence name, extracts the sequence defined in there and appends all
+    algorithms defined in that sequence to the provided list of algorithms. The
+    module is imported with on-the-fly configuration by providing global
+    calibraation values (`CONSTANTS` and `cms_energy_config`).
+
+    The path for the module import is determined via f'{sequence}.py' and the
+    name of the imported sequence is the same as the filename replacing `.py`
+    with `Sequence`, see the examples below.
+
+    Args:
+        sequence (str): The name of the sequence to be added. This name is used
+            to dynamically create the filename and sequence class name. The
+            sequence file should be a `.py` file located in the working
+            directory or accessible in the Python path.
+        alg_list (list): The list to which the sequence of algorithms will be
+            appended. This list is modified in-place.
+
+    Examples:
+        >>> alg_list = []
+        >>> add_sequence("Tracking/TrackingDigi", alg_list)
+
+        This will import `Tracking.TrackingDigi` and add the algorithms in
+        `TrackingDigiSequence` to the `alg_list`
+    """
+    filename = f"{sequence}.py"
+    seq_name = f"{sequence.split('/')[-1]}Sequence"
+
+    seq_module = import_from(
+        filename,
+        global_vars={"CONSTANTS": CONSTANTS, "cms_energy_config": cms_energy_config},
+    )
+    seq = getattr(seq_module, seq_name)
+    alg_list.extend(seq)
 
 
 def create_reader(input_files):
@@ -230,52 +264,18 @@ PairBgOverlay.Parameters = {
 # algList.append(PairBgOverlay)
 
 
-from Tracking.TrackingDigi import TrackingDigiSequence
-
-algList.extend(TrackingDigiSequence)
-
-TrackingRecoSequence = import_with_constants(
-    "Tracking/TrackingReco.py"
-).TrackingRecoSequence
-algList.extend(TrackingRecoSequence)
-
-
 ecal_technology = CONSTANTS["EcalTechnology"]
-EcalDigiSequence = import_with_constants(
-    f"CaloDigi/{ecal_technology}Digi.py",
-).EcalDigiSequence
-algList.extend(EcalDigiSequence)
-
 hcal_technology = CONSTANTS["HcalTechnology"]
-HcalDigiSequence = import_with_constants(
-    f"CaloDigi/{hcal_technology}Digi.py",
-).HcalDigiSequence
-algList.extend(HcalDigiSequence)
 
-FcalDigiSequence = import_with_constants(
-    "CaloDigi/FcalDigi.py",
-).FcalDigiSequence
-algList.extend(FcalDigiSequence)
-
-MuonDigiSequence = import_with_constants(
-    "CaloDigi/MuonDigi.py",
-).MuonDigiSequence
-algList.extend(MuonDigiSequence)
-
-ParticleFlowSequence = import_with_constants(
-    "ParticleFlow/PandoraPFA.py",
-).ParticleFlowSequence
-algList.extend(ParticleFlowSequence)
-
-BeamCalRecoSequence = import_with_constants(
-    "HighLevelReco/BeamCalReco.py"
-).BeamCalRecoSequence
-algList.extend(BeamCalRecoSequence)
-
-HighLevelRecoSequence = import_with_constants(
-    "HighLevelReco/HighLevelReco.py"
-).HighLevelRecoSequence
-algList.extend(HighLevelRecoSequence)
+add_sequence("Tracking/TrackingDigi", algList)
+add_sequence("Tracking/TrackingReco", algList)
+add_sequence(f"CaloDigi/{ecal_technology}Digi", algList)
+add_sequence(f"CaloDigi/{hcal_technology}Digi", algList)
+add_sequence("CaloDigi/FcalDigi", algList)
+add_sequence("CaloDigi/MuonDigi", algList)
+add_sequence("ParticleFlow/PandoraPFA", algList)
+add_sequence("HighLevelReco/BeamCalReco", algList)
+add_sequence("HighLevelReco/HighLevelReco", algList)
 
 
 MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")

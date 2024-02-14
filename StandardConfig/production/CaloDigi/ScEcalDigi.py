@@ -253,7 +253,7 @@ MergeEcalEndcapRecHits.Parameters = {
     "OutputCollection": ["EcalEndcapsCollectionRec"],
 }
 
-EcalDigiSequence = [
+ScEcalSequence = [
     MyEcalBarrelDigiEven,
     MyEcalBarrelDigiOdd,
     MyEcalBarrelRecoEven,

@@ -102,7 +102,7 @@ MyHcalRingReco.Parameters = {
     "ppd_npix": ["2000"],
 }
 
-HcalDigiSequence = [
+AHcalDigiSequence = [
     MyHcalBarrelDigi,
     MyHcalBarrelReco,
     MyHcalEndcapDigi,

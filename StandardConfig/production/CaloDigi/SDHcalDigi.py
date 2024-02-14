@@ -68,7 +68,7 @@ MySimDigitalToEnergy.Parameters = {
     ],
 }
 
-HcalDigiSequence = [
+SDHcalDigiSequence = [
     MySimDigital,
     MySimDigitalToEnergy,
 ]
