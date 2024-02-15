@@ -49,9 +49,7 @@ parser.add_argument(
     help="One or multiple input files",
 )
 parser.add_argument(
-    "--compactFile",
-    help="Compact detector file to use",
-    default=f"{os.environ['K4GEO']}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml",
+    "--compactFile", help="Compact detector file to use", type=str, default=""
 )
 parser.add_argument(
     "--outputFileBase",
@@ -82,19 +80,24 @@ parser.add_argument(
 
 reco_args = parser.parse_known_args()[0]
 
-
 algList = []
 svcList = []
 
 evtsvc = k4DataSvc("EventDataSvc")
 svcList.append(evtsvc)
 
+det_model = reco_args.detectorModel
+
+if reco_args.compactFile:
+    compact_file = reco_args.compactFile
+else:
+    compact_file = f"{os.environ['K4GEO']}/ILD/compact/{det_model}/{det_model}.xml"
+
+
 from Configurables import GeoSvc
 
 geoSvc = GeoSvc("GeoSvc")
-geoSvc.detectors = [
-    reco_args.compactFile,
-]
+geoSvc.detectors = [compact_file]
 geoSvc.OutputLevel = INFO
 geoSvc.EnableGeant4Geo = False
 svcList.append(geoSvc)
@@ -109,9 +112,7 @@ CONSTANTS = {
 from k4FWCore.utils import import_from
 
 
-det_calib_constants = import_from(
-    f"Calibration/Calibration_{reco_args.detectorModel}.cfg"
-).CONSTANTS
+det_calib_constants = import_from(f"Calibration/Calibration_{det_model}.cfg").CONSTANTS
 CONSTANTS.update(det_calib_constants)
 
 parseConstants(CONSTANTS)
