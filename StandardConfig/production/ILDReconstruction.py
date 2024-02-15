@@ -119,7 +119,6 @@ evtsvc = k4DataSvc("EventDataSvc")
 svcList.append(evtsvc)
 
 det_model = reco_args.detectorModel
-
 if reco_args.compactFile:
     compact_file = reco_args.compactFile
 else:
@@ -136,7 +135,6 @@ CONSTANTS = {
     "CMSEnergy": str(reco_args.cmsEnergy),
     "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
 }
-
 
 det_calib_constants = import_from(f"Calibration/Calibration_{det_model}.cfg").CONSTANTS
 CONSTANTS.update(det_calib_constants)
@@ -273,6 +271,7 @@ MyPfoAnalysis.Parameters = {
     "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
 }
 
+algList.append(MyPfoAnalysis)
 
 if reco_args.lcioOutput != "only":
     lcioToEDM4hepOutput = Lcio2EDM4hepTool("OutputConversion")
@@ -285,6 +284,9 @@ if reco_args.lcioOutput != "only":
     edm4hepOutput = PodioOutput("EDM4hepOutput")
     edm4hepOutput.filename = f"{reco_args.outputFileBase}_REC.edm4hep.root"
     edm4hepOutput.outputCommands = ["keep *"]
+    for name in CONSTANTS["AdditionalDropCollectionsREC"].split(" "):
+        edm4hepOutput.outputCommands.append(f"drop {name}")
+
     algList.append(edm4hepOutput)
 
 
@@ -335,9 +337,6 @@ if reco_args.lcioOutput in ("on", "only"):
 
     algList.append(MyLCIOOutputProcessor)
     algList.append(DSTOutput)
-
-algList.append(MyPfoAnalysis)
-
 
 ApplicationMgr(
     TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
