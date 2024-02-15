@@ -1,6 +1,7 @@
 import os
 import sys
-from Gaudi.Configuration import *
+
+from Gaudi.Configuration import INFO
 
 from Configurables import (
     LcioEvent,
