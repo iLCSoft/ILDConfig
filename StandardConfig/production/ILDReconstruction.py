@@ -109,7 +109,7 @@ CONSTANTS = {
     "BeamCalCalibrationFactor": "79.6",
 }
 
-from k4FWCore.utils import import_from
+from k4FWCore.utils import import_from, SequenceLoader
 
 
 det_calib_constants = import_from(f"Calibration/Calibration_{det_model}.cfg").CONSTANTS
@@ -122,44 +122,10 @@ cms_energy_config = import_from(
     f"Config/Parameters{reco_args.cmsEnergy}GeV.cfg"
 ).PARAMETERS
 
-
-def add_sequence(sequence: str, alg_list: list):
-    """Add a sequence to the list of algorithms.
-
-    This function dynamically imports a Python module based on the provided
-    sequence name, extracts the sequence defined in there and appends all
-    algorithms defined in that sequence to the provided list of algorithms. The
-    module is imported with on-the-fly configuration by providing global
-    calibraation values (`CONSTANTS` and `cms_energy_config`).
-
-    The path for the module import is determined via f'{sequence}.py' and the
-    name of the imported sequence is the same as the filename replacing `.py`
-    with `Sequence`, see the examples below.
-
-    Args:
-        sequence (str): The name of the sequence to be added. This name is used
-            to dynamically create the filename and sequence class name. The
-            sequence file should be a `.py` file located in the working
-            directory or accessible in the Python path.
-        alg_list (list): The list to which the sequence of algorithms will be
-            appended. This list is modified in-place.
-
-    Examples:
-        >>> alg_list = []
-        >>> add_sequence("Tracking/TrackingDigi", alg_list)
-
-        This will import `Tracking.TrackingDigi` and add the algorithms in
-        `TrackingDigiSequence` to the `alg_list`
-    """
-    filename = f"{sequence}.py"
-    seq_name = f"{sequence.split('/')[-1]}Sequence"
-
-    seq_module = import_from(
-        filename,
-        global_vars={"CONSTANTS": CONSTANTS, "cms_energy_config": cms_energy_config},
-    )
-    seq = getattr(seq_module, seq_name)
-    alg_list.extend(seq)
+sequenceLoader = SequenceLoader(
+    algList,
+    global_vars={"CONSTANTS": CONSTANTS, "cms_energy_config": cms_energy_config},
+)
 
 
 def create_reader(input_files):
@@ -268,15 +234,15 @@ PairBgOverlay.Parameters = {
 ecal_technology = CONSTANTS["EcalTechnology"]
 hcal_technology = CONSTANTS["HcalTechnology"]
 
-add_sequence("Tracking/TrackingDigi", algList)
-add_sequence("Tracking/TrackingReco", algList)
-add_sequence(f"CaloDigi/{ecal_technology}Digi", algList)
-add_sequence(f"CaloDigi/{hcal_technology}Digi", algList)
-add_sequence("CaloDigi/FcalDigi", algList)
-add_sequence("CaloDigi/MuonDigi", algList)
-add_sequence("ParticleFlow/PandoraPFA", algList)
-add_sequence("HighLevelReco/BeamCalReco", algList)
-add_sequence("HighLevelReco/HighLevelReco", algList)
+sequenceLoader.load("Tracking/TrackingDigi")
+sequenceLoader.load("Tracking/TrackingReco")
+sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
+sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
+sequenceLoader.load("CaloDigi/FcalDigi")
+sequenceLoader.load("CaloDigi/MuonDigi")
+sequenceLoader.load("ParticleFlow/PandoraPFA")
+sequenceLoader.load("HighLevelReco/BeamCalReco")
+sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 
 MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
