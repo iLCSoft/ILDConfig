@@ -10,7 +10,11 @@ from Configurables import (
     PodioOutput,
     EDM4hep2LcioTool,
     Lcio2EDM4hepTool,
+    GeoSvc,
+    ApplicationMgr,
 )
+from k4FWCore.utils import import_from, SequenceLoader
+from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 
 DETECTOR_MODELS = (
@@ -37,9 +41,6 @@ DETECTOR_MODELS = (
     "ILD_s5_o3_v02",
     "ILD_s5_o4_v02",
 )
-
-
-from k4FWCore.parseArgs import parser
 
 parser.add_argument(
     "--inputFiles",
@@ -123,9 +124,6 @@ if reco_args.compactFile:
 else:
     compact_file = f"{os.environ['K4GEO']}/ILD/compact/{det_model}/{det_model}.xml"
 
-
-from Configurables import GeoSvc
-
 geoSvc = GeoSvc("GeoSvc")
 geoSvc.detectors = [compact_file]
 geoSvc.OutputLevel = INFO
@@ -137,8 +135,6 @@ CONSTANTS = {
     "CMSEnergy": str(reco_args.cmsEnergy),
     "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
 }
-
-from k4FWCore.utils import import_from, SequenceLoader
 
 
 det_calib_constants = import_from(f"Calibration/Calibration_{det_model}.cfg").CONSTANTS
@@ -341,7 +337,6 @@ if reco_args.lcioOutput in ("on", "only"):
 
 algList.append(MyPfoAnalysis)
 
-from Configurables import ApplicationMgr
 
 ApplicationMgr(
     TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
