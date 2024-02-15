@@ -80,6 +80,13 @@ parser.add_argument(
 parser.add_argument(
     "--perfectPFA", help="Run perfect PandoraPFA", action="store_true", default=False
 )
+parser.add_argument(
+    "--runOverlay",
+    help="Run background overaly. NOTE: You have to make sure that the Overlay algorithms in "
+    " BgOverlay/BgOverlay.py are provided with the necessary overlay files",
+    action="store_true",
+    default=False,
+)
 # BeamCal reco configuration
 parser.add_argument(
     "--runBeamCalReco",
@@ -201,8 +208,9 @@ MyStatusmonitor.Parameters = {"HowOften": ["1"]}
 algList.append(MyStatusmonitor)
 
 
-# TODO: input file specification for this
-# sequenceLoader.load("BgOverlay/BgOverlay")
+# TODO: input file specification for this from command line?
+if reco_args.runOverlay:
+    sequenceLoader.load("BgOverlay/BgOverlay")
 
 
 ecal_technology = CONSTANTS["EcalTechnology"]

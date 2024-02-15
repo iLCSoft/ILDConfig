@@ -154,6 +154,9 @@ output file with similar contents as the *REC* file described above.
 - `--[run|no]BeamCalReco` toggle whether to run BeamCal reconstruction or not.
   Defaults to true. Use the `--beamCalCalibFactor` to set the calibration
   constant (defaults to `79.6`)
+- `--runOverlay` turns on overlay of background events. Defaults to false.
+  **NOTE that you have to configure the necessary overlay files first in
+  `BgOverlay/BgOverlay.py`!**
 
 ### 4. View the result in the event display
 
