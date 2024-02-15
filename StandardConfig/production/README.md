@@ -139,13 +139,19 @@ output file with similar contents as the *REC* file described above.
   detect whether these are LCIO or EDM4hep input files and instantiate the
   appropriate reader (and a potentially necessary conversion). **It is not
   possible to mix EDM4hep and LCIO input file**
-- `--compactFile` can be used to specify a compact detector file. This defaults
-  to `$lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml` (same as simulation)
+- `--detectorModel` is necessary to specify the detector model to run the
+  reconstruction for. Default is `ILD_l5_o1_v02`
+- `--compactFile` can be used to specify a compact detector file. By default
+  this will be constructed to use the compact file from `$K4GEO` that
+  corresponds to the specified detectorModel.
 - `--outputFileBase` is the basename for all the output files that will be
   created. Defaults to `StandardReco`
 - `--lcioOutput` can be set to either `on`, `off`, or `only` and steers whether
   there is additional (or exclusive) LCIO output produced as well. Defaults to
   `off`.
+- `--cmsEnergy` can be used to set the desired center-of-mass energy. Possible
+  values are 250, 250, 500 and 1000 GeV. The default is 250 GeV.
+ 
 
 ### 4. View the result in the event display
 
