@@ -7,7 +7,7 @@ MyDDSimpleMuonDigi = MarlinProcessorWrapper("MyDDSimpleMuonDigi")
 MyDDSimpleMuonDigi.OutputLevel = INFO
 MyDDSimpleMuonDigi.ProcessorType = "DDSimpleMuonDigi"
 MyDDSimpleMuonDigi.Parameters = {
-    "CalibrMUON": ["%(MuonCalibration)s" % CONSTANTS],
+    "CalibrMUON": [CONSTANTS["MuonCalibration"]],
     "CellIDLayerString": ["layer"],
     "DetectorNameBarrel": ["YokeBarrel"],
     "DetectorNameEndcap": ["YokeEndcap"],

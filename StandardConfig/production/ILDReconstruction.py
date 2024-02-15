@@ -204,7 +204,7 @@ MyPfoAnalysis.Parameters = {
     "BCalCollections": ["BCAL"],
     "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
     "CollectCalibrationDetails": ["0"],
-    "ECalBarrelCollectionsSimCaloHit": ["%(ECalBarrelSimHitCollections)s" % CONSTANTS],
+    "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
     "ECalCollections": [
         "EcalBarrelCollectionRec",
         "EcalBarrelCollectionGapHits",
@@ -212,17 +212,17 @@ MyPfoAnalysis.Parameters = {
         "EcalEndcapsCollectionGapHits",
         "EcalEndcapRingCollectionRec",
     ],
-    "ECalCollectionsSimCaloHit": ["%(ECalSimHitCollections)s" % CONSTANTS],
-    "ECalEndCapCollectionsSimCaloHit": ["%(ECalEndcapSimHitCollections)s" % CONSTANTS],
-    "ECalOtherCollectionsSimCaloHit": ["%(ECalRingSimHitCollections)s" % CONSTANTS],
-    "HCalBarrelCollectionsSimCaloHit": ["%(HCalBarrelSimHitCollections)s" % CONSTANTS],
+    "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
+    "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
+    "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
+    "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
     "HCalCollections": [
         "HcalBarrelCollectionRec",
         "HcalEndcapsCollectionRec",
         "HcalEndcapRingCollectionRec",
     ],
-    "HCalEndCapCollectionsSimCaloHit": ["%(HCalEndcapSimHitCollections)s" % CONSTANTS],
-    "HCalOtherCollectionsSimCaloHit": ["%(HCalRingSimHitCollections)s" % CONSTANTS],
+    "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
+    "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
     "LCalCollections": ["LCAL"],
     "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
     "LHCalCollections": ["LHCAL"],
@@ -260,7 +260,7 @@ if reco_args.lcioOutput in ("on", "only"):
     MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
     MyLCIOOutputProcessor.Parameters = {
         "CompressionLevel": ["6"],
-        "DropCollectionNames": ["%(AdditionalDropCollectionsREC)s" % CONSTANTS],
+        "DropCollectionNames": [CONSTANTS["AdditionalDropCollectionsREC"]],
         "LCIOOutputFile": [f"{reco_args.outputFileBase}_REC.slcio"],
         "LCIOWriteMode": ["WRITE_NEW"],
     }

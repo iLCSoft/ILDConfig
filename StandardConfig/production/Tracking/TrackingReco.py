@@ -259,7 +259,7 @@ MyCompute_dEdxProcessor.Parameters = {
     "dEdxErrorScalingExponents": ["-0.34", "-0.45"],
     "dxStrategy": ["1"],
     "isSmearing": ["true"],
-    "smearingFactor": ["%(dEdXSmearingFactor)s" % CONSTANTS],
+    "smearingFactor": [CONSTANTS["dEdXSmearingFactor"]],
 }
 
 MyV0Finder = MarlinProcessorWrapper("MyV0Finder")

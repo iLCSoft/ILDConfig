@@ -45,7 +45,7 @@ MySimDigitalToEnergy = MarlinProcessorWrapper("MySimDigitalToEnergy")
 MySimDigitalToEnergy.OutputLevel = INFO
 MySimDigitalToEnergy.ProcessorType = "SimDigitalToEnergy"
 MySimDigitalToEnergy.Parameters = {
-    "EnergyCalibration": ["%(SDHcalEnergyFactors)s" % CONSTANTS],
+    "EnergyCalibration": [CONSTANTS["SDHcalEnergyFactors"]],
     "inputHitCollections": [
         "HcalBarrelCollectionDigi",
         "HcalEndcapsCollectionDigi",

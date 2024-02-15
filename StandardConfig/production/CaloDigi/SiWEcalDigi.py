@@ -28,7 +28,7 @@ MyEcalBarrelDigi.OutputLevel = INFO
 MyEcalBarrelDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["%(EcalBarrelMip)s" % CONSTANTS],
+    "calibration_mip": [CONSTANTS["EcalBarrelMip"]],
     "inputHitCollections": ["EcalBarrelCollection"],
     "outputHitCollections": ["EcalBarrelCollectionDigi"],
     "outputRelationCollections": ["EcalBarrelRelationsSimDigi"],
@@ -41,7 +41,7 @@ MyEcalBarrelReco.OutputLevel = INFO
 MyEcalBarrelReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalBarrelReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["%(EcalBarrelEnergyFactors)s" % CONSTANTS],
+    "calibration_factorsMipGev": [CONSTANTS["EcalBarrelEnergyFactors"]],
     "calibration_layergroups": ["20", "11"],
     "inputHitCollections": ["EcalBarrelCollectionDigi"],
     "inputRelationCollections": ["EcalBarrelRelationsSimDigi"],
@@ -67,7 +67,7 @@ MyEcalEndcapDigi.OutputLevel = INFO
 MyEcalEndcapDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalEndcapDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["%(EcalEndcapMip)s" % CONSTANTS],
+    "calibration_mip": [CONSTANTS["EcalEndcapMip"]],
     "inputHitCollections": ["EcalEndcapsCollection"],
     "outputHitCollections": ["EcalEndcapsCollectionDigi"],
     "outputRelationCollections": ["EcalEndcapsRelationsSimDigi"],
@@ -80,7 +80,7 @@ MyEcalEndcapReco.OutputLevel = INFO
 MyEcalEndcapReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["%(EcalEndcapEnergyFactors)s" % CONSTANTS],
+    "calibration_factorsMipGev": [CONSTANTS["EcalEndcapEnergyFactors"]],
     "calibration_layergroups": ["20", "11"],
     "inputHitCollections": ["EcalEndcapsCollectionDigi"],
     "inputRelationCollections": ["EcalEndcapsRelationsSimDigi"],
@@ -106,7 +106,7 @@ MyEcalRingDigi.OutputLevel = INFO
 MyEcalRingDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalRingDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["%(EcalRingMip)s" % CONSTANTS],
+    "calibration_mip": [CONSTANTS["EcalRingMip"]],
     "inputHitCollections": ["EcalEndcapRingCollection"],
     "outputHitCollections": ["EcalEndcapRingCollectionDigi"],
     "outputRelationCollections": ["EcalEndcapRingRelationsSimDigi"],
@@ -119,7 +119,7 @@ MyEcalRingReco.OutputLevel = INFO
 MyEcalRingReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalRingReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["%(EcalRingEnergyFactors)s" % CONSTANTS],
+    "calibration_factorsMipGev": [CONSTANTS["EcalRingEnergyFactors"]],
     "calibration_layergroups": ["20", "11"],
     "inputHitCollections": ["EcalEndcapRingCollectionDigi"],
     "inputRelationCollections": ["EcalEndcapRingRelationsSimDigi"],

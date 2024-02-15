@@ -8,7 +8,7 @@ MySimpleBCalDigi = MarlinProcessorWrapper("MySimpleBCalDigi")
 MySimpleBCalDigi.OutputLevel = INFO
 MySimpleBCalDigi.ProcessorType = "SimpleFCalDigi"
 MySimpleBCalDigi.Parameters = {
-    "CalibrFCAL": ["%(BeamCalCalibrationFactor)s" % CONSTANTS],
+    "CalibrFCAL": [CONSTANTS["BeamCalCalibrationFactor"]],
     "CaloID": ["bcal"],
     "CellIDLayerString": ["layer"],
     "FCALCollections": ["BeamCalCollection"],

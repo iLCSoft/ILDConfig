@@ -8,7 +8,7 @@ MyHcalBarrelDigi.OutputLevel = INFO
 MyHcalBarrelDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["%(HcalBarrelMip)s" % CONSTANTS],
+    "calibration_mip": [CONSTANTS["HcalBarrelMip"]],
     "inputHitCollections": ["HcalBarrelRegCollection"],
     "outputHitCollections": ["HcalBarrelCollectionDigi"],
     "outputRelationCollections": ["HcalBarrelRelationsSimDigi"],
@@ -26,7 +26,7 @@ MyHcalBarrelReco.OutputLevel = INFO
 MyHcalBarrelReco.ProcessorType = "RealisticCaloRecoScinPpd"
 MyHcalBarrelReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["%(HcalBarrelEnergyFactors)s" % CONSTANTS],
+    "calibration_factorsMipGev": [CONSTANTS["HcalBarrelEnergyFactors"]],
     "calibration_layergroups": ["100"],
     "inputHitCollections": ["HcalBarrelCollectionDigi"],
     "inputRelationCollections": ["HcalBarrelRelationsSimDigi"],
@@ -41,7 +41,7 @@ MyHcalEndcapDigi.OutputLevel = INFO
 MyHcalEndcapDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalEndcapDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["%(HcalEndcapMip)s" % CONSTANTS],
+    "calibration_mip": [CONSTANTS["HcalEndcapMip"]],
     "inputHitCollections": ["HcalEndcapsCollection"],
     "outputHitCollections": ["HcalEndcapsCollectionDigi"],
     "outputRelationCollections": ["HcalEndcapsRelationsSimDigi"],
@@ -59,7 +59,7 @@ MyHcalEndcapReco.OutputLevel = INFO
 MyHcalEndcapReco.ProcessorType = "RealisticCaloRecoScinPpd"
 MyHcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["%(HcalEndcapEnergyFactors)s" % CONSTANTS],
+    "calibration_factorsMipGev": [CONSTANTS["HcalEndcapEnergyFactors"]],
     "calibration_layergroups": ["100"],
     "inputHitCollections": ["HcalEndcapsCollectionDigi"],
     "inputRelationCollections": ["HcalEndcapsRelationsSimDigi"],
@@ -74,7 +74,7 @@ MyHcalRingDigi.OutputLevel = INFO
 MyHcalRingDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalRingDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["%(HcalRingMip)s" % CONSTANTS],
+    "calibration_mip": [CONSTANTS["HcalRingMip"]],
     "inputHitCollections": ["HcalEndcapRingCollection"],
     "outputHitCollections": ["HcalEndcapRingCollectionDigi"],
     "outputRelationCollections": ["HcalEndcapRingRelationsSimDigi"],
@@ -92,7 +92,7 @@ MyHcalRingReco.OutputLevel = INFO
 MyHcalRingReco.ProcessorType = "RealisticCaloRecoScinPpd"
 MyHcalRingReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["%(HcalRingEnergyFactors)s" % CONSTANTS],
+    "calibration_factorsMipGev": [CONSTANTS["HcalRingEnergyFactors"]],
     "calibration_layergroups": ["100"],
     "inputHitCollections": ["HcalEndcapRingCollectionDigi"],
     "inputRelationCollections": ["HcalEndcapRingRelationsSimDigi"],
