@@ -77,6 +77,26 @@ parser.add_argument(
     type=str,
     default="ILD_l5_o1_v02",
 )
+# BeamCal reco configuration
+parser.add_argument(
+    "--runBeamCalReco",
+    help="Run the BeamCal reco",
+    action="store_true",
+    dest="runBeamCalReco",
+)
+parser.add_argument(
+    "--noBeamCalReco",
+    help="Don't run the BeamCal reco",
+    action="store_true",
+    dest="runBeamCalReco",
+)
+parser.set_defaults(runBeamCalReco=True)
+parser.add_argument(
+    "--beamCalCalibFactor",
+    help="The BeamCal calibration constant from sim hit energy to calibrated calo hit energy",
+    type=float,
+    default=79.6,
+)
 
 reco_args = parser.parse_known_args()[0]
 
@@ -105,8 +125,7 @@ svcList.append(geoSvc)
 
 CONSTANTS = {
     "CMSEnergy": str(reco_args.cmsEnergy),
-    "RunBeamCalReco": "true",
-    "BeamCalCalibrationFactor": "79.6",
+    "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
 }
 
 from k4FWCore.utils import import_from, SequenceLoader
@@ -193,7 +212,8 @@ sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
 sequenceLoader.load("CaloDigi/FcalDigi")
 sequenceLoader.load("CaloDigi/MuonDigi")
 sequenceLoader.load("ParticleFlow/PandoraPFA")
-sequenceLoader.load("HighLevelReco/BeamCalReco")
+if reco_args.runBeamCalReco:
+    sequenceLoader.load("HighLevelReco/BeamCalReco")
 sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 

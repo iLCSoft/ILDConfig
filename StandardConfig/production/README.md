@@ -151,7 +151,9 @@ output file with similar contents as the *REC* file described above.
   `off`.
 - `--cmsEnergy` can be used to set the desired center-of-mass energy. Possible
   values are 250, 250, 500 and 1000 GeV. The default is 250 GeV.
- 
+- `--[run|no]BeamCalReco` toggle whether to run BeamCal reconstruction or not.
+  Defaults to true. Use the `--beamCalCalibFactor` to set the calibration
+  constant (defaults to `79.6`)
 
 ### 4. View the result in the event display
 
