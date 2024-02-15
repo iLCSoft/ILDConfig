@@ -77,6 +77,9 @@ parser.add_argument(
     type=str,
     default="ILD_l5_o1_v02",
 )
+parser.add_argument(
+    "--perfectPFA", help="Run perfect PandoraPFA", action="store_true", default=False
+)
 # BeamCal reco configuration
 parser.add_argument(
     "--runBeamCalReco",
@@ -211,9 +214,15 @@ sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
 sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
 sequenceLoader.load("CaloDigi/FcalDigi")
 sequenceLoader.load("CaloDigi/MuonDigi")
-sequenceLoader.load("ParticleFlow/PandoraPFA")
+
+if reco_args.perfectPFA:
+    sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
+else:
+    sequenceLoader.load("ParticleFlow/PandoraPFA")
+
 if reco_args.runBeamCalReco:
     sequenceLoader.load("HighLevelReco/BeamCalReco")
+
 sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 
