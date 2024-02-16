@@ -2,6 +2,7 @@
 
 <execute>
   <processor name="InitDD4hep"/>
+  <!--processor name="Statusmonitor"/-->
   <!--processor name="FastJetOverlay"/>
   <processor name="ExpandJet"/-->
   <processor name="Thrust"/>
@@ -24,6 +25,8 @@
   <if condition="${RundEdxCorrections}">
     <processor name="ComputeCorrectAngulardEdX"/>
     <processor name="LikelihoodPID"/>
+    <processor name="LeptonID"/>
+    <processor name="ComprehensivePID"/>
   </if>
   <processor name="LCIOOutputProcessor"/>
 </execute>
@@ -59,6 +62,14 @@
 <processor name="InitDD4hep" type="InitializeDD4hep">
   <parameter name="DD4hepXMLFile" type="string"> ${lcgeo_DIR}/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml </parameter>
   <parameter name="Verbosity"> SILENT </parameter>
+</processor>
+
+<processor name="Statusmonitor" type="Statusmonitor">
+    <!--Statusmonitor prints out information on running Marlin Job: Prints number of runs run and current number of the event. Counting is sequential and not the run or event ID.-->
+    <!--Print the event number every N events-->
+    <parameter name="HowOften" type="int"> 1000 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">MESSAGE </parameter> -->
 </processor>
 
 
@@ -989,6 +1000,75 @@
   <parameter name="PIDMethodsToRun_version" type="string"> v2 </parameter>
   <!--Name of the PFO collection-->
   <parameter name="RecoParticleCollection" type="string"> PandoraPFOs </parameter>
+</processor>
+
+<processor name="LeptonID" type="LeptonIDProcessor">
+  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
+  <parameter name="BuildTree" type="bool">false</parameter>
+  <parameter name="EvalMVA" type="bool">true</parameter>
+  <parameter name="weightfile">HighLevelReco/PIDFiles/CPID/LeptonID_multi_jet_dEdx_800t_3d_cm50r50_BDTG.weights.xml</parameter>
+</processor>
+
+<processor name="ComprehensivePID" type="ComprehensivePIDProcessor">
+
+  <parameter name="PFOCollection" type="string" value="PandoraPFOs"/>
+  <parameter name="RecoMCTruthLink" type="string" value="RecoMCTruthLink"/>
+
+  <parameter name="modeExtract" type="bool" value="true" />
+  <parameter name="modeTrain"   type="bool" value="false"/>
+  <parameter name="modeInfer"   type="bool" value="true"/>
+
+  <parameter name="TTreeFileName" type="string" value="-"/>
+  <parameter name="reffile" type="string" value="HighLevelReco/PIDFiles/CPID/Ref_singleP_12bins_conservative.txt"/>
+  <parameter name="signalPDGs" type="FloatVec"  value="11 13 211 321 2212"/>
+  <parameter name="backgroundPDGs" type="FloatVec"  value=""/>
+  
+  <parameter name="plotFolder" type="string" value="."/>
+  <parameter name="fileFormat" type="string" value=".png"/>
+
+  <parameter name="momMin" type="float" value="1"/>
+  <parameter name="momMax" type="float" value="100"/>
+  <parameter name="momLog" type="bool" value="true"/>
+  <parameter name="momNBins" type="float" value="12"/>
+
+  <parameter name="cutD0" type="float" value="0"/>
+  <parameter name="cutZ0" type="float" value="0"/>
+  <parameter name="cutLamMin" type="float" value="0"/>
+  <parameter name="cutLamMax" type="float" value="0"/>
+  <parameter name="cutNTracksMin" type="int" value="1"/>
+  <parameter name="cutNTracksMax" type="int" value="-1"/>
+  
+  <parameter name="inputAlgoSpecs" type="StringVec">
+    dEdx_RCD:dEdx_RCD
+    TOF:TOF100
+    Pandora
+    LeptonID
+  </parameter>
+
+  <parameter name="TOF100.S" type="StringVec" value="TOFEstimators100ps"/>
+  
+  <parameter name="dEdx_RCD.F" type="FloatVec">
+    -1.28883368e-02   2.72959919e+01   1.10560871e+01 -1.74534200e+00  -9.84887586e-07
+      6.49143971e-02   1.55775592e+03   9.31848047e+08  2.32201725e-01   2.50492066e-04
+      6.54955215e-02   8.26239081e+04   1.92933904e+07  2.52743206e-01   2.26657525e-04
+      7.52235689e-02   1.59710415e+04   1.79625604e+06  3.15315795e-01   2.30414997e-04
+      7.92251260e-02   6.38129720e+04   3.82995071e+04  2.80793601e-01   7.14371743e-04
+      1
+  </parameter>
+
+  <parameter name="trainModelSpecs" type="StringVec">
+    TMVA_BDT_MC:TMVA_BDT_MC_12bins_singleP
+  </parameter>
+  <parameter name="trainingObservables" type="StringVec"> </parameter>
+
+  <parameter name="TMVA_BDT_MC_12bins_singleP.S" type="StringVec">
+    !V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass
+    SplitMode=Random:NormMode=NumEvents:!V
+    !V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5
+    dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900
+  </parameter>
+  
 </processor>
 
 </marlin>
