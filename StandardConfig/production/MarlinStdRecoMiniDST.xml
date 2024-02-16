@@ -2,7 +2,7 @@
 
 <execute>
   <processor name="InitDD4hep"/>
-  <processor name="Statusmonitor"/>
+  <!--processor name="Statusmonitor"/-->
   <!--processor name="FastJetOverlay"/>
   <processor name="ExpandJet"/-->
   <processor name="Thrust"/>
@@ -1132,12 +1132,12 @@
   <parameter name="modeTrain"   type="bool" value="false"/>
   <parameter name="modeInfer"   type="bool" value="true"/>
 
-  <parameter name="TTreeFileName" type="string" value=""/>
+  <parameter name="TTreeFileName" type="string" value="-"/>
   <parameter name="reffile" type="string" value="HighLevelReco/PIDFiles/CPID/Ref_singleP_12bins_conservative.txt"/>
   <parameter name="signalPDGs" type="FloatVec"  value="11 13 211 321 2212"/>
   <parameter name="backgroundPDGs" type="FloatVec"  value=""/>
   
-  <parameter name="plotFolder" type="string" value="CPID_Plots"/>
+  <parameter name="plotFolder" type="string" value="."/>
   <parameter name="fileFormat" type="string" value=".png"/>
 
   <parameter name="momMin" type="float" value="1"/>
