@@ -1,0 +1,15 @@
+momabs lambda dEdx_RCD_elDis dEdx_RCD_muDis dEdx_RCD_piDis dEdx_RCD_kaDis dEdx_RCD_prDis TOF100_mass2 Pandora_PandoraPDG LeptonID_elness LeptonID_muness LeptonID_piness 
+11 13 211 321 2212 | 
+
+1 1.4678 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_0.weights.xml
+1.4678 2.15443 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_1.weights.xml
+2.15443 3.16228 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_2.weights.xml
+3.16228 4.64159 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_3.weights.xml
+4.64159 6.81292 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_4.weights.xml
+6.81292 10 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_5.weights.xml
+10 14.678 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_6.weights.xml
+14.678 21.5443 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_7.weights.xml
+21.5443 31.6228 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_8.weights.xml
+31.6228 46.4159 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_9.weights.xml
+46.4159 68.1292 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_10.weights.xml
+68.1292 100 HighLevelReco/PIDFiles/CPID/2fZhad_12bins_conservative/TMVA_BDT_MC_11.weights.xml
