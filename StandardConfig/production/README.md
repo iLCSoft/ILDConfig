@@ -134,7 +134,7 @@ k4run ILDReconstruction.py --inputFiles=bbudsc_3evt_SIM.slcio
 This will by default produce an [EDM4hep](https://github.com/key4hep/EDM4hep)
 output file with similar contents as the *REC* file described above.
 
-`MarlinStdReco.py` has a few command line options / flags
+`ILDReconstruction.py` has a few command line options / flags
 - `--inputFiles` takes a list of input files to run over. It will automatically
   detect whether these are LCIO or EDM4hep input files and instantiate the
   appropriate reader (and a potentially necessary conversion). **It is not
