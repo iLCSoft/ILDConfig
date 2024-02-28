@@ -160,7 +160,7 @@ def create_reader(input_files):
             sys.exit(1)
 
         read = LcioEvent()
-        read.Files = reco_args.inputFiles
+        read.Files = input_files
     else:
         if any(not f.endswith(".root") for f in input_files):
             print("All input files need to have the same format (EDM4hep)")
@@ -172,9 +172,12 @@ def create_reader(input_files):
     return read
 
 
-read = create_reader(reco_args.inputFiles)
-read.OutputLevel = INFO
-algList.append(read)
+if reco_args.inputFiles:
+    read = create_reader(reco_args.inputFiles)
+    read.OutputLevel = INFO
+    algList.append(read)
+else:
+    read = None
 
 
 MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
