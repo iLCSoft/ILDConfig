@@ -99,7 +99,7 @@ parser.add_argument(
 parser.add_argument(
     "--noBeamCalReco",
     help="Don't run the BeamCal reco",
-    action="store_true",
+    action="store_false",
     dest="runBeamCalReco",
 )
 parser.set_defaults(runBeamCalReco=True)
