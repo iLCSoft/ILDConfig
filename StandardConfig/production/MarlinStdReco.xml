@@ -47,7 +47,7 @@
     <constant name="BeamCalCalibrationFactor">79.6</constant>
     
     <!--Flag to run differently the PFA, use value Perfect to run MCtruePFA-->
-    <constant name="PFAtype" value="Std" />
+    <constant name="PFAtype" value="Standard" />
     
     <!-- ***** Input files constants ***** -->        
     <!-- Geometry model dependant calibration constants from external file -->
