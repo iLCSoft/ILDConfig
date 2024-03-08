@@ -14,7 +14,12 @@ from Configurables import (
     GeoSvc,
     ApplicationMgr,
 )
-from k4FWCore.utils import import_from, SequenceLoader
+
+try:
+    from k4FWCore.utils import import_from, SequenceLoader
+except ImportError:
+    from py_utils import import_from, SequenceLoader
+
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 
