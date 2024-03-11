@@ -47,7 +47,7 @@ Most of these directories are used by the top-level Marlin steering file *Marlin
 ### 1. Initialize the current ilcsoft release
    
 ```shell
-source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-03-02/init_ilcsoft.sh
+source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-03-03/init_ilcsoft.sh
 ```
 
 ### 1.1 (Semi-optionally) Check-out a version of ILDConfig that is consistent with the release
@@ -60,7 +60,7 @@ If you start from scratch (i.e. before cloning this repository) you can directly
 clone the corresponding tag via
 
 ``` shell
-git clone -b v02-03-02 https://github.com/iLCSoft/ILDConfig
+git clone -b v02-03-03 https://github.com/iLCSoft/ILDConfig
 ```
 
 
@@ -68,7 +68,7 @@ If you already have cloned this repository than you can simply go to the
 corresponding tag via
 
 ``` shell
-git checkout v02-03-02
+git checkout v02-03-03
 ```
 
 In both cases you will get a message about being in `detached HEAD` state from
