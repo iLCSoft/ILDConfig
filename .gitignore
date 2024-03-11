@@ -1,0 +1,20 @@
+**/__pycache__/
+
+# Common outputs of the standard workflow
+*.out
+*_SIM.slcio
+*_REC.slcio
+*_DST.slcio
+*_miniDST.slcio
+*_PfoAnalysis.root
+*_AIDA.root
+*_LCTuple.root
+
+*_REC.edm4hep.root
+*_SIM.edm4hep.root
+
+# Side product of running Marlin
+MarlinStdRecoParsed.xml
+
+# Output for ranlux
+Ranlux.coonf
