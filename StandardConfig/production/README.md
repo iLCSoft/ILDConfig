@@ -47,8 +47,34 @@ Most of these directories are used by the top-level Marlin steering file *Marlin
 ### 1. Initialize the current ilcsoft release
    
 ```shell
-source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-02/init_ilcsoft.sh
+source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-03-02/init_ilcsoft.sh
 ```
+
+### 1.1 (Semi-optionally) Check-out a version of ILDConfig that is consistent with the release
+
+Each release of iLCSoft has a corresponding tag for ILDConfig. Usually, multiple
+versions of ILDConfig work with a given release, but if you want to make sure to
+get consistent results you can also check out a specific tag for ILDConfig.
+
+If you start from scratch (i.e. before cloning this repository) you can directly
+clone the corresponding tag via
+
+``` shell
+git clone -b v02-03-02 https://github.com/iLCSoft/ILDConfig
+```
+
+
+If you already have cloned this repository than you can simply go to the
+corresponding tag via
+
+``` shell
+git checkout v02-03-02
+```
+
+In both cases you will get a message about being in `detached HEAD` state from
+git. This is simply gits way of telling you that you are not currently on a
+branch. For simply running things this is no problem. If you want to make
+changes it's easiest to simply create a new branch before doing so.
 
 ### 2. Run the lcgeo/ddsim simulation: the 3 ttbar example 
 
