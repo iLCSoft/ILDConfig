@@ -32,6 +32,7 @@ DETECTOR_MODELS = (
     "ILD_l5_o1_v04",
     "ILD_l5_o1_v05",
     "ILD_l5_o1_v06",
+    "ILD_l5_o1_v09",
     "ILD_l5_o2_v02",
     "ILD_l5_o3_v02",
     "ILD_l5_o4_v02",
