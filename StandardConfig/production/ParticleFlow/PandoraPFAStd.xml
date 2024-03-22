@@ -1,0 +1,82 @@
+
+
+<group name="ParticleFlow">
+
+  <processor name="MyDDMarlinPandora" type="DDPandoraPFANewProcessor">
+    <!--Track cut on distance from BarrelTracker inner r to id whether track can form pfo-->
+    <parameter name="MaxBarrelTrackerInnerRDistance" type="float">105.0 </parameter>
+    <parameter name="PandoraSettingsXmlFile" type="String"> ${PandoraSettingsFile} </parameter>
+    <parameter name="UseDD4hepField" type="bool">false</parameter>
+    <!-- Collection names -->
+    <parameter name="TrackCollections" type="StringVec">MarlinTrkTracks</parameter>
+    <parameter name="ECalCaloHitCollections" type="StringVec">EcalBarrelCollectionRec EcalBarrelCollectionGapHits EcalEndcapsCollectionRec EcalEndcapsCollectionGapHits EcalEndcapRingCollectionRec</parameter>
+    <parameter name="HCalCaloHitCollections" type="StringVec">HcalBarrelCollectionRec HcalEndcapsCollectionRec HcalEndcapRingCollectionRec</parameter>
+    <parameter name="LCalCaloHitCollections" type="StringVec">LCAL</parameter>
+    <parameter name="LHCalCaloHitCollections" type="StringVec">LHCAL</parameter>
+    <parameter name="MuonCaloHitCollections" type="StringVec">MUON</parameter>
+    <parameter name="MCParticleCollections" type="StringVec">MCParticle</parameter>
+    <parameter name="RelCaloHitCollections" type="StringVec">EcalBarrelRelationsSimRec EcalEndcapsRelationsSimRec EcalEndcapRingRelationsSimRec HcalBarrelRelationsSimRec HcalEndcapsRelationsSimRec HcalEndcapRingRelationsSimRec RelationMuonHit RelationLHcalHit RelationLcalHit</parameter>
+    <parameter name="RelTrackCollections" type="StringVec">MarlinTrkTracksMCTruthLink</parameter>
+    <parameter name="KinkVertexCollections" type="StringVec">KinkVertices</parameter>
+    <parameter name="ProngVertexCollections" type="StringVec">ProngVertices</parameter>
+    <parameter name="SplitVertexCollections" type="StringVec">SplitVertices</parameter>
+    <parameter name="V0VertexCollections" type="StringVec">V0Vertices</parameter>
+    <parameter name="StartVertexCollectionName" type="string">PandoraPFANewStartVertices</parameter>
+    <parameter name="StartVertexAlgorithmName" type="string">PandoraPFANew</parameter>
+    <parameter name="ClusterCollectionName" type="String">PandoraClusters</parameter>
+    <parameter name="PFOCollectionName" type="String">PandoraPFOs</parameter>
+    <!-- Calibration constants -->
+    <parameter name="ECalToMipCalibration">${PandoraEcalToMip}</parameter>
+    <parameter name="HCalToMipCalibration">${PandoraHcalToMip}</parameter>
+    <parameter name="MuonToMipCalibration">${PandoraMuonToMip}</parameter>
+    <parameter name="ECalMipThreshold" type="float">0.5</parameter>
+    <parameter name="HCalMipThreshold" type="float">0.3</parameter>
+    <parameter name="ECalToEMGeVCalibration">${PandoraEcalToEMScale}</parameter>
+    <parameter name="HCalToEMGeVCalibration">${PandoraHcalToEMScale}</parameter>
+    <parameter name="ECalToHadGeVCalibrationBarrel">${PandoraEcalToHadBarrelScale}</parameter>
+    <parameter name="ECalToHadGeVCalibrationEndCap">${PandoraEcalToHadEndcapScale}</parameter>
+    <parameter name="HCalToHadGeVCalibration">${PandoraHcalToHadScale}</parameter>
+    <parameter name="DigitalMuonHits" type="int">0</parameter>
+    <parameter name="MaxHCalHitHadronicEnergy" type="float">1000000.</parameter>
+    <parameter name="SoftwareCompensationWeights" type="FloatVec"> ${PandoraSoftwareCompensationWeights} </parameter>
+    <parameter name="SoftwareCompensationEnergyDensityBins" type="FloatVec">0  2  5  7.5  9.5  13  16  20  23.5  28</parameter>
+    <parameter name="FinalEnergyDensityBin" type="float">30</parameter>
+    <parameter name="MaxClusterEnergyToApplySoftComp" type="float">1000</parameter>
+    <parameter name="MinCleanHitEnergy" type="float">0.5</parameter>
+    <parameter name="MinCleanHitEnergyFraction" type="float">0.01</parameter>
+    <parameter name="MinCleanCorrectedHitEnergy" type="float">0.1</parameter>
+
+    <!--Whether to calculate track states manually, rather than copy stored fitter values-->
+    <parameter name="UseOldTrackStateCalculation" type="int"> 0 1  </parameter> <!-- !!!FIXME, workaround for some missing TS AtCalo face - this should really be: 0 -->
+    <parameter name="NEventsToSkip" type="int">0</parameter>
+    <!--parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG0 </parameter-->
+    <!--The name of the Vertex Barrel detector-->
+    <parameter name="VertexBarrelDetectorName" type="string">VXD </parameter>
+    <!--Detector names of the Trackers in the Barrel starting from the innermost one-->
+    <parameter name="TrackerBarrelDetectorNames" type="StringVec">TPC</parameter>
+    <!--Detector names of the Trackers in the Endcap starting from the innermost one-->
+    <parameter name="TrackerEndcapDetectorNames" type="StringVec">FTD</parameter>
+    <parameter name="CoilName" type="string">Coil</parameter>
+    <parameter name="ECalBarrelDetectorName" type="string">EcalBarrel </parameter>
+    <parameter name="ECalEndcapDetectorName" type="string">EcalEndcap </parameter>
+    <parameter name="ECalOtherDetectorNames" type="StringVec">EcalPlug Lcal BeamCal  </parameter>
+    <parameter name="HCalEndcapDetectorName" type="string">HcalEndcap </parameter>
+    <parameter name="HCalBarrelDetectorName" type="string">HcalBarrel </parameter>
+    <parameter name="HCalOtherDetectorNames" type="StringVec">HcalRing LHcal </parameter>
+    <parameter name="MuonBarrelDetectorName" type="string">YokeBarrel </parameter>
+    <parameter name="MuonEndcapDetectorName" type="string">YokeEndcap </parameter>
+    <parameter name="MuonOtherDetectorNames" type="StringVec"></parameter>
+    <!--Decides whether to create gaps in the geometry (ILD-specific)-->
+    <!---SHOULD BE TRUE FOR ILD BUT INNER/OUTER SYMMETRIES ARE NOT COMPATIBLE -->
+    <parameter name="CreateGaps" type="bool">false</parameter>
+
+    <!-- RE: Fix for driver Yoke05_Barrel in lcgeo. See PR #241 iLCSoft/lcgeo -->
+    <!-- The layers are oriented in (0,1,0) before placement in the stave/module -->
+    <parameter name="YokeBarrelNormalVector" type="FloatVec">0 1 0 </parameter>
+
+    <!--The name of the DDTrackCreator implementation-->
+    <parameter name="TrackCreatorName" type="string">DDTrackCreatorILD </parameter>
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> SILENT </parameter>
+  </processor>
+
+</group>
