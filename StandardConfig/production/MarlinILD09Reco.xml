@@ -1,0 +1,319 @@
+<!-- 
+  Top level Marlin steering file defining the ILD reconstruction chain.
+  
+  !! WARNING !! This file may have been generated from 'Marlin -n MarlinstdReco.xml'. 
+  In this case you will find that : 
+  - no <include ref="..."> element is present
+  - some values differ between the constants section and the actual values in the global section or the processor parameter (e.g the compact file).
+    In this case, please refer to values in the global section or the processor parameters and not the constants section ! 
+  
+  Mandatory parameters :
+    * global.LCIOInputFiles : The input lcio input file(s)
+    * constant.lcgeo_DIR : the lcgeo directory must point on the one sourced in your current ilcsoft
+  
+  Optional parameters :
+    * constant.DetectorModel : the detector model to use the pre-defined lcgeo_DIR as ${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml
+    * constant.RunOverlay250GeV (350, 500 or 1000 GeV) : whether to run the background overlay. If set to true, you must ensure that the overlay background files are correctly set 
+    * constant.PandoraSettingsFile : The pandora settings file to use
+    * constant.PidPDFFile : A single root file name for the PID likelihood processor
+    * constant.PidWeightFiles : A list (space separated) of XML files containing weights for low momentum pi/mu separation (from TMVA)
+
+  Author : Victor, DESY
+-->
+
+
+<marlin>
+  <constants>
+    <!-- ***** Global constant for reconstruction ***** -->
+    <!-- The lcgeo directory where to look for the ILD model -->
+    <constant name="lcgeo_DIR" value="/path/to/lcgeo_DIR" />
+    <!-- ILD detector model -->
+    <constant name="DetectorModel" value="None_Please_specify_one" />
+    <!-- The full compact file name -->
+    <constant name="CompactFile" value="${lcgeo_DIR}/ILD/compact/${DetectorModel}/${DetectorModel}.xml" />
+    <!-- ILD calibration file -->
+    <constant name="CalibrationFile" value="Calibration/Calibration_${DetectorModel}.xml" />
+  
+    <!-- Whether to run the overlay background -->
+    <!-- WARNING : By setting this value to true (or True), you must ensure that the overlay files are set in the processor parameters -->
+    <constant name="RunOverlay" value="false" />
+    <!-- The center of mass energy (unit GeV). Mainly used for background overlay -->
+    <constant name="CMSEnergy" value="Unknown" />
+    <!-- The energy dependant parameters file to include -->
+    <constant name="EnergyParametersFile" value="Config/Parameters${CMSEnergy}GeV.xml" />
+    <!--Whether to run the BeamCal reconstruction-->
+    <constant name="RunBeamCalReco" value="true" />
+    <!--The BeamCal calibration constant, sim hit energy to calibrated calo hit energy-->
+    <constant name="BeamCalCalibrationFactor">79.6</constant>
+    
+    <!--Flag to run differently the PFA, use value Perfect to run MCtruePFA-->
+    <constant name="PFAtype" value="_SiILD" />
+    
+    <!-- ***** Input files constants ***** -->        
+    <!-- Geometry model dependant calibration constants from external file -->
+    <include ref="${CalibrationFile}" />
+    
+    <!-- Energy dependant parameters -->
+    <include ref="${EnergyParametersFile}" />
+    
+    <!-- Output files constants -->
+    <constant name="OutputBaseName" value="StandardReco" />
+    <constant name="AIDAFileName" value="${OutputBaseName}_AIDA" />
+    <constant name="RECOutputFile" value="${OutputBaseName}_REC.slcio" />
+    <constant name="DSTOutputFile" value="${OutputBaseName}_DST.slcio" />
+    <constant name="PfoOutputFile" value="${OutputBaseName}_PfoAnalysis.root" />
+  </constants>
+  
+  
+  <!-- ***** Execute section ***** -->
+  <execute>
+    <!-- Initialization processors -->
+    <processor name="MyAIDAProcessor" />
+    <processor name="InitDD4hep" />
+    <processor name="MyStatusmonitor" />
+
+    <!-- Overlay background, if any (see constant RunOverlay) -->
+    <if condition="${RunOverlay}">
+      <group name="BgOverlay" />
+    </if>
+    
+    <!-- Tracking digitizers -->
+    <group name="SiliconTrackingDigi" />
+    <!-- Tracking reconstruction -->
+    <group name="ConformalTrackingReco" />
+    <!-- Ecal digitizers -->
+    <group name="EcalDigi" />
+    <!-- Hcal digitizers -->
+    <group name="HcalDigi" />
+    <!-- Fcal digitizers -->
+    <group name="FcalDigi" />
+    <!-- Muon digitizer(s) -->
+    <group name="MuonDigi" />
+    <!-- Particle flow reconstruction -->
+    <group name="ParticleFlow" />
+    
+    <!--BeamCal reconstruction-->
+    <if condition="${RunBeamCalReco}">
+      <group name="BeamCalReco" />
+    </if>
+
+    <!-- High level reconstruction -->
+    <group name="HighLevelReco" />
+    
+    <!-- Output processors -->
+    <processor name="MyLCIOOutputProcessor" />
+    <processor name="DSTOutput" />
+    <processor name="MyPfoAnalysis" />
+  </execute>
+  
+  <!-- ***** Global section ***** -->
+  <global>
+    <parameter name="LCIOInputFiles"> </parameter>
+    <parameter name="MaxRecordNumber" value="0"/>
+    <parameter name="SkipNEvents" value="0"/>
+    <parameter name="SupressCheck" value="false"/>
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+    <parameter name="RandomSeed" value="1234567890" />
+    <parameter name="OutputSteeringFile" value="MarlinStdRecoParsed.xml"/>
+  </global>
+  
+  <!-- Init processors : histograming, logging, geometry ... -->
+  <processor name="MyAIDAProcessor" type="AIDAProcessor">
+    <!--Processor that handles AIDA files. Creates on directory per processor.  Processors only need to create and fill the histograms, clouds and tuples. Needs to be the first ActiveProcessor-->
+    <!-- compression of output file 0: false >0: true (default) -->
+    <parameter name="Compress" type="int" value="1"/>
+    <!-- filename without extension-->
+    <parameter name="FileName" type="string" value="${AIDAFileName}"/>
+    <!-- type of output file xml (default) or root ( only OpenScientist)-->
+    <parameter name="FileType" type="string" value="root "/>
+  </processor>
+  <processor name="InitDD4hep" type="InitializeDD4hep">
+    <!--InitializeDD4hep reads a compact xml file and initializes the DD4hep::LCDD object-->
+    <!--Name of the DD4hep compact xml file to load-->
+    <parameter name="DD4hepXMLFile" type="string"> ${CompactFile} </parameter>
+  </processor>
+  <processor name="MyStatusmonitor" type="Statusmonitor">
+    <!--Statusmonitor prints out information on running Marlin Job: Prints number of runs run and current number of the event. Counting is sequential and not the run or event ID.-->
+    <!--Print the event number every N events-->
+    <parameter name="HowOften" type="int">1 </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">MESSAGE </parameter> -->
+  </processor>
+
+
+  <!-- Overlay background -->
+  <group name="BgOverlay">
+    <!--Overlay each event with this number of background events. (default 0)-->
+    <parameter name="NumberOverlayEvents" type="int"> 0 </parameter>
+    
+    <processor name="BgOverlayWW" type="Overlay">
+      <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+      <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+      <parameter name="expBG" type="double"> ${ExpectedBgWW} </parameter>
+      <!--Name of the lcio input file(s)-->
+      <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+    </processor>
+    <processor name="BgOverlayWB" type="Overlay">
+      <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+      <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+      <parameter name="expBG" type="double"> ${ExpectedBgWB} </parameter>
+      <!--Name of the lcio input file(s)-->
+      <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+    </processor>
+    <processor name="BgOverlayBW" type="Overlay">
+      <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+      <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+      <parameter name="expBG" type="double"> ${ExpectedBgBW} </parameter>
+      <!--Name of the lcio input file(s)-->
+      <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+    </processor>
+    <processor name="BgOverlayBB" type="Overlay">
+      <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+      <!--Add additional background events according to a poisson distribution with this expectation value. (non, if parameter not set)-->
+      <parameter name="expBG" type="double"> ${ExpectedBgBB} </parameter>
+      <!--Name of the lcio input file(s)-->
+      <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+    </processor>
+    <processor name="PairBgOverlay" type="Overlay">
+      <!--Opens a second (chain of) lcio file(s) and overlays events...-->
+      <!--Overlay each event with this number of background events. (default 0)-->
+      <parameter name="NumberOverlayEvents" type="int"> 1 </parameter>
+      <!--Name of the lcio input file(s)-->
+      <parameter name="InputFileNames" type="StringVec"> undefined.slcio </parameter>
+      <!--List of collections to exclude for merging-->
+      <!--Exclude BeamCalCollection because overlay is treated in the BeamCalReco itself-->
+      <parameter name="ExcludeCollections" type="StringVec">BeamCalCollection </parameter>
+    </processor>
+  </group>
+  
+  <!-- Tracking related : digitization, reconstruction -->
+  <include ref="Tracking/TrackingDigi_SiILD.xml" />
+  <include ref="Tracking/ConformalTracking_SiILD.xml" />
+  
+  <!-- Calorimeter digitization : Ecal, Hcal, Fcal and Muon -->
+  <include ref="CaloDigi/${EcalTechnology}Digi.xml" />
+  <include ref="CaloDigi/${HcalTechnology}Digi.xml" />
+  <include ref="CaloDigi/FcalDigi.xml" />
+  <include ref="CaloDigi/MuonDigi.xml" />
+  
+  <!-- Particle Flow reconstruction : PandoraPFA -->
+  <include ref="ParticleFlow/PandoraPFA${PFAtype}.xml" />
+  
+  <!-- Standalone BeamCal reconstruction -->
+  <include ref="HighLevelReco/BeamCalReco.xml" />
+
+  <!-- Post reconstruction related : PID, Vertexing, Particle finding, cluster topology -->
+  <include ref="HighLevelReco/HighLevelReco_SiILD.xml" />
+  
+  
+  <!-- Write reconstruction output : REC, DST and PfoAnalysis -->
+  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
+    <!--   standard output: full reconstruction keep all collections -->
+    <parameter name="LCIOOutputFile" type="string" >
+      ${RECOutputFile}
+    </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <parameter name="DropCollectionNames" type="StringVec"> 
+      ${AdditionalDropCollectionsREC} 
+    </parameter>
+    <parameter name="CompressionLevel" type="int" value="6"/>
+    <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
+  </processor>
+  <processor name="DSTOutput" type="LCIOOutputProcessor">
+    <!-- DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles -->
+    <parameter name="LCIOOutputFile" type="string" >
+      ${DSTOutputFile}
+    </parameter>
+    <parameter name="DropCollectionTypes" type="StringVec"> 
+      MCParticle 
+      SimTrackerHit 
+      SimCalorimeterHit
+      TrackerHit 
+      TrackerHitPlane 
+      CalorimeterHit 
+      LCRelation
+      Track 
+      LCFloatVec      
+    </parameter>
+    <parameter name="DropCollectionNames" type="StringVec">
+      PandoraPFANewStartVertices
+    </parameter>
+    <parameter name="FullSubsetCollections" type="StringVec" value="MCParticlesSkimmed"/>
+    <parameter name="KeepCollectionNames" type="StringVec"> 
+      MCParticlesSkimmed
+      MarlinTrkTracks
+      MarlinTrkTracksProton
+      MarlinTrkTracksKaon
+      MCTruthMarlinTrkTracksLink
+      MarlinTrkTracksMCTruthLink
+      RecoMCTruthLink
+      MCTruthRecoLink
+      MCTruthClusterLink
+      ClusterMCTruthLink
+    </parameter>
+    <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+    <parameter name="CompressionLevel" type="int" value="6"/>
+    <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
+  </processor>
+  <processor name="MyPfoAnalysis" type="PfoAnalysis">
+    <!--PfoAnalysis analyses output of PandoraPFANew-->
+    <!--Names of input pfo collection-->
+    <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <!--Names of mc particle collection-->
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle">MCParticle </parameter>
+    <!--Flag to look for quarks with mother Z-->
+    <parameter name="LookForQuarksWithMotherZ" type="int">2 </parameter>
+    <!--MC pfo selection radius-->
+    <parameter name="MCPfoSelectionRadius" type="float">500. </parameter>
+    <!--MC pfo selection momentum-->
+    <parameter name="MCPfoSelectionMomentum" type="float">0.01 </parameter>
+    <!--MC pfo selection neutron and proton low energy cut-off-->
+    <parameter name="MCPfoSelectionLowEnergyNPCutOff" type="float">1.2 </parameter>
+    <!--Set the debug print level-->
+    <parameter name="Printing" type="int">0 </parameter>
+    <!--Name of the output root file-->
+    <parameter name="RootFile" type="string"> ${PfoOutputFile} </parameter>
+    
+    <!--Name of the ECal collection of calo hits used to form clusters-->
+    <parameter name="ECalCollections" type="StringVec" lcioInType="CalorimeterHit">EcalBarrelCollectionRec EcalBarrelCollectionGapHits EcalEndcapsCollectionRec EcalEndcapsCollectionGapHits EcalEndcapRingCollectionRec</parameter>
+    <!--Name of the HCAL collection used to form clusters-->
+    <parameter name="HCalCollections" type="StringVec" lcioInType="CalorimeterHit">HcalBarrelCollectionRec HcalEndcapsCollectionRec HcalEndcapRingCollectionRec </parameter>
+    <!--Name of the MUON collection used to form clusters-->
+    <parameter name="MuonCollections" type="StringVec" lcioInType="CalorimeterHit">MUON </parameter>
+    <!--Name of the BCAL collection used to form clusters-->
+    <parameter name="BCalCollections" type="StringVec" lcioInType="CalorimeterHit">BCAL</parameter>
+    <!--Name of the LHCAL collection used to form clusters-->
+    <parameter name="LHCalCollections" type="StringVec" lcioInType="CalorimeterHit">LHCAL</parameter>
+    <!--Name of the LCAL collection used to form clusters-->
+    <parameter name="LCalCollections" type="StringVec" lcioInType="CalorimeterHit">LCAL</parameter>
+
+    <!--Whether to collect calibration details-->
+    <parameter name="CollectCalibrationDetails" type="int"> 0 </parameter>
+    <!--Name of the ECal collection post ddsim, pre digitisation-->
+    <parameter name="ECalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalSimHitCollections}</parameter>
+    <!--Name of the HCal Barrel collection post ddsim, pre digitisation-->
+    <parameter name="HCalBarrelCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${HCalBarrelSimHitCollections}</parameter>
+    <!--Name of the HCal EndCap collection post ddsim, pre digitisation-->
+    <parameter name="HCalEndCapCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${HCalEndcapSimHitCollections}</parameter>
+    <!--Name of the HCAL Other collection used to form clusters-->
+    <parameter name="HCalOtherCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${HCalRingSimHitCollections}</parameter>
+    <!--Name of the ECal Barrel collection post ddsim, pre digitisation-->
+    <parameter name="ECalBarrelCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalBarrelSimHitCollections}</parameter>
+    <!--Name of the ECAL EndCap collection post ddsim, pre digitisation-->
+    <parameter name="ECalEndCapCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalEndcapSimHitCollections}</parameter>
+    <!--Name of the ECAL Other collection post ddsim, pre digitisation-->
+    <parameter name="ECalOtherCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">${ECalRingSimHitCollections}</parameter>
+    <!--Name of the Muon collection post ddsim, pre digitisation-->
+    <parameter name="MuonCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">YokeBarrelCollection YokeEndcapsCollection</parameter>
+    <!--Name of the BeamCal collection post ddsim, pre digitisation-->
+    <parameter name="BCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">BeamCalCollection</parameter>
+    <!--Name of the LHCal collection post ddsim, pre digitisation-->
+    <parameter name="LHCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">LHCalCollection</parameter>
+    <!--Name of the LCal collection post ddsim, pre digitisation-->
+    <parameter name="LCalCollectionsSimCaloHit" type="StringVec" lcioInType="SimCalorimeterHit">LumiCalCollection</parameter>
+
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+  
+</marlin>
