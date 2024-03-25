@@ -3,9 +3,38 @@ from Gaudi.Configuration import *
 
 from Configurables import LcioEvent, EventDataSvc, MarlinProcessorWrapper
 from k4MarlinWrapper.parseConstants import *
+
+from k4FWCore.parseArgs import parser
+
+
 algList = []
 evtsvc = EventDataSvc()
 
+DETECTOR_MODELS = (
+    "ILD_l2_v02",
+    "ILD_l4_o1_v02",
+    "ILD_l4_o2_v02",
+    "ILD_l5_o1_v02",
+    "ILD_l5_o1_v03",
+    "ILD_l5_o1_v04",
+    "ILD_l5_o1_v05",
+    "ILD_l5_o1_v06",
+    "ILD_l5_o1_v09",
+    "ILD_l5_o2_v02",
+    "ILD_l5_o3_v02",
+    "ILD_l5_o4_v02",
+    "ILD_s2_v02",
+    "ILD_s4_o1_v02",
+    "ILD_s4_o2_v02",
+    "ILD_s5_o1_v02",
+    "ILD_s5_o1_v03",
+    "ILD_s5_o1_v04",
+    "ILD_s5_o1_v05",
+    "ILD_s5_o1_v06",
+    "ILD_s5_o2_v02",
+    "ILD_s5_o3_v02",
+    "ILD_s5_o4_v02",
+)
 
 CONSTANTS = {
              'lcgeo_DIR': os.environ["lcgeo_DIR"],
@@ -68,26 +97,70 @@ CONSTANTS = {
              'BeamSizeX': "0",
              'BeamSizeY': "0",
              'BeamSizeZ': "0",
-             'OutputBaseName': "StandardReco",
-             'AIDAFileName': "%(OutputBaseName)s_AIDA",
-             'RECOutputFile': "%(OutputBaseName)s_REC.slcio",
-             'DSTOutputFile': "%(OutputBaseName)s_DST.slcio",
-             'PfoOutputFile': "%(OutputBaseName)s_PfoAnalysis.root",
+            #  'OutputBaseName': "StandardReco",
+            #  'AIDAFileName': "%(OutputBaseName)s_AIDA",
+            #  'RECOutputFile': "%(OutputBaseName)s_REC.slcio",
+            #  'DSTOutputFile': "%(OutputBaseName)s_DST.slcio",
+            #  'PfoOutputFile': "%(OutputBaseName)s_PfoAnalysis.root",
 }
 
 parseConstants(CONSTANTS)
 
-read = LcioEvent()
-read.OutputLevel = INFO
-read.Files = ["None"]
-algList.append(read)
+parser.add_argument(
+    "--inputFiles",
+    action="extend",
+    nargs="+",
+    metavar=["file1", "file2"],
+    help="One or multiple input files",
+)
+parser.add_argument(
+    "--outputFileBase",
+    help="Base name of all the produced output files",
+    default="StandardReco",
+)
+
+# parser.add_argument(
+#     "--detectorModel",
+#     help="Which detector model to run reconstruction for",
+#     choices=DETECTOR_MODELS,
+#     type=str,
+#     default="ILD_l5_o1_v02",
+# )
+
+def create_reader(input_files):
+    """Create the appropriate reader for the input files"""
+    if input_files[0].endswith(".slcio"):
+        if any(not f.endswith(".slcio") for f in input_files):
+            print("All input files need to have the same format (LCIO)")
+            sys.exit(1)
+
+        read = LcioEvent()
+        read.Files = input_files
+    else:
+        if any(not f.endswith(".root") for f in input_files):
+            print("All input files need to have the same format (EDM4hep)")
+            sys.exit(1)
+        read = PodioInput("PodioInput")
+        global evtsvc
+        evtsvc.inputs = input_files
+
+    return read
+
+reco_args = parser.parse_known_args()[0]
+
+if reco_args.inputFiles:
+    read = create_reader(reco_args.inputFiles)
+    read.OutputLevel = INFO
+    algList.append(read)
+else:
+    read = None
 
 MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
 MyAIDAProcessor.OutputLevel = INFO
 MyAIDAProcessor.ProcessorType = "AIDAProcessor"
 MyAIDAProcessor.Parameters = {
                               "Compress": ["1"],
-                              "FileName": ["%(AIDAFileName)s" % CONSTANTS],
+                              "FileName": [f"{reco_args.outputFileBase}_AIDA"],
                               "FileType": ["root"]
                               }
 
@@ -839,7 +912,7 @@ MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
 MyLCIOOutputProcessor.Parameters = {
                                     "CompressionLevel": ["6"],
                                     "DropCollectionNames": ["%(AdditionalDropCollectionsREC)s" % CONSTANTS],
-                                    "LCIOOutputFile": ["%(RECOutputFile)s" % CONSTANTS],
+                                    "LCIOOutputFile": [f"{reco_args.outputFileBase}_REC.slcio"],
                                     "LCIOWriteMode": ["WRITE_NEW"]
                                     }
 
@@ -852,7 +925,7 @@ DSTOutput.Parameters = {
                         "DropCollectionTypes": ["MCParticle", "SimTrackerHit", "SimCalorimeterHit", "TrackerHit", "TrackerHitPlane", "CalorimeterHit", "LCRelation", "Track", "LCFloatVec"],
                         "FullSubsetCollections": ["MCParticlesSkimmed"],
                         "KeepCollectionNames": ["MCParticlesSkimmed", "MarlinTrkTracks", "MarlinTrkTracksProton", "MarlinTrkTracksKaon", "MCTruthMarlinTrkTracksLink", "MarlinTrkTracksMCTruthLink", "RecoMCTruthLink", "MCTruthRecoLink", "MCTruthClusterLink", "ClusterMCTruthLink"],
-                        "LCIOOutputFile": ["%(DSTOutputFile)s" % CONSTANTS],
+                        "LCIOOutputFile": [f"{reco_args.outputFileBase}_DST.slcio"],
                         "LCIOWriteMode": ["WRITE_NEW"]
                         }
 
@@ -885,7 +958,7 @@ MyPfoAnalysis.Parameters = {
                             "MuonCollectionsSimCaloHit": ["YokeBarrelCollection", "YokeEndcapsCollection"],
                             "PfoCollection": ["PandoraPFOs"],
                             "Printing": ["0"],
-                            "RootFile": ["%(PfoOutputFile)s" % CONSTANTS]
+                            "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"]
                             }
 
 algList.append(MyAIDAProcessor)
