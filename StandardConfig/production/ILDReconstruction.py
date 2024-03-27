@@ -1,22 +1,21 @@
 import os
 import sys
 
-from Gaudi.Configuration import INFO
-
 from Configurables import (
+    ApplicationMgr,
+    EDM4hep2LcioTool,
+    GeoSvc,
+    Lcio2EDM4hepTool,
     LcioEvent,
     MarlinProcessorWrapper,
-    k4DataSvc,
     PodioInput,
     PodioOutput,
-    EDM4hep2LcioTool,
-    Lcio2EDM4hepTool,
-    GeoSvc,
-    ApplicationMgr,
+    k4DataSvc,
 )
+from Gaudi.Configuration import INFO
 
 try:
-    from k4FWCore.utils import import_from, SequenceLoader
+    from k4FWCore.utils import SequenceLoader, import_from
 except ImportError:
     from py_utils import import_from, SequenceLoader
 
