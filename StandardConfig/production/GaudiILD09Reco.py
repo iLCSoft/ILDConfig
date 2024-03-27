@@ -1,40 +1,45 @@
+################################################################
+# with convertMarlinSteeringToGaudi.py converted
+# based on Jan Klamkas Gaudi Reco for full Si ILD
+################################################################
+
 import os
 from Gaudi.Configuration import *
 
-from Configurables import LcioEvent, EventDataSvc, MarlinProcessorWrapper
+from Configurables import EDM4hep2LcioTool,Lcio2EDM4hepTool,LcioEvent, PodioInput, PodioOutput, k4DataSvc, MarlinProcessorWrapper
 from k4MarlinWrapper.parseConstants import *
 
 from k4FWCore.parseArgs import parser
 
 
 algList = []
-evtsvc = EventDataSvc()
+evtsvc = k4DataSvc("EventDataSvc")
 
-DETECTOR_MODELS = (
-    "ILD_l2_v02",
-    "ILD_l4_o1_v02",
-    "ILD_l4_o2_v02",
-    "ILD_l5_o1_v02",
-    "ILD_l5_o1_v03",
-    "ILD_l5_o1_v04",
-    "ILD_l5_o1_v05",
-    "ILD_l5_o1_v06",
-    "ILD_l5_o1_v09",
-    "ILD_l5_o2_v02",
-    "ILD_l5_o3_v02",
-    "ILD_l5_o4_v02",
-    "ILD_s2_v02",
-    "ILD_s4_o1_v02",
-    "ILD_s4_o2_v02",
-    "ILD_s5_o1_v02",
-    "ILD_s5_o1_v03",
-    "ILD_s5_o1_v04",
-    "ILD_s5_o1_v05",
-    "ILD_s5_o1_v06",
-    "ILD_s5_o2_v02",
-    "ILD_s5_o3_v02",
-    "ILD_s5_o4_v02",
-)
+# DETECTOR_MODELS = (
+#     "ILD_l2_v02",
+#     "ILD_l4_o1_v02",
+#     "ILD_l4_o2_v02",
+#     "ILD_l5_o1_v02",
+#     "ILD_l5_o1_v03",
+#     "ILD_l5_o1_v04",
+#     "ILD_l5_o1_v05",
+#     "ILD_l5_o1_v06",
+#     "ILD_l5_o1_v09",
+#     "ILD_l5_o2_v02",
+#     "ILD_l5_o3_v02",
+#     "ILD_l5_o4_v02",
+#     "ILD_s2_v02",
+#     "ILD_s4_o1_v02",
+#     "ILD_s4_o2_v02",
+#     "ILD_s5_o1_v02",
+#     "ILD_s5_o1_v03",
+#     "ILD_s5_o1_v04",
+#     "ILD_s5_o1_v05",
+#     "ILD_s5_o1_v06",
+#     "ILD_s5_o2_v02",
+#     "ILD_s5_o3_v02",
+#     "ILD_s5_o4_v02",
+# )
 
 CONSTANTS = {
              'lcgeo_DIR': os.environ["lcgeo_DIR"],
@@ -118,7 +123,13 @@ parser.add_argument(
     help="Base name of all the produced output files",
     default="StandardReco",
 )
-
+parser.add_argument(
+    "--lcioOutput",
+    help="Choose whether to still create LCIO output (off by default)",
+    choices=["off", "on", "only"],
+    default="off",
+    type=str,
+)
 # parser.add_argument(
 #     "--detectorModel",
 #     help="Which detector model to run reconstruction for",
@@ -960,6 +971,64 @@ MyPfoAnalysis.Parameters = {
                             "Printing": ["0"],
                             "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"]
                             }
+if reco_args.lcioOutput != "only":
+    lcioToEDM4hepOutput = Lcio2EDM4hepTool("OutputConversion")
+    # Take care of the different naming conventions
+    lcioToEDM4hepOutput.collNameMapping = {"MCParticle": "MCParticles"}
+    lcioToEDM4hepOutput.OutputLevel = INFO
+    # Attach the conversion to the last non-output processor that is always run
+    MyPfoAnalysis.Lcio2EDM4hepTool = lcioToEDM4hepOutput
+
+    edm4hepOutput = PodioOutput("EDM4hepOutput")
+    edm4hepOutput.filename = f"{reco_args.outputFileBase}_REC.edm4hep.root"
+    edm4hepOutput.outputCommands = ["keep *"]
+    for name in CONSTANTS["AdditionalDropCollectionsREC"].split(" "):
+        edm4hepOutput.outputCommands.append(f"drop {name}")
+
+if reco_args.lcioOutput in ("on", "only"):
+    MyLCIOOutputProcessor = MarlinProcessorWrapper("MyLCIOOutputProcessor")
+    MyLCIOOutputProcessor.OutputLevel = INFO
+    MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
+    MyLCIOOutputProcessor.Parameters = {
+        "CompressionLevel": ["6"],
+        "DropCollectionNames": [CONSTANTS["AdditionalDropCollectionsREC"]],
+        "LCIOOutputFile": [f"{reco_args.outputFileBase}_REC.slcio"],
+        "LCIOWriteMode": ["WRITE_NEW"],
+    }
+
+    DSTOutput = MarlinProcessorWrapper("DSTOutput")
+    DSTOutput.OutputLevel = INFO
+    DSTOutput.ProcessorType = "LCIOOutputProcessor"
+    DSTOutput.Parameters = {
+        "CompressionLevel": ["6"],
+        "DropCollectionNames": ["PandoraPFANewStartVertices"],
+        "DropCollectionTypes": [
+            "MCParticle",
+            "SimTrackerHit",
+            "SimCalorimeterHit",
+            "TrackerHit",
+            "TrackerHitPlane",
+            "CalorimeterHit",
+            "LCRelation",
+            "Track",
+            "LCFloatVec",
+        ],
+        "FullSubsetCollections": ["MCParticlesSkimmed"],
+        "KeepCollectionNames": [
+            "MCParticlesSkimmed",
+            "MarlinTrkTracks",
+            "MarlinTrkTracksProton",
+            "MarlinTrkTracksKaon",
+            "MCTruthMarlinTrkTracksLink",
+            "MarlinTrkTracksMCTruthLink",
+            "RecoMCTruthLink",
+            "MCTruthRecoLink",
+            "MCTruthClusterLink",
+            "ClusterMCTruthLink",
+        ],
+        "LCIOOutputFile": [f"{reco_args.outputFileBase}_DST.slcio"],
+        "LCIOWriteMode": ["WRITE_NEW"],
+    }
 
 algList.append(MyAIDAProcessor)
 algList.append(InitDD4hep)
@@ -1013,9 +1082,13 @@ algList.append(MyGammaGammaSolutionFinder)
 algList.append(MyDistilledPFOCreator)
 algList.append(MyLikelihoodPID)
 algList.append(MyRecoMCTruthLinker)
-algList.append(MyLCIOOutputProcessor)
-algList.append(DSTOutput)
 algList.append(MyPfoAnalysis)
+if reco_args.lcioOutput != "only":
+    algList.append(edm4hepOutput)
+if reco_args.lcioOutput is not "off":
+    algList.append(MyLCIOOutputProcessor)
+    algList.append(DSTOutput)
+
 
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg = algList,
