@@ -1,91 +1,66 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
+# shouldnt the OutputLevel be passed down from a CL arg?
+
+# default names for Collection based on one variable
+
 from Configurables import MarlinProcessorWrapper
+from Gaudi.Configuration import INFO
 
-MySplitCollectionByLayer = MarlinProcessorWrapper("MySplitCollectionByLayer")
-MySplitCollectionByLayer.OutputLevel = INFO
-MySplitCollectionByLayer.ProcessorType = "SplitCollectionByLayer"
-MySplitCollectionByLayer.Parameters = {
-    "InputCollection": ["FTDCollection"],
-    "OutputCollections": [
-        "FTD_PIXELCollection",
-        "0",
-        "1",
-        "FTD_STRIPCollection",
-        "2",
-        "6",
-    ],
-}
-
-VXDPlanarDigiProcessor_CMOSVXD5 = MarlinProcessorWrapper(
-    "VXDPlanarDigiProcessor_CMOSVXD5"
-)
-VXDPlanarDigiProcessor_CMOSVXD5.OutputLevel = INFO
-VXDPlanarDigiProcessor_CMOSVXD5.ProcessorType = "DDPlanarDigiProcessor"
-VXDPlanarDigiProcessor_CMOSVXD5.Parameters = {
-    "ForceHitsOntoSurface": ["true"],
+VertexBarrelDigitiser = MarlinProcessorWrapper("VertexBarrelDigitiser")
+VertexBarrelDigitiser.OutputLevel = INFO
+VertexBarrelDigitiser.ProcessorType = "DDPlanarDigiProcessor"
+VertexBarrelDigitiser.Parameters = {
     "IsStrip": ["false"],
     "ResolutionU": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
     "ResolutionV": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
-    "SimTrackHitCollectionName": ["VXDCollection"],
-    "SimTrkHitRelCollection": ["VXDTrackerHitRelations"],
-    "SubDetectorName": ["VXD"],
-    "TrackerHitCollectionName": ["VXDTrackerHits"],
+    "SimTrackHitCollectionName": ["VertexBarrelCollection"],
+    "SimTrkHitRelCollection": ["VertexBarrelTrackerHitRelations"],
+    "SubDetectorName": ["VertexBarrel"],
+    "TrackerHitCollectionName": ["VertexBarrelTrackerHits"],
 }
 
-SITPlanarDigiProcessor = MarlinProcessorWrapper("SITPlanarDigiProcessor")
-SITPlanarDigiProcessor.OutputLevel = INFO
-SITPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
-SITPlanarDigiProcessor.Parameters = {
+VertexEndcapDigitiser = MarlinProcessorWrapper("VertexEndcapDigitiser")
+VertexEndcapDigitiser.OutputLevel = INFO
+VertexEndcapDigitiser.ProcessorType = "DDPlanarDigiProcessor"
+VertexEndcapDigitiser.Parameters = {
+    "IsStrip": ["false"],
+    "ResolutionU": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
+    "ResolutionV": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
+    "SimTrackHitCollectionName": ["VertexEndcapCollection"],
+    "SimTrkHitRelCollection": ["VertexEndcapTrackerHitRelations"],
+    "SubDetectorName": ["VertexEndcap"],
+    "TrackerHitCollectionName": ["VertexEndcapTrackerHits"],
+}
+
+InnerPlanarDigiProcessor = MarlinProcessorWrapper("InnerPlanarDigiProcessor")
+InnerPlanarDigiProcessor.OutputLevel = INFO
+InnerPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
+InnerPlanarDigiProcessor.Parameters = {
+    "ForceHitsOntoSurface": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionU": ["0.005", "0.007", "0.007", "0.007", "0.007", "0.007", "0.007"],
+    "ResolutionV": ["0.005", "0.09", "0.09", "0.09", "0.09", "0.09", "0.09"],
+    "SimTrackHitCollectionName": ["InnerTrackerBarrelCollection"],
+    "SimTrkHitRelCollection": ["InnerTrackerBarrelHitRelations"],
+    "SubDetectorName": ["InnerTrackerBarrel"],
+    "TrackerHitCollectionName": ["InnerTrackerBarrelHits"],
+}
+
+InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
+    "InnerEndcapPlanarDigiProcessor"
+)
+InnerEndcapPlanarDigiProcessor.OutputLevel = INFO
+InnerEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
+InnerEndcapPlanarDigiProcessor.Parameters = {
     "ForceHitsOntoSurface": ["true"],
     "IsStrip": ["false"],
     "ResolutionU": ["0.005"],
     "ResolutionV": ["0.005"],
-    "SimTrackHitCollectionName": ["SITCollection"],
-    "SimTrkHitRelCollection": ["SITTrackerHitRelations"],
-    "SubDetectorName": ["SIT"],
-    "TrackerHitCollectionName": ["SITTrackerHits"],
-}
-
-FTDPixelPlanarDigiProcessor = MarlinProcessorWrapper("FTDPixelPlanarDigiProcessor")
-FTDPixelPlanarDigiProcessor.OutputLevel = INFO
-FTDPixelPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
-FTDPixelPlanarDigiProcessor.Parameters = {
-    "ForceHitsOntoSurface": ["true"],
-    "IsStrip": ["false"],
-    "ResolutionU": ["0.003"],
-    "ResolutionV": ["0.003"],
-    "SimTrackHitCollectionName": ["FTD_PIXELCollection"],
-    "SimTrkHitRelCollection": ["FTDPixelTrackerHitRelations"],
-    "SubDetectorName": ["FTD"],
-    "TrackerHitCollectionName": ["FTDPixelTrackerHits"],
-}
-
-FTDStripPlanarDigiProcessor = MarlinProcessorWrapper("FTDStripPlanarDigiProcessor")
-FTDStripPlanarDigiProcessor.OutputLevel = INFO
-FTDStripPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
-FTDStripPlanarDigiProcessor.Parameters = {
-    "ForceHitsOntoSurface": ["true"],
-    "IsStrip": ["true"],
-    "ResolutionU": ["0.007"],
-    "ResolutionV": ["0.0"],
-    "SimTrackHitCollectionName": ["FTD_STRIPCollection"],
-    "SimTrkHitRelCollection": ["FTDStripTrackerHitRelations"],
-    "SubDetectorName": ["FTD"],
-    "TrackerHitCollectionName": ["FTDStripTrackerHits"],
-}
-
-FTDDDSpacePointBuilder = MarlinProcessorWrapper("FTDDDSpacePointBuilder")
-FTDDDSpacePointBuilder.OutputLevel = INFO
-FTDDDSpacePointBuilder.ProcessorType = "DDSpacePointBuilder"
-FTDDDSpacePointBuilder.Parameters = {
-    "SimHitSpacePointRelCollection": ["FTDSpacePointRelations"],
-    "SpacePointsCollection": ["FTDSpacePoints"],
-    "StripLength": ["2.500000000e+02"],
-    "SubDetectorName": ["FTD"],
-    "TrackerHitCollection": ["FTDStripTrackerHits"],
-    "TrackerHitSimHitRelCollection": ["FTDStripTrackerHitRelations"],
+    "SimTrackHitCollectionName": ["InnerTrackerEndcapCollection"],
+    "SimTrkHitRelCollection": ["InnerTrackerEndcapHitRelations"],
+    "SubDetectorName": ["InnerTrackerEndcap"],
+    "TrackerHitCollectionName": ["InnerTrackerEndcapHits"],
 }
 
 SETPlanarDigiProcessor = MarlinProcessorWrapper("SETPlanarDigiProcessor")
@@ -151,12 +126,10 @@ MyTPCDigiProcessor.Parameters = {
 }
 
 TrackingDigiSequence = [
-    MySplitCollectionByLayer,
-    VXDPlanarDigiProcessor_CMOSVXD5,
-    SITPlanarDigiProcessor,
-    FTDPixelPlanarDigiProcessor,
-    FTDStripPlanarDigiProcessor,
-    FTDDDSpacePointBuilder,
+    VertexEndcapDigitiser,
+    VertexBarrelDigitiser,
+    InnerPlanarDigiProcessor,
+    InnerEndcapPlanarDigiProcessor,
     SETPlanarDigiProcessor,
     SETDDSpacePointBuilder,
     MyTPCDigiProcessor,
