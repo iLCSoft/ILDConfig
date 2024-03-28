@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
+from Gaudi.Configuration import INFO
 
 MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
 MyClupatraProcessor.OutputLevel = INFO
@@ -323,12 +323,12 @@ MyRefitProcessorProton.Parameters = {
 TrackingRecoSequence = [
     MyClupatraProcessor,
     MySiliconTracking_MarlinTrk,
-    MyForwardTracking,
+    # MyForwardTracking,
     MyTrackSubsetProcessor,
     MyFullLDCTracking_MarlinTrk,
     MyCompute_dEdxProcessor,
     MyV0Finder,
-    MyKinkFinder,
+    # MyKinkFinder,
     MyRefitProcessorKaon,
     MyRefitProcessorProton,
 ]
