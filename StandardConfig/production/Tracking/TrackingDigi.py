@@ -2,7 +2,9 @@
 
 # shouldnt the OutputLevel be passed down from a CL arg?
 
-# default names for Collection based on one variable
+# TODO: default names for Collection based on one variable, not individually for REL, HitColl, ...
+
+# non-name parameters of Vertex and Inner D as for CLD (https://github.com/key4hep/CLDConfig/blob/main/CLDConfig/CLDReconstruction.py @ bbb0842)
 
 from Configurables import MarlinProcessorWrapper
 from Gaudi.Configuration import INFO
@@ -37,10 +39,9 @@ InnerPlanarDigiProcessor = MarlinProcessorWrapper("InnerPlanarDigiProcessor")
 InnerPlanarDigiProcessor.OutputLevel = INFO
 InnerPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerPlanarDigiProcessor.Parameters = {
-    "ForceHitsOntoSurface": ["true"],
     "IsStrip": ["false"],
-    "ResolutionU": ["0.005", "0.007", "0.007", "0.007", "0.007", "0.007", "0.007"],
-    "ResolutionV": ["0.005", "0.09", "0.09", "0.09", "0.09", "0.09", "0.09"],
+    "ResolutionU": ["0.007"],
+    "ResolutionV": ["0.09"],
     "SimTrackHitCollectionName": ["InnerTrackerBarrelCollection"],
     "SimTrkHitRelCollection": ["InnerTrackerBarrelHitRelations"],
     "SubDetectorName": ["InnerTrackerBarrel"],
@@ -53,10 +54,9 @@ InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
 InnerEndcapPlanarDigiProcessor.OutputLevel = INFO
 InnerEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerEndcapPlanarDigiProcessor.Parameters = {
-    "ForceHitsOntoSurface": ["true"],
     "IsStrip": ["false"],
-    "ResolutionU": ["0.005"],
-    "ResolutionV": ["0.005"],
+    "ResolutionU": ["0.005", "0.007", "0.007", "0.007", "0.007", "0.007", "0.007"],
+    "ResolutionV": ["0.005", "0.09", "0.09", "0.09", "0.09", "0.09", "0.09"],
     "SimTrackHitCollectionName": ["InnerTrackerEndcapCollection"],
     "SimTrkHitRelCollection": ["InnerTrackerEndcapHitRelations"],
     "SubDetectorName": ["InnerTrackerEndcap"],
