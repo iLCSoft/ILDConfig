@@ -46,6 +46,7 @@ DETECTOR_MODELS = (
     "ILD_s5_o2_v02",
     "ILD_s5_o3_v02",
     "ILD_s5_o4_v02",
+    "ILD_l5_v11",
 )
 
 parser.add_argument(
@@ -221,20 +222,20 @@ hcal_technology = CONSTANTS["HcalTechnology"]
 
 sequenceLoader.load("Tracking/TrackingDigi")
 sequenceLoader.load("Tracking/TrackingReco")
-sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
-sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
-sequenceLoader.load("CaloDigi/FcalDigi")
-sequenceLoader.load("CaloDigi/MuonDigi")
+# sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
+# sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
+# sequenceLoader.load("CaloDigi/FcalDigi")
+# sequenceLoader.load("CaloDigi/MuonDigi")
 
-if reco_args.perfectPFA:
-    sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
-else:
-    sequenceLoader.load("ParticleFlow/PandoraPFA")
+# if reco_args.perfectPFA:
+#    sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
+# else:
+#    sequenceLoader.load("ParticleFlow/PandoraPFA")
 
 if reco_args.runBeamCalReco:
     sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-sequenceLoader.load("HighLevelReco/HighLevelReco")
+# sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 
 MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
