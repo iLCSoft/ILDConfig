@@ -22,6 +22,7 @@ except ImportError:
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 
+# only non-FCCMDI models
 DETECTOR_MODELS = (
     "ILD_l2_v02",
     "ILD_l4_o1_v02",
@@ -31,7 +32,6 @@ DETECTOR_MODELS = (
     "ILD_l5_o1_v04",
     "ILD_l5_o1_v05",
     "ILD_l5_o1_v06",
-    "ILD_l5_o1_v09",
     "ILD_l5_o2_v02",
     "ILD_l5_o3_v02",
     "ILD_l5_o4_v02",
@@ -46,8 +46,13 @@ DETECTOR_MODELS = (
     "ILD_s5_o2_v02",
     "ILD_s5_o3_v02",
     "ILD_s5_o4_v02",
+)
+# only FCCMDI
+FCCeeMDI_DETECTOR_MODELS = (
+    "ILD_l5_o1_v09",
     "ILD_l5_v11",
 )
+DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
 
 parser.add_argument(
     "--inputFiles",
@@ -86,7 +91,10 @@ parser.add_argument(
     default="ILD_l5_o1_v02",
 )
 parser.add_argument(
-    "--perfectPFA", help="Run perfect PandoraPFA", action="store_true", default=False
+    "--perfectPFA",
+    help="Run perfect PandoraPFA",
+    action="store_true",
+    default=False,
 )
 parser.add_argument(
     "--runOverlay",
@@ -95,12 +103,13 @@ parser.add_argument(
     action="store_true",
     default=False,
 )
-# BeamCal reco configuration
+# action and default contradict
 parser.add_argument(
     "--runBeamCalReco",
     help="Run the BeamCal reco",
     action="store_true",
     dest="runBeamCalReco",
+    default=True,
 )
 parser.add_argument(
     "--noBeamCalReco",
@@ -108,12 +117,16 @@ parser.add_argument(
     action="store_false",
     dest="runBeamCalReco",
 )
-parser.set_defaults(runBeamCalReco=True)
 parser.add_argument(
     "--beamCalCalibFactor",
     help="The BeamCal calibration constant from sim hit energy to calibrated calo hit energy",
     type=float,
     default=79.6,
+)
+parser.add_argument(
+    "--trackingOnly",
+    help="Only Tracking is performed; built for reco testing purposes",
+    action="store_true",
 )
 
 reco_args = parser.parse_known_args()[0]
@@ -220,22 +233,28 @@ if reco_args.runOverlay:
 ecal_technology = CONSTANTS["EcalTechnology"]
 hcal_technology = CONSTANTS["HcalTechnology"]
 
-sequenceLoader.load("Tracking/TrackingDigi")
-sequenceLoader.load("Tracking/TrackingReco")
-# sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
-# sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
-# sequenceLoader.load("CaloDigi/FcalDigi")
-# sequenceLoader.load("CaloDigi/MuonDigi")
+if reco_args.detectorModel in FCCeeMDI_DETECTOR_MODELS:
+    sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
+    sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
+else:
+    sequenceLoader.load("Tracking/TrackingDigi")
+    sequenceLoader.load("Tracking/TrackingReco")
 
-# if reco_args.perfectPFA:
-#    sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
-# else:
-#    sequenceLoader.load("ParticleFlow/PandoraPFA")
+if not reco_args.trackingOnly:
+    sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
+    sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
+    sequenceLoader.load("CaloDigi/FcalDigi")
+    sequenceLoader.load("CaloDigi/MuonDigi")
 
-if reco_args.runBeamCalReco:
-    sequenceLoader.load("HighLevelReco/BeamCalReco")
+    if reco_args.perfectPFA:
+        sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
+    else:
+        sequenceLoader.load("ParticleFlow/PandoraPFA")
 
-# sequenceLoader.load("HighLevelReco/HighLevelReco")
+    if reco_args.runBeamCalReco:
+        sequenceLoader.load("HighLevelReco/BeamCalReco")
+
+    sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 
 MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")

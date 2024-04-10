@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
+from Gaudi.Configuration import INFO
 
 MyAdd4MomCovMatrixCharged = MarlinProcessorWrapper("MyAdd4MomCovMatrixCharged")
 MyAdd4MomCovMatrixCharged.OutputLevel = INFO
@@ -377,10 +377,10 @@ HighLevelRecoSequence = [
     MyDistilledPFOCreator,
     MyLikelihoodPID,
     MyRecoMCTruthLinker,
-#    VertexFinder, 
-#    TrackLengthProcessor,
-#    TOFEstimators0ps,
-#    TOFEstimators10ps,
-#    TOFEstimators50ps,
-#    TOFEstimators100ps,
+    VertexFinder,
+    TrackLengthProcessor,
+    TOFEstimators0ps,
+    TOFEstimators10ps,
+    TOFEstimators50ps,
+    TOFEstimators100ps,
 ]
