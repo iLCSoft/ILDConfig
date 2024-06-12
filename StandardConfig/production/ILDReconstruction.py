@@ -94,14 +94,12 @@ parser.add_argument(
     "--perfectPFA",
     help="Run perfect PandoraPFA",
     action="store_true",
-    default=False,
 )
 parser.add_argument(
     "--runOverlay",
     help="Run background overaly. NOTE: You have to make sure that the Overlay algorithms in "
     " BgOverlay/BgOverlay.py are provided with the necessary overlay files",
     action="store_true",
-    default=False,
 )
 
 parser.add_argument(
@@ -109,7 +107,6 @@ parser.add_argument(
     help="Run the BeamCal reco",
     action="store_true",
     dest="runBeamCalReco",
-    default=True,
 )
 parser.add_argument(
     "--noBeamCalReco",
