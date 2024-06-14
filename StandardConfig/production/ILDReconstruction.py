@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 
 from Configurables import (
     ApplicationMgr,
@@ -22,7 +23,7 @@ except ImportError:
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 
-# only non-FCCMDI models
+# only non-FCCMDI models, later FCCMDI models are added to this tuple
 DETECTOR_MODELS = (
     "ILD_l2_v02",
     "ILD_l4_o1_v02",
@@ -230,12 +231,22 @@ if reco_args.runOverlay:
 ecal_technology = CONSTANTS["EcalTechnology"]
 hcal_technology = CONSTANTS["HcalTechnology"]
 
-if reco_args.detectorModel in FCCeeMDI_DETECTOR_MODELS:
+# identify specified detector model
+if reco_args.compactFile:
+    det_model = Path(reco_args.compactFile).stem
+else:
+    det_model = reco_args.detectorModel
+# load relevant tracking
+if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
     sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
-else:
+elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
+else:
+    raise ValueError(
+        f"Detector model '{det_model}' is neither in the 'FCCeeMDI_DETECTOR_MODELS' list nor in the 'DETECTOR_MODELS' list. Choose a supported detector model!"
+    )
 
 if not reco_args.trackingOnly:
     sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
