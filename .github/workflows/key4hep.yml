@@ -69,7 +69,7 @@ jobs:
             echo "::group::Run simulation"
             cd StandardConfig/production
             ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
-                  --outputFile bbudsc_3evt_SIM.edm4hep \
+                  --outputFile bbudsc_3evt_SIM.edm4hep.root \
                   --compactFile $lcgeo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
                   --steeringFile ddsim_steer.py
             echo "::endgroup::"
