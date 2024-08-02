@@ -1,0 +1,31 @@
+name: smoke-tests
+
+on:
+  push:
+    branches:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  simulation:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        detector_model: [ILD_l5_o1_v02]
+        key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
+        os: [ubuntu2204, el9]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cvmfs-contrib/github-action-cvmfs@v4
+      - uses: aidasoft/run-lcg-view@v4
+        with:
+          container: ${{ matrix.os }}
+          view-path: /cvmfs/${{ matrix.key4hep_build }}
+          run: |
+            cd StandardConfig/production
+            ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
+                  --outputFile bbudsc_3evt_SIM.slcio \
+                  --compactFile $lcgeo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
+                  --steeringFile ddsim_steer.py
