@@ -53,6 +53,8 @@ jobs:
                    --constant.lcgeo_DIR=$lcgeo_DIR
             echo "::endgroup::"
 
+
+  # Reconstruction using EDM4hep inputs and outputs
   gaudi-std-reco:
     runs-on: ubuntu-latest
     strategy:
@@ -79,6 +81,6 @@ jobs:
             echo "::endgroup::"
             echo "::group::Run reconstruction"
             k4run ILDReconstruction.py \
-                  --inputFiles=bbudsc_3evt_SIM.edm4hep \
+                  --inputFiles=bbudsc_3evt_SIM.edm4hep.root \
                   --outputFileBase=bbudsc_3evt_GaudiRec \
-                  --detectorModel=${{ matrix.detectorModel }}
+                  --detectorModel=${{ matrix.detector_model }}
