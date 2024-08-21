@@ -56,14 +56,13 @@ jobs:
                    --constant.lcgeo_DIR=$lcgeo_DIR
             echo "::endgroup::"
 
-
   # Reconstruction using EDM4hep inputs and outputs
   gaudi-std-reco:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        detector_model: [ILD_l5_o1_v02]
+        detector_model: [ILD_l5_o1_v02, ILD_l5_v11]
         key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
         os: [ubuntu2204, el9]
 
