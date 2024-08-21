@@ -23,7 +23,7 @@ except ImportError:
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 
-# only non-FCCMDI models, later FCCMDI models are added to this tuple
+# only non-FCCMDI models
 DETECTOR_MODELS = (
     "ILD_l2_v02",
     "ILD_l4_o1_v02",
@@ -86,7 +86,7 @@ parser.add_argument(
 parser.add_argument(
     "--detectorModel",
     help="Which detector model to run reconstruction for",
-    choices=DETECTOR_MODELS,
+    choices=DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS,
     type=str,
     default="ILD_l5_o1_v02",
 )
@@ -97,7 +97,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--runOverlay",
-    help="Run background overaly. NOTE: You have to make sure that the Overlay algorithms in "
+    help="Run background overlay. NOTE: You have to make sure that the Overlay algorithms in "
     " BgOverlay/BgOverlay.py are provided with the necessary overlay files",
     action="store_true",
 )
