@@ -243,10 +243,6 @@ if det_model in FCCeeMDI_DETECTOR_MODELS:
 elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
-else:
-    raise ValueError(
-        f"Detector model '{det_model}' is neither in the 'FCCeeMDI_DETECTOR_MODELS' list nor in the 'DETECTOR_MODELS' list. Choose a supported detector model!"
-    )
 
 if not reco_args.trackingOnly:
     sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
