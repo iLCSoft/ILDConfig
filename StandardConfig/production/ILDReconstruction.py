@@ -53,7 +53,6 @@ FCCeeMDI_DETECTOR_MODELS = (
     "ILD_l5_o1_v09",
     "ILD_l5_v11",
 )
-DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
 
 parser.add_argument(
     "--inputFiles",
