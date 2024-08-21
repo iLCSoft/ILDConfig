@@ -94,7 +94,7 @@ jobs:
       fail-fast: false
       matrix:
         detector_model: [ILD_l5_v11]
-        key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
+        key4hep_build: [sw.hsf.org]
         os: [ubuntu2204, el9]
 
     steps:
