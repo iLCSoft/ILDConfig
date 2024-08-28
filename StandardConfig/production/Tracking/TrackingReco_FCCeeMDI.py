@@ -3,6 +3,12 @@
 from Configurables import MarlinProcessorWrapper
 from Gaudi.Configuration import INFO
 
+CT_MAX_DIST = "0.03;"  # semi-colon is important! RANDOM VALUE COPYIED FROM CLDRECO
+MCPartColName = ["MCParticle"]  # MCParticleCollectionName
+VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
+VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
+
+
 MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
 MyClupatraProcessor.OutputLevel = INFO
 MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
@@ -32,6 +38,57 @@ MyClupatraProcessor.Parameters = {
     "TrackSystemName": ["DDKalTest"],
     "VXDHitCollection": ["VXDTrackerHits"],
     "pickUpSiHits": ["false"],
+}
+
+MyConformalTracking = MarlinProcessorWrapper("MyConformalTracking")
+MyConformalTracking.OutputLevel = INFO
+MyConformalTracking.ProcessorType = "ConformalTrackingV2"
+MyConformalTracking.Parameters = {
+    "DebugHits": ["DebugHits"],
+    "DebugPlots": ["false"],
+    "DebugTiming": ["false"],
+    "MCParticleCollectionName": MCPartColName,
+    "MaxHitInvertedFit": ["0"],
+    "MinClustersOnTrackAfterFit": ["3"],
+    "RelationsNames": [
+        "VertexBarrelTrackerHitRelations",
+        "VertexEndcapTrackerHitRelations",
+        "InnerTrackerBarrelHitRelations",
+        "InnerTrackerEndcapHitRelations",
+    ],
+    "RetryTooManyTracks": ["false"],
+    "SiTrackCollectionName": ["SiTracksCT"],
+    "SortTreeResults": ["true"],
+    # fmt: off
+    "Steps": [
+        "[VertexBarrel]",
+        "@Collections", ":", "VertexBarrelTrackerHits",
+        "@Parameters", ":", "MaxCellAngle", ":", "0.01;", "MaxCellAngleRZ", ":", "0.01;", "Chi2Cut", ":", "100;", "MinClustersOnTrack", ":", "4;", "MaxDistance", ":", CT_MAX_DIST, "SlopeZRange:", "10.0;", "HighPTCut:", "10.0;",
+        "@Flags", ":", "HighPTFit,", "VertexToTracker",
+        "@Functions", ":", "CombineCollections,", "BuildNewTracks",
+        "[VertexEncap]",
+        "@Collections", ":", "VertexEndcapTrackerHits",
+        "@Parameters", ":", "MaxCellAngle", ":", "0.01;", "MaxCellAngleRZ", ":", "0.01;", "Chi2Cut", ":", "100;", "MinClustersOnTrack", ":", "4;", "MaxDistance", ":", CT_MAX_DIST, "SlopeZRange:", "10.0;", "HighPTCut:", "10.0;",
+        "@Flags", ":", "HighPTFit,", "VertexToTracker",
+        "@Functions", ":", "CombineCollections,", "ExtendTracks",
+        "[Tracker]",
+        "@Collections", ":", "InnerTrackerBarrelHits,", "InnerTrackerEndcapHits",
+        "@Parameters", ":", "MaxCellAngle", ":", "0.1;", "MaxCellAngleRZ", ":", "0.1;", "Chi2Cut", ":", "2000;", "MinClustersOnTrack", ":", "4;", "MaxDistance", ":", CT_MAX_DIST, "SlopeZRange:", "10.0;", "HighPTCut:", "1.0;",
+        "@Flags", ":", "HighPTFit,", "VertexToTracker,", "RadialSearch",
+        "@Functions", ":", "CombineCollections,", "ExtendTracks",
+    ],
+    # fmt: on
+    "ThetaRange": ["0.05"],
+    "TooManyTracks": ["100000"],
+    "TrackerHitCollectionNames": [
+        "InnerTrackerBarrelHits",
+        "InnerTrackerEndcapHits",
+    ]
+    + VertexBarrelHitCollectionNames
+    + VertexEndcapHitCollectionNames,
+    "trackPurity": ["0.7"],
+    "VertexBarrelHitCollectionNames": VertexBarrelHitCollectionNames,
+    "VertexEndcapHitCollectionNames": VertexEndcapHitCollectionNames,
 }
 
 MySiliconTracking_MarlinTrk = MarlinProcessorWrapper("MySiliconTracking_MarlinTrk")
@@ -322,13 +379,14 @@ MyRefitProcessorProton.Parameters = {
 
 TrackingReco_FCCeeMDISequence = [
     MyClupatraProcessor,
-    MySiliconTracking_MarlinTrk,
-    # MyForwardTracking,
-    MyTrackSubsetProcessor,
+    MyConformalTracking,
     MyFullLDCTracking_MarlinTrk,
-    MyCompute_dEdxProcessor,
-    MyV0Finder,
+    # MySiliconTracking_MarlinTrk,
+    # MyForwardTracking,
+    # MyTrackSubsetProcessor,
+    # MyCompute_dEdxProcessor,
+    # MyV0Finder,
     # MyKinkFinder,
-    MyRefitProcessorKaon,
-    MyRefitProcessorProton,
+    # MyRefitProcessorKaon,
+    # MyRefitProcessorProton,
 ]
