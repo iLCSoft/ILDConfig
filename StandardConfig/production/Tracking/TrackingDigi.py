@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
+from Gaudi.Configuration import INFO
 
 MySplitCollectionByLayer = MarlinProcessorWrapper("MySplitCollectionByLayer")
 MySplitCollectionByLayer.OutputLevel = INFO

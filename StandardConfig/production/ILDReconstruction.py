@@ -1,28 +1,29 @@
 import os
 import sys
-
-from Gaudi.Configuration import INFO
+from pathlib import Path
 
 from Configurables import (
+    ApplicationMgr,
+    EDM4hep2LcioTool,
+    GeoSvc,
+    Lcio2EDM4hepTool,
     LcioEvent,
     MarlinProcessorWrapper,
-    k4DataSvc,
     PodioInput,
     PodioOutput,
-    EDM4hep2LcioTool,
-    Lcio2EDM4hepTool,
-    GeoSvc,
-    ApplicationMgr,
+    k4DataSvc,
 )
+from Gaudi.Configuration import INFO
 
 try:
-    from k4FWCore.utils import import_from, SequenceLoader
+    from k4FWCore.utils import SequenceLoader, import_from
 except ImportError:
     from py_utils import import_from, SequenceLoader
 
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 
+# only non-FCCMDI models
 DETECTOR_MODELS = (
     "ILD_l2_v02",
     "ILD_l4_o1_v02",
@@ -46,6 +47,11 @@ DETECTOR_MODELS = (
     "ILD_s5_o2_v02",
     "ILD_s5_o3_v02",
     "ILD_s5_o4_v02",
+)
+# only FCCMDI
+FCCeeMDI_DETECTOR_MODELS = (
+    "ILD_l5_o1_v09",
+    "ILD_l5_v11",
 )
 
 parser.add_argument(
@@ -80,21 +86,22 @@ parser.add_argument(
 parser.add_argument(
     "--detectorModel",
     help="Which detector model to run reconstruction for",
-    choices=DETECTOR_MODELS,
+    choices=DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS,
     type=str,
     default="ILD_l5_o1_v02",
 )
 parser.add_argument(
-    "--perfectPFA", help="Run perfect PandoraPFA", action="store_true", default=False
+    "--perfectPFA",
+    help="Run perfect PandoraPFA",
+    action="store_true",
 )
 parser.add_argument(
     "--runOverlay",
-    help="Run background overaly. NOTE: You have to make sure that the Overlay algorithms in "
+    help="Run background overlay. NOTE: You have to make sure that the Overlay algorithms in "
     " BgOverlay/BgOverlay.py are provided with the necessary overlay files",
     action="store_true",
-    default=False,
 )
-# BeamCal reco configuration
+
 parser.add_argument(
     "--runBeamCalReco",
     help="Run the BeamCal reco",
@@ -107,12 +114,16 @@ parser.add_argument(
     action="store_false",
     dest="runBeamCalReco",
 )
-parser.set_defaults(runBeamCalReco=True)
 parser.add_argument(
     "--beamCalCalibFactor",
     help="The BeamCal calibration constant from sim hit energy to calibrated calo hit energy",
     type=float,
     default=79.6,
+)
+parser.add_argument(
+    "--trackingOnly",
+    help="Only Tracking is performed; built for reco testing purposes",
+    action="store_true",
 )
 
 reco_args = parser.parse_known_args()[0]
@@ -219,22 +230,34 @@ if reco_args.runOverlay:
 ecal_technology = CONSTANTS["EcalTechnology"]
 hcal_technology = CONSTANTS["HcalTechnology"]
 
-sequenceLoader.load("Tracking/TrackingDigi")
-sequenceLoader.load("Tracking/TrackingReco")
-sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
-sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
-sequenceLoader.load("CaloDigi/FcalDigi")
-sequenceLoader.load("CaloDigi/MuonDigi")
-
-if reco_args.perfectPFA:
-    sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
+# identify specified detector model
+if reco_args.compactFile:
+    det_model = Path(reco_args.compactFile).stem
 else:
-    sequenceLoader.load("ParticleFlow/PandoraPFA")
+    det_model = reco_args.detectorModel
+# load relevant tracking
+if det_model in FCCeeMDI_DETECTOR_MODELS:
+    sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
+    sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
+elif det_model in DETECTOR_MODELS:
+    sequenceLoader.load("Tracking/TrackingDigi")
+    sequenceLoader.load("Tracking/TrackingReco")
 
-if reco_args.runBeamCalReco:
-    sequenceLoader.load("HighLevelReco/BeamCalReco")
+if not reco_args.trackingOnly:
+    sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
+    sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
+    sequenceLoader.load("CaloDigi/FcalDigi")
+    sequenceLoader.load("CaloDigi/MuonDigi")
 
-sequenceLoader.load("HighLevelReco/HighLevelReco")
+    if reco_args.perfectPFA:
+        sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
+    else:
+        sequenceLoader.load("ParticleFlow/PandoraPFA")
+
+    if reco_args.runBeamCalReco:
+        sequenceLoader.load("HighLevelReco/BeamCalReco")
+
+    sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 
 MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")

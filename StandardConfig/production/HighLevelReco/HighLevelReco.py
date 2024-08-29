@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
+from Gaudi.Configuration import INFO
 
 MyAdd4MomCovMatrixCharged = MarlinProcessorWrapper("MyAdd4MomCovMatrixCharged")
 MyAdd4MomCovMatrixCharged.OutputLevel = INFO
