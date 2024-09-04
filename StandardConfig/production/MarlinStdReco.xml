@@ -46,6 +46,9 @@
     <!--The BeamCal calibration constant, sim hit energy to calibrated calo hit energy-->
     <constant name="BeamCalCalibrationFactor">79.6</constant>
     
+    <!--Flag to run differently the PFA, use value Perfect to run MCtruePFA-->
+    <constant name="PFAtype" value="" />
+    
     <!-- ***** Input files constants ***** -->        
     <!-- Geometry model dependant calibration constants from external file -->
     <include ref="${CalibrationFile}" />
@@ -194,7 +197,7 @@
   <include ref="CaloDigi/MuonDigi.xml" />
   
   <!-- Particle Flow reconstruction : PandoraPFA -->
-  <include ref="ParticleFlow/PandoraPFA.xml" />
+  <include ref="ParticleFlow/PandoraPFA${PFAtype}.xml" />
   
   <!-- Standalone BeamCal reconstruction -->
   <include ref="HighLevelReco/BeamCalReco.xml" />

@@ -1,0 +1,133 @@
+
+<group name="ConformalTrackingReco">
+
+    <!-- == Pattern recognition parameters == -->
+    <processor name="MyConformalTracking" type="ConformalTrackingV2">
+      <!--ConformalTracking constructs tracks using a combined conformal mapping and cellular automaton approach.-->
+
+      <!--Name of the TrackerHit input collections-->
+      <parameter name="TrackerHitCollectionNames" type="StringVec" lcioInType="TrackerHitPlane"> VXDTrackerHits FTDPixelTrackerHits FTDStripTrackerHits SITTrackerHits OTrackerHits OTrackerEndcapHits </parameter>
+      <!--Name of the MCParticle input collection-->
+      <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticle </parameter>
+      <!--Name of the TrackerHit relation collections-->
+      <parameter name="RelationsNames" type="StringVec" lcioInType="LCRelation"> VXDTrackerHitRelations FTDPixelTrackerHitRelations FTDStripTrackerHitRelations SITTrackerHitRelations OuterTrackerBarrelHitsRelations OuterTrackerEndcapHitsRelations </parameter>
+      <!--Silicon track Collection Name-->
+      <parameter name="SiTrackCollectionName" type="string" lcioOutType="Track"> SiTracksCT </parameter>
+      <!--Debug hits Collection Name-->
+      <parameter name="DebugHits" type="string" lcioOutType="TrackerHitPlane"> DebugHits </parameter>
+      <!--Maximum number of track hits to try the inverted fit-->
+      <parameter name="MaxHitInvertedFit" type="int"> 6 </parameter>
+      <!--Final minimum number of track clusters-->
+      <parameter name="MinClustersOnTrackAfterFit" type="int">3 </parameter>
+
+      <!--enable debug plots -->
+      <parameter name="DebugPlots" type="bool"> false </parameter>
+      <!--Purity value used for checking if tracks are real or not-->
+      <parameter name="trackPurity" type="double">0.7 </parameter>
+      <!--Print out time profile - for some, verbosity must be enable-->
+      <parameter name="DebugTiming" type="bool">false </parameter>
+      <!--retry with tightened parameters, when too many tracks are being created-->
+      <parameter name="RetryTooManyTracks" type="bool">false </parameter>
+      <!--Number of tracks that is considered too many-->
+      <parameter name="TooManyTracks" type="int">100000 </parameter>
+      <!--sort results from kdtree search-->
+      <parameter name="SortTreeResults" type="bool">true </parameter>
+
+      <!--steps for the pattern recognition-->
+      <parameter name="Steps" type="StringVec">
+        [VXDBarrel]
+        @Collections : VXDTrackerHits
+        @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Flags : HighPTFit, VertexToTracker
+        @Functions : CombineCollections, BuildNewTracks
+        [VXDEncap]
+        @Collections : FTDPixelTrackerHits
+        @Parameters : MaxCellAngle : 0.005; MaxCellAngleRZ : 0.005; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 0.0;
+        @Flags : HighPTFit, VertexToTracker
+        @Functions : CombineCollections, ExtendTracks
+        [LowerCellAngle1]
+        @Collections : VXDTrackerHits, FTDPixelTrackerHits
+        @Parameters : MaxCellAngle : 0.025; MaxCellAngleRZ : 0.025; Chi2Cut : 100; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Flags : HighPTFit, VertexToTracker, RadialSearch
+        @Functions : CombineCollections, BuildNewTracks
+        [LowerCellAngle2]
+        @Collections :
+        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.05; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Flags : HighPTFit, VertexToTracker, RadialSearch
+        @Functions : BuildNewTracks, SortTracks
+        [Tracker]
+        @Collections : SITTrackerHits, FTDStripTrackerHits, OTrackerHits, OTrackerEndcapHits
+        @Parameters : MaxCellAngle : 0.05; MaxCellAngleRZ : 0.1; Chi2Cut : 2000; MinClustersOnTrack : 4; MaxDistance : 0.04; SlopeZRange: 10.0; HighPTCut: 0.0;
+        @Flags : HighPTFit, VertexToTracker, RadialSearch
+        @Functions : CombineCollections, ExtendTracks
+        [Displaced]
+        @Collections : VXDTrackerHits, FTDPixelTrackerHits, SITTrackerHits, FTDStripTrackerHits, OTrackerHits, OTrackerEndcapHits
+        @Parameters : MaxCellAngle : 0.1; MaxCellAngleRZ : 0.1; Chi2Cut : 1000; MinClustersOnTrack : 5; MaxDistance : 0.035; SlopeZRange: 10.0; HighPTCut: 10.0;
+        @Flags : OnlyZSchi2cut, RadialSearch
+        @Functions : CombineCollections, BuildNewTracks
+      </parameter>
+
+      <!--Angular range for initial cell seeding-->
+      <parameter name="ThetaRange" type="double"> 0.05 </parameter>
+
+      <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+      <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+    </processor>
+
+
+    <processor name="ClonesAndSplitTracksFinder" type="ClonesAndSplitTracksFinder">
+      <parameter name="InputTrackCollectionName" type="string"> SiTracksCT </parameter>
+      <parameter name="OutputTrackCollectionName" type="string"> SiTracks </parameter>
+      <parameter name="MultipleScatteringOn" type="bool"> true </parameter>
+      <parameter name="EnergyLossOn" type="bool"> true </parameter>
+      <parameter name="SmoothOn" type="bool"> false </parameter>
+      <parameter name="extrapolateForward" type="bool"> true </parameter>
+      <!--if true, the merging of split tracks is performed-->
+      <parameter name="mergeSplitTracks" type="bool">true  </parameter>
+      <!--minimum track pt for merging (in GeV/c)-->
+      <parameter name="minTrackPt" type="double">1 </parameter>
+      <!--maximum significance separation in phi-->
+      <parameter name="maxSignificancePhi" type="double">3 </parameter>
+      <!--maximum significance separation in pt-->
+      <parameter name="maxSignificancePt" type="double">2 </parameter>
+      <!--maximum significance separation in tanLambda-->
+      <parameter name="maxSignificanceTheta" type="double">3 </parameter>
+
+      <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+      <!-- <parameter name="Verbosity" type="string">DEBUG </parameter> -->
+    </processor>
+
+
+    <processor name="Refit" type="RefitFinal">
+      <!--Refit processor that calls finaliseLCIOTrack after taking the trackstate from the existing track. No re-sorting of hits is done-->
+      <!--Use Energy Loss in Fit-->
+      <parameter name="EnergyLossOn" type="bool"> true </parameter>
+      <!--Name of the input track to MCParticle relation collection-->
+      <parameter name="InputRelationCollectionName" type="string" lcioInType="LCRelation"> SiTrackRelations </parameter>
+      <!--Name of the input track collection-->
+      <parameter name="InputTrackCollectionName" type="string" lcioInType="Track"> SiTracks </parameter>
+      <!--maximum allowable chi2 increment when moving from one site to another-->
+      <parameter name="Max_Chi2_Incr" type="double"> 1.79769e+30 </parameter>
+      <!--Use MultipleScattering in Fit-->
+      <parameter name="MultipleScatteringOn" type="bool"> true </parameter>
+      <!--Refit Track to MCParticle relation collection Name-->
+      <parameter name="OutputRelationCollectionName" type="string" lcioOutType="LCRelation">
+        SiTracks_Refitted_Relation
+      </parameter>
+      <!--Name of the output track collection-->
+      <parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">
+        SiTracks_Refitted
+      </parameter>
+      <!--Identifier of the reference point to use for the fit initialisation, -1 means at 0 0 0-->
+      <parameter name="ReferencePoint" type="int"> -1 </parameter>
+      <!--Smooth All Mesurement Sites in Fit-->
+      <parameter name="SmoothOn" type="bool"> false </parameter>
+      <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+      <!--parameter name="Verbosity" type="string"> DEBUG </parameter-->
+      <!--if true extrapolation in the forward direction (in-out), otherwise backward (out-in)-->
+      <parameter name="extrapolateForward" type="bool"> true </parameter>
+      <!--Final minimum number of track clusters-->
+      <parameter name="MinClustersOnTrackAfterFit" type="int">3 </parameter>
+    </processor>
+
+</group>
