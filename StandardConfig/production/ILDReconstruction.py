@@ -15,10 +15,7 @@ from Configurables import (
 )
 from Gaudi.Configuration import INFO
 
-try:
-    from k4FWCore.utils import SequenceLoader, import_from
-except ImportError:
-    from py_utils import import_from, SequenceLoader
+from py_utils import import_from, SequenceLoader
 
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
