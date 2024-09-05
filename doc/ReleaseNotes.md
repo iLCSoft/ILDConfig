@@ -1,3 +1,32 @@
+# v02-03-03
+
+* 2024-03-11 tmadlener ([PR#140](https://github.com/iLCSoft/ILDConfig/pull/140))
+  - Update the README to point to the `v02-03-03` release
+  - Add brief description of how to get an ILDConfig that is consistent with the release
+
+* 2024-03-11 tmadlener ([PR#137](https://github.com/iLCSoft/ILDConfig/pull/137))
+  - Add a Gaudi options file to run the standard reconstruction with some command line arguments to configure what to run
+    - Created via automatic conversion of the Marlin steering file plus the necessary adaptions to make it run 
+    - Run from LCIO or EDM4hep inputs (mutually exlusive), use `--inputFiles`
+    - Produce EDM4hep output only by default, but allow to add LCIO output as well or switch to that using `--lcioOutput`.
+    - Read the README section to see all available command line arguments
+  - The overall reconstruction chain is modularized effectively in the same way as it was previously done for Marlin.
+    - Different parts of the chain live in different files, where each file defines part of the whole chain as a sequence.
+    - These sequences are dynamically loaded and configured depending on calibration constants, which depend on the CMS energy as well as the detector model.
+  - Calibration for the different detector models is also split into different `.cfg` files which essentially all just define a single dictionary with all calibration constants. The same approach is followed by the CMS energy dependent config parameters.
+
+* 2024-03-08 tmadlener ([PR#139](https://github.com/iLCSoft/ILDConfig/pull/139))
+  - Make sure standard workflow still runs with default PFA by ensuring the `PFAtype` constant is non empty.
+  - Rename the default PFA configuration to `PandoraPFAStd.xml`
+
+* 2024-02-23 Ulrich Einhaus ([PR#138](https://github.com/iLCSoft/ILDConfig/pull/138))
+  Add CPID calibration for ILD MC production of 2020, one based on training with single particles and one based on 2-fermion-Z-hadronic events.
+  
+  This includes the weight files and the reference files which point to the weight files. In addition, the CPID steering is added to the MarlinRecoMiniDST.xml. Paths are relative and only work if executed from the StandardConfig/production folder!
+
+* 2024-01-10 Gerald Grenier ([PR#135](https://github.com/iLCSoft/ILDConfig/pull/135))
+  Add option to run different PFA type in Standard Reco and add an xml file to run perfect PandoraPFA based on MC truth.
+
 # v02-03-02
 
 * 2023-02-24 Jan Klamka ([PR#134](https://github.com/iLCSoft/iLDConfig/pull/134))

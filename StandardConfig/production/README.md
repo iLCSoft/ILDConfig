@@ -47,8 +47,34 @@ Most of these directories are used by the top-level Marlin steering file *Marlin
 ### 1. Initialize the current ilcsoft release
    
 ```shell
-source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-02/init_ilcsoft.sh
+source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-03-03/init_ilcsoft.sh
 ```
+
+### 1.1 (Semi-optionally) Check-out a version of ILDConfig that is consistent with the release
+
+Each release of iLCSoft has a corresponding tag for ILDConfig. Usually, multiple
+versions of ILDConfig work with a given release, but if you want to make sure to
+get consistent results you can also check out a specific tag for ILDConfig.
+
+If you start from scratch (i.e. before cloning this repository) you can directly
+clone the corresponding tag via
+
+``` shell
+git clone -b v02-03-03 https://github.com/iLCSoft/ILDConfig
+```
+
+
+If you already have cloned this repository than you can simply go to the
+corresponding tag via
+
+``` shell
+git checkout v02-03-03
+```
+
+In both cases you will get a message about being in `detached HEAD` state from
+git. This is simply gits way of telling you that you are not currently on a
+branch. For simply running things this is no problem. If you want to make
+changes it's easiest to simply create a new branch before doing so.
 
 ### 2. Run the lcgeo/ddsim simulation: the 3 ttbar example 
 
@@ -94,6 +120,43 @@ Marlin MarlinStdReco.xml \
   --constant.RunBeamCalReco=false \
   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio
 ```
+
+### 3a. Run the reconstruction using Gaudi in Key4hep
+
+If you are in a Key4hep environment you can also run the reconstruction using
+the [k4MarlinWrapper](https://github.com/key4hep/k4MarlinWrapper) and the Gaudi
+based framework via
+
+```shell
+k4run ILDReconstruction.py --inputFiles=bbudsc_3evt_SIM.slcio
+```
+
+This will by default produce an [EDM4hep](https://github.com/key4hep/EDM4hep)
+output file with similar contents as the *REC* file described above.
+
+`ILDReconstruction.py` has a few command line options / flags
+- `--inputFiles` takes a list of input files to run over. It will automatically
+  detect whether these are LCIO or EDM4hep input files and instantiate the
+  appropriate reader (and a potentially necessary conversion). **It is not
+  possible to mix EDM4hep and LCIO input file**
+- `--detectorModel` is necessary to specify the detector model to run the
+  reconstruction for. Default is `ILD_l5_o1_v02`
+- `--compactFile` can be used to specify a compact detector file. By default
+  this will be constructed to use the compact file from `$K4GEO` that
+  corresponds to the specified detectorModel.
+- `--outputFileBase` is the basename for all the output files that will be
+  created. Defaults to `StandardReco`
+- `--lcioOutput` can be set to either `on`, `off`, or `only` and steers whether
+  there is additional (or exclusive) LCIO output produced as well. Defaults to
+  `off`.
+- `--cmsEnergy` can be used to set the desired center-of-mass energy. Possible
+  values are 250, 250, 500 and 1000 GeV. The default is 250 GeV.
+- `--[run|no]BeamCalReco` toggle whether to run BeamCal reconstruction or not.
+  Defaults to true. Use the `--beamCalCalibFactor` to set the calibration
+  constant (defaults to `79.6`)
+- `--runOverlay` turns on overlay of background events. Defaults to false.
+  **NOTE that you have to configure the necessary overlay files first in
+  `BgOverlay/BgOverlay.py`!**
 
 ### 4. View the result in the event display
 
