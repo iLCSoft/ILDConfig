@@ -1,0 +1,121 @@
+name: smoke-tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "19 6 * * *"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  marlin-std-reco:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        detector_model: [ILD_l5_o1_v02]
+        key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
+        os: [ubuntu2204, el9]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cvmfs-contrib/github-action-cvmfs@v4
+      - uses: aidasoft/run-lcg-view@v4
+        with:
+          container: ${{ matrix.os }}
+          view-path: /cvmfs/${{ matrix.key4hep_build }}/key4hep
+          run: |
+            echo "::group::Run Simulation"
+            cd StandardConfig/production
+            ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
+                  --outputFile bbudsc_3evt_SIM.slcio \
+                  --compactFile $lcgeo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
+                  --steeringFile ddsim_steer.py
+            echo "::endgroup::"
+            echo "::group::Run Reconstruction"
+            Marlin MarlinStdReco.xml \
+                   --constant.lcgeo_DIR=$lcgeo_DIR \
+                   --constant.DetectorModel=${{ matrix.detector_model }} \
+                   --constant.OutputBaseName=bbudsc_3evt \
+                   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio
+            echo "::endgroup::"
+            echo "::group::Run LCTuple"
+            Marlin MarlinStdRecoLCTuple.xml \
+                   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
+                   --MyAIDAProcessor.FileName=bbudsc_3evt_LCTuple
+            echo "::endgroup::"
+            echo "::group::Run MiniDST production"
+            Marlin MarlinStdRecoMiniDST.xml \
+                   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
+                   --constant.OutputFile=bbudsc_3evt_miniDST.slcio \
+                   --constant.lcgeo_DIR=$lcgeo_DIR
+            echo "::endgroup::"
+
+  # Reconstruction using EDM4hep inputs and outputs
+  gaudi-std-reco:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        detector_model: [ILD_l5_o1_v02]
+        key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
+        os: [ubuntu2204, el9]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cvmfs-contrib/github-action-cvmfs@v4
+      - uses: aidasoft/run-lcg-view@v4
+        with:
+          container: ${{ matrix.os }}
+          view-path: /cvmfs/${{ matrix.key4hep_build }}/key4hep
+          run: |
+            echo "::group::Run simulation"
+            cd StandardConfig/production
+            ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
+                  --outputFile bbudsc_3evt_SIM.edm4hep.root \
+                  --compactFile $lcgeo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
+                  --steeringFile ddsim_steer.py
+            echo "::endgroup::"
+            echo "::group::Run reconstruction"
+            k4run ILDReconstruction.py \
+                  --inputFiles=bbudsc_3evt_SIM.edm4hep.root \
+                  --outputFileBase=bbudsc_3evt_GaudiRec \
+                  --detectorModel=${{ matrix.detector_model }}
+
+  # Reconstruction with the v11 model (FCCee) using EDM4hep inputs and outputs
+  gaudi-v11-reco:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        detector_model: [ILD_l5_v11]
+        key4hep_build: [sw-nightlies.hsf.org]
+        os: [ubuntu2204, el9]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cvmfs-contrib/github-action-cvmfs@v4
+      - uses: aidasoft/run-lcg-view@v4
+        with:
+          container: ${{ matrix.os }}
+          view-path: /cvmfs/${{ matrix.key4hep_build }}/key4hep
+          run: |
+            echo "::group::Run simulation"
+            cd StandardConfig/production
+            ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
+                  --outputFile bbudsc_3evt_SIM.edm4hep.root \
+                  --compactFile $lcgeo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
+                  --steeringFile ddsim_steer.py
+            echo "::endgroup::"
+            echo "::group::Run reconstruction"
+            k4run ILDReconstruction.py \
+                  --inputFiles=bbudsc_3evt_SIM.edm4hep.root \
+                  --outputFileBase=bbudsc_3evt_GaudiRec \
+                  --detectorModel=${{ matrix.detector_model }} \
+                  --noBeamCalRec \
+                  --trackingOnly

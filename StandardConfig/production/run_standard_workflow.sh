@@ -71,6 +71,10 @@ MARLIN_CMD="Marlin MarlinStdReco.xml \
   --constant.OutputBaseName=bbudsc_3evt \
   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio"
 
+GAUDI_RECO="k4run ILDReconstruction.py \
+  --inputFiles=bbudsc_3evt_SIM.slcio \
+  --outputFileBase=bbudsc_3evt_GaudiRec"
+
 LCTUPLE_CMD="Marlin MarlinStdRecoLCTuple.xml \
   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
   --MyAIDAProcessor.FileName=bbudsc_3evt_LCTuple"
@@ -83,5 +87,6 @@ MINIDST_CMD="Marlin MarlinStdRecoMiniDST.xml \
 clear_outputs
 run_cmd ddsim.out ${DDSIM_CMD}
 run_cmd marlin.out ${MARLIN_CMD}
+run_cmd k4run_rec.out ${GAUDI_RECO}
 run_cmd lctuple.out ${LCTUPLE_CMD}
 run_cmd minidst.out ${MINIDST_CMD}
