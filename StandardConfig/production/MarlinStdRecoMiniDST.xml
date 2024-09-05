@@ -28,7 +28,6 @@
     <processor name="LeptonID"/>
     <processor name="ComprehensivePID"/>
   </if>
-  <processor name="WWCategorisation"/>
   <processor name="LCIOOutputProcessor"/>
 </execute>
 
@@ -989,16 +988,6 @@
     !V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5
     dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900
   </parameter>
-</processor>
-
-<processor name="WWCategorisation" type="WWCategorisationProcessor">
-  <parameter name="IsolatedElectrons" type="string" lcioInType="ReconstructedParticle"> IsolatedElectrons </parameter>
-  <parameter name="IsolatedMuons" type="string" lcioInType="ReconstructedParticle"> IsolatedMuons </parameter>
-  <parameter name="IsolatedTaus" type="string" lcioInType="ReconstructedParticle"> IsolatedTaus </parameter>
-  <parameter name="IsolatedPhotons" type="string" lcioInType="ReconstructedParticle"> IsolatedPhotons </parameter>
-  <parameter name="PFOsminusphoton" type="string" lcioInType="ReconstructedParticle"> PFOsminusphoton </parameter>
-  <parameter name="TTreeFileName" type="string"> /nfs/dust/ilc/user/ueinhaus/work/WWCKM/TTreeFile.root </parameter>
-  <parameter name="ConfusionMatrixFileName" type="string"> ./ConfusionMatrix.png </parameter>
 </processor>
 
 
