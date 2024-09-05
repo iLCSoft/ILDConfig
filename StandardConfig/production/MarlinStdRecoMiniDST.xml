@@ -28,6 +28,7 @@
     <processor name="LeptonID"/>
     <processor name="ComprehensivePID"/>
   </if>
+  <processor name="WWCategorisation"/>
   <processor name="LCIOOutputProcessor"/>
 </execute>
 
@@ -990,6 +991,15 @@
   </parameter>
 </processor>
 
+<processor name="WWCategorisation" type="WWCategorisationProcessor">
+  <parameter name="IsolatedElectrons" type="string" lcioInType="ReconstructedParticle"> IsolatedElectrons </parameter>
+  <parameter name="IsolatedMuons" type="string" lcioInType="ReconstructedParticle"> IsolatedMuons </parameter>
+  <parameter name="IsolatedTaus" type="string" lcioInType="ReconstructedParticle"> IsolatedTaus </parameter>
+  <parameter name="IsolatedPhotons" type="string" lcioInType="ReconstructedParticle"> IsolatedPhotons </parameter>
+  <parameter name="PFOsminusphoton" type="string" lcioInType="ReconstructedParticle"> PFOsminusphoton </parameter>
+  <parameter name="TTreeFileName" type="string"> /nfs/dust/ilc/user/ueinhaus/work/WWCKM/TTreeFile.root </parameter>
+  <parameter name="ConfusionMatrixFileName" type="string"> ./ConfusionMatrix.png </parameter>
+</processor>
 
 <processor name="LCIOOutputProcessor" type="LCIOOutputProcessor">
   <!-- DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles -->
@@ -1069,119 +1079,6 @@
   <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
   <parameter name="CompressionLevel" type="int" value="6"/>
   <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
-</processor>
-
-<processor name="ComputeCorrectAngulardEdX" type="AngularCorrection_dEdxProcessor">
-  <!-- description not set by author -->
-  <!--parameter for new angular correction dedx= uncorrected_dedx  / f, with f= pol3(lambda)-->
-  <!-- Parameters for 2020 DST (and all generated with v02-02 and v02-02-01 -->
-  <parameter name="AngularCorrectionParameters" type="FloatVec"> 0.970205 0.0007506 4.41781e-8 5.8222e-8 </parameter>
-  <!--LDC track collection name-->
-  <parameter name="LDCTrackCollection" type="string" lcioInType="Track">MarlinTrkTracks </parameter>
-  <!--parameters used in the outdated angular correction outdated_dedx= uncorrected_dedx / f, with f = 1. / ( 1.0+[1]*cos(theta)*cos(theta)/[0] )-->
-</processor>
-
-<!-- Post reconstruction related : PID, Vertexing, Particle finding, cluster topology -->
-<processor name="LikelihoodPID" type="LikelihoodPIDProcessor">
-  <!--Performs particle identification-->
-  <!--Debugging?-->
-  <parameter name="Debug" type="int">0</parameter>
-  <!--Boundaries for energy binning-->
-  <parameter name="EnergyBoundaries" type="FloatVec">0 1.0e+07</parameter>
-  <!--Name of files containing pdfs for charged particles-->
-  <parameter name="FilePDFName" type="StringVec"> ${ProductionDir}/HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root </parameter>
-  <!--Whether MVA low momentum mu/pi is used or not-->
-  <parameter name="UseLowMomentumMuPiSeparation" type="bool">true</parameter>
-  <!--The BDTG weights files for low momentum mu/pi separation-->
-  <parameter name="FileWeightFormupiSeparationName" type="StringVec">${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_02GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_03GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_04GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_05GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_06GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_07GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_08GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_09GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_10GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_11GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_12GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_13GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_14GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_15GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_16GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_17GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_18GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_19GeVP_clusterinfo.weights.xml ${ProductionDir}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_20GeVP_clusterinfo.weights.xml </parameter>
-  <!--dE/dx parameters for each particle-->
-  <!-- Parameters for 2020 DST (and all generated with v02-02 and v02-02-01 -->
-  <parameter name="dEdxParameter_electron" type="FloatVec"> -0.00232937 -3.88424e+13 -37881.1 -1.56837 0 </parameter>
-  <parameter name="dEdxParameter_muon" type="FloatVec"> 0.0717375 -16596.5 -4.84028e+07 0.356728 0.000371431 </parameter>
-  <parameter name="dEdxParameter_pion" type="FloatVec"> 0.0733683 51678.4 8.19644e+07 0.453505 0.000404984 </parameter>
-  <parameter name="dEdxParameter_kaon" type="FloatVec"> 0.0792784 3798.12 4.06952e+07 0.450671 0.00050169 </parameter>
-  <parameter name="dEdxParameter_proton" type="FloatVec"> 0.0770318 1053.24 4.95076e+06 0.281489 0.000168616 </parameter>
-  <!--dE/dx normalization-->
-  <parameter name="dEdxNormalization" type="float">1.350e-7</parameter>
-  <!--dE/dx error factor(7.55 for l5, 8.53 for s5)-->
-  <parameter name="dEdxErrorFactor" type="float">7.55</parameter>
-  <!-- Method: Maximum Likelihood(0), Bayesian(1), or risk based Bayesian(2)-->
-  <parameter name="UseBayesian" type="int">2</parameter>
-  <!-- Cost Matrix for risk based Bayesian(2)-->
-  <parameter name="CostMatrix" type="FloatVec">1.0e-50 1.0 1.5 1.0 1.5 1.0 1.0e-50 3.0 1.0 1.0 1.0 1.0 1.0e-50 1.0 3.0 1.0 1.0 4.0 1.0e-50 2.0 1.0 1.0 5.0 1.0 1.0e-50</parameter>
-  <!--Version to be added to the name of the calculated methods-->
-  <parameter name="PIDMethodsToRun_version" type="string"> v2 </parameter>
-  <!--Name of the PFO collection-->
-  <parameter name="RecoParticleCollection" type="string"> PandoraPFOs </parameter>
-</processor>
-
-<processor name="LeptonID" type="LeptonIDProcessor">
-  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-  <parameter name="Verbosity" type="string"> MESSAGE </parameter>
-  <parameter name="BuildTree" type="bool">false</parameter>
-  <parameter name="EvalMVA" type="bool">true</parameter>
-  <parameter name="weightfile">HighLevelReco/PIDFiles/CPID/LeptonID_multi_jet_dEdx_800t_3d_cm50r50_BDTG.weights.xml</parameter>
-</processor>
-
-<processor name="ComprehensivePID" type="ComprehensivePIDProcessor">
-
-  <parameter name="PFOCollection" type="string" value="PandoraPFOs"/>
-  <parameter name="RecoMCTruthLink" type="string" value="RecoMCTruthLink"/>
-
-  <parameter name="modeExtract" type="bool" value="true" />
-  <parameter name="modeTrain"   type="bool" value="false"/>
-  <parameter name="modeInfer"   type="bool" value="true"/>
-
-  <parameter name="TTreeFileName" type="string" value=""/>
-  <parameter name="reffile" type="string" value="HighLevelReco/PIDFiles/CPID/Ref_singleP_12bins_conservative.txt"/>
-  <parameter name="signalPDGs" type="FloatVec"  value="11 13 211 321 2212"/>
-  <parameter name="backgroundPDGs" type="FloatVec"  value=""/>
-  
-  <parameter name="plotFolder" type="string" value="CPID_Plots"/>
-  <parameter name="fileFormat" type="string" value=".png"/>
-
-  <parameter name="momMin" type="float" value="1"/>
-  <parameter name="momMax" type="float" value="100"/>
-  <parameter name="momLog" type="bool" value="true"/>
-  <parameter name="momNBins" type="float" value="12"/>
-
-  <parameter name="cutD0" type="float" value="0"/>
-  <parameter name="cutZ0" type="float" value="0"/>
-  <parameter name="cutLamMin" type="float" value="0"/>
-  <parameter name="cutLamMax" type="float" value="0"/>
-  <parameter name="cutNTracksMin" type="int" value="1"/>
-  <parameter name="cutNTracksMax" type="int" value="-1"/>
-  
-  <parameter name="inputAlgoSpecs" type="StringVec">
-    dEdx_RCD:dEdx_RCD
-    TOF:TOF100
-    Pandora
-    LeptonID
-  </parameter>
-
-  <parameter name="TOF100.S" type="StringVec" value="TOFEstimators100ps"/>
-  
-  <parameter name="dEdx_RCD.F" type="FloatVec">
-    -1.28883368e-02   2.72959919e+01   1.10560871e+01 -1.74534200e+00  -9.84887586e-07
-      6.49143971e-02   1.55775592e+03   9.31848047e+08  2.32201725e-01   2.50492066e-04
-      6.54955215e-02   8.26239081e+04   1.92933904e+07  2.52743206e-01   2.26657525e-04
-      7.52235689e-02   1.59710415e+04   1.79625604e+06  3.15315795e-01   2.30414997e-04
-      7.92251260e-02   6.38129720e+04   3.82995071e+04  2.80793601e-01   7.14371743e-04
-      1
-  </parameter>
-
-  <parameter name="trainModelSpecs" type="StringVec">
-    TMVA_BDT_MC:TMVA_BDT_MC_12bins_singleP
-  </parameter>
-  <parameter name="trainingObservables" type="StringVec"> </parameter>
-
-  <parameter name="TMVA_BDT_MC_12bins_singleP.S" type="StringVec">
-    !V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass
-    SplitMode=Random:NormMode=NumEvents:!V
-    !V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5
-    dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900
-  </parameter>
-  
 </processor>
 
 </marlin>
