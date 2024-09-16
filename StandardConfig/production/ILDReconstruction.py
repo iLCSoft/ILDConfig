@@ -15,10 +15,7 @@ from Configurables import (
 )
 from Gaudi.Configuration import INFO
 
-try:
-    from k4FWCore.utils import SequenceLoader, import_from
-except ImportError:
-    from py_utils import import_from, SequenceLoader
+from py_utils import import_from, SequenceLoader, parse_collection_patch_file
 
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
@@ -53,6 +50,8 @@ FCCeeMDI_DETECTOR_MODELS = (
     "ILD_l5_o1_v09",
     "ILD_l5_v11",
 )
+
+REC_COLLECTION_CONTENTS_FILE = "collections_rec_level.txt"
 
 parser.add_argument(
     "--inputFiles",
@@ -301,16 +300,26 @@ MyPfoAnalysis.Parameters = {
     "Printing": ["0"],
     "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
 }
-
 algList.append(MyPfoAnalysis)
 
 if reco_args.lcioOutput != "only":
+    # Attach the LCIO -> EDM4hep conversion to the last processor that is run
+    # before the output
     lcioToEDM4hepOutput = Lcio2EDM4hepTool("OutputConversion")
     # Take care of the different naming conventions
     lcioToEDM4hepOutput.collNameMapping = {"MCParticle": "MCParticles"}
     lcioToEDM4hepOutput.OutputLevel = INFO
-    # Attach the conversion to the last non-output processor that is always run
-    MyPfoAnalysis.Lcio2EDM4hepTool = lcioToEDM4hepOutput
+
+    # Make sure that all collections are always available by patching in missing
+    # ones on-the-fly
+    collPatcherRec = MarlinProcessorWrapper(
+        "CollPacherREC", OutputLevel=INFO, ProcessorType="PatchCollections"
+    )
+    collPatcherRec.Parameters = {
+        "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
+    }
+    collPatcherRec.Lcio2EDM4hepTool = lcioToEDM4hepOutput
+    algList.append(collPatcherRec)
 
     edm4hepOutput = PodioOutput("EDM4hepOutput")
     edm4hepOutput.filename = f"{reco_args.outputFileBase}_REC.edm4hep.root"
