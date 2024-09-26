@@ -14,11 +14,10 @@ from Configurables import (
     k4DataSvc,
 )
 from Gaudi.Configuration import INFO
-
-from py_utils import import_from, SequenceLoader, parse_collection_patch_file
-
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
+
+from py_utils import SequenceLoader, import_from, parse_collection_patch_file
 
 # only non-FCCMDI models
 DETECTOR_MODELS = (
