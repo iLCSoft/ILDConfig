@@ -14,11 +14,10 @@ from Configurables import (
     k4DataSvc,
 )
 from Gaudi.Configuration import INFO
-
-from py_utils import import_from, SequenceLoader, parse_collection_patch_file
-
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
+
+from py_utils import SequenceLoader, import_from, parse_collection_patch_file
 
 # only non-FCCMDI models
 DETECTOR_MODELS = (
@@ -46,9 +45,14 @@ DETECTOR_MODELS = (
     "ILD_s5_o4_v02",
 )
 # only FCCMDI
+FCCeeMDI_DETECTOR_MODELS_common_MDI = (
+    "ILD_FCCee_v01",
+    "ILD_FCCee_v02",
+)
 FCCeeMDI_DETECTOR_MODELS = (
     "ILD_l5_o1_v09",
     "ILD_l5_v11",
+    *FCCeeMDI_DETECTOR_MODELS_common_MDI,
 )
 
 REC_COLLECTION_CONTENTS_FILE = "collections_rec_level.txt"
@@ -137,7 +141,10 @@ det_model = reco_args.detectorModel
 if reco_args.compactFile:
     compact_file = reco_args.compactFile
 else:
-    compact_file = f"{os.environ['K4GEO']}/ILD/compact/{det_model}/{det_model}.xml"
+    if det_model in FCCeeMDI_DETECTOR_MODELS_common_MDI:
+        compact_file = f"{os.path.normpath(os.environ['k4geo_DIR'])}/FCCee/ILD_FCCee/compact/{det_model}/{det_model}.xml"
+    else:
+        compact_file = f"{os.path.normpath(os.environ['k4geo_DIR'])}/ILD/compact/{det_model}/{det_model}.xml"
 
 geoSvc = GeoSvc("GeoSvc")
 geoSvc.detectors = [compact_file]
