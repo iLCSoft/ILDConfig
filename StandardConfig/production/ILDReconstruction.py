@@ -45,11 +45,11 @@ DETECTOR_MODELS = (
     "ILD_s5_o4_v02",
 )
 # only FCCMDI
-FCCeeMDI_DETECTOR_MODELS_common_MDI = (
+FCCeeMDI_DETECTOR_MODELS_common_MDI = (  # only models located in $K4GEO/FCCee/ILD_FCCee/
     "ILD_FCCee_v01",
     "ILD_FCCee_v02",
 )
-FCCeeMDI_DETECTOR_MODELS = (
+FCCeeMDI_DETECTOR_MODELS = (  # only add models located in $K4GEO/ILD/ here
     "ILD_l5_o1_v09",
     "ILD_l5_v11",
     *FCCeeMDI_DETECTOR_MODELS_common_MDI,
