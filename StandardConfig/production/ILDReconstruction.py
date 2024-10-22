@@ -142,9 +142,9 @@ if reco_args.compactFile:
     compact_file = reco_args.compactFile
 else:
     if det_model in FCCeeMDI_DETECTOR_MODELS_common_MDI:
-        compact_file = f"{os.path.normpath(os.environ['k4geo_DIR'])}/FCCee/ILD_FCCee/compact/{det_model}/{det_model}.xml"
+        compact_file = f"{os.path.normpath(os.environ['K4GEO'])}/FCCee/ILD_FCCee/compact/{det_model}/{det_model}.xml"
     else:
-        compact_file = f"{os.path.normpath(os.environ['k4geo_DIR'])}/ILD/compact/{det_model}/{det_model}.xml"
+        compact_file = f"{os.path.normpath(os.environ['K4GEO'])}/ILD/compact/{det_model}/{det_model}.xml"
 
 geoSvc = GeoSvc("GeoSvc")
 geoSvc.detectors = [compact_file]
