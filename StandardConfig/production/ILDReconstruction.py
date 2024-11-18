@@ -129,6 +129,14 @@ parser.add_argument(
     action="store_true",
 )
 
+
+def get_compact_file_path(detector_model: str):
+    """returns the compact file path to a specified detector model starting with the path stored in the 'K4GEO' environment variable"""
+    if detector_model in FCCeeMDI_DETECTOR_MODELS_common_MDI:
+        return f"{os.path.normpath(os.environ['K4GEO'])}/FCCee/ILD_FCCee/compact/{detector_model}/{detector_model}.xml"
+    return f"{os.path.normpath(os.environ['K4GEO'])}/ILD/compact/{detector_model}/{detector_model}.xml"
+
+
 reco_args = parser.parse_known_args()[0]
 
 algList = []
@@ -138,13 +146,7 @@ evtsvc = k4DataSvc("EventDataSvc")
 svcList.append(evtsvc)
 
 det_model = reco_args.detectorModel
-if reco_args.compactFile:
-    compact_file = reco_args.compactFile
-else:
-    if det_model in FCCeeMDI_DETECTOR_MODELS_common_MDI:
-        compact_file = f"{os.path.normpath(os.environ['K4GEO'])}/FCCee/ILD_FCCee/compact/{det_model}/{det_model}.xml"
-    else:
-        compact_file = f"{os.path.normpath(os.environ['K4GEO'])}/ILD/compact/{det_model}/{det_model}.xml"
+compact_file = reco_args.compactFile or get_compact_file_path(det_model)
 
 geoSvc = GeoSvc("GeoSvc")
 geoSvc.detectors = [compact_file]
