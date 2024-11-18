@@ -87,13 +87,13 @@ jobs:
                   --outputFileBase=bbudsc_3evt_GaudiRec \
                   --detectorModel=${{ matrix.detector_model }}
 
-  # Reconstruction with the v11 model (FCCee) using EDM4hep inputs and outputs
-  gaudi-v11-reco:
+  # Reconstruction with the ILD@FCCee models using EDM4hep inputs and outputs
+  gaudi-ILDatFCCee-reco:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        detector_model: [ILD_l5_v11]
+        detector_model: [ILD_FCCee_v01, ILD_FCCee_v02]
         key4hep_build: [sw-nightlies.hsf.org]
         os: [ubuntu2204, el9]
 
@@ -109,7 +109,7 @@ jobs:
             cd StandardConfig/production
             ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
                   --outputFile bbudsc_3evt_SIM.edm4hep.root \
-                  --compactFile $lcgeo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
+                  --compactFile $lcgeo_DIR/FCCee/ILD_FCCee/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
                   --steeringFile ddsim_steer.py
             echo "::endgroup::"
             echo "::group::Run reconstruction"
