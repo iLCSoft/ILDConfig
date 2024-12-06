@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MergeCollectionsEcalBarrelHits = MarlinProcessorWrapper(
     "MergeCollectionsEcalBarrelHits"
 )
-MergeCollectionsEcalBarrelHits.OutputLevel = INFO
 MergeCollectionsEcalBarrelHits.ProcessorType = "MergeCollections"
 MergeCollectionsEcalBarrelHits.Parameters = {
     "InputCollections": ["ECalBarrelSiHitsEven", "ECalBarrelSiHitsOdd"],
@@ -16,7 +14,6 @@ MergeCollectionsEcalBarrelHits.Parameters = {
 MergeCollectionsEcalEndcapHits = MarlinProcessorWrapper(
     "MergeCollectionsEcalEndcapHits"
 )
-MergeCollectionsEcalEndcapHits.OutputLevel = INFO
 MergeCollectionsEcalEndcapHits.ProcessorType = "MergeCollections"
 MergeCollectionsEcalEndcapHits.Parameters = {
     "InputCollections": ["ECalEndcapSiHitsEven", "ECalEndcapSiHitsOdd"],
@@ -24,7 +21,6 @@ MergeCollectionsEcalEndcapHits.Parameters = {
 }
 
 MyEcalBarrelDigi = MarlinProcessorWrapper("MyEcalBarrelDigi")
-MyEcalBarrelDigi.OutputLevel = INFO
 MyEcalBarrelDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -37,7 +33,6 @@ MyEcalBarrelDigi.Parameters = {
 }
 
 MyEcalBarrelReco = MarlinProcessorWrapper("MyEcalBarrelReco")
-MyEcalBarrelReco.OutputLevel = INFO
 MyEcalBarrelReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalBarrelReco.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -50,7 +45,6 @@ MyEcalBarrelReco.Parameters = {
 }
 
 MyEcalBarrelGapFiller = MarlinProcessorWrapper("MyEcalBarrelGapFiller")
-MyEcalBarrelGapFiller.OutputLevel = INFO
 MyEcalBarrelGapFiller.ProcessorType = "BruteForceEcalGapFiller"
 MyEcalBarrelGapFiller.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -63,7 +57,6 @@ MyEcalBarrelGapFiller.Parameters = {
 }
 
 MyEcalEndcapDigi = MarlinProcessorWrapper("MyEcalEndcapDigi")
-MyEcalEndcapDigi.OutputLevel = INFO
 MyEcalEndcapDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalEndcapDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -76,7 +69,6 @@ MyEcalEndcapDigi.Parameters = {
 }
 
 MyEcalEndcapReco = MarlinProcessorWrapper("MyEcalEndcapReco")
-MyEcalEndcapReco.OutputLevel = INFO
 MyEcalEndcapReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -89,7 +81,6 @@ MyEcalEndcapReco.Parameters = {
 }
 
 MyEcalEndcapGapFiller = MarlinProcessorWrapper("MyEcalEndcapGapFiller")
-MyEcalEndcapGapFiller.OutputLevel = INFO
 MyEcalEndcapGapFiller.ProcessorType = "BruteForceEcalGapFiller"
 MyEcalEndcapGapFiller.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -102,7 +93,6 @@ MyEcalEndcapGapFiller.Parameters = {
 }
 
 MyEcalRingDigi = MarlinProcessorWrapper("MyEcalRingDigi")
-MyEcalRingDigi.OutputLevel = INFO
 MyEcalRingDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalRingDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -115,7 +105,6 @@ MyEcalRingDigi.Parameters = {
 }
 
 MyEcalRingReco = MarlinProcessorWrapper("MyEcalRingReco")
-MyEcalRingReco.OutputLevel = INFO
 MyEcalRingReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalRingReco.Parameters = {
     "CellIDLayerString": ["layer"],

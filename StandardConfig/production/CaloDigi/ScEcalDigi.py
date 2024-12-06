@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MyEcalBarrelDigiEven = MarlinProcessorWrapper("MyEcalBarrelDigiEven")
-MyEcalBarrelDigiEven.OutputLevel = INFO
 MyEcalBarrelDigiEven.ProcessorType = "RealisticCaloDigiScinPpd"
 MyEcalBarrelDigiEven.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -22,7 +20,6 @@ MyEcalBarrelDigiEven.Parameters = {
 }
 
 MyEcalBarrelDigiOdd = MarlinProcessorWrapper("MyEcalBarrelDigiOdd")
-MyEcalBarrelDigiOdd.OutputLevel = INFO
 MyEcalBarrelDigiOdd.ProcessorType = "RealisticCaloDigiScinPpd"
 MyEcalBarrelDigiOdd.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -40,7 +37,6 @@ MyEcalBarrelDigiOdd.Parameters = {
 }
 
 MyEcalBarrelRecoEven = MarlinProcessorWrapper("MyEcalBarrelRecoEven")
-MyEcalBarrelRecoEven.OutputLevel = INFO
 MyEcalBarrelRecoEven.ProcessorType = "RealisticCaloRecoScinPpd"
 MyEcalBarrelRecoEven.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -55,7 +51,6 @@ MyEcalBarrelRecoEven.Parameters = {
 }
 
 MyEcalBarrelRecoOdd = MarlinProcessorWrapper("MyEcalBarrelRecoOdd")
-MyEcalBarrelRecoOdd.OutputLevel = INFO
 MyEcalBarrelRecoOdd.ProcessorType = "RealisticCaloRecoScinPpd"
 MyEcalBarrelRecoOdd.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -70,7 +65,6 @@ MyEcalBarrelRecoOdd.Parameters = {
 }
 
 MyEcalEndcapDigiEven = MarlinProcessorWrapper("MyEcalEndcapDigiEven")
-MyEcalEndcapDigiEven.OutputLevel = INFO
 MyEcalEndcapDigiEven.ProcessorType = "RealisticCaloDigiScinPpd"
 MyEcalEndcapDigiEven.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -88,7 +82,6 @@ MyEcalEndcapDigiEven.Parameters = {
 }
 
 MyEcalEndcapDigiOdd = MarlinProcessorWrapper("MyEcalEndcapDigiOdd")
-MyEcalEndcapDigiOdd.OutputLevel = INFO
 MyEcalEndcapDigiOdd.ProcessorType = "RealisticCaloDigiScinPpd"
 MyEcalEndcapDigiOdd.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -106,7 +99,6 @@ MyEcalEndcapDigiOdd.Parameters = {
 }
 
 MyEcalEndcapRecoEven = MarlinProcessorWrapper("MyEcalEndcapRecoEven")
-MyEcalEndcapRecoEven.OutputLevel = INFO
 MyEcalEndcapRecoEven.ProcessorType = "RealisticCaloRecoScinPpd"
 MyEcalEndcapRecoEven.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -121,7 +113,6 @@ MyEcalEndcapRecoEven.Parameters = {
 }
 
 MyEcalEndcapRecoOdd = MarlinProcessorWrapper("MyEcalEndcapRecoOdd")
-MyEcalEndcapRecoOdd.OutputLevel = INFO
 MyEcalEndcapRecoOdd.ProcessorType = "RealisticCaloRecoScinPpd"
 MyEcalEndcapRecoOdd.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -136,7 +127,6 @@ MyEcalEndcapRecoOdd.Parameters = {
 }
 
 MyEcalRingDigi = MarlinProcessorWrapper("MyEcalRingDigi")
-MyEcalRingDigi.OutputLevel = INFO
 MyEcalRingDigi.ProcessorType = "RealisticCaloDigiSilicon"
 MyEcalRingDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -149,7 +139,6 @@ MyEcalRingDigi.Parameters = {
 }
 
 MyEcalRingReco = MarlinProcessorWrapper("MyEcalRingReco")
-MyEcalRingReco.OutputLevel = INFO
 MyEcalRingReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalRingReco.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -162,7 +151,6 @@ MyEcalRingReco.Parameters = {
 }
 
 MyDDStripSplitterBarrel = MarlinProcessorWrapper("MyDDStripSplitterBarrel")
-MyDDStripSplitterBarrel.OutputLevel = INFO
 MyDDStripSplitterBarrel.ProcessorType = "DDStripSplitter"
 MyDDStripSplitterBarrel.Parameters = {
     "ECALcollection_evenLayers": ["ECalBarrelScHitsEvenRec"],
@@ -176,7 +164,6 @@ MyDDStripSplitterBarrel.Parameters = {
 }
 
 MyDDStripSplitterEndcap = MarlinProcessorWrapper("MyDDStripSplitterEndcap")
-MyDDStripSplitterEndcap.OutputLevel = INFO
 MyDDStripSplitterEndcap.ProcessorType = "DDStripSplitter"
 MyDDStripSplitterEndcap.Parameters = {
     "ECALcollection_evenLayers": ["ECalEndcapScHitsEvenRec"],
@@ -190,7 +177,6 @@ MyDDStripSplitterEndcap.Parameters = {
 }
 
 MergeEcalBarrelHits = MarlinProcessorWrapper("MergeEcalBarrelHits")
-MergeEcalBarrelHits.OutputLevel = INFO
 MergeEcalBarrelHits.ProcessorType = "MergeCollections"
 MergeEcalBarrelHits.Parameters = {
     "InputCollections": ["ECalBarrelScHitsEven", "ECalBarrelScHitsOdd"],
@@ -198,7 +184,6 @@ MergeEcalBarrelHits.Parameters = {
 }
 
 MergeEcalEndcapHits = MarlinProcessorWrapper("MergeEcalEndcapHits")
-MergeEcalEndcapHits.OutputLevel = INFO
 MergeEcalEndcapHits.ProcessorType = "MergeCollections"
 MergeEcalEndcapHits.Parameters = {
     "InputCollections": ["ECalEndcapScHitsEven", "ECalEndcapScHitsOdd"],
@@ -206,7 +191,6 @@ MergeEcalEndcapHits.Parameters = {
 }
 
 MergeEcalBarrelDigiHits = MarlinProcessorWrapper("MergeEcalBarrelDigiHits")
-MergeEcalBarrelDigiHits.OutputLevel = INFO
 MergeEcalBarrelDigiHits.ProcessorType = "MergeCollections"
 MergeEcalBarrelDigiHits.Parameters = {
     "InputCollections": ["ECalBarrelScHitsEvenDigi", "ECalBarrelScHitsOddDigi"],
@@ -214,7 +198,6 @@ MergeEcalBarrelDigiHits.Parameters = {
 }
 
 MergeEcalEndcapDigiHits = MarlinProcessorWrapper("MergeEcalEndcapDigiHits")
-MergeEcalEndcapDigiHits.OutputLevel = INFO
 MergeEcalEndcapDigiHits.ProcessorType = "MergeCollections"
 MergeEcalEndcapDigiHits.Parameters = {
     "InputCollections": ["ECalEndcapScHitsEvenDigi", "ECalEndcapScHitsOddDigi"],
@@ -222,7 +205,6 @@ MergeEcalEndcapDigiHits.Parameters = {
 }
 
 MergeEcalBarrelRecStripHits = MarlinProcessorWrapper("MergeEcalBarrelRecStripHits")
-MergeEcalBarrelRecStripHits.OutputLevel = INFO
 MergeEcalBarrelRecStripHits.ProcessorType = "MergeCollections"
 MergeEcalBarrelRecStripHits.Parameters = {
     "InputCollections": ["ECalBarrelScHitsEvenRec", "ECalBarrelScHitsOddRec"],
@@ -230,7 +212,6 @@ MergeEcalBarrelRecStripHits.Parameters = {
 }
 
 MergeEcalEndcapRecStripHits = MarlinProcessorWrapper("MergeEcalEndcapRecStripHits")
-MergeEcalEndcapRecStripHits.OutputLevel = INFO
 MergeEcalEndcapRecStripHits.ProcessorType = "MergeCollections"
 MergeEcalEndcapRecStripHits.Parameters = {
     "InputCollections": ["ECalEndcapScHitsEvenRec", "ECalEndcapScHitsOddRec"],
@@ -238,7 +219,6 @@ MergeEcalEndcapRecStripHits.Parameters = {
 }
 
 MergeEcalBarrelRecHits = MarlinProcessorWrapper("MergeEcalBarrelRecHits")
-MergeEcalBarrelRecHits.OutputLevel = INFO
 MergeEcalBarrelRecHits.ProcessorType = "MergeCollections"
 MergeEcalBarrelRecHits.Parameters = {
     "InputCollections": ["ECalBarrelScHitsSplit", "ECalBarrelScHitsUnSplit"],
@@ -246,7 +226,6 @@ MergeEcalBarrelRecHits.Parameters = {
 }
 
 MergeEcalEndcapRecHits = MarlinProcessorWrapper("MergeEcalEndcapRecHits")
-MergeEcalEndcapRecHits.OutputLevel = INFO
 MergeEcalEndcapRecHits.ProcessorType = "MergeCollections"
 MergeEcalEndcapRecHits.Parameters = {
     "InputCollections": ["ECalEndcapScHitsSplit", "ECalEndcapScHitsUnSplit"],

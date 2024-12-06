@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MyDDSimpleMuonDigi = MarlinProcessorWrapper("MyDDSimpleMuonDigi")
-MyDDSimpleMuonDigi.OutputLevel = INFO
 MyDDSimpleMuonDigi.ProcessorType = "DDSimpleMuonDigi"
 MyDDSimpleMuonDigi.Parameters = {
     "CalibrMUON": [CONSTANTS["MuonCalibration"]],

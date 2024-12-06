@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 from Configurables import MarlinProcessorWrapper
-from Gaudi.Configuration import INFO
 
 MySplitCollectionByLayer = MarlinProcessorWrapper("MySplitCollectionByLayer")
-MySplitCollectionByLayer.OutputLevel = INFO
 MySplitCollectionByLayer.ProcessorType = "SplitCollectionByLayer"
 MySplitCollectionByLayer.Parameters = {
     "InputCollection": ["FTDCollection"],
@@ -21,7 +19,6 @@ MySplitCollectionByLayer.Parameters = {
 VXDPlanarDigiProcessor_CMOSVXD5 = MarlinProcessorWrapper(
     "VXDPlanarDigiProcessor_CMOSVXD5"
 )
-VXDPlanarDigiProcessor_CMOSVXD5.OutputLevel = INFO
 VXDPlanarDigiProcessor_CMOSVXD5.ProcessorType = "DDPlanarDigiProcessor"
 VXDPlanarDigiProcessor_CMOSVXD5.Parameters = {
     "ForceHitsOntoSurface": ["true"],
@@ -35,7 +32,6 @@ VXDPlanarDigiProcessor_CMOSVXD5.Parameters = {
 }
 
 SITPlanarDigiProcessor = MarlinProcessorWrapper("SITPlanarDigiProcessor")
-SITPlanarDigiProcessor.OutputLevel = INFO
 SITPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 SITPlanarDigiProcessor.Parameters = {
     "ForceHitsOntoSurface": ["true"],
@@ -49,7 +45,6 @@ SITPlanarDigiProcessor.Parameters = {
 }
 
 FTDPixelPlanarDigiProcessor = MarlinProcessorWrapper("FTDPixelPlanarDigiProcessor")
-FTDPixelPlanarDigiProcessor.OutputLevel = INFO
 FTDPixelPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 FTDPixelPlanarDigiProcessor.Parameters = {
     "ForceHitsOntoSurface": ["true"],
@@ -63,7 +58,6 @@ FTDPixelPlanarDigiProcessor.Parameters = {
 }
 
 FTDStripPlanarDigiProcessor = MarlinProcessorWrapper("FTDStripPlanarDigiProcessor")
-FTDStripPlanarDigiProcessor.OutputLevel = INFO
 FTDStripPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 FTDStripPlanarDigiProcessor.Parameters = {
     "ForceHitsOntoSurface": ["true"],
@@ -77,7 +71,6 @@ FTDStripPlanarDigiProcessor.Parameters = {
 }
 
 FTDDDSpacePointBuilder = MarlinProcessorWrapper("FTDDDSpacePointBuilder")
-FTDDDSpacePointBuilder.OutputLevel = INFO
 FTDDDSpacePointBuilder.ProcessorType = "DDSpacePointBuilder"
 FTDDDSpacePointBuilder.Parameters = {
     "SimHitSpacePointRelCollection": ["FTDSpacePointRelations"],
@@ -89,7 +82,6 @@ FTDDDSpacePointBuilder.Parameters = {
 }
 
 SETPlanarDigiProcessor = MarlinProcessorWrapper("SETPlanarDigiProcessor")
-SETPlanarDigiProcessor.OutputLevel = INFO
 SETPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 SETPlanarDigiProcessor.Parameters = {
     "ForceHitsOntoSurface": ["true"],
@@ -103,7 +95,6 @@ SETPlanarDigiProcessor.Parameters = {
 }
 
 SETDDSpacePointBuilder = MarlinProcessorWrapper("SETDDSpacePointBuilder")
-SETDDSpacePointBuilder.OutputLevel = INFO
 SETDDSpacePointBuilder.ProcessorType = "DDSpacePointBuilder"
 SETDDSpacePointBuilder.Parameters = {
     "SimHitSpacePointRelCollection": ["SETSpacePointRelations"],
@@ -115,7 +106,6 @@ SETDDSpacePointBuilder.Parameters = {
 }
 
 MyTPCDigiProcessor = MarlinProcessorWrapper("MyTPCDigiProcessor")
-MyTPCDigiProcessor.OutputLevel = INFO
 MyTPCDigiProcessor.ProcessorType = "DDTPCDigiProcessor"
 MyTPCDigiProcessor.Parameters = {
     "DiffusionCoeffRPhi": ["0.025"],

@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MyBeamCalClusterReco = MarlinProcessorWrapper("MyBeamCalClusterReco")
-MyBeamCalClusterReco.OutputLevel = INFO
 MyBeamCalClusterReco.ProcessorType = "BeamCalClusterReco"
 MyBeamCalClusterReco.Parameters = {
     "BackgroundMethod": ["Gaussian"],

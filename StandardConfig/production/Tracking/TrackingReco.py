@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
-MyClupatraProcessor.OutputLevel = INFO
 MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
 MyClupatraProcessor.Parameters = {
     "Chi2Cut": ["100"],
@@ -35,7 +33,6 @@ MyClupatraProcessor.Parameters = {
 }
 
 MySiliconTracking_MarlinTrk = MarlinProcessorWrapper("MySiliconTracking_MarlinTrk")
-MySiliconTracking_MarlinTrk.OutputLevel = INFO
 MySiliconTracking_MarlinTrk.ProcessorType = "SiliconTracking_MarlinTrk"
 MySiliconTracking_MarlinTrk.Parameters = {
     "AngleCutForMerging": ["0.1"],
@@ -107,7 +104,6 @@ MySiliconTracking_MarlinTrk.Parameters = {
 }
 
 MyForwardTracking = MarlinProcessorWrapper("MyForwardTracking")
-MyForwardTracking.OutputLevel = INFO
 MyForwardTracking.ProcessorType = "ForwardTracking"
 MyForwardTracking.Parameters = {
     "BestSubsetFinder": ["SubsetSimple"],
@@ -159,7 +155,6 @@ MyForwardTracking.Parameters = {
 }
 
 MyTrackSubsetProcessor = MarlinProcessorWrapper("MyTrackSubsetProcessor")
-MyTrackSubsetProcessor.OutputLevel = INFO
 MyTrackSubsetProcessor.ProcessorType = "TrackSubsetProcessor"
 MyTrackSubsetProcessor.Parameters = {
     "EnergyLossOn": ["true"],
@@ -173,7 +168,6 @@ MyTrackSubsetProcessor.Parameters = {
 }
 
 MyFullLDCTracking_MarlinTrk = MarlinProcessorWrapper("MyFullLDCTracking_MarlinTrk")
-MyFullLDCTracking_MarlinTrk.OutputLevel = INFO
 MyFullLDCTracking_MarlinTrk.ProcessorType = "FullLDCTracking_MarlinTrk"
 MyFullLDCTracking_MarlinTrk.Parameters = {
     "AngleCutForForcedMerging": ["0.05"],
@@ -243,7 +237,6 @@ MyFullLDCTracking_MarlinTrk.Parameters = {
 }
 
 MyCompute_dEdxProcessor = MarlinProcessorWrapper("MyCompute_dEdxProcessor")
-MyCompute_dEdxProcessor.OutputLevel = INFO
 MyCompute_dEdxProcessor.ProcessorType = "Compute_dEdxProcessor"
 MyCompute_dEdxProcessor.Parameters = {
     "AngularCorrectionParameters": ["0.635762", "-0.0573237"],
@@ -263,7 +256,6 @@ MyCompute_dEdxProcessor.Parameters = {
 }
 
 MyV0Finder = MarlinProcessorWrapper("MyV0Finder")
-MyV0Finder.OutputLevel = INFO
 MyV0Finder.ProcessorType = "V0Finder"
 MyV0Finder.Parameters = {
     "MassRangeGamma": ["0.01"],
@@ -273,7 +265,6 @@ MyV0Finder.Parameters = {
 }
 
 MyKinkFinder = MarlinProcessorWrapper("MyKinkFinder")
-MyKinkFinder.OutputLevel = INFO
 MyKinkFinder.ProcessorType = "KinkFinder"
 MyKinkFinder.Parameters = {
     "DebugPrinting": ["0"],
@@ -281,7 +272,6 @@ MyKinkFinder.Parameters = {
 }
 
 MyRefitProcessorKaon = MarlinProcessorWrapper("MyRefitProcessorKaon")
-MyRefitProcessorKaon.OutputLevel = INFO
 MyRefitProcessorKaon.ProcessorType = "RefitProcessor"
 MyRefitProcessorKaon.Parameters = {
     "EnergyLossOn": ["true"],
@@ -301,7 +291,6 @@ MyRefitProcessorKaon.Parameters = {
 }
 
 MyRefitProcessorProton = MarlinProcessorWrapper("MyRefitProcessorProton")
-MyRefitProcessorProton.OutputLevel = INFO
 MyRefitProcessorProton.ProcessorType = "RefitProcessor"
 MyRefitProcessorProton.Parameters = {
     "EnergyLossOn": ["true"],

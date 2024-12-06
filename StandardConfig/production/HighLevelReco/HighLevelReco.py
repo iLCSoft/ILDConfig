@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
 from Configurables import MarlinProcessorWrapper
-from Gaudi.Configuration import INFO
 
 MyAdd4MomCovMatrixCharged = MarlinProcessorWrapper("MyAdd4MomCovMatrixCharged")
-MyAdd4MomCovMatrixCharged.OutputLevel = INFO
 MyAdd4MomCovMatrixCharged.ProcessorType = "Add4MomCovMatrixCharged"
 MyAdd4MomCovMatrixCharged.Parameters = {"InputPandoraPFOsCollection": ["PandoraPFOs"]}
 
 MyAddClusterProperties = MarlinProcessorWrapper("MyAddClusterProperties")
-MyAddClusterProperties.OutputLevel = INFO
 MyAddClusterProperties.ProcessorType = "AddClusterProperties"
 MyAddClusterProperties.Parameters = {
     "ClusterCollection": ["PandoraClusters"],
@@ -19,7 +16,6 @@ MyAddClusterProperties.Parameters = {
 MyComputeShowerShapesProcessor = MarlinProcessorWrapper(
     "MyComputeShowerShapesProcessor"
 )
-MyComputeShowerShapesProcessor.OutputLevel = INFO
 MyComputeShowerShapesProcessor.ProcessorType = "ComputeShowerShapesProcessor"
 MyComputeShowerShapesProcessor.Parameters = {
     "ClusterCollectionName": ["PandoraClusters"],
@@ -32,7 +28,6 @@ MyComputeShowerShapesProcessor.Parameters = {
 }
 
 MyphotonCorrectionProcessor = MarlinProcessorWrapper("MyphotonCorrectionProcessor")
-MyphotonCorrectionProcessor.OutputLevel = INFO
 MyphotonCorrectionProcessor.ProcessorType = "photonCorrectionProcessor"
 MyphotonCorrectionProcessor.Parameters = {
     "energyCor_Linearise": ["0.987", "0.01426"],
@@ -95,7 +90,6 @@ MyphotonCorrectionProcessor.Parameters = {
 }
 
 MyPi0Finder = MarlinProcessorWrapper("MyPi0Finder")
-MyPi0Finder.OutputLevel = INFO
 MyPi0Finder.ProcessorType = "GammaGammaCandidateFinder"
 MyPi0Finder.Parameters = {
     "GammaGammaResonanceMass": ["0.1349766"],
@@ -108,7 +102,6 @@ MyPi0Finder.Parameters = {
 }
 
 MyEtaFinder = MarlinProcessorWrapper("MyEtaFinder")
-MyEtaFinder.OutputLevel = INFO
 MyEtaFinder.ProcessorType = "GammaGammaCandidateFinder"
 MyEtaFinder.Parameters = {
     "GammaGammaResonanceMass": ["0.547862"],
@@ -121,7 +114,6 @@ MyEtaFinder.Parameters = {
 }
 
 MyEtaPrimeFinder = MarlinProcessorWrapper("MyEtaPrimeFinder")
-MyEtaPrimeFinder.OutputLevel = INFO
 MyEtaPrimeFinder.ProcessorType = "GammaGammaCandidateFinder"
 MyEtaPrimeFinder.Parameters = {
     "GammaGammaResonanceMass": ["0.95778"],
@@ -134,7 +126,6 @@ MyEtaPrimeFinder.Parameters = {
 }
 
 MyGammaGammaSolutionFinder = MarlinProcessorWrapper("MyGammaGammaSolutionFinder")
-MyGammaGammaSolutionFinder.OutputLevel = INFO
 MyGammaGammaSolutionFinder.ProcessorType = "GammaGammaSolutionFinder"
 MyGammaGammaSolutionFinder.Parameters = {
     "InputParticleCollectionName1": ["GammaGammaCandidatePi0s"],
@@ -145,7 +136,6 @@ MyGammaGammaSolutionFinder.Parameters = {
 }
 
 MyDistilledPFOCreator = MarlinProcessorWrapper("MyDistilledPFOCreator")
-MyDistilledPFOCreator.OutputLevel = INFO
 MyDistilledPFOCreator.ProcessorType = "DistilledPFOCreator"
 MyDistilledPFOCreator.Parameters = {
     "InputParticleCollectionName1": ["PandoraPFOs"],
@@ -155,7 +145,6 @@ MyDistilledPFOCreator.Parameters = {
 }
 
 MyLikelihoodPID = MarlinProcessorWrapper("MyLikelihoodPID")
-MyLikelihoodPID.OutputLevel = INFO
 MyLikelihoodPID.ProcessorType = "LikelihoodPIDProcessor"
 MyLikelihoodPID.Parameters = {
     # fmt: off
@@ -214,7 +203,6 @@ MyLikelihoodPID.Parameters = {
 }
 
 MyRecoMCTruthLinker = MarlinProcessorWrapper("MyRecoMCTruthLinker")
-MyRecoMCTruthLinker.OutputLevel = INFO
 MyRecoMCTruthLinker.ProcessorType = "RecoMCTruthLinker"
 MyRecoMCTruthLinker.Parameters = {
     "ClusterCollection": ["PandoraClusters"],
@@ -272,7 +260,6 @@ MyRecoMCTruthLinker.Parameters = {
 }
 
 VertexFinder = MarlinProcessorWrapper("VertexFinder")
-VertexFinder.OutputLevel = INFO
 VertexFinder.ProcessorType = "LcfiplusProcessor"
 VertexFinder.Parameters = {
     "Algorithms": ["PrimaryVertexFinder", "BuildUpVertex"],
@@ -317,12 +304,10 @@ VertexFinder.Parameters = {
 }
 
 TrackLengthProcessor = MarlinProcessorWrapper("TrackLengthProcessor")
-TrackLengthProcessor.OutputLevel = INFO
 TrackLengthProcessor.ProcessorType = "TrackLengthProcessor"
 TrackLengthProcessor.Parameters = {"ReconstructedParticleCollection": ["PandoraPFOs"]}
 
 TOFEstimators0ps = MarlinProcessorWrapper("TOFEstimators0ps")
-TOFEstimators0ps.OutputLevel = INFO
 TOFEstimators0ps.ProcessorType = "TOFEstimators"
 TOFEstimators0ps.Parameters = {
     "ExtrapolateToEcal": ["true"],
@@ -333,7 +318,6 @@ TOFEstimators0ps.Parameters = {
 }
 
 TOFEstimators10ps = MarlinProcessorWrapper("TOFEstimators10ps")
-TOFEstimators10ps.OutputLevel = INFO
 TOFEstimators10ps.ProcessorType = "TOFEstimators"
 TOFEstimators10ps.Parameters = {
     "ExtrapolateToEcal": ["true"],
@@ -344,7 +328,6 @@ TOFEstimators10ps.Parameters = {
 }
 
 TOFEstimators50ps = MarlinProcessorWrapper("TOFEstimators50ps")
-TOFEstimators50ps.OutputLevel = INFO
 TOFEstimators50ps.ProcessorType = "TOFEstimators"
 TOFEstimators50ps.Parameters = {
     "ExtrapolateToEcal": ["true"],
@@ -355,7 +338,6 @@ TOFEstimators50ps.Parameters = {
 }
 
 TOFEstimators100ps = MarlinProcessorWrapper("TOFEstimators100ps")
-TOFEstimators100ps.OutputLevel = INFO
 TOFEstimators100ps.ProcessorType = "TOFEstimators"
 TOFEstimators100ps.Parameters = {
     "ExtrapolateToEcal": ["true"],
