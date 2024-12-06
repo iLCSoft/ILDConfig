@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MyHcalBarrelDigi = MarlinProcessorWrapper("MyHcalBarrelDigi")
-MyHcalBarrelDigi.OutputLevel = INFO
 MyHcalBarrelDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -22,7 +20,6 @@ MyHcalBarrelDigi.Parameters = {
 }
 
 MyHcalBarrelReco = MarlinProcessorWrapper("MyHcalBarrelReco")
-MyHcalBarrelReco.OutputLevel = INFO
 MyHcalBarrelReco.ProcessorType = "RealisticCaloRecoScinPpd"
 MyHcalBarrelReco.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -37,7 +34,6 @@ MyHcalBarrelReco.Parameters = {
 }
 
 MyHcalEndcapDigi = MarlinProcessorWrapper("MyHcalEndcapDigi")
-MyHcalEndcapDigi.OutputLevel = INFO
 MyHcalEndcapDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalEndcapDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -55,7 +51,6 @@ MyHcalEndcapDigi.Parameters = {
 }
 
 MyHcalEndcapReco = MarlinProcessorWrapper("MyHcalEndcapReco")
-MyHcalEndcapReco.OutputLevel = INFO
 MyHcalEndcapReco.ProcessorType = "RealisticCaloRecoScinPpd"
 MyHcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -70,7 +65,6 @@ MyHcalEndcapReco.Parameters = {
 }
 
 MyHcalRingDigi = MarlinProcessorWrapper("MyHcalRingDigi")
-MyHcalRingDigi.OutputLevel = INFO
 MyHcalRingDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalRingDigi.Parameters = {
     "CellIDLayerString": ["layer"],
@@ -88,7 +82,6 @@ MyHcalRingDigi.Parameters = {
 }
 
 MyHcalRingReco = MarlinProcessorWrapper("MyHcalRingReco")
-MyHcalRingReco.OutputLevel = INFO
 MyHcalRingReco.ProcessorType = "RealisticCaloRecoScinPpd"
 MyHcalRingReco.Parameters = {
     "CellIDLayerString": ["layer"],

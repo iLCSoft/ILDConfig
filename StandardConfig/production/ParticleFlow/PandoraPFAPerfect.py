@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MyRecoMCTruthLinkerPass1 = MarlinProcessorWrapper("MyRecoMCTruthLinkerPass1")
-MyRecoMCTruthLinkerPass1.OutputLevel = INFO
 MyRecoMCTruthLinkerPass1.ProcessorType = "RecoMCTruthLinker"
 MyRecoMCTruthLinkerPass1.Parameters = {
     "ClusterCollection": [],
@@ -43,7 +41,6 @@ MyRecoMCTruthLinkerPass1.Parameters = {
 }
 
 MyDDMarlinPandora = MarlinProcessorWrapper("MyDDMarlinPandora")
-MyDDMarlinPandora.OutputLevel = INFO
 MyDDMarlinPandora.ProcessorType = "DDPandoraPFANewProcessor"
 MyDDMarlinPandora.Parameters = {
     "ClusterCollectionName": ["PandoraClusters"],

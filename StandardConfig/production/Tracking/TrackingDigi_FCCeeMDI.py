@@ -5,10 +5,8 @@
 # non-name parameters of Vertex and Inner D as for CLD (https://github.com/key4hep/CLDConfig/blob/main/CLDConfig/CLDReconstruction.py @ bbb0842)
 
 from Configurables import MarlinProcessorWrapper
-from Gaudi.Configuration import INFO
 
 VertexBarrelDigitiser = MarlinProcessorWrapper("VertexBarrelDigitiser")
-VertexBarrelDigitiser.OutputLevel = INFO
 VertexBarrelDigitiser.ProcessorType = "DDPlanarDigiProcessor"
 VertexBarrelDigitiser.Parameters = {
     "IsStrip": ["false"],
@@ -21,7 +19,6 @@ VertexBarrelDigitiser.Parameters = {
 }
 
 VertexEndcapDigitiser = MarlinProcessorWrapper("VertexEndcapDigitiser")
-VertexEndcapDigitiser.OutputLevel = INFO
 VertexEndcapDigitiser.ProcessorType = "DDPlanarDigiProcessor"
 VertexEndcapDigitiser.Parameters = {
     "IsStrip": ["false"],
@@ -34,7 +31,6 @@ VertexEndcapDigitiser.Parameters = {
 }
 
 InnerPlanarDigiProcessor = MarlinProcessorWrapper("InnerPlanarDigiProcessor")
-InnerPlanarDigiProcessor.OutputLevel = INFO
 InnerPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerPlanarDigiProcessor.Parameters = {
     "IsStrip": ["false"],
@@ -49,7 +45,6 @@ InnerPlanarDigiProcessor.Parameters = {
 InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
     "InnerEndcapPlanarDigiProcessor"
 )
-InnerEndcapPlanarDigiProcessor.OutputLevel = INFO
 InnerEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerEndcapPlanarDigiProcessor.Parameters = {
     "IsStrip": ["false"],
@@ -62,7 +57,6 @@ InnerEndcapPlanarDigiProcessor.Parameters = {
 }
 
 SETPlanarDigiProcessor = MarlinProcessorWrapper("SETPlanarDigiProcessor")
-SETPlanarDigiProcessor.OutputLevel = INFO
 SETPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 SETPlanarDigiProcessor.Parameters = {
     "ForceHitsOntoSurface": ["true"],
@@ -76,7 +70,6 @@ SETPlanarDigiProcessor.Parameters = {
 }
 
 SETDDSpacePointBuilder = MarlinProcessorWrapper("SETDDSpacePointBuilder")
-SETDDSpacePointBuilder.OutputLevel = INFO
 SETDDSpacePointBuilder.ProcessorType = "DDSpacePointBuilder"
 SETDDSpacePointBuilder.Parameters = {
     "SimHitSpacePointRelCollection": ["SETSpacePointRelations"],
@@ -88,7 +81,6 @@ SETDDSpacePointBuilder.Parameters = {
 }
 
 MyTPCDigiProcessor = MarlinProcessorWrapper("MyTPCDigiProcessor")
-MyTPCDigiProcessor.OutputLevel = INFO
 MyTPCDigiProcessor.ProcessorType = "DDTPCDigiProcessor"
 MyTPCDigiProcessor.Parameters = {
     "DiffusionCoeffRPhi": ["0.025"],

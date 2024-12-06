@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 MySimDigital = MarlinProcessorWrapper("MySimDigital")
-MySimDigital.OutputLevel = INFO
 MySimDigital.ProcessorType = "SimDigital"
 MySimDigital.Parameters = {
     "AngleCorrectionPower": ["0.65"],
@@ -42,7 +40,6 @@ MySimDigital.Parameters = {
 }
 
 MySimDigitalToEnergy = MarlinProcessorWrapper("MySimDigitalToEnergy")
-MySimDigitalToEnergy.OutputLevel = INFO
 MySimDigitalToEnergy.ProcessorType = "SimDigitalToEnergy"
 MySimDigitalToEnergy.Parameters = {
     "EnergyCalibration": [CONSTANTS["SDHcalEnergyFactors"]],
