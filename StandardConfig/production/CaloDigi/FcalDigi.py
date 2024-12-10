@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 
 MySimpleBCalDigi = MarlinProcessorWrapper("MySimpleBCalDigi")
-MySimpleBCalDigi.OutputLevel = INFO
 MySimpleBCalDigi.ProcessorType = "SimpleFCalDigi"
 MySimpleBCalDigi.Parameters = {
     "CalibrFCAL": [CONSTANTS["BeamCalCalibrationFactor"]],
@@ -18,7 +16,6 @@ MySimpleBCalDigi.Parameters = {
 }
 
 MySimpleLCalDigi = MarlinProcessorWrapper("MySimpleLCalDigi")
-MySimpleLCalDigi.OutputLevel = INFO
 MySimpleLCalDigi.ProcessorType = "SimpleFCalDigi"
 MySimpleLCalDigi.Parameters = {
     "CalibrFCAL": ["89.0"],
@@ -31,7 +28,6 @@ MySimpleLCalDigi.Parameters = {
 }
 
 MySimpleLHCalDigi = MarlinProcessorWrapper("MySimpleLHCalDigi")
-MySimpleLHCalDigi.OutputLevel = INFO
 MySimpleLHCalDigi.ProcessorType = "SimpleFCalDigi"
 MySimpleLHCalDigi.Parameters = {
     "CalibrFCAL": ["150"],

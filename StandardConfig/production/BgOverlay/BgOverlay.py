@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import INFO
 from Configurables import MarlinProcessorWrapper
 
 BgOverlayWW = MarlinProcessorWrapper("BgOverlayWW")
-BgOverlayWW.OutputLevel = INFO
 BgOverlayWW.ProcessorType = "Overlay"
 BgOverlayWW.Parameters = {
     "InputFileNames": ["undefined.slcio"],
@@ -13,7 +11,6 @@ BgOverlayWW.Parameters = {
 }
 
 BgOverlayWB = MarlinProcessorWrapper("BgOverlayWB")
-BgOverlayWB.OutputLevel = INFO
 BgOverlayWB.ProcessorType = "Overlay"
 BgOverlayWB.Parameters = {
     "InputFileNames": ["undefined.slcio"],
@@ -22,7 +19,6 @@ BgOverlayWB.Parameters = {
 }
 
 BgOverlayBW = MarlinProcessorWrapper("BgOverlayBW")
-BgOverlayBW.OutputLevel = INFO
 BgOverlayBW.ProcessorType = "Overlay"
 BgOverlayBW.Parameters = {
     "InputFileNames": ["undefined.slcio"],
@@ -31,7 +27,6 @@ BgOverlayBW.Parameters = {
 }
 
 BgOverlayBB = MarlinProcessorWrapper("BgOverlayBB")
-BgOverlayBB.OutputLevel = INFO
 BgOverlayBB.ProcessorType = "Overlay"
 BgOverlayBB.Parameters = {
     "InputFileNames": ["undefined.slcio"],
@@ -40,7 +35,6 @@ BgOverlayBB.Parameters = {
 }
 
 PairBgOverlay = MarlinProcessorWrapper("PairBgOverlay")
-PairBgOverlay.OutputLevel = INFO
 PairBgOverlay.ProcessorType = "Overlay"
 PairBgOverlay.Parameters = {
     "ExcludeCollections": ["BeamCalCollection"],

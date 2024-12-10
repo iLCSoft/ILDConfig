@@ -205,7 +205,6 @@ else:
 
 
 MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
-MyAIDAProcessor.OutputLevel = INFO
 MyAIDAProcessor.ProcessorType = "AIDAProcessor"
 MyAIDAProcessor.Parameters = {
     "Compress": ["1"],
@@ -224,7 +223,6 @@ if isinstance(read, PodioInput):
 
 
 MyStatusmonitor = MarlinProcessorWrapper("MyStatusmonitor")
-MyStatusmonitor.OutputLevel = INFO
 MyStatusmonitor.ProcessorType = "Statusmonitor"
 MyStatusmonitor.Parameters = {"HowOften": ["1"]}
 algList.append(MyStatusmonitor)
@@ -269,7 +267,6 @@ if not reco_args.trackingOnly:
 
 
 MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
-MyPfoAnalysis.OutputLevel = INFO
 MyPfoAnalysis.ProcessorType = "PfoAnalysis"
 MyPfoAnalysis.Parameters = {
     "BCalCollections": ["BCAL"],
@@ -317,12 +314,11 @@ if reco_args.lcioOutput != "only":
     lcioToEDM4hepOutput = Lcio2EDM4hepTool("OutputConversion")
     # Take care of the different naming conventions
     lcioToEDM4hepOutput.collNameMapping = {"MCParticle": "MCParticles"}
-    lcioToEDM4hepOutput.OutputLevel = INFO
 
     # Make sure that all collections are always available by patching in missing
     # ones on-the-fly
     collPatcherRec = MarlinProcessorWrapper(
-        "CollPacherREC", OutputLevel=INFO, ProcessorType="PatchCollections"
+        "CollPacherREC", ProcessorType="PatchCollections"
     )
     collPatcherRec.Parameters = {
         "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
@@ -341,7 +337,6 @@ if reco_args.lcioOutput != "only":
 
 if reco_args.lcioOutput in ("on", "only"):
     MyLCIOOutputProcessor = MarlinProcessorWrapper("MyLCIOOutputProcessor")
-    MyLCIOOutputProcessor.OutputLevel = INFO
     MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
     MyLCIOOutputProcessor.Parameters = {
         "CompressionLevel": ["6"],
@@ -351,7 +346,6 @@ if reco_args.lcioOutput in ("on", "only"):
     }
 
     DSTOutput = MarlinProcessorWrapper("DSTOutput")
-    DSTOutput.OutputLevel = INFO
     DSTOutput.ProcessorType = "LCIOOutputProcessor"
     DSTOutput.Parameters = {
         "CompressionLevel": ["6"],
