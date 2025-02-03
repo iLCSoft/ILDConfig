@@ -185,7 +185,10 @@ def get_drop_collections(calib: Dict[str, str], cmds: bool) -> List[str]:
     Returns:
         List [str]: A list of collections to drop
     """
-    drop_calib = calib.get("DropCollectionsCalibrationREC", [])
-    drop_add = calib.get("AdditionalDropCollectionsREC", [])
+    drop_calib = calib.get("DropCollectionsCalibrationREC", "")
+    drop_calib = drop_calib.split(" ") if drop_calib else []
+    drop_add = calib.get("AdditionalDropCollectionsREC", "")
+    drop_add = drop_add.split(" ") if drop_add else []
+
     prefix = "drop " if cmds else ""
     return [f"{prefix}{c}" for c in drop_calib + drop_add]
