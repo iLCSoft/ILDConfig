@@ -167,3 +167,25 @@ def parse_collection_patch_file(patch_file: Union[str, os.PathLike]) -> List[str
 
     # Flatten the list of lists into one large list
     return [s for strings in patch_colls for s in strings]
+
+
+def get_drop_collections(calib: Dict[str, str], cmds: bool) -> List[str]:
+    """Get the collections to drop from the calibration
+
+    Combine all the different sources for dropping collections into one list.
+    These sources are
+    - DropCollectionsCalibrationREC (i.e. the ones defined in the calibration)
+    - AdditionalDropCollectionsREC (i.e. user defined ones)
+
+    Args:
+        calib (Dict[str, str]): The calibration configuration
+        cmds (bool): Whether or not the list should be turned into a list of
+            keep / drop commands as used by EDM4hep output
+
+    Returns:
+        List [str]: A list of collections to drop
+    """
+    drop_calib = calib.get("DropCollectionsCalibrationREC", [])
+    drop_add = calib.get("AdditionalDropCollectionsREC", [])
+    prefix = "drop " if cmds else ""
+    return [f"{prefix}{c}" for c in drop_calib + drop_add]

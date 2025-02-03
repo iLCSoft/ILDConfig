@@ -20,7 +20,12 @@ from k4MarlinWrapper.parseConstants import parseConstants
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
 sys.path.append(Path(__file__).parent)
-from py_utils import SequenceLoader, import_from, parse_collection_patch_file
+from py_utils import (
+    SequenceLoader,
+    import_from,
+    parse_collection_patch_file,
+    get_drop_collections,
+)
 
 # only non-FCCMDI models
 DETECTOR_MODELS = (
@@ -332,8 +337,7 @@ if reco_args.lcioOutput != "only":
     edm4hepOutput = PodioOutput("EDM4hepOutput")
     edm4hepOutput.filename = f"{reco_args.outputFileBase}_REC.edm4hep.root"
     edm4hepOutput.outputCommands = ["keep *"]
-    for name in CONSTANTS["AdditionalDropCollectionsREC"].split(" "):
-        edm4hepOutput.outputCommands.append(f"drop {name}")
+    edm4hepOutput.outputCommands.extend(get_drop_collections(CONSTANTS, True))
 
     algList.append(edm4hepOutput)
 
@@ -343,7 +347,7 @@ if reco_args.lcioOutput in ("on", "only"):
     MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
     MyLCIOOutputProcessor.Parameters = {
         "CompressionLevel": ["6"],
-        "DropCollectionNames": [CONSTANTS["AdditionalDropCollectionsREC"]],
+        "DropCollectionNames": get_drop_collections(CONSTANTS, False),
         "LCIOOutputFile": [f"{reco_args.outputFileBase}_REC.slcio"],
         "LCIOWriteMode": ["WRITE_NEW"],
     }
