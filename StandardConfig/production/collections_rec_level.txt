@@ -7,12 +7,12 @@
      ClupatraTrackSegments                              Track                                             
      ClupatraTracks                                     Track                                             
      ClusterMCTruthLink                                 LCRelation[Cluster,MCParticle]                    
-     DistilledPFOs                                      ReconstructedParticle                             
+     DistilledPFOs                                      ReconstructedParticle*
      ECalBarrelSiHitsEven                               SimCalorimeterHit                                 
      ECalBarrelSiHitsOdd                                SimCalorimeterHit                                 
      ECalEndcapSiHitsEven                               SimCalorimeterHit                                 
      ECalEndcapSiHitsOdd                                SimCalorimeterHit                                 
-     EcalBarrelCollection                               SimCalorimeterHit                                 
+     EcalBarrelCollection                               SimCalorimeterHit*
      EcalBarrelCollectionDigi                           CalorimeterHit                                    
      EcalBarrelCollectionGapHits                        CalorimeterHit                                    
      EcalBarrelCollectionRec                            CalorimeterHit                                    
@@ -23,7 +23,7 @@
      EcalEndcapRingCollectionRec                        CalorimeterHit                                    
      EcalEndcapRingRelationsSimDigi                     LCRelation[CalorimeterHit,SimCalorimeterHit]      
      EcalEndcapRingRelationsSimRec                      LCRelation[CalorimeterHit,SimCalorimeterHit]      
-     EcalEndcapsCollection                              SimCalorimeterHit                                 
+     EcalEndcapsCollection                              SimCalorimeterHit*
      EcalEndcapsCollectionDigi                          CalorimeterHit                                    
      EcalEndcapsCollectionGapHits                       CalorimeterHit                                    
      EcalEndcapsCollectionRec                           CalorimeterHit                                    
@@ -42,7 +42,7 @@
      GammaGammaCandidateEtaPrimes                       ReconstructedParticle                             
      GammaGammaCandidateEtas                            ReconstructedParticle                             
      GammaGammaCandidatePi0s                            ReconstructedParticle                             
-     GammaGammaParticles                                ReconstructedParticle                             
+     GammaGammaParticles                                ReconstructedParticle*
      HcalBarrelCollectionDigi                           CalorimeterHit                                    
      HcalBarrelCollectionRec                            CalorimeterHit                                    
      HcalBarrelRegCollection                            SimCalorimeterHit                                 
@@ -65,7 +65,7 @@
      LHCalCollection                                    SimCalorimeterHit                                 
      LumiCalCollection                                  SimCalorimeterHit                                 
      MCParticle                                         MCParticle                                        
-     MCParticlesSkimmed                                 MCParticle                                        
+     MCParticlesSkimmed                                 MCParticle*
      MCTruthClusterLink                                 LCRelation[MCParticle,Cluster]                    
      MCTruthMarlinTrkTracksLink                         LCRelation[MCParticle,Track]                      
      MCTruthRecoLink                                    LCRelation[MCParticle,ReconstructedParticle]      
