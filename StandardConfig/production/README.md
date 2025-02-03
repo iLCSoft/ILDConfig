@@ -194,46 +194,6 @@ Marlin MarlinStdRecoLCTuple.xml \
 This will produce the file *bbudsc_3evt_LCTuple.root*
 
 
-## Generating one/multiple steering files
-
-Even if the current top-level Marlin steering file *MarlinStdReco.xml* can be run as it is, it's sometimes more convenient to have a (almost) standalone steering file without includes. The python script *GenerateSteeringFiles.py* helps you to generate a new steering file from the default top level one. The help command is the following :
-
-```shell
-python GenerateSteeringFiles.py --help
-usage: Steering file generate: [-h] [--lcgeo_DIR LCGEO_DIR]
-                               [--detectorModels DETECTORMODELS [DETECTORMODELS ...]]
-                               [--outputDirectory OUTPUTDIRECTORY]
-                               [--steeringFile STEERINGFILE]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --lcgeo_DIR LCGEO_DIR
-                        The path to lcgeo directory (default taken from env vars)
-  --detectorModels DETECTORMODELS [DETECTORMODELS ...]
-                        The detector models to process
-  --outputDirectory OUTPUTDIRECTORY
-                        The output directory in which the output files will go
-  --steeringFile STEERINGFILE
-                        The input template steering file
-```
-By default, the detector models are the ones under studies. You can choose one model or many by using the --detectorModels option. The option --lcgeo_DIR allows you to set a particular lcgeo version to use. By default, the environment variable lcgeo_DIR (defined after sourcing a particular ilcsoft version) is used. The --steeringFile option is the top-level Marlin steering file to process (by default MarlinStdReco.xml).
-
-You can, for example generate the 4 flavors of option 5 with large and small TPC radius by running the following command :
-
-```shell
-mkdir GeneratedFiles
-python GenerateSteeringFiles.py \
-  --detectorModels ILD_l5_o1_v02 ILD_l5_o2_v02 ILD_s5_o1_v02 ILD_s5_o2_v02 \
-  --outputDirectory ./GeneratedFiles
-```
-
-This will produces 4 files :
-
-```shell
-ls GeneratedFiles
-# -> MarlinStdReco_ILD_l5_o1_v02.xml  MarlinStdReco_ILD_l5_o2_v02.xml  MarlinStdReco_ILD_s5_o1_v02.xml  MarlinStdReco_ILD_s5_o2_v02.xml
-```
-
 ## Running the full reconstruction chain with all silicon ILD model
 
 In order to run the standard full reconstruction with the ILD_l5_v09 model, in the `MarlinStdReco.xml` file:
