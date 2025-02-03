@@ -36,8 +36,8 @@
      FTDSpacePoints                                     TrackerHit                                        
      FTDStripTrackerHitRelations                        LCRelation[TrackerHitPlane,SimTrackerHit]         
      FTDStripTrackerHits                                TrackerHitPlane                                   
-     FTD_PIXELCollection                                SimTrackerHit
-     FTD_STRIPCollection                                SimTrackerHit
+     FTD_PIXELCollection                                SimTrackerHit*
+     FTD_STRIPCollection                                SimTrackerHit*
      ForwardTracks                                      Track                                             
      GammaGammaCandidateEtaPrimes                       ReconstructedParticle                             
      GammaGammaCandidateEtas                            ReconstructedParticle                             
