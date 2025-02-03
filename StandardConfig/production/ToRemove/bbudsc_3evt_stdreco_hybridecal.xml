@@ -184,7 +184,7 @@
   <processor name="InitDD4hep" type="InitializeDD4hep">
     <!--InitializeDD4hep reads a compact xml file and initializes the DD4hep::LCDD object-->
     <!--Name of the DD4hep compact xml file to load-->
-    <parameter name="DD4hepXMLFile" type="string"> $lcgeo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml </parameter>
+    <parameter name="DD4hepXMLFile" type="string"> $k4geo_DIR/ILD/compact/ILD_o1_v05/ILD_o1_v05.xml </parameter>
   </processor>
   
 

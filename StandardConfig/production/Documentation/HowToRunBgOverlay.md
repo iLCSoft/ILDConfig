@@ -67,7 +67,7 @@ For run the WW (virtual-virtual) simulation, e.g, for one file :
 ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pW.I39212.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pW.I39212.01.stdhep.ddsim.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.1968 0 \
   --vertexOffset 0 0 0 0 \
   --steeringFile ddsim_steer.py
@@ -79,7 +79,7 @@ For run the WB (virtual-beam) simulation, e.g, for one file :
 ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pB.I39213.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eW.pB.I39213.01.stdhep.ddsim.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.186 0 \
   --vertexOffset 0 0 -0.04222 0 \
   --steeringFile ddsim_steer.py
@@ -91,7 +91,7 @@ For run the BW (beam-virtual) simulation, e.g, for one file :
 ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pW.I39214.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pW.I39214.01.stdhep.ddsim.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.186 0 \
   --vertexOffset 0 0 0.04222 0 \
   --steeringFile ddsim_steer.py
@@ -103,7 +103,7 @@ For run the BB (beam-beam) simulation, e.g, for one file :
 ddsim \
   --inputFiles /pnfs/desy.de/ilc/prod/ilc/mc-dbd/generated/500-TDR_ws/aa_lowpt/E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I39215.01.stdhep \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E0500-TDR_ws.Paaddhad.Gwhizard-1.95.eB.pB.I39215.01.stdhep.ddsim.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.16988 0 \
   --vertexOffset 0 0 0 0 \
   --steeringFile ddsim_steer.py
@@ -122,7 +122,7 @@ and the command to run the ddsim simulation for pair background is the following
 ddsim \
   --inputFiles /nfs/dust/ilc/user/berggren/blub/E500-TDR_ws.PBeamstr-seeablepairs.GGuineaPig-v1-4-4.I230001.0001.slcio \
   --outputFile sv01-19-05_lcgeo.mILD_l5_o1_v02.E500-TDR_ws.PBeamstr-seeablepairs.GGuineaPig-v1-4-4.I230001.0001.simulated.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --steeringFile ddsim_steer.py \
   --lcio.mcParticleCollectionName MCParticles
 ```
@@ -137,7 +137,7 @@ First run the simulation as usual :
 ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
   --vertexSigma  0 0 0.1968 0 \
   --vertexOffset 0 0 0 0 \
   --steeringFile ddsim_steer.py
@@ -155,7 +155,7 @@ are copied locally, one can run the following command to reconstruct events with
 
 ```shell
 Marlin MarlinStdReco.xml \
-  --constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.lcgeo_DIR=$k4geo_DIR \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --global.LCIOInputFiles=bbudsc_3evt.slcio \
   --constant.OutputBaseName=bbudsc_3evt \

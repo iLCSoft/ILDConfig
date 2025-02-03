@@ -62,11 +62,11 @@ done
 DDSIM_CMD="ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt_SIM.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
   --steeringFile ddsim_steer.py"
 
 MARLIN_CMD="Marlin MarlinStdReco.xml \
-  --constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.lcgeo_DIR=$k4geo_DIR \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --constant.OutputBaseName=bbudsc_3evt \
   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio"
@@ -82,7 +82,7 @@ LCTUPLE_CMD="Marlin MarlinStdRecoLCTuple.xml \
 MINIDST_CMD="Marlin MarlinStdRecoMiniDST.xml \
   --global.LCIOInputFiles=bbudsc_3evt_DST.slcio \
   --constant.OutputFile=bbudsc_3evt_miniDST.slcio \
-  --constant.lcgeo_DIR=$lcgeo_DIR"
+  --constant.lcgeo_DIR=$k4geo_DIR"
 
 clear_outputs
 run_cmd ddsim.out ${DDSIM_CMD}

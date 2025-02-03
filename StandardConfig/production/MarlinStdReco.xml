@@ -26,7 +26,7 @@
   <constants>
     <!-- ***** Global constant for reconstruction ***** -->
     <!-- The lcgeo directory where to look for the ILD model -->
-    <constant name="lcgeo_DIR" value="/path/to/lcgeo_DIR" />
+    <constant name="lcgeo_DIR" value="/path/to/k4geo_DIR" />
     <!-- ILD detector model -->
     <constant name="DetectorModel" value="None_Please_specify_one" />
     <!-- The full compact file name -->

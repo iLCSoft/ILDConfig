@@ -82,7 +82,7 @@ changes it's easiest to simply create a new branch before doing so.
 ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt_SIM.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
   --steeringFile ddsim_steer.py
 ```
 
@@ -98,7 +98,7 @@ anajob bbudsc_3evt_SIM.slcio
 
 ```shell
 Marlin MarlinStdReco.xml \
-  --constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.lcgeo_DIR=$k4geo_DIR \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --constant.OutputBaseName=bbudsc_3evt \
   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio
@@ -114,7 +114,7 @@ For single particles reconstruction you may also want to switch off the BeamCal 
 
 ```shell
 Marlin MarlinStdReco.xml \
-  --constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.lcgeo_DIR=$k4geo_DIR \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --constant.OutputBaseName=bbudsc_3evt \
   --constant.RunBeamCalReco=false \
@@ -180,7 +180,7 @@ Marlin MarlinStdRecoViewerDST.xml \
 - start both, glced and Marlin in one go:
 ```shell
 # Option -s 1 to display also tracking surfaces
-ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml bbudsc_3evt_REC.slcio
+ced2go -s 1 -d $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml bbudsc_3evt_REC.slcio
 ```
 
 ### 5. Create a ROOT TTree for analysis
