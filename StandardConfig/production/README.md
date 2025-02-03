@@ -82,7 +82,7 @@ changes it's easiest to simply create a new branch before doing so.
 ddsim \
   --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
   --outputFile bbudsc_3evt_SIM.slcio \
-  --compactFile $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
+  --compactFile $k4geo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
   --steeringFile ddsim_steer.py
 ```
 
@@ -98,7 +98,7 @@ anajob bbudsc_3evt_SIM.slcio
 
 ```shell
 Marlin MarlinStdReco.xml \
-  --constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.lcgeo_DIR=$k4geo_DIR \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --constant.OutputBaseName=bbudsc_3evt \
   --global.LCIOInputFiles=bbudsc_3evt_SIM.slcio
@@ -114,7 +114,7 @@ For single particles reconstruction you may also want to switch off the BeamCal 
 
 ```shell
 Marlin MarlinStdReco.xml \
-  --constant.lcgeo_DIR=$lcgeo_DIR \
+  --constant.lcgeo_DIR=$k4geo_DIR \
   --constant.DetectorModel=ILD_l5_o1_v02 \
   --constant.OutputBaseName=bbudsc_3evt \
   --constant.RunBeamCalReco=false \
@@ -180,7 +180,7 @@ Marlin MarlinStdRecoViewerDST.xml \
 - start both, glced and Marlin in one go:
 ```shell
 # Option -s 1 to display also tracking surfaces
-ced2go -s 1 -d $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml bbudsc_3evt_REC.slcio
+ced2go -s 1 -d $k4geo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml bbudsc_3evt_REC.slcio
 ```
 
 ### 5. Create a ROOT TTree for analysis
@@ -193,46 +193,6 @@ Marlin MarlinStdRecoLCTuple.xml \
 
 This will produce the file *bbudsc_3evt_LCTuple.root*
 
-
-## Generating one/multiple steering files
-
-Even if the current top-level Marlin steering file *MarlinStdReco.xml* can be run as it is, it's sometimes more convenient to have a (almost) standalone steering file without includes. The python script *GenerateSteeringFiles.py* helps you to generate a new steering file from the default top level one. The help command is the following :
-
-```shell
-python GenerateSteeringFiles.py --help
-usage: Steering file generate: [-h] [--lcgeo_DIR LCGEO_DIR]
-                               [--detectorModels DETECTORMODELS [DETECTORMODELS ...]]
-                               [--outputDirectory OUTPUTDIRECTORY]
-                               [--steeringFile STEERINGFILE]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --lcgeo_DIR LCGEO_DIR
-                        The path to lcgeo directory (default taken from env vars)
-  --detectorModels DETECTORMODELS [DETECTORMODELS ...]
-                        The detector models to process
-  --outputDirectory OUTPUTDIRECTORY
-                        The output directory in which the output files will go
-  --steeringFile STEERINGFILE
-                        The input template steering file
-```
-By default, the detector models are the ones under studies. You can choose one model or many by using the --detectorModels option. The option --lcgeo_DIR allows you to set a particular lcgeo version to use. By default, the environment variable lcgeo_DIR (defined after sourcing a particular ilcsoft version) is used. The --steeringFile option is the top-level Marlin steering file to process (by default MarlinStdReco.xml).
-
-You can, for example generate the 4 flavors of option 5 with large and small TPC radius by running the following command :
-
-```shell
-mkdir GeneratedFiles
-python GenerateSteeringFiles.py \
-  --detectorModels ILD_l5_o1_v02 ILD_l5_o2_v02 ILD_s5_o1_v02 ILD_s5_o2_v02 \
-  --outputDirectory ./GeneratedFiles
-```
-
-This will produces 4 files :
-
-```shell
-ls GeneratedFiles
-# -> MarlinStdReco_ILD_l5_o1_v02.xml  MarlinStdReco_ILD_l5_o2_v02.xml  MarlinStdReco_ILD_s5_o1_v02.xml  MarlinStdReco_ILD_s5_o2_v02.xml
-```
 
 ## Running the full reconstruction chain with all silicon ILD model
 

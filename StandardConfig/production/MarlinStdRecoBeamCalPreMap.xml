@@ -4,7 +4,7 @@
   binary FCalClusterer/bin/BCBackgroundPar.
   Example usage: 
   Marlin 
-    --constant.lcgeo_DIR=$lcgeo_DIR 
+    --constant.lcgeo_DIR=$k4geo_DIR
     --constant.DetectorModel=ILD_l5_v08 
     --constant.OutputPreMapFile=OutputPreMap.root
     --global.LCIOInputFiles=file.slcio
@@ -18,7 +18,7 @@
   <constants>
     <!-- ***** Global constant for reconstruction ***** -->
     <!-- The lcgeo directory where to look for the ILD model -->
-    <constant name="lcgeo_DIR" value="/path/to/lcgeo_DIR" />
+    <constant name="lcgeo_DIR" value="/path/to/k4geo_DIR" />
     <!-- ILD detector model -->
     <constant name="DetectorModel" value="None_Please_specify_one" />
     <!-- The full compact file name -->

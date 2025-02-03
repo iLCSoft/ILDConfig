@@ -45,7 +45,7 @@
   <constant name="OutputFile" value="mini-DST.slcio"/>
   <constant name="ProductionDir" value="."/>
   <constant name="RundEdxCorrections" value="true"/>
-  <constant name="lcgeo_DIR" value=$lcgeo_DIR/>
+  <constant name="lcgeo_DIR" value=$k4geo_DIR/>
 
   <constant name="LCFIPlusConfig_DIR" value="./LCFIPlusConfig"/>
   <constant name="LCFIPlusVertexPrefix" value="ildl5_4q250_ZZ"/>
