@@ -128,9 +128,11 @@ MyEtaPrimeFinder.Parameters = {
 MyGammaGammaSolutionFinder = MarlinProcessorWrapper("MyGammaGammaSolutionFinder")
 MyGammaGammaSolutionFinder.ProcessorType = "GammaGammaSolutionFinder"
 MyGammaGammaSolutionFinder.Parameters = {
-    "InputParticleCollectionName1": ["GammaGammaCandidatePi0s"],
-    "InputParticleCollectionName2": ["GammaGammaCandidateEtas"],
-    "InputParticleCollectionName3": ["GammaGammaCandidateEtaPrimes"],
+    "GammaGammaCandidateCollections" : [
+      "GammaGammaCandidatePi0s",
+      "GammaGammaCandidateEtas",
+      "GammaGammaCandidateEtaPrimes",
+    ],
     "OutputParticleCollectionName": ["GammaGammaParticles"],
     "Printing": ["0"],
 }
