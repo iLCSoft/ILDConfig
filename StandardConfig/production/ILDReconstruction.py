@@ -4,12 +4,9 @@ from pathlib import Path
 
 from Configurables import (
     ApplicationMgr,
-    EDM4hep2LcioTool,
     GeoSvc,
     Lcio2EDM4hepTool,
-    LcioEvent,
     MarlinProcessorWrapper,
-    PodioInput,
     PodioOutput,
     k4DataSvc,
     AuditorSvc,
@@ -18,6 +15,7 @@ from Configurables import (
 from Gaudi.Configuration import INFO
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
+from k4MarlinWrapper.inputReader import create_reader, attach_edm4hep2lcio_conversion
 
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
@@ -185,26 +183,6 @@ sequenceLoader = SequenceLoader(
 )
 
 
-def create_reader(input_files):
-    """Create the appropriate reader for the input files"""
-    if input_files[0].endswith(".slcio"):
-        if any(not f.endswith(".slcio") for f in input_files):
-            print("All input files need to have the same format (LCIO)")
-            sys.exit(1)
-
-        read = LcioEvent()
-        read.Files = input_files
-    else:
-        if any(not f.endswith(".root") for f in input_files):
-            print("All input files need to have the same format (EDM4hep)")
-            sys.exit(1)
-        read = PodioInput("PodioInput")
-        global evtsvc
-        evtsvc.inputs = input_files
-
-    return read
-
-
 if reco_args.inputFiles:
     read = create_reader(reco_args.inputFiles)
     read.OutputLevel = INFO
@@ -221,15 +199,6 @@ MyAIDAProcessor.Parameters = {
     "FileType": ["root"],
 }
 algList.append(MyAIDAProcessor)
-
-# We need to convert the inputs in case we have EDM4hep input
-if isinstance(read, PodioInput):
-    EDM4hep2LcioInput = EDM4hep2LcioTool("InputConversion")
-    EDM4hep2LcioInput.convertAll = True
-    # Adjust for the different naming conventions
-    EDM4hep2LcioInput.collNameMapping = {"MCParticles": "MCParticle"}
-    MyAIDAProcessor.EDM4hep2LcioTool = EDM4hep2LcioInput
-
 
 MyStatusmonitor = MarlinProcessorWrapper("MyStatusmonitor")
 MyStatusmonitor.ProcessorType = "Statusmonitor"
@@ -389,6 +358,7 @@ if reco_args.lcioOutput in ("on", "only"):
     algList.append(MyLCIOOutputProcessor)
     algList.append(DSTOutput)
 
+attach_edm4hep2lcio_conversion(algList, read)
 
 # Use Gaudi Auditor service to get timing information on algorithm execution
 auditorSvc = AuditorSvc()
