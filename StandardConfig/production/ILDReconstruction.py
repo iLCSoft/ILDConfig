@@ -296,7 +296,7 @@ if reco_args.lcioOutput != "only":
     # Make sure that all collections are always available by patching in missing
     # ones on-the-fly
     collPatcherRec = MarlinProcessorWrapper(
-        "CollPacherREC", ProcessorType="PatchCollections"
+        "CollPatcherREC", ProcessorType="PatchCollections"
     )
     collPatcherRec.Parameters = {
         "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
