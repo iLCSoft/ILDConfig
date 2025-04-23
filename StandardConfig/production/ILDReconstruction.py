@@ -3,16 +3,17 @@ import sys
 from pathlib import Path
 
 from Configurables import (
-    ApplicationMgr,
     GeoSvc,
     Lcio2EDM4hepTool,
     MarlinProcessorWrapper,
     PodioOutput,
-    k4DataSvc,
     AuditorSvc,
     AlgTimingAuditor,
+    EventDataSvc,
+    LcioEvent,
 )
 from Gaudi.Configuration import INFO
+from k4FWCore import ApplicationMgr, IOSvc
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 from k4MarlinWrapper.inputReader import create_reader, attach_edm4hep2lcio_conversion
@@ -150,7 +151,7 @@ reco_args = parser.parse_known_args()[0]
 algList = []
 svcList = []
 
-evtsvc = k4DataSvc("EventDataSvc")
+evtsvc = EventDataSvc("EventDataSvc")
 svcList.append(evtsvc)
 
 det_model = reco_args.detectorModel
@@ -183,10 +184,30 @@ sequenceLoader = SequenceLoader(
 )
 
 
+def add_reader(input_files, alg_list):
+    """Add a reader that is equipped to read the passed files and make sure it
+    appears on the list of algorithms if necessary"""
+    if input_files[0].endswith(".slcio"):
+        if any(not f.endswith(".slcio") for f in input_files):
+            print("All input files need to have the same format (LCIO)")
+            sys.exit(1)
+
+        read = LcioEvent()
+        read.Files = input_files
+        alg_list.append(read)
+    else:
+        if any(not f.endswith(".root") for f in input_files):
+            print("All input files need to have the same format (EDM4hep)")
+            sys.exit(1)
+
+        read = IOSvc("IOSvc")
+        read.Input = input_files
+
+    return read
+
+
 if reco_args.inputFiles:
-    read = create_reader(reco_args.inputFiles, evtsvc)
-    read.OutputLevel = INFO
-    algList.append(read)
+    read = add_reader()
 else:
     read = None
 
