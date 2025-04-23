@@ -183,7 +183,7 @@ sequenceLoader = SequenceLoader(
 
 
 if reco_args.inputFiles:
-    read = create_reader(reco_args.inputFiles)
+    read = create_reader(reco_args.inputFiles, evtsvc)
     read.OutputLevel = INFO
     algList.append(read)
 else:
