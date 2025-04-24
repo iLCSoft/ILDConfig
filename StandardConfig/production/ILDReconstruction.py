@@ -4,19 +4,16 @@ from pathlib import Path
 
 from Configurables import (
     GeoSvc,
-    Lcio2EDM4hepTool,
     MarlinProcessorWrapper,
-    PodioOutput,
+    EventDataSvc,
     AuditorSvc,
     AlgTimingAuditor,
-    EventDataSvc,
-    LcioEvent,
 )
 from Gaudi.Configuration import INFO
 from k4FWCore import ApplicationMgr, IOSvc
 from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
-from k4MarlinWrapper.inputReader import create_reader, attach_edm4hep2lcio_conversion
+from k4MarlinWrapper.io_helpers import IOHandlerHelper
 
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
@@ -153,6 +150,7 @@ svcList = []
 
 evtsvc = EventDataSvc("EventDataSvc")
 svcList.append(evtsvc)
+iosvc = IOSvc()
 
 det_model = reco_args.detectorModel
 compact_file = reco_args.compactFile or get_compact_file_path(det_model)
@@ -183,34 +181,8 @@ sequenceLoader = SequenceLoader(
     global_vars={"CONSTANTS": CONSTANTS, "cms_energy_config": cms_energy_config},
 )
 
-
-def add_reader(input_files, alg_list):
-    """Add a reader that is equipped to read the passed files and make sure it
-    appears on the list of algorithms if necessary"""
-    if input_files[0].endswith(".slcio"):
-        if any(not f.endswith(".slcio") for f in input_files):
-            print("All input files need to have the same format (LCIO)")
-            sys.exit(1)
-
-        read = LcioEvent()
-        read.Files = input_files
-        alg_list.append(read)
-    else:
-        if any(not f.endswith(".root") for f in input_files):
-            print("All input files need to have the same format (EDM4hep)")
-            sys.exit(1)
-
-        read = IOSvc("IOSvc")
-        read.Input = input_files
-
-    return read
-
-
-if reco_args.inputFiles:
-    read = add_reader()
-else:
-    read = None
-
+io_handler = IOHandlerHelper(algList, iosvc)
+io_handler.add_reader(reco_args.inputFiles)
 
 MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
 MyAIDAProcessor.ProcessorType = "AIDAProcessor"
@@ -264,56 +236,49 @@ if not reco_args.trackingOnly:
 
     sequenceLoader.load("HighLevelReco/HighLevelReco")
 
-
-MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
-MyPfoAnalysis.ProcessorType = "PfoAnalysis"
-MyPfoAnalysis.Parameters = {
-    "BCalCollections": ["BCAL"],
-    "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
-    "CollectCalibrationDetails": ["0"],
-    "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
-    "ECalCollections": [
-        "EcalBarrelCollectionRec",
-        "EcalBarrelCollectionGapHits",
-        "EcalEndcapsCollectionRec",
-        "EcalEndcapsCollectionGapHits",
-        "EcalEndcapRingCollectionRec",
-    ],
-    "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
-    "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
-    "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
-    "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
-    "HCalCollections": [
-        "HcalBarrelCollectionRec",
-        "HcalEndcapsCollectionRec",
-        "HcalEndcapRingCollectionRec",
-    ],
-    "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
-    "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
-    "LCalCollections": ["LCAL"],
-    "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
-    "LHCalCollections": ["LHCAL"],
-    "LHCalCollectionsSimCaloHit": ["LHCalCollection"],
-    "LookForQuarksWithMotherZ": ["2"],
-    "MCParticleCollection": ["MCParticle"],
-    "MCPfoSelectionLowEnergyNPCutOff": ["1.2"],
-    "MCPfoSelectionMomentum": ["0.01"],
-    "MCPfoSelectionRadius": ["500."],
-    "MuonCollections": ["MUON"],
-    "MuonCollectionsSimCaloHit": ["YokeBarrelCollection", "YokeEndcapsCollection"],
-    "PfoCollection": ["PandoraPFOs"],
-    "Printing": ["0"],
-    "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
-}
-algList.append(MyPfoAnalysis)
+    MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
+    MyPfoAnalysis.ProcessorType = "PfoAnalysis"
+    MyPfoAnalysis.Parameters = {
+        "BCalCollections": ["BCAL"],
+        "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
+        "CollectCalibrationDetails": ["0"],
+        "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
+        "ECalCollections": [
+            "EcalBarrelCollectionRec",
+            "EcalBarrelCollectionGapHits",
+            "EcalEndcapsCollectionRec",
+            "EcalEndcapsCollectionGapHits",
+            "EcalEndcapRingCollectionRec",
+        ],
+        "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
+        "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
+        "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
+        "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
+        "HCalCollections": [
+            "HcalBarrelCollectionRec",
+            "HcalEndcapsCollectionRec",
+            "HcalEndcapRingCollectionRec",
+        ],
+        "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
+        "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
+        "LCalCollections": ["LCAL"],
+        "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
+        "LHCalCollections": ["LHCAL"],
+        "LHCalCollectionsSimCaloHit": ["LHCalCollection"],
+        "LookForQuarksWithMotherZ": ["2"],
+        "MCParticleCollection": ["MCParticle"],
+        "MCPfoSelectionLowEnergyNPCutOff": ["1.2"],
+        "MCPfoSelectionMomentum": ["0.01"],
+        "MCPfoSelectionRadius": ["500."],
+        "MuonCollections": ["MUON"],
+        "MuonCollectionsSimCaloHit": ["YokeBarrelCollection", "YokeEndcapsCollection"],
+        "PfoCollection": ["PandoraPFOs"],
+        "Printing": ["0"],
+        "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
+    }
+    algList.append(MyPfoAnalysis)
 
 if reco_args.lcioOutput != "only":
-    # Attach the LCIO -> EDM4hep conversion to the last processor that is run
-    # before the output
-    lcioToEDM4hepOutput = Lcio2EDM4hepTool("OutputConversion")
-    # Take care of the different naming conventions
-    lcioToEDM4hepOutput.collNameMapping = {"MCParticle": "MCParticles"}
-
     # Make sure that all collections are always available by patching in missing
     # ones on-the-fly
     collPatcherRec = MarlinProcessorWrapper(
@@ -322,20 +287,16 @@ if reco_args.lcioOutput != "only":
     collPatcherRec.Parameters = {
         "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
     }
-    collPatcherRec.Lcio2EDM4hepTool = lcioToEDM4hepOutput
-    algList.append(collPatcherRec)
 
-    edm4hepOutput = PodioOutput("EDM4hepOutput")
-    edm4hepOutput.filename = f"{reco_args.outputFileBase}_REC.edm4hep.root"
-    edm4hepOutput.outputCommands = ["keep *"]
-    edm4hepOutput.outputCommands.extend(get_drop_collections(CONSTANTS, True))
-
-    algList.append(edm4hepOutput)
+    output_commands = ["keep *"]
+    output_commands.extend(get_drop_collections(CONSTANTS, True))
+    io_handler.add_edm4hep_writer(
+        f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands
+    )
 
 
 if reco_args.lcioOutput in ("on", "only"):
-    MyLCIOOutputProcessor = MarlinProcessorWrapper("MyLCIOOutputProcessor")
-    MyLCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
+    MyLCIOOutputProcessor = io_handler.add_lcio_writer("MyLCIOOutputProcessor")
     MyLCIOOutputProcessor.Parameters = {
         "CompressionLevel": ["6"],
         "DropCollectionNames": get_drop_collections(CONSTANTS, False),
@@ -343,7 +304,7 @@ if reco_args.lcioOutput in ("on", "only"):
         "LCIOWriteMode": ["WRITE_NEW"],
     }
 
-    DSTOutput = MarlinProcessorWrapper("DSTOutput")
+    DSTOutput = io_handler.add_lcio_writer("DSTOutput")
     DSTOutput.ProcessorType = "LCIOOutputProcessor"
     DSTOutput.Parameters = {
         "CompressionLevel": ["6"],
@@ -376,10 +337,7 @@ if reco_args.lcioOutput in ("on", "only"):
         "LCIOWriteMode": ["WRITE_NEW"],
     }
 
-    algList.append(MyLCIOOutputProcessor)
-    algList.append(DSTOutput)
-
-attach_edm4hep2lcio_conversion(algList, read)
+io_handler.finalize_converters()
 
 # Use Gaudi Auditor service to get timing information on algorithm execution
 auditorSvc = AuditorSvc()
