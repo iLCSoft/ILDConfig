@@ -95,7 +95,7 @@ jobs:
       matrix:
         detector_model: [ILD_FCCee_v01, ILD_FCCee_v02]
         key4hep_build: [sw-nightlies.hsf.org]
-        os: [ubuntu2204, el9]
+        os: [ubuntu2404, el9]
 
     steps:
       - uses: actions/checkout@v4
