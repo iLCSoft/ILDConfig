@@ -12,6 +12,8 @@ from Configurables import (
     PodioInput,
     PodioOutput,
     k4DataSvc,
+    AuditorSvc,
+    AlgTimingAuditor,
 )
 from Gaudi.Configuration import INFO
 from k4FWCore.parseArgs import parser
@@ -161,7 +163,6 @@ geoSvc.detectors = [compact_file]
 geoSvc.OutputLevel = INFO
 geoSvc.EnableGeant4Geo = False
 svcList.append(geoSvc)
-
 
 CONSTANTS = {
     "CMSEnergy": str(reco_args.cmsEnergy),
@@ -388,6 +389,16 @@ if reco_args.lcioOutput in ("on", "only"):
     algList.append(MyLCIOOutputProcessor)
     algList.append(DSTOutput)
 
-ApplicationMgr(
+
+# Use Gaudi Auditor service to get timing information on algorithm execution
+auditorSvc = AuditorSvc()
+svcList.append(auditorSvc)
+auditorSvc.Auditors = [AlgTimingAuditor()]
+
+app_mgr = ApplicationMgr(
     TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
 )
+
+app_mgr.AuditAlgorithms = True
+app_mgr.AuditTools = True
+app_mgr.AuditServices = True
