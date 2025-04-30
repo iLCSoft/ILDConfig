@@ -1,3 +1,62 @@
+# v02-03-04
+
+* 2025-04-28 Thomas Madlener ([PR#163](https://github.com/ilCSoft/ILDConfig/pull/163))
+  - Add information output about the time spent in each algorithm to the end of the execution for Gaudi reconstruction
+
+* 2025-04-28 Thomas Madlener ([PR#162](https://github.com/ilCSoft/ILDConfig/pull/162))
+  - Set the default verbosity to `MESSAGE` for `MarlinStdReco.xml` and `MarlinStdRecoLCTuple.xml`
+
+* 2025-04-25 Thomas Madlener ([PR#160](https://github.com/ilCSoft/ILDConfig/pull/160))
+  - Switch to Ubuntu24 for the CI workflows that test the FCCee models
+
+* 2025-02-05 Thomas Madlener ([PR#156](https://github.com/ilCSoft/ILDConfig/pull/156))
+  - Introduce a `DropCollectionsCalibrationREC` for all the `CONSTANTS` configurations to free **`AdditionalDropCollectionsREC`** for user defined collections that should be dropped.
+    - Introduce `get_drop_collections` function that does the appropriate merging.
+
+* 2025-02-03 Thomas Madlener ([PR#158](https://github.com/ilCSoft/ILDConfig/pull/158))
+  - Mark all subset collections as such in the full REC collections content to avoid spurious crashes.
+    - See also the documentation changes in [key4hep/k4EDM4hep2LcioConv#109](https://github.com/key4hep/k4EDM4hep2LcioConv/pull/109)
+  - Sort the collection list alphabetically
+
+* 2025-02-03 Thomas Madlener ([PR#157](https://github.com/ilCSoft/ILDConfig/pull/157))
+  - Replace `$lcgeo_DIR` usage by `$k4geo_DIR` in READMEs and example scripts as the former is going to be removed (see [key4hep/k4geo#415](https://github.com/key4hep/k4geo/pull/415).
+  - **Keeping the `constants` and command line arguments unchanged to not break user scripts and workflows**.
+
+* 2025-02-03 Thomas Madlener ([PR#155](https://github.com/ilCSoft/ILDConfig/pull/155))
+  - Make sure that the `py_utils` import works as expected by setting PYTHONPATH on the fly accordingly.
+
+* 2024-12-10 Thomas Madlener ([PR#152](https://github.com/ilCSoft/ILDConfig/pull/152))
+  - Remove all `OutputLevel` settings from the wrapped Marlin processors in `ILDReconstruction.py` and components.
+
+* 2024-11-18 Victor Schwan ([PR#150](https://github.com/ilCSoft/ILDConfig/pull/150))
+  - minimal requirements for reco with ILD_FCCee_v01/2 models satisfied
+
+* 2024-09-16 tmadlener ([PR#149](https://github.com/ilCSoft/ILDConfig/pull/149))
+  - Make sure that all events contain the same collection contents before they are converted to EDM4hep by patching in potentially missing empty collections on the fly using the `PatchCollections` processor.
+  - For now the contents of `collctions_rec_level.txt` has been determined from the 3 ttbar events that we run in CI. This will need some more adjustments as we go and most likely also needs some more tuning for different detector models.
+
+* 2024-09-06 Ulrich Einhaus ([PR#148](https://github.com/ilCSoft/ILDConfig/pull/148))
+  - added weight files for 0.1 GeV < p < 1 GeV
+  - split into 6 bins for 2f-Z-had, but only 4 bins for single particles due to statistics reasons
+  - use the new reference files Ref_2fZhad_18bins... or Ref_singleP_16bins..., respectively
+
+* 2024-08-29 Victor Laurenz Schwan ([PR#142](https://github.com/ilCSoft/ILDConfig/pull/142))
+  - ILD Reco also possible with v09 and v11 models
+  - so far only tracking
+
+* 2024-08-23 tmadlener ([PR#147](https://github.com/ilCSoft/ILDConfig/pull/147))
+  - Run the CI workflows on a daily schedule to detect accidental upstream breakages
+
+* 2024-08-21 tmadlener ([PR#146](https://github.com/ilCSoft/ILDConfig/pull/146))
+  - Remove the old travis-ci configuration
+  - Fix triggers for github actions based CI
+
+* 2024-08-02 tmadlener ([PR#145](https://github.com/ilCSoft/ILDConfig/pull/145))
+  - Add CI workflows based on key4hep releases and nightlies that run the typical 3 ttbar events simulation & full reconstruction for
+    - LCIO inputs / outputs using Marlin: `MarlinStdReco.xml`, `MarlinStdRecoLCTuple.xml` and `MarlinStdRecoMiniDST.xml`
+    - EDM4hep inputs / outputs using Gaudi: `ILDReconstruction.py`
+  - The setup currently only uses the `ILD_l5_o1_v02` geometry, but more geometries can be added
+
 # v02-03-03
 
 * 2024-03-11 tmadlener ([PR#140](https://github.com/iLCSoft/ILDConfig/pull/140))
