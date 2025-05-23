@@ -21,7 +21,12 @@ jobs:
       matrix:
         detector_model: [ILD_l5_o1_v02]
         key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
-        os: [ubuntu2204, el9]
+        os: [el9]
+        include:
+          - detector_model: ILD_l5_o1_v02
+            key4hep_build: sw-nightlies.hsf.org
+            os: ubuntu2404
+
     steps:
       - uses: actions/checkout@v4
       - uses: cvmfs-contrib/github-action-cvmfs@v4
@@ -64,7 +69,11 @@ jobs:
       matrix:
         detector_model: [ILD_l5_o1_v02]
         key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
-        os: [ubuntu2204, el9]
+        os: [el9]
+        include:
+          - detector_model: ILD_l5_o1_v02
+            key4hep_build: sw-nightlies.hsf.org
+            os: ubuntu2404
 
     steps:
       - uses: actions/checkout@v4
