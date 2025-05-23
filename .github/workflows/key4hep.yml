@@ -95,6 +95,18 @@ jobs:
                   --inputFiles=bbudsc_3evt_SIM.edm4hep.root \
                   --outputFileBase=bbudsc_3evt_GaudiRec \
                   --detectorModel=${{ matrix.detector_model }}
+            echo "::endgroup::"
+            echo "::group::Run simulation (LCIO output)"
+            ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \
+                  --outputFile bbudsc_3evt_SIM.slcio \
+                  --compactFile $k4geo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml \
+                  --steeringFile ddsim_steer.py
+            echo "::endgroup::"
+            echo "::group::Run reconstruction (LCIO input)"
+            k4run ILDReconstruction.py \
+                  --inputFiles=bbudsc_3evt_SIM.slcio \
+                  --outputFileBase=bbudsc_3evt_GaudiRec_LCIO_input \
+                  --detectorModel=${{ matrix.detector_model }}
 
   # Reconstruction with the ILD@FCCee models using EDM4hep inputs and outputs
   gaudi-ILDatFCCee-reco:
