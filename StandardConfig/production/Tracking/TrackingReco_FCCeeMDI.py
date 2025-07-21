@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from Configurables import MarlinProcessorWrapper
+from py_utils import encode_CT_steps_dict_to_legacy_list
 
-CT_MAX_DIST = "0.03;"  # semi-colon is important! RANDOM VALUE COPYIED FROM CLDRECO
+CT_MAX_DIST = "0.03"  # RANDOM VALUE COPYIED FROM CLDRECO
 MCPartColName = ["MCParticle"]  # MCParticleCollectionName
 VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
 VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
@@ -40,7 +41,50 @@ MyClupatraProcessor.Parameters = {
 
 MyConformalTracking = MarlinProcessorWrapper("MyConformalTracking")
 MyConformalTracking.ProcessorType = "ConformalTrackingV2"
-# fmt: off
+conformal_tracking_steps_config = {
+    "VertexBarrel": {
+        "collections": ["VertexBarrelTrackerHits"],
+        "params": {
+            "MaxCellAngle": 0.01,
+            "MaxCellAngleRZ": 0.01,
+            "Chi2Cut": 100,
+            "MinClustersOnTrack": 4,
+            "MaxDistance": CT_MAX_DIST,
+            "SlopeZRange": 10.0,
+            "HighPTCut": 10.0,
+        },
+        "flags": ["HighPTFit", "VertexToTracker"],
+        "functions": ["CombineCollections", "BuildNewTracks"],
+    },
+    "VertexEncap": {
+        "collections": ["VertexEndcapTrackerHits"],
+        "params": {
+            "MaxCellAngle": 0.01,
+            "MaxCellAngleRZ": 0.01,
+            "Chi2Cut": 100,
+            "MinClustersOnTrack": 4,
+            "MaxDistance": CT_MAX_DIST,
+            "SlopeZRange": 10.0,
+            "HighPTCut": 10.0,
+        },
+        "flags": ["HighPTFit", "VertexToTracker"],
+        "functions": ["CombineCollections", "ExtendTracks"],
+    },
+    "Tracker": {
+        "collections": ["InnerTrackerBarrelHits", "InnerTrackerEndcapHits"],
+        "params": {
+            "MaxCellAngle": 0.1,
+            "MaxCellAngleRZ": 0.1,
+            "Chi2Cut": 2000,
+            "MinClustersOnTrack": 4,
+            "MaxDistance": CT_MAX_DIST,
+            "SlopeZRange": 10.0,
+            "HighPTCut": 1.0,
+        },
+        "flags": ["HighPTFit", "VertexToTracker", "RadialSearch"],
+        "functions": ["CombineCollections", "ExtendTracks"],
+    },
+}
 MyConformalTracking.Parameters = {
     "DebugHits": ["DebugHits"],
     "DebugPlots": ["false"],
@@ -57,23 +101,7 @@ MyConformalTracking.Parameters = {
     "RetryTooManyTracks": ["false"],
     "SiTrackCollectionName": ["SiTracksCT"],
     "SortTreeResults": ["true"],
-    "Steps": [
-        "[VertexBarrel]",
-        "@Collections", ":", "VertexBarrelTrackerHits",
-        "@Parameters", ":", "MaxCellAngle", ":", "0.01;", "MaxCellAngleRZ", ":", "0.01;", "Chi2Cut", ":", "100;", "MinClustersOnTrack", ":", "4;", "MaxDistance", ":", CT_MAX_DIST, "SlopeZRange:", "10.0;", "HighPTCut:", "10.0;",
-        "@Flags", ":", "HighPTFit,", "VertexToTracker",
-        "@Functions", ":", "CombineCollections,", "BuildNewTracks",
-        "[VertexEncap]",
-        "@Collections", ":", "VertexEndcapTrackerHits",
-        "@Parameters", ":", "MaxCellAngle", ":", "0.01;", "MaxCellAngleRZ", ":", "0.01;", "Chi2Cut", ":", "100;", "MinClustersOnTrack", ":", "4;", "MaxDistance", ":", CT_MAX_DIST, "SlopeZRange:", "10.0;", "HighPTCut:", "10.0;",
-        "@Flags", ":", "HighPTFit,", "VertexToTracker",
-        "@Functions", ":", "CombineCollections,", "ExtendTracks",
-        "[Tracker]",
-        "@Collections", ":", "InnerTrackerBarrelHits,", "InnerTrackerEndcapHits",
-        "@Parameters", ":", "MaxCellAngle", ":", "0.1;", "MaxCellAngleRZ", ":", "0.1;", "Chi2Cut", ":", "2000;", "MinClustersOnTrack", ":", "4;", "MaxDistance", ":", CT_MAX_DIST, "SlopeZRange:", "10.0;", "HighPTCut:", "1.0;",
-        "@Flags", ":", "HighPTFit,", "VertexToTracker,", "RadialSearch",
-        "@Functions", ":", "CombineCollections,", "ExtendTracks",
-    ],
+    "Steps": encode_CT_steps_dict_to_legacy_list(conformal_tracking_steps_config),
     "ThetaRange": ["0.05"],
     "TooManyTracks": ["100000"],
     "TrackerHitCollectionNames": [
@@ -86,7 +114,6 @@ MyConformalTracking.Parameters = {
     "VertexBarrelHitCollectionNames": VertexBarrelHitCollectionNames,
     "VertexEndcapHitCollectionNames": VertexEndcapHitCollectionNames,
 }
-# fmt: on
 
 MySiliconTracking_MarlinTrk = MarlinProcessorWrapper("MySiliconTracking_MarlinTrk")
 MySiliconTracking_MarlinTrk.ProcessorType = "SiliconTracking_MarlinTrk"
