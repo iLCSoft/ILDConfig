@@ -287,6 +287,7 @@ if reco_args.lcioOutput != "only":
     collPatcherRec.Parameters = {
         "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
     }
+    algList.append(collPatcherRec)
 
     output_commands = ["keep *"]
     output_commands.extend(get_drop_collections(CONSTANTS, True))
