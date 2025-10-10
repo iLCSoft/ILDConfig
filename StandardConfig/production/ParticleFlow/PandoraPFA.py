@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
+from Gaudi.Configuration import ERROR
+
 from Configurables import MarlinProcessorWrapper
 
 MyDDMarlinPandora = MarlinProcessorWrapper("MyDDMarlinPandora")
 MyDDMarlinPandora.ProcessorType = "DDPandoraPFANewProcessor"
+MyDDMarlinPandora.OutputLevel = ERROR
 MyDDMarlinPandora.Parameters = {
     "ClusterCollectionName": ["PandoraClusters"],
     "CoilName": ["Coil"],
