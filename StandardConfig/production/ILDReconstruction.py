@@ -12,18 +12,15 @@ from Configurables import (
 from Gaudi.Configuration import INFO
 from k4FWCore import ApplicationMgr, IOSvc
 from k4FWCore.parseArgs import parser
+from k4FWCore.SequenceLoader import SequenceLoader
+from k4FWCore.utils import import_from
 from k4MarlinWrapper.parseConstants import parseConstants
-from k4MarlinWrapper.io_helpers import IOHandlerHelper
+from k4MarlinWrapper.io_helpers import IOHandlerHelper, parse_collection_patch_file
 
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
 sys.path.append(Path(__file__).parent)
-from py_utils import (
-    SequenceLoader,
-    import_from,
-    parse_collection_patch_file,
-    get_drop_collections,
-)
+from py_utils import get_drop_collections
 
 # only non-FCCMDI models
 DETECTOR_MODELS = (
