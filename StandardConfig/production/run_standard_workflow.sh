@@ -84,9 +84,15 @@ MINIDST_CMD="Marlin MarlinStdRecoMiniDST.xml \
   --constant.OutputFile=bbudsc_3evt_miniDST.slcio \
   --constant.lcgeo_DIR=$k4geo_DIR"
 
+GAUDI_MINIDST="k4run ILDMiniDST.py  \
+    --inputFiles=bbudsc_3evt_DST.slcio \
+    --outputFileBase=bbudsc_3evt_GaudiMiniDST \
+    --compactFile $k4geo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml"
+
 clear_outputs
 run_cmd ddsim.out ${DDSIM_CMD}
 run_cmd marlin.out ${MARLIN_CMD}
 run_cmd k4run_rec.out ${GAUDI_RECO}
 run_cmd lctuple.out ${LCTUPLE_CMD}
 run_cmd minidst.out ${MINIDST_CMD}
+run_cmd k4run_minidst.out ${GAUDI_MINIDST}
