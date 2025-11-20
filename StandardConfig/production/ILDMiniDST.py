@@ -1426,11 +1426,13 @@ algList.append(JC5FT)
 algList.append(EF5)
 algList.append(JC6FT)
 algList.append(EF6)
-# algList.append(ComputeCorrectAngulardEdX)  # ${RundEdxCorrections}
-# algList.append(LikelihoodPID)  # ${RundEdxCorrections}
-# algList.append(LeptonID)  # ${RundEdxCorrections}
-# algList.append(ComprehensivePID_singleP)  # ${RundEdxCorrections}
-# algList.append(ComprehensivePID_2fZhad)  # ${RundEdxCorrections}
+if CONSTANTS.get("RundEdxCorrections", "false") == "true":
+    algList.append(ComputeCorrectAngulardEdX)
+    algList.append(LikelihoodPID)
+    algList.append(LeptonID)
+    algList.append(ComprehensivePID_singleP)
+    algList.append(ComprehensivePID_2fZhad)
+
 algList.append(WWCategorisation)
 algList.append(ParticleIDFilter)
 algList.append(LCIOOutputProcessor)
