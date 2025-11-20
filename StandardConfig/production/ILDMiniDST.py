@@ -1,19 +1,69 @@
-from Gaudi.Configuration import *
+from Gaudi.Configuration import ERROR, FATAL, INFO, DEBUG
 
-from Configurables import LcioEvent, EventDataSvc, MarlinProcessorWrapper, GeoSvc
-from k4MarlinWrapper.parseConstants import *
+from Configurables import EventDataSvc, MarlinProcessorWrapper, GeoSvc
+from k4FWCore import ApplicationMgr, IOSvc
+from k4FWCore.parseArgs import parser
+from k4MarlinWrapper.parseConstants import parseConstants
+from k4MarlinWrapper.io_helpers import IOHandlerHelper
+
+
+parser.add_argument(
+    "--inputFiles",
+    action="extend",
+    nargs="+",
+    metavar=["file1", "file2"],
+    help="One or multiple input files",
+)
+parser.add_argument("--compactFile", help="Compact detector file to use", type=str)
+parser.add_argument(
+    "--lcioOutput",
+    help="Choose whether to still create LCIO output (off by default)",
+    choices=["off", "on", "only"],
+    default="on",
+    type=str,
+)
+parser.add_argument(
+    "--outputFileBase",
+    help="Base name of all the produced output files",
+    default="mini-DST",
+)
+parser.add_argument(
+    "--rundEdxCorrections",
+    help="Choose whether to run dEdx corrections (on by default)",
+    action="store_true",
+    default=True,
+)
+parser.add_argument(
+    "--nodEdxCorrections",
+    help="Turn off dEdx corrections",
+    dest="rundEdxCorrections",
+    action="store_false",
+)
+
+# Parse arguments to get the rundEdxCorrections value
+minidst_args = parser.parse_known_args()[0]
+
 
 algList = []
 svcList = []
-evtsvc = EventDataSvc()
 
+
+evtsvc = EventDataSvc()
 svcList.append(evtsvc)
+iosvc = IOSvc()
+
+geoSvc = GeoSvc("GeoSvc")
+geoSvc.OutputLevel = ERROR
+geoSvc.EnableGeant4Geo = False
+geoSvc.detectors = [minidst_args.compactFile]
+svcList.append(geoSvc)
+
+io_handler = IOHandlerHelper(algList, iosvc)
+io_handler.add_reader(minidst_args.inputFiles)
+
 
 CONSTANTS = {
-    "OutputFile": "mini-DST.slcio",
     "ProductionDir": ".",
-    "RundEdxCorrections": "true",
-    "lcgeo_DIR": "$k4geo_DIR",
     "LCFIPlusConfig_DIR": "./LCFIPlusConfig",
     "LCFIPlusVertexPrefix": "ildl5_4q250_ZZ",
     "LCFIPlusD0ProbFile": "%(LCFIPlusConfig_DIR)s/vtxprob/d0probv2_%(LCFIPlusVertexPrefix)s.root",
@@ -26,17 +76,6 @@ CONSTANTS = {
 }
 
 parseConstants(CONSTANTS)
-
-read = LcioEvent()
-read.OutputLevel = ERROR
-read.Files = ["INPUTNAME"]
-algList.append(read)
-
-geoSvc = GeoSvc("GeoSvc")
-geoSvc.OutputLevel = FATAL
-geoSvc.EnableGeant4Geo = False
-geoSvc.detectors = ["%(lcgeo_DIR)s/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml" % CONSTANTS]
-svcList.append(geoSvc)
 
 Statusmonitor = MarlinProcessorWrapper("Statusmonitor")
 Statusmonitor.ProcessorType = "Statusmonitor"
@@ -1333,80 +1372,6 @@ ParticleIDFilter.Parameters = {
     "RecoParticleCollection": ["PandoraPFOs"],
 }
 
-LCIOOutputProcessor = MarlinProcessorWrapper("LCIOOutputProcessor")
-LCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
-LCIOOutputProcessor.Parameters = {
-    "CompressionLevel": ["6"],
-    "DropCollectionNames": [
-        "ClusterMCTruthLink",
-        "MCTruthClusterLink",
-        "MCTruthMarlinTrkTracksLink",
-        "MarlinTrkTracksMCTruthLink",
-        "DistilledPFOs",
-        "GammaGammaCandidateEtaPrimes",
-        "GammaGammaCandidateEtas",
-        "GammaGammaCandidatePi0s",
-        "GammaGammaParticles",
-        "V0RecoParticles",
-        "V0Vertices",
-        "ProngRecoParticles",
-        "ProngVertices",
-        "KinkRecoParticles",
-        "KinkVertices",
-        "SplitRecoParticles",
-        "SplitVertices",
-        "BuildUpVertex_RP",
-        "BuildUpVertex",
-        "BuildUpVertex_V0_RP",
-        "BuildUpVertex_V0",
-        "PFOsminusmu",
-        "PFOsminuse",
-        "PFOsminustau",
-        "PFOsminusphoton",
-        "Vertex2Jets",
-        "Vertex3Jets",
-        "Vertex4Jets",
-        "Vertex5Jets",
-        "Vertex6Jets",
-        "Refined2Jets_rel",
-        "Refined3Jets_rel",
-        "Refined4Jets_rel",
-        "Refined5Jets_rel",
-        "Refined6Jets_rel",
-        "Refined2Jets_vtx",
-        "Refined3Jets_vtx",
-        "Refined4Jets_vtx",
-        "Refined5Jets_vtx",
-        "Refined6Jets_vtx",
-        "Refined2Jets_vtx_RP",
-        "Refined3Jets_vtx_RP",
-        "Refined4Jets_vtx_RP",
-        "Refined5Jets_vtx_RP",
-        "Refined6Jets_vtx_RP",
-        "RefinedVertex2Jets",
-        "RefinedVertex3Jets",
-        "RefinedVertex4Jets",
-        "RefinedVertex5Jets",
-        "RefinedVertex6Jets",
-        "RefinedVertex2Jets_RP",
-        "RefinedVertex3Jets_RP",
-        "RefinedVertex4Jets_RP",
-        "RefinedVertex5Jets_RP",
-        "RefinedVertex6Jets_RP",
-        "Refined2JetsEF",
-        "Refined3JetsEF",
-        "Refined4JetsEF",
-        "Refined5JetsEF",
-        "Refined6JetsEF",
-        "BCALMCTruthLink",
-        "MCTruthBcalLink",
-        "MCTruthTrackLink",
-        "TrackMCTruthLink",
-    ],
-    "DropCollectionTypes": ["Track", "Cluster"],
-    "LCIOOutputFile": ["%(OutputFile)s" % CONSTANTS],
-    "LCIOWriteMode": ["WRITE_NEW"],
-}
 
 algList.append(Statusmonitor)
 algList.append(Thrust)
@@ -1426,7 +1391,8 @@ algList.append(JC5FT)
 algList.append(EF5)
 algList.append(JC6FT)
 algList.append(EF6)
-if CONSTANTS.get("RundEdxCorrections", "false") == "true":
+
+if minidst_args.rundEdxCorrections:
     algList.append(ComputeCorrectAngulardEdX)
     algList.append(LikelihoodPID)
     algList.append(LeptonID)
@@ -1435,9 +1401,85 @@ if CONSTANTS.get("RundEdxCorrections", "false") == "true":
 
 algList.append(WWCategorisation)
 algList.append(ParticleIDFilter)
-algList.append(LCIOOutputProcessor)
 
-from Configurables import ApplicationMgr
+if minidst_args.lcioOutput in ("on", "only"):
+    LCIOOutputProcessor = MarlinProcessorWrapper("LCIOOutputProcessor")
+    LCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
+    LCIOOutputProcessor.Parameters = {
+        "CompressionLevel": ["6"],
+        "DropCollectionNames": [
+            "ClusterMCTruthLink",
+            "MCTruthClusterLink",
+            "MCTruthMarlinTrkTracksLink",
+            "MarlinTrkTracksMCTruthLink",
+            "DistilledPFOs",
+            "GammaGammaCandidateEtaPrimes",
+            "GammaGammaCandidateEtas",
+            "GammaGammaCandidatePi0s",
+            "GammaGammaParticles",
+            "V0RecoParticles",
+            "V0Vertices",
+            "ProngRecoParticles",
+            "ProngVertices",
+            "KinkRecoParticles",
+            "KinkVertices",
+            "SplitRecoParticles",
+            "SplitVertices",
+            "BuildUpVertex_RP",
+            "BuildUpVertex",
+            "BuildUpVertex_V0_RP",
+            "BuildUpVertex_V0",
+            "PFOsminusmu",
+            "PFOsminuse",
+            "PFOsminustau",
+            "PFOsminusphoton",
+            "Vertex2Jets",
+            "Vertex3Jets",
+            "Vertex4Jets",
+            "Vertex5Jets",
+            "Vertex6Jets",
+            "Refined2Jets_rel",
+            "Refined3Jets_rel",
+            "Refined4Jets_rel",
+            "Refined5Jets_rel",
+            "Refined6Jets_rel",
+            "Refined2Jets_vtx",
+            "Refined3Jets_vtx",
+            "Refined4Jets_vtx",
+            "Refined5Jets_vtx",
+            "Refined6Jets_vtx",
+            "Refined2Jets_vtx_RP",
+            "Refined3Jets_vtx_RP",
+            "Refined4Jets_vtx_RP",
+            "Refined5Jets_vtx_RP",
+            "Refined6Jets_vtx_RP",
+            "RefinedVertex2Jets",
+            "RefinedVertex3Jets",
+            "RefinedVertex4Jets",
+            "RefinedVertex5Jets",
+            "RefinedVertex6Jets",
+            "RefinedVertex2Jets_RP",
+            "RefinedVertex3Jets_RP",
+            "RefinedVertex4Jets_RP",
+            "RefinedVertex5Jets_RP",
+            "RefinedVertex6Jets_RP",
+            "Refined2JetsEF",
+            "Refined3JetsEF",
+            "Refined4JetsEF",
+            "Refined5JetsEF",
+            "Refined6JetsEF",
+            "BCALMCTruthLink",
+            "MCTruthBcalLink",
+            "MCTruthTrackLink",
+            "TrackMCTruthLink",
+        ],
+        "DropCollectionTypes": ["Track", "Cluster"],
+        "LCIOOutputFile": [f"{minidst_args.outputFileBase}.slcio"],
+        "LCIOWriteMode": ["WRITE_NEW"],
+    }
+
+    algList.append(LCIOOutputProcessor)
+
 
 ApplicationMgr(
     TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=svcList, OutputLevel=ERROR
