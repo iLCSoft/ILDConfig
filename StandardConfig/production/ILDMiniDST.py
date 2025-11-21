@@ -120,65 +120,60 @@ Fox.Parameters = {
     "NameOfReconstructedParticlesCollection": ["PandoraPFOs"],
 }
 
-IsolatedMuonTagging = MarlinProcessorWrapper("IsolatedMuonTagging")
-IsolatedMuonTagging.OutputLevel = FATAL
-IsolatedMuonTagging.ProcessorType = "IsolatedLeptonTaggingProcessor"
-IsolatedMuonTagging.Parameters = {
+# Common parameters for isolated lepton tagging processors
+ISOLATED_LEPTON_COMMON_PARAMETERS = {
     "CosConeLarge": ["0.95"],
     "CosConeSmall": ["0.98"],
-    "CutOnTheISOElectronMVA": ["2"],
-    "CutOnTheISOMuonMVA": ["0.7"],
     "DirOfISOElectronWeights": [CONSTANTS["ElectronIsolationWeightsDir"]],
     "DirOfISOMuonWeights": [CONSTANTS["MuonIsolationWeightsDir"]],
-    "InputPandoraPFOsCollection": ["PandoraPFOs"],
     "InputPrimaryVertexCollection": ["PrimaryVertex"],
     "IsSelectingOneIsoLep": ["false"],
-    "MaxD0SigForElectron": ["50"],
-    "MaxD0SigForMuon": ["20"],
     "MaxEOverPForElectron": ["1.3"],
     "MaxEOverPForMuon": ["0.3"],
-    "MaxZ0SigForElectron": ["50"],
-    "MaxZ0SigForMuon": ["20"],
     "MinEOverPForElectron": ["0.5"],
     "MinEecalOverTotEForElectron": ["0.9"],
     "MinEyokeForMuon": ["1.2"],
     "MinPForElectron": ["5"],
     "MinPForMuon": ["5"],
-    "OutputIsoLeptonsCollection": ["IsolatedMuons"],
-    "OutputPFOsWithoutIsoLepCollection": ["PFOsminusmu"],
     "UseIP": ["true"],
     "UseYokeForMuonID": ["true"],
 }
 
+IsolatedMuonTagging = MarlinProcessorWrapper("IsolatedMuonTagging")
+IsolatedMuonTagging.OutputLevel = FATAL
+IsolatedMuonTagging.ProcessorType = "IsolatedLeptonTaggingProcessor"
+IsolatedMuonTagging.Parameters = ISOLATED_LEPTON_COMMON_PARAMETERS.copy()
+IsolatedMuonTagging.Parameters.update(
+    {
+        "CutOnTheISOElectronMVA": ["2"],
+        "CutOnTheISOMuonMVA": ["0.7"],
+        "InputPandoraPFOsCollection": ["PandoraPFOs"],
+        "MaxD0SigForElectron": ["50"],
+        "MaxD0SigForMuon": ["20"],
+        "MaxZ0SigForElectron": ["50"],
+        "MaxZ0SigForMuon": ["20"],
+        "OutputIsoLeptonsCollection": ["IsolatedMuons"],
+        "OutputPFOsWithoutIsoLepCollection": ["PFOsminusmu"],
+    }
+)
+
 IsolatedElectronTagging = MarlinProcessorWrapper("IsolatedElectronTagging")
 IsolatedElectronTagging.OutputLevel = FATAL
 IsolatedElectronTagging.ProcessorType = "IsolatedLeptonTaggingProcessor"
-IsolatedElectronTagging.Parameters = {
-    "CosConeLarge": ["0.95"],
-    "CosConeSmall": ["0.98"],
-    "CutOnTheISOElectronMVA": ["0.5"],
-    "CutOnTheISOMuonMVA": ["2"],
-    "DirOfISOElectronWeights": [CONSTANTS["ElectronIsolationWeightsDir"]],
-    "DirOfISOMuonWeights": [CONSTANTS["MuonIsolationWeightsDir"]],
-    "InputPandoraPFOsCollection": ["PFOsminusmu"],
-    "InputPrimaryVertexCollection": ["PrimaryVertex"],
-    "IsSelectingOneIsoLep": ["false"],
-    "MaxD0SigForElectron": ["10"],
-    "MaxD0SigForMuon": ["10"],
-    "MaxEOverPForElectron": ["1.3"],
-    "MaxEOverPForMuon": ["0.3"],
-    "MaxZ0SigForElectron": ["10"],
-    "MaxZ0SigForMuon": ["10"],
-    "MinEOverPForElectron": ["0.5"],
-    "MinEecalOverTotEForElectron": ["0.9"],
-    "MinEyokeForMuon": ["1.2"],
-    "MinPForElectron": ["5"],
-    "MinPForMuon": ["5"],
-    "OutputIsoLeptonsCollection": ["IsolatedElectrons"],
-    "OutputPFOsWithoutIsoLepCollection": ["PFOsminuse"],
-    "UseIP": ["true"],
-    "UseYokeForMuonID": ["true"],
-}
+IsolatedElectronTagging.Parameters = ISOLATED_LEPTON_COMMON_PARAMETERS.copy()
+IsolatedElectronTagging.Parameters.update(
+    {
+        "CutOnTheISOElectronMVA": ["0.5"],
+        "CutOnTheISOMuonMVA": ["2"],
+        "InputPandoraPFOsCollection": ["PFOsminusmu"],
+        "MaxD0SigForElectron": ["10"],
+        "MaxD0SigForMuon": ["10"],
+        "MaxZ0SigForElectron": ["10"],
+        "MaxZ0SigForMuon": ["10"],
+        "OutputIsoLeptonsCollection": ["IsolatedElectrons"],
+        "OutputPFOsWithoutIsoLepCollection": ["PFOsminuse"],
+    }
+)
 
 IsolatedTauTagging = MarlinProcessorWrapper("IsolatedTauTagging")
 IsolatedTauTagging.ProcessorType = "TaJetClustering"
