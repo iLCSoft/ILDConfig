@@ -699,8 +699,21 @@ DROP_COLLECTIONS = [
 
 if minidst_args.lcioOutput != "only":
     output_commands = [f"drop {c}" for c in DROP_COLLECTIONS] + [
+        # Drop all Clusters and Tracks
         "drop type edm4hep::ClusterCollection",
         "drop type edm4hep::TrackCollection",
+        # Drop some additional collections that are created in LCIO -> EDM4hep
+        # conversion
+        "drop BuildUpVertex_*",
+        "drop GammaGammaCandidate*_startVertices",
+        "drop KinkRecoParticles_startVertices",
+        "drop KinkVertices_associatedParticles",
+        "drop MarlinTrkTracks*_dQdx",
+        "drop SplitRecoParticles_startVertices",
+        "drop SplitVertices_associatedParticles",
+        "drop V0RecoParticles_startVertices",
+        "drop V0Vertices_associatedParticles",
+        "drop Vertex?Jets_*",
     ]
     io_handler.add_edm4hep_writer(
         f"{minidst_args.outputFileBase}-miniDST.edm4hep.root", output_commands
