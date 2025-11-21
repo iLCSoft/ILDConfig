@@ -26,8 +26,11 @@
     <processor name="ComputeCorrectAngulardEdX"/>
     <processor name="LikelihoodPID"/>
     <processor name="LeptonID"/>
-    <processor name="ComprehensivePID"/>
+    <processor name="ComprehensivePID_singleP"/>
+    <processor name="ComprehensivePID_2fZhad"/>
   </if>
+  <processor name="WWCategorisation"/>
+  <processor name="ParticleIDFilter"/>
   <processor name="LCIOOutputProcessor"/>
 </execute>
 
@@ -45,7 +48,7 @@
   <constant name="OutputFile" value="mini-DST.slcio"/>
   <constant name="ProductionDir" value="."/>
   <constant name="RundEdxCorrections" value="true"/>
-  <constant name="lcgeo_DIR" value=$k4geo_DIR/>
+  <constant name="lcgeo_DIR" value="$k4geo_DIR"/>
 
   <constant name="LCFIPlusConfig_DIR" value="./LCFIPlusConfig"/>
   <constant name="LCFIPlusVertexPrefix" value="ildl5_4q250_ZZ"/>
@@ -930,7 +933,7 @@
   <parameter name="weightfile">HighLevelReco/PIDFiles/CPID/LeptonID_multi_jet_dEdx_800t_3d_cm50r50_BDTG.weights.xml</parameter>
 </processor>
 
-<processor name="ComprehensivePID" type="ComprehensivePIDProcessor">
+<processor name="ComprehensivePID_singleP" type="ComprehensivePIDProcessor">
 
   <parameter name="PFOCollection" type="string" value="PandoraPFOs"/>
   <parameter name="RecoMCTruthLink" type="string" value="RecoMCTruthLink"/>
@@ -944,7 +947,7 @@
   <parameter name="signalPDGs" type="FloatVec"  value="11 13 211 321 2212"/>
   <parameter name="backgroundPDGs" type="FloatVec"  value=""/>
   
-  <parameter name="plotFolder" type="string" value="CPID_Plots"/>
+  <parameter name="plotFolder" type="string" value="CPID_Plots/singleP/"/>
   <parameter name="fileFormat" type="string" value=".png"/>
 
   <parameter name="momMin" type="float" value="1"/>
@@ -978,11 +981,11 @@
   </parameter>
 
   <parameter name="trainModelSpecs" type="StringVec">
-    TMVA_BDT_MC:TMVA_BDT_MC_12bins_singleP
+    TMVA_BDT_MC:CPID_singleP_16bins_cons
   </parameter>
   <parameter name="trainingObservables" type="StringVec"> </parameter>
 
-  <parameter name="TMVA_BDT_MC_12bins_singleP.S" type="StringVec">
+  <parameter name="CPID_singleP_16bins_cons.S" type="StringVec">
     !V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass
     SplitMode=Random:NormMode=NumEvents:!V
     !V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5
@@ -990,6 +993,77 @@
   </parameter>
 </processor>
 
+<processor name="ComprehensivePID_2fZhad" type="ComprehensivePIDProcessor">
+
+  <parameter name="Verbosity" type="string"> DEBUG </parameter>
+  <parameter name="PFOCollection" type="string" value="PandoraPFOs"/>
+  <parameter name="RecoMCTruthLink" type="string" value="RecoMCTruthLink"/>
+
+  <parameter name="modeExtract" type="bool" value="true" />
+  <parameter name="modeTrain"   type="bool" value="false"/>
+  <parameter name="modeInfer"   type="bool" value="true"/>
+
+  <parameter name="TTreeFileName" type="string" value=""/>
+  <parameter name="reffile" type="string" value="HighLevelReco/PIDFiles/CPID/Ref_2fZhad_18bins_conservative.txt"/>
+  <parameter name="signalPDGs" type="FloatVec"  value="11 13 211 321 2212"/>
+  <parameter name="backgroundPDGs" type="FloatVec"  value=""/>
+  
+  <parameter name="plotFolder" type="string" value="CPID_Plots/2fZhad/"/>
+  <parameter name="fileFormat" type="string" value=".png"/>
+
+  <parameter name="cutD0" type="float" value="0"/>
+  <parameter name="cutZ0" type="float" value="0"/>
+  <parameter name="cutLamMin" type="float" value="0"/>
+  <parameter name="cutLamMax" type="float" value="0"/>
+  <parameter name="cutNTracksMin" type="int" value="1"/>
+  <parameter name="cutNTracksMax" type="int" value="-1"/>
+  
+  <parameter name="inputAlgoSpecs" type="StringVec">
+    dEdx_RCD:dEdx_RCD
+    TOF:TOF100
+    Pandora
+    LeptonID
+  </parameter>
+
+  <parameter name="TOF100.S" type="StringVec" value="TOFEstimators100ps"/>
+  
+  <parameter name="dEdx_RCD.F" type="FloatVec">
+    -1.28883368e-02   2.72959919e+01   1.10560871e+01 -1.74534200e+00  -9.84887586e-07
+      6.49143971e-02   1.55775592e+03   9.31848047e+08  2.32201725e-01   2.50492066e-04
+      6.54955215e-02   8.26239081e+04   1.92933904e+07  2.52743206e-01   2.26657525e-04
+      7.52235689e-02   1.59710415e+04   1.79625604e+06  3.15315795e-01   2.30414997e-04
+      7.92251260e-02   6.38129720e+04   3.82995071e+04  2.80793601e-01   7.14371743e-04
+      1
+  </parameter>
+
+  <parameter name="trainModelSpecs" type="StringVec">
+    TMVA_BDT_MC:CPID_2fZhad_18bins_cons
+  </parameter>
+  <parameter name="trainingObservables" type="StringVec"> </parameter>
+
+  <parameter name="CPID_2fZhad_18bins_cons.S" type="StringVec">
+    !V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass
+    SplitMode=Random:NormMode=NumEvents:!V
+    !V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5
+    dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900
+  </parameter>
+</processor>
+
+<processor name="WWCategorisation" type="WWCategorisationProcessor">
+  <parameter name="IsolatedElectrons" type="string" lcioInType="ReconstructedParticle"> IsolatedElectrons </parameter>
+  <parameter name="IsolatedMuons" type="string" lcioInType="ReconstructedParticle"> IsolatedMuons </parameter>
+  <parameter name="IsolatedTaus" type="string" lcioInType="ReconstructedParticle"> IsolatedTaus </parameter>
+  <parameter name="IsolatedPhotons" type="string" lcioInType="ReconstructedParticle"> IsolatedPhotons </parameter>
+  <parameter name="PFOsminusphoton" type="string" lcioInType="ReconstructedParticle"> PFOsminusphoton </parameter>
+  <parameter name="TTreeFileName" type="string">  </parameter>
+  <parameter name="ConfusionMatrixFileName" type="string">  </parameter>
+</processor>
+
+<processor name="ParticleIDFilter" type="ReconstructedParticleParticleIDFilterProcessor">
+    <parameter name="RecoParticleCollection" type="string" value="PandoraPFOs"/>
+    <parameter name="FilterPIDAlgos" type="StringVev" value="BasicVariablePID LikelihoodPID LowMomMuID ShowerShapesPID dEdxPID"/>
+    <parameter name="Verbosity" type="string" value="MESSAGE"/>
+</processor>
 
 <processor name="LCIOOutputProcessor" type="LCIOOutputProcessor">
   <!-- DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles -->
