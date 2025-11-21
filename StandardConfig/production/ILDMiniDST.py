@@ -579,15 +579,8 @@ LeptonID.Parameters = {
     ],
 }
 
-ComprehensivePID_singleP = MarlinProcessorWrapper("ComprehensivePID_singleP")
-ComprehensivePID_singleP.ProcessorType = "ComprehensivePIDProcessor"
-ComprehensivePID_singleP.Parameters = {
-    "CPID_singleP_16bins_cons.S": [
-        "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass",
-        "SplitMode=Random:NormMode=NumEvents:!V",
-        "!V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5",
-        "dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900",
-    ],
+# Common parameters for ComprehensivePID processors
+COMPREHENSIVE_PID_COMMON_PARAMETERS = {
     "PFOCollection": ["PandoraPFOs"],
     "RecoMCTruthLink": ["RecoMCTruthLink"],
     "TOF100.S": ["TOFEstimators100ps"],
@@ -632,77 +625,48 @@ ComprehensivePID_singleP.Parameters = {
     "modeExtract": ["true"],
     "modeInfer": ["true"],
     "modeTrain": ["false"],
-    "momLog": ["true"],
-    "momMax": ["100"],
-    "momMin": ["1"],
-    "momNBins": ["12"],
-    "plotFolder": ["CPID_Plots/singleP/"],
-    "reffile": ["HighLevelReco/PIDFiles/CPID/Ref_singleP_16bins_conservative.txt"],
     "signalPDGs": ["11", "13", "211", "321", "2212"],
-    "trainModelSpecs": ["TMVA_BDT_MC:CPID_singleP_16bins_cons"],
     "trainingObservables": [],
 }
+
+ComprehensivePID_singleP = MarlinProcessorWrapper("ComprehensivePID_singleP")
+ComprehensivePID_singleP.ProcessorType = "ComprehensivePIDProcessor"
+ComprehensivePID_singleP.Parameters = COMPREHENSIVE_PID_COMMON_PARAMETERS.copy()
+ComprehensivePID_singleP.Parameters.update(
+    {
+        "CPID_singleP_16bins_cons.S": [
+            "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass",
+            "SplitMode=Random:NormMode=NumEvents:!V",
+            "!V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5",
+            "dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900",
+        ],
+        "momLog": ["true"],
+        "momMax": ["100"],
+        "momMin": ["1"],
+        "momNBins": ["12"],
+        "plotFolder": ["CPID_Plots/singleP/"],
+        "reffile": ["HighLevelReco/PIDFiles/CPID/Ref_singleP_16bins_conservative.txt"],
+        "trainModelSpecs": ["TMVA_BDT_MC:CPID_singleP_16bins_cons"],
+    }
+)
 
 ComprehensivePID_2fZhad = MarlinProcessorWrapper("ComprehensivePID_2fZhad")
 ComprehensivePID_2fZhad.OutputLevel = DEBUG
 ComprehensivePID_2fZhad.ProcessorType = "ComprehensivePIDProcessor"
-ComprehensivePID_2fZhad.Parameters = {
-    "CPID_2fZhad_18bins_cons.S": [
-        "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass",
-        "SplitMode=Random:NormMode=NumEvents:!V",
-        "!V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5",
-        "dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900",
-    ],
-    "PFOCollection": ["PandoraPFOs"],
-    "RecoMCTruthLink": ["RecoMCTruthLink"],
-    "TOF100.S": ["TOFEstimators100ps"],
-    "TTreeFileName": [],
-    "backgroundPDGs": [],
-    "cutD0": ["0"],
-    "cutLamMax": ["0"],
-    "cutLamMin": ["0"],
-    "cutNTracksMax": ["-1"],
-    "cutNTracksMin": ["1"],
-    "cutZ0": ["0"],
-    "dEdx_RCD.F": [
-        "-1.28883368e-02",
-        "2.72959919e+01",
-        "1.10560871e+01",
-        "-1.74534200e+00",
-        "-9.84887586e-07",
-        "6.49143971e-02",
-        "1.55775592e+03",
-        "9.31848047e+08",
-        "2.32201725e-01",
-        "2.50492066e-04",
-        "6.54955215e-02",
-        "8.26239081e+04",
-        "1.92933904e+07",
-        "2.52743206e-01",
-        "2.26657525e-04",
-        "7.52235689e-02",
-        "1.59710415e+04",
-        "1.79625604e+06",
-        "3.15315795e-01",
-        "2.30414997e-04",
-        "7.92251260e-02",
-        "6.38129720e+04",
-        "3.82995071e+04",
-        "2.80793601e-01",
-        "7.14371743e-04",
-        "1",
-    ],
-    "fileFormat": [".png"],
-    "inputAlgoSpecs": ["dEdx_RCD:dEdx_RCD", "TOF:TOF100", "Pandora", "LeptonID"],
-    "modeExtract": ["true"],
-    "modeInfer": ["true"],
-    "modeTrain": ["false"],
-    "plotFolder": ["CPID_Plots/2fZhad/"],
-    "reffile": ["HighLevelReco/PIDFiles/CPID/Ref_2fZhad_18bins_conservative.txt"],
-    "signalPDGs": ["11", "13", "211", "321", "2212"],
-    "trainModelSpecs": ["TMVA_BDT_MC:CPID_2fZhad_18bins_cons"],
-    "trainingObservables": [],
-}
+ComprehensivePID_2fZhad.Parameters = COMPREHENSIVE_PID_COMMON_PARAMETERS.copy()
+ComprehensivePID_2fZhad.Parameters.update(
+    {
+        "CPID_2fZhad_18bins_cons.S": [
+            "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass",
+            "SplitMode=Random:NormMode=NumEvents:!V",
+            "!V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5",
+            "dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900",
+        ],
+        "plotFolder": ["CPID_Plots/2fZhad/"],
+        "reffile": ["HighLevelReco/PIDFiles/CPID/Ref_2fZhad_18bins_conservative.txt"],
+        "trainModelSpecs": ["TMVA_BDT_MC:CPID_2fZhad_18bins_cons"],
+    }
+)
 
 WWCategorisation = MarlinProcessorWrapper("WWCategorisation")
 WWCategorisation.ProcessorType = "WWCategorisationProcessor"
