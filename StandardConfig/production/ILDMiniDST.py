@@ -128,8 +128,8 @@ IsolatedMuonTagging.Parameters = {
     "CosConeSmall": ["0.98"],
     "CutOnTheISOElectronMVA": ["2"],
     "CutOnTheISOMuonMVA": ["0.7"],
-    "DirOfISOElectronWeights": ["%(ElectronIsolationWeightsDir)s" % CONSTANTS],
-    "DirOfISOMuonWeights": ["%(MuonIsolationWeightsDir)s" % CONSTANTS],
+    "DirOfISOElectronWeights": [CONSTANTS["ElectronIsolationWeightsDir"]],
+    "DirOfISOMuonWeights": [CONSTANTS["MuonIsolationWeightsDir"]],
     "InputPandoraPFOsCollection": ["PandoraPFOs"],
     "InputPrimaryVertexCollection": ["PrimaryVertex"],
     "IsSelectingOneIsoLep": ["false"],
@@ -158,8 +158,8 @@ IsolatedElectronTagging.Parameters = {
     "CosConeSmall": ["0.98"],
     "CutOnTheISOElectronMVA": ["0.5"],
     "CutOnTheISOMuonMVA": ["2"],
-    "DirOfISOElectronWeights": ["%(ElectronIsolationWeightsDir)s" % CONSTANTS],
-    "DirOfISOMuonWeights": ["%(MuonIsolationWeightsDir)s" % CONSTANTS],
+    "DirOfISOElectronWeights": [CONSTANTS["ElectronIsolationWeightsDir"]],
+    "DirOfISOMuonWeights": [CONSTANTS["MuonIsolationWeightsDir"]],
     "InputPandoraPFOsCollection": ["PFOsminusmu"],
     "InputPrimaryVertexCollection": ["PrimaryVertex"],
     "IsSelectingOneIsoLep": ["false"],
@@ -327,12 +327,12 @@ JC2FT.Parameters = {
         "vtxmult",
         "1vtxprob",
     ],
-    "FlavorTag.D0ProbFileName": ["%(LCFIPlusD0ProbFile)s" % CONSTANTS],
+    "FlavorTag.D0ProbFileName": [CONSTANTS["LCFIPlusD0ProbFile"]],
     "FlavorTag.JetCollectionName": ["Refined2Jets"],
     "FlavorTag.PIDAlgo": ["lcfiplus"],
-    "FlavorTag.WeightsDirectory": ["%(LCFIPlusWeightsDir)s" % CONSTANTS],
-    "FlavorTag.WeightsPrefix": ["%(LCFIPlusWeightsPrefix)s" % CONSTANTS],
-    "FlavorTag.Z0ProbFileName": ["%(LCFIPlusZ0ProbFile)s" % CONSTANTS],
+    "FlavorTag.WeightsDirectory": [CONSTANTS["LCFIPlusWeightsDir"]],
+    "FlavorTag.WeightsPrefix": [CONSTANTS["LCFIPlusWeightsPrefix"]],
+    "FlavorTag.Z0ProbFileName": [CONSTANTS["LCFIPlusZ0ProbFile"]],
     "JetClustering.InputVertexCollectionName": ["BuildUpVertex"],
     "JetClustering.JetAlgorithm": ["DurhamVertex"],
     "JetClustering.MuonIDExternal": ["0"],
@@ -499,12 +499,12 @@ JC3FT.Parameters = {
         "vtxmult",
         "1vtxprob",
     ],
-    "FlavorTag.D0ProbFileName": ["%(LCFIPlusD0ProbFile)s" % CONSTANTS],
+    "FlavorTag.D0ProbFileName": [CONSTANTS["LCFIPlusD0ProbFile"]],
     "FlavorTag.JetCollectionName": ["Refined3Jets"],
     "FlavorTag.PIDAlgo": ["lcfiplus"],
-    "FlavorTag.WeightsDirectory": ["%(LCFIPlusWeightsDir)s" % CONSTANTS],
-    "FlavorTag.WeightsPrefix": ["%(LCFIPlusWeightsPrefix)s" % CONSTANTS],
-    "FlavorTag.Z0ProbFileName": ["%(LCFIPlusZ0ProbFile)s" % CONSTANTS],
+    "FlavorTag.WeightsDirectory": [CONSTANTS["LCFIPlusWeightsDir"]],
+    "FlavorTag.WeightsPrefix": [CONSTANTS["LCFIPlusWeightsPrefix"]],
+    "FlavorTag.Z0ProbFileName": [CONSTANTS["LCFIPlusZ0ProbFile"]],
     "JetClustering.InputVertexCollectionName": ["BuildUpVertex"],
     "JetClustering.JetAlgorithm": ["DurhamVertex"],
     "JetClustering.MuonIDExternal": ["0"],
@@ -674,12 +674,12 @@ JC4FT.Parameters = {
         "vtxmult",
         "1vtxprob",
     ],
-    "FlavorTag.D0ProbFileName": ["%(LCFIPlusD0ProbFile)s" % CONSTANTS],
+    "FlavorTag.D0ProbFileName": [CONSTANTS["LCFIPlusD0ProbFile"]],
     "FlavorTag.JetCollectionName": ["Refined4Jets"],
     "FlavorTag.PIDAlgo": ["lcfiplus"],
-    "FlavorTag.WeightsDirectory": ["%(LCFIPlusWeightsDir)s" % CONSTANTS],
-    "FlavorTag.WeightsPrefix": ["%(LCFIPlusWeightsPrefix)s" % CONSTANTS],
-    "FlavorTag.Z0ProbFileName": ["%(LCFIPlusZ0ProbFile)s" % CONSTANTS],
+    "FlavorTag.WeightsDirectory": [CONSTANTS["LCFIPlusWeightsDir"]],
+    "FlavorTag.WeightsPrefix": [CONSTANTS["LCFIPlusWeightsPrefix"]],
+    "FlavorTag.Z0ProbFileName": [CONSTANTS["LCFIPlusZ0ProbFile"]],
     "JetClustering.InputVertexCollectionName": ["BuildUpVertex"],
     "JetClustering.JetAlgorithm": ["DurhamVertex"],
     "JetClustering.MuonIDExternal": ["0"],
@@ -849,12 +849,12 @@ JC5FT.Parameters = {
         "vtxmult",
         "1vtxprob",
     ],
-    "FlavorTag.D0ProbFileName": ["%(LCFIPlusD0ProbFile)s" % CONSTANTS],
+    "FlavorTag.D0ProbFileName": [CONSTANTS["LCFIPlusD0ProbFile"]],
     "FlavorTag.JetCollectionName": ["Refined5Jets"],
     "FlavorTag.PIDAlgo": ["lcfiplus"],
-    "FlavorTag.WeightsDirectory": ["%(LCFIPlusWeightsDir)s" % CONSTANTS],
-    "FlavorTag.WeightsPrefix": ["%(LCFIPlusWeightsPrefix)s" % CONSTANTS],
-    "FlavorTag.Z0ProbFileName": ["%(LCFIPlusZ0ProbFile)s" % CONSTANTS],
+    "FlavorTag.WeightsDirectory": [CONSTANTS["LCFIPlusWeightsDir"]],
+    "FlavorTag.WeightsPrefix": [CONSTANTS["LCFIPlusWeightsPrefix"]],
+    "FlavorTag.Z0ProbFileName": [CONSTANTS["LCFIPlusZ0ProbFile"]],
     "JetClustering.InputVertexCollectionName": ["BuildUpVertex"],
     "JetClustering.JetAlgorithm": ["DurhamVertex"],
     "JetClustering.MuonIDExternal": ["0"],
@@ -1024,12 +1024,12 @@ JC6FT.Parameters = {
         "vtxmult",
         "1vtxprob",
     ],
-    "FlavorTag.D0ProbFileName": ["%(LCFIPlusD0ProbFile)s" % CONSTANTS],
+    "FlavorTag.D0ProbFileName": [CONSTANTS["LCFIPlusD0ProbFile"]],
     "FlavorTag.JetCollectionName": ["Refined6Jets"],
     "FlavorTag.PIDAlgo": ["lcfiplus"],
-    "FlavorTag.WeightsDirectory": ["%(LCFIPlusWeightsDir)s" % CONSTANTS],
-    "FlavorTag.WeightsPrefix": ["%(LCFIPlusWeightsPrefix)s" % CONSTANTS],
-    "FlavorTag.Z0ProbFileName": ["%(LCFIPlusZ0ProbFile)s" % CONSTANTS],
+    "FlavorTag.WeightsDirectory": [CONSTANTS["LCFIPlusWeightsDir"]],
+    "FlavorTag.WeightsPrefix": [CONSTANTS["LCFIPlusWeightsPrefix"]],
+    "FlavorTag.Z0ProbFileName": [CONSTANTS["LCFIPlusZ0ProbFile"]],
     "JetClustering.InputVertexCollectionName": ["BuildUpVertex"],
     "JetClustering.JetAlgorithm": ["DurhamVertex"],
     "JetClustering.MuonIDExternal": ["0"],
@@ -1124,48 +1124,11 @@ LikelihoodPID.Parameters = {
     "Debug": ["0"],
     "EnergyBoundaries": ["0", "1.0e+07"],
     "FilePDFName": [
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root"
-        % CONSTANTS
+        f"{CONSTANTS['ProductionDir']}/HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root"
     ],
     "FileWeightFormupiSeparationName": [
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_02GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_03GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_04GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_05GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_06GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_07GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_08GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_09GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_10GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_11GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_12GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_13GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_14GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_15GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_16GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_17GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_18GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_19GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
-        "%(ProductionDir)s/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_20GeVP_clusterinfo.weights.xml"
-        % CONSTANTS,
+        f"{CONSTANTS['ProductionDir']}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_{i:02d}GeVP_clusterinfo.weights.xml"
+        for i in range(2, 21)
     ],
     "PIDMethodsToRun_version": ["v2"],
     "RecoParticleCollection": ["PandoraPFOs"],
