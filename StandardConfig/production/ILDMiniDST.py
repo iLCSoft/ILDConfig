@@ -82,6 +82,7 @@ Statusmonitor.ProcessorType = "Statusmonitor"
 Statusmonitor.Parameters = {
     "HowOften": ["1000"],
 }
+algList.append(Statusmonitor)
 
 FastJetOverlay = MarlinProcessorWrapper("FastJetOverlay")
 FastJetOverlay.ProcessorType = "FastJetProcessor"
@@ -92,6 +93,7 @@ FastJetOverlay.Parameters = {
     "recParticleIn": ["PandoraPFOs"],
     "recombinationScheme": ["E_scheme"],
 }
+# algList.append(FastJetOverlay)
 
 ExpandJet = MarlinProcessorWrapper("ExpandJet")
 ExpandJet.ProcessorType = "ExpandJetProcessor"
@@ -99,6 +101,7 @@ ExpandJet.Parameters = {
     "InputCollection": ["PFOsminusoverlayJets"],
     "OutputCollection": ["PFOsminusoverlay"],
 }
+# algList.append(ExpandJet)
 
 Thrust = MarlinProcessorWrapper("Thrust")
 Thrust.ProcessorType = "ThrustReconstruction"
@@ -106,6 +109,7 @@ Thrust.Parameters = {
     "inputCollectionName": ["PandoraPFOs"],
     "typeOfThrustFinder": ["2"],
 }
+algList.append(Thrust)
 
 Sphere = MarlinProcessorWrapper("Sphere")
 Sphere.ProcessorType = "Sphere"
@@ -113,12 +117,14 @@ Sphere.Parameters = {
     "CollectionName": ["PandoraPFOs"],
     "r_value": ["2.0"],
 }
+algList.append(Sphere)
 
 Fox = MarlinProcessorWrapper("Fox")
 Fox.ProcessorType = "Fox"
 Fox.Parameters = {
     "NameOfReconstructedParticlesCollection": ["PandoraPFOs"],
 }
+algList.append(Fox)
 
 # Common parameters for isolated lepton tagging processors
 ISOLATED_LEPTON_COMMON_PARAMETERS = {
@@ -156,6 +162,7 @@ IsolatedMuonTagging.Parameters.update(
         "OutputPFOsWithoutIsoLepCollection": ["PFOsminusmu"],
     }
 )
+algList.append(IsolatedMuonTagging)
 
 IsolatedElectronTagging = MarlinProcessorWrapper("IsolatedElectronTagging")
 IsolatedElectronTagging.OutputLevel = FATAL
@@ -174,6 +181,7 @@ IsolatedElectronTagging.Parameters.update(
         "OutputPFOsWithoutIsoLepCollection": ["PFOsminuse"],
     }
 )
+algList.append(IsolatedElectronTagging)
 
 IsolatedTauTagging = MarlinProcessorWrapper("IsolatedTauTagging")
 IsolatedTauTagging.ProcessorType = "TaJetClustering"
@@ -192,6 +200,7 @@ IsolatedTauTagging.Parameters = {
     "TauCosAngle": ["0.98"],
     "TauMass": ["2"],
 }
+algList.append(IsolatedTauTagging)
 
 IsolatedPhotonTagging = MarlinProcessorWrapper("IsolatedPhotonTagging")
 IsolatedPhotonTagging.ProcessorType = "IsolatedPhotonTaggingProcessor"
@@ -206,6 +215,7 @@ IsolatedPhotonTagging.Parameters = {
     "OutputIsoPhotonsCollection": ["IsolatedPhotons"],
     "OutputPFOsWithoutIsoPhotonCollection": ["PFOsminusphoton"],
 }
+algList.append(IsolatedPhotonTagging)
 
 # Common parameters for all jet clustering and flavor tagging algorithms that
 # are run below. The non common ones will be updated accordingly at the specific
@@ -369,115 +379,30 @@ JCFT_COMMON_PARAMETERS = {
     "UseMCP": ["0"],
 }
 
-JC2FT = MarlinProcessorWrapper("JC2FT")
-JC2FT.ProcessorType = "LcfiplusProcessor"
-JC2FT.Parameters = JCFT_COMMON_PARAMETERS.copy()
-JC2FT.Parameters.update(
-    {
-        "FlavorTag.JetCollectionName": ["Refined2Jets"],
-        "JetClustering.NJetsRequested": ["2"],
-        "JetClustering.OutputJetCollectionName": ["Vertex2Jets"],
-        "JetVertexRefiner.InputJetCollectionName": ["Vertex2Jets"],
-        "JetVertexRefiner.OutputJetCollectionName": ["Refined2Jets"],
-        "JetVertexRefiner.OutputVertexCollectionName": ["RefinedVertex2Jets"],
+for i in range(2, 7):
+    jcft = MarlinProcessorWrapper(f"JC{i}FT")
+    jcft.ProcessorType = "LcfiplusProcessor"
+    jcft.Parameters = JCFT_COMMON_PARAMETERS.copy()
+    jcft.Parameters.update(
+        {
+            "FlavorTag.JetCollectionName": [f"Refined{i}Jets"],
+            "JetClustering.NJetsRequested": [f"{i}"],
+            "JetClustering.OutputJetCollectionName": [f"Vertex{i}Jets"],
+            "JetVertexRefiner.InputJetCollectionName": [f"Vertex{i}Jets"],
+            "JetVertexRefiner.OutputJetCollectionName": [f"Refined{i}Jets"],
+            "JetVertexRefiner.OutputVertexCollectionName": [f"RefinedVertex{i}Jets"],
+        }
+    )
+    algList.append(jcft)
+
+    err_flow = MarlinProcessorWrapper(f"EF{i}")
+    err_flow.ProcessorType = "ErrorFlow"
+    err_flow.Parameters = {
+        "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
+        "InputPFOCollection": [f"Refined{i}Jets"],
+        "OutputPFOCollection": [f"Refined{i}JetsEF"],
     }
-)
-
-EF2 = MarlinProcessorWrapper("EF2")
-EF2.ProcessorType = "ErrorFlow"
-EF2.Parameters = {
-    "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
-    "InputPFOCollection": ["Refined2Jets"],
-    "OutputPFOCollection": ["Refined2JetsEF"],
-}
-
-JC3FT = MarlinProcessorWrapper("JC3FT")
-JC3FT.ProcessorType = "LcfiplusProcessor"
-JC3FT.Parameters = JCFT_COMMON_PARAMETERS.copy()
-JC3FT.Parameters.update(
-    {
-        "FlavorTag.JetCollectionName": ["Refined3Jets"],
-        "JetClustering.NJetsRequested": ["3"],
-        "JetClustering.OutputJetCollectionName": ["Vertex3Jets"],
-        "JetVertexRefiner.InputJetCollectionName": ["Vertex3Jets"],
-        "JetVertexRefiner.OutputJetCollectionName": ["Refined3Jets"],
-        "JetVertexRefiner.OutputVertexCollectionName": ["RefinedVertex3Jets"],
-    }
-)
-
-EF3 = MarlinProcessorWrapper("EF3")
-EF3.ProcessorType = "ErrorFlow"
-EF3.Parameters = {
-    "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
-    "InputPFOCollection": ["Refined3Jets"],
-    "OutputPFOCollection": ["Refined3JetsEF"],
-}
-
-JC4FT = MarlinProcessorWrapper("JC4FT")
-JC4FT.ProcessorType = "LcfiplusProcessor"
-JC4FT.Parameters = JCFT_COMMON_PARAMETERS.copy()
-JC4FT.Parameters.update(
-    {
-        "FlavorTag.JetCollectionName": ["Refined4Jets"],
-        "JetClustering.NJetsRequested": ["4"],
-        "JetClustering.OutputJetCollectionName": ["Vertex4Jets"],
-        "JetVertexRefiner.InputJetCollectionName": ["Vertex4Jets"],
-        "JetVertexRefiner.OutputJetCollectionName": ["Refined4Jets"],
-        "JetVertexRefiner.OutputVertexCollectionName": ["RefinedVertex4Jets"],
-    }
-)
-
-EF4 = MarlinProcessorWrapper("EF4")
-EF4.ProcessorType = "ErrorFlow"
-EF4.Parameters = {
-    "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
-    "InputPFOCollection": ["Refined4Jets"],
-    "OutputPFOCollection": ["Refined4JetsEF"],
-}
-
-JC5FT = MarlinProcessorWrapper("JC5FT")
-JC5FT.ProcessorType = "LcfiplusProcessor"
-JC5FT.Parameters = JCFT_COMMON_PARAMETERS.copy()
-JC5FT.Parameters.update(
-    {
-        "FlavorTag.JetCollectionName": ["Refined5Jets"],
-        "JetClustering.NJetsRequested": ["5"],
-        "JetClustering.OutputJetCollectionName": ["Vertex5Jets"],
-        "JetVertexRefiner.InputJetCollectionName": ["Vertex5Jets"],
-        "JetVertexRefiner.OutputJetCollectionName": ["Refined5Jets"],
-        "JetVertexRefiner.OutputVertexCollectionName": ["RefinedVertex5Jets"],
-    }
-)
-
-EF5 = MarlinProcessorWrapper("EF5")
-EF5.ProcessorType = "ErrorFlow"
-EF5.Parameters = {
-    "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
-    "InputPFOCollection": ["Refined5Jets"],
-    "OutputPFOCollection": ["Refined5JetsEF"],
-}
-
-JC6FT = MarlinProcessorWrapper("JC6FT")
-JC6FT.ProcessorType = "LcfiplusProcessor"
-JC6FT.Parameters = JCFT_COMMON_PARAMETERS.copy()
-JC6FT.Parameters.update(
-    {
-        "FlavorTag.JetCollectionName": ["Refined6Jets"],
-        "JetClustering.NJetsRequested": ["6"],
-        "JetClustering.OutputJetCollectionName": ["Vertex6Jets"],
-        "JetVertexRefiner.InputJetCollectionName": ["Vertex6Jets"],
-        "JetVertexRefiner.OutputJetCollectionName": ["Refined6Jets"],
-        "JetVertexRefiner.OutputVertexCollectionName": ["RefinedVertex6Jets"],
-    }
-)
-
-EF6 = MarlinProcessorWrapper("EF6")
-EF6.ProcessorType = "ErrorFlow"
-EF6.Parameters = {
-    "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
-    "InputPFOCollection": ["Refined6Jets"],
-    "OutputPFOCollection": ["Refined6JetsEF"],
-}
+    algList.append(err_flow)
 
 ComputeCorrectAngulardEdX = MarlinProcessorWrapper("ComputeCorrectAngulardEdX")
 ComputeCorrectAngulardEdX.ProcessorType = "AngularCorrection_dEdxProcessor"
@@ -694,25 +619,6 @@ ParticleIDFilter.Parameters = {
     "RecoParticleCollection": ["PandoraPFOs"],
 }
 
-
-algList.append(Statusmonitor)
-algList.append(Thrust)
-algList.append(Sphere)
-algList.append(Fox)
-algList.append(IsolatedMuonTagging)
-algList.append(IsolatedElectronTagging)
-algList.append(IsolatedTauTagging)
-algList.append(IsolatedPhotonTagging)
-algList.append(JC2FT)
-algList.append(EF2)
-algList.append(JC3FT)
-algList.append(EF3)
-algList.append(JC4FT)
-algList.append(EF4)
-algList.append(JC5FT)
-algList.append(EF5)
-algList.append(JC6FT)
-algList.append(EF6)
 
 if minidst_args.rundEdxCorrections:
     algList.append(ComputeCorrectAngulardEdX)
