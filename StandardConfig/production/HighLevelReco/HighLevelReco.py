@@ -205,6 +205,7 @@ MyLikelihoodPID.Parameters = {
 MyRecoMCTruthLinker = MarlinProcessorWrapper("MyRecoMCTruthLinker")
 MyRecoMCTruthLinker.ProcessorType = "RecoMCTruthLinker"
 MyRecoMCTruthLinker.Parameters = {
+    "CalohitMCTruthLinkName": ["CalohitMCTruthLink"],
     "ClusterCollection": ["PandoraClusters"],
     "ClusterMCTruthLinkName": ["ClusterMCTruthLink"],
     "FullRecoRelation": ["true"],
