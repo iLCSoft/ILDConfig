@@ -1,0 +1,755 @@
+from Gaudi.Configuration import ERROR, FATAL, INFO, DEBUG
+
+from Configurables import EventDataSvc, MarlinProcessorWrapper, GeoSvc
+from k4FWCore import ApplicationMgr, IOSvc
+from k4FWCore.parseArgs import parser
+from k4MarlinWrapper.parseConstants import parseConstants
+from k4MarlinWrapper.io_helpers import IOHandlerHelper
+
+from py_utils import parse_collection_patch_file
+
+MINIDST_COLLECTION_CONTENTS_FILE = "collections_minidst.txt"
+
+parser.add_argument(
+    "--inputFiles",
+    action="extend",
+    nargs="+",
+    metavar=["file1", "file2"],
+    help="One or multiple input files",
+)
+parser.add_argument("--compactFile", help="Compact detector file to use", type=str)
+parser.add_argument(
+    "--lcioOutput",
+    help="Choose whether to still create LCIO output (off by default)",
+    choices=["off", "on", "only"],
+    default="on",
+    type=str,
+)
+parser.add_argument(
+    "--outputFileBase",
+    help="Base name of all the produced output files",
+    default="mini-DST",
+)
+parser.add_argument(
+    "--rundEdxCorrections",
+    help="Choose whether to run dEdx corrections (on by default)",
+    action="store_true",
+    default=True,
+)
+parser.add_argument(
+    "--nodEdxCorrections",
+    help="Turn off dEdx corrections",
+    dest="rundEdxCorrections",
+    action="store_false",
+)
+
+# Parse arguments to get the rundEdxCorrections value
+minidst_args = parser.parse_known_args()[0]
+
+
+algList = []
+svcList = []
+
+
+evtsvc = EventDataSvc()
+svcList.append(evtsvc)
+iosvc = IOSvc()
+
+geoSvc = GeoSvc("GeoSvc")
+geoSvc.OutputLevel = ERROR
+geoSvc.EnableGeant4Geo = False
+geoSvc.detectors = [minidst_args.compactFile]
+svcList.append(geoSvc)
+
+io_handler = IOHandlerHelper(algList, iosvc)
+io_handler.add_reader(minidst_args.inputFiles)
+
+
+CONSTANTS = {
+    "ProductionDir": ".",
+    "LCFIPlusConfig_DIR": "./LCFIPlusConfig",
+    "LCFIPlusVertexPrefix": "ildl5_4q250_ZZ",
+    "LCFIPlusD0ProbFile": "%(LCFIPlusConfig_DIR)s/vtxprob/d0probv2_%(LCFIPlusVertexPrefix)s.root",
+    "LCFIPlusZ0ProbFile": "%(LCFIPlusConfig_DIR)s/vtxprob/z0probv2_%(LCFIPlusVertexPrefix)s.root",
+    "LCFIPlusWeightsPrefix": "4q250_v04_p00_ildl5",
+    "LCFIPlusWeightsDir": "%(LCFIPlusConfig_DIR)s/lcfiweights/4q250_ZZ_v4_p00_ildl5",
+    "IsolatedLeptonTagging_DIR": "./IsolatedLeptonTagging",
+    "ElectronIsolationWeightsDir": "%(IsolatedLeptonTagging_DIR)s/weights/e1e1h_gg_qqqq_250",
+    "MuonIsolationWeightsDir": "%(IsolatedLeptonTagging_DIR)s/weights/e2e2h_gg_qqqq_250",
+}
+
+parseConstants(CONSTANTS)
+
+Statusmonitor = MarlinProcessorWrapper("Statusmonitor")
+Statusmonitor.ProcessorType = "Statusmonitor"
+Statusmonitor.Parameters = {
+    "HowOften": ["1000"],
+}
+algList.append(Statusmonitor)
+
+FastJetOverlay = MarlinProcessorWrapper("FastJetOverlay")
+FastJetOverlay.ProcessorType = "FastJetProcessor"
+FastJetOverlay.Parameters = {
+    "algorithm": ["ee_genkt_algorithm", "3.0", "1.0"],
+    "clusteringMode": ["ExclusiveNJets", "2"],
+    "jetOut": ["PFOsminusoverlayJets"],
+    "recParticleIn": ["PandoraPFOs"],
+    "recombinationScheme": ["E_scheme"],
+}
+# algList.append(FastJetOverlay)
+
+ExpandJet = MarlinProcessorWrapper("ExpandJet")
+ExpandJet.ProcessorType = "ExpandJetProcessor"
+ExpandJet.Parameters = {
+    "InputCollection": ["PFOsminusoverlayJets"],
+    "OutputCollection": ["PFOsminusoverlay"],
+}
+# algList.append(ExpandJet)
+
+Thrust = MarlinProcessorWrapper("Thrust")
+Thrust.ProcessorType = "ThrustReconstruction"
+Thrust.Parameters = {
+    "inputCollectionName": ["PandoraPFOs"],
+    "typeOfThrustFinder": ["2"],
+}
+algList.append(Thrust)
+
+Sphere = MarlinProcessorWrapper("Sphere")
+Sphere.ProcessorType = "Sphere"
+Sphere.Parameters = {
+    "CollectionName": ["PandoraPFOs"],
+    "r_value": ["2.0"],
+}
+algList.append(Sphere)
+
+Fox = MarlinProcessorWrapper("Fox")
+Fox.ProcessorType = "Fox"
+Fox.Parameters = {
+    "NameOfReconstructedParticlesCollection": ["PandoraPFOs"],
+}
+algList.append(Fox)
+
+# Common parameters for isolated lepton tagging processors
+ISOLATED_LEPTON_COMMON_PARAMETERS = {
+    "CosConeLarge": ["0.95"],
+    "CosConeSmall": ["0.98"],
+    "DirOfISOElectronWeights": [CONSTANTS["ElectronIsolationWeightsDir"]],
+    "DirOfISOMuonWeights": [CONSTANTS["MuonIsolationWeightsDir"]],
+    "InputPrimaryVertexCollection": ["PrimaryVertex"],
+    "IsSelectingOneIsoLep": ["false"],
+    "MaxEOverPForElectron": ["1.3"],
+    "MaxEOverPForMuon": ["0.3"],
+    "MinEOverPForElectron": ["0.5"],
+    "MinEecalOverTotEForElectron": ["0.9"],
+    "MinEyokeForMuon": ["1.2"],
+    "MinPForElectron": ["5"],
+    "MinPForMuon": ["5"],
+    "UseIP": ["true"],
+    "UseYokeForMuonID": ["true"],
+}
+
+IsolatedMuonTagging = MarlinProcessorWrapper("IsolatedMuonTagging")
+IsolatedMuonTagging.OutputLevel = FATAL
+IsolatedMuonTagging.ProcessorType = "IsolatedLeptonTaggingProcessor"
+IsolatedMuonTagging.Parameters = ISOLATED_LEPTON_COMMON_PARAMETERS.copy()
+IsolatedMuonTagging.Parameters.update(
+    {
+        "CutOnTheISOElectronMVA": ["2"],
+        "CutOnTheISOMuonMVA": ["0.7"],
+        "InputPandoraPFOsCollection": ["PandoraPFOs"],
+        "MaxD0SigForElectron": ["50"],
+        "MaxD0SigForMuon": ["20"],
+        "MaxZ0SigForElectron": ["50"],
+        "MaxZ0SigForMuon": ["20"],
+        "OutputIsoLeptonsCollection": ["IsolatedMuons"],
+        "OutputPFOsWithoutIsoLepCollection": ["PFOsminusmu"],
+    }
+)
+algList.append(IsolatedMuonTagging)
+
+IsolatedElectronTagging = MarlinProcessorWrapper("IsolatedElectronTagging")
+IsolatedElectronTagging.OutputLevel = FATAL
+IsolatedElectronTagging.ProcessorType = "IsolatedLeptonTaggingProcessor"
+IsolatedElectronTagging.Parameters = ISOLATED_LEPTON_COMMON_PARAMETERS.copy()
+IsolatedElectronTagging.Parameters.update(
+    {
+        "CutOnTheISOElectronMVA": ["0.5"],
+        "CutOnTheISOMuonMVA": ["2"],
+        "InputPandoraPFOsCollection": ["PFOsminusmu"],
+        "MaxD0SigForElectron": ["10"],
+        "MaxD0SigForMuon": ["10"],
+        "MaxZ0SigForElectron": ["10"],
+        "MaxZ0SigForMuon": ["10"],
+        "OutputIsoLeptonsCollection": ["IsolatedElectrons"],
+        "OutputPFOsWithoutIsoLepCollection": ["PFOsminuse"],
+    }
+)
+algList.append(IsolatedElectronTagging)
+
+IsolatedTauTagging = MarlinProcessorWrapper("IsolatedTauTagging")
+IsolatedTauTagging.ProcessorType = "TaJetClustering"
+IsolatedTauTagging.Parameters = {
+    "AcceptFlexibleLowEnergyTrack": ["1"],
+    "ConeMaxCosAngle": ["1"],
+    "ConeMaxEnergyFrac": ["0.1"],
+    "ConeMinCosAngle": ["0.9"],
+    "MinimumJetEnergy": ["3"],
+    "MinimumTrackEnergy": ["2"],
+    "MinimumTrackEnergyAssoc": ["2"],
+    "NoSelection": ["0"],
+    "OutputTauCollection": ["IsolatedTaus"],
+    "PFOCollection": ["PFOsminuse"],
+    "RemainPFOCollection": ["PFOsminustau"],
+    "TauCosAngle": ["0.98"],
+    "TauMass": ["2"],
+}
+algList.append(IsolatedTauTagging)
+
+IsolatedPhotonTagging = MarlinProcessorWrapper("IsolatedPhotonTagging")
+IsolatedPhotonTagging.ProcessorType = "IsolatedPhotonTaggingProcessor"
+IsolatedPhotonTagging.Parameters = {
+    "CosConeLarge": ["0.95"],
+    "CosConeSmall": ["0.98"],
+    "CutOnTheISOPhotonMVA": ["0.5"],
+    "DirOfIsoPhotonWeights": ["isolated_photon_weights"],
+    "InputPandoraPFOsCollection": ["PFOsminustau"],
+    "IsSelectingOneIsoPhoton": ["false"],
+    "MinEForPhoton": ["5."],
+    "OutputIsoPhotonsCollection": ["IsolatedPhotons"],
+    "OutputPFOsWithoutIsoPhotonCollection": ["PFOsminusphoton"],
+}
+algList.append(IsolatedPhotonTagging)
+
+# Common parameters for all jet clustering and flavor tagging algorithms that
+# are run below. The non common ones will be updated accordingly at the specific
+# instances
+JCFT_COMMON_PARAMETERS = {
+    "Algorithms": ["JetClustering", "JetVertexRefiner", "FlavorTag", "ReadMVA"],
+    "FlavorTag.BookName": ["bdt"],
+    "FlavorTag.CategoryDefinition1": ["nvtx==0"],
+    "FlavorTag.CategoryDefinition2": ["nvtx==1&&nvtxall==1"],
+    "FlavorTag.CategoryDefinition3": ["nvtx==1&&nvtxall==2"],
+    "FlavorTag.CategoryDefinition4": ["nvtx>=2"],
+    "FlavorTag.CategoryPreselection1": ["trk1d0sig!=0"],
+    "FlavorTag.CategoryPreselection2": ["trk1d0sig!=0"],
+    "FlavorTag.CategoryPreselection3": ["trk1d0sig!=0"],
+    "FlavorTag.CategoryPreselection4": ["trk1d0sig!=0"],
+    "FlavorTag.CategorySpectators1": ["aux", "nvtx"],
+    "FlavorTag.CategorySpectators2": ["aux", "nvtx"],
+    "FlavorTag.CategorySpectators3": ["aux", "nvtx"],
+    "FlavorTag.CategorySpectators4": ["aux", "nvtx"],
+    "FlavorTag.CategoryVariables1": [
+        "trk1d0sig",
+        "trk2d0sig",
+        "trk1z0sig",
+        "trk2z0sig",
+        "trk1pt_jete",
+        "trk2pt_jete",
+        "jprobr25sigma",
+        "jprobz25sigma",
+        "d0bprob2",
+        "d0cprob2",
+        "d0qprob2",
+        "z0bprob2",
+        "z0cprob2",
+        "z0qprob2",
+        "nmuon",
+        "nelectron",
+        "trkmass",
+    ],
+    "FlavorTag.CategoryVariables2": [
+        "trk1d0sig",
+        "trk2d0sig",
+        "trk1z0sig",
+        "trk2z0sig",
+        "trk1pt_jete",
+        "trk2pt_jete",
+        "jprobr2",
+        "jprobz2",
+        "vtxlen1_jete",
+        "vtxsig1_jete",
+        "vtxdirang1_jete",
+        "vtxmom1_jete",
+        "vtxmass1",
+        "vtxmult1",
+        "vtxmasspc",
+        "vtxprob",
+        "d0bprob2",
+        "d0cprob2",
+        "d0qprob2",
+        "z0bprob2",
+        "z0cprob2",
+        "z0qprob2",
+        "trkmass",
+        "nelectron",
+        "nmuon",
+    ],
+    "FlavorTag.CategoryVariables3": [
+        "trk1d0sig",
+        "trk2d0sig",
+        "trk1z0sig",
+        "trk2z0sig",
+        "trk1pt_jete",
+        "trk2pt_jete",
+        "jprobr2",
+        "jprobz2",
+        "vtxlen1_jete",
+        "vtxsig1_jete",
+        "vtxdirang1_jete",
+        "vtxmom1_jete",
+        "vtxmass1",
+        "vtxmult1",
+        "vtxmasspc",
+        "vtxprob",
+        "1vtxprob",
+        "vtxlen12all_jete",
+        "vtxmassall",
+    ],
+    "FlavorTag.CategoryVariables4": [
+        "trk1d0sig",
+        "trk2d0sig",
+        "trk1z0sig",
+        "trk2z0sig",
+        "trk1pt_jete",
+        "trk2pt_jete",
+        "jprobr2",
+        "jprobz2",
+        "vtxlen1_jete",
+        "vtxsig1_jete",
+        "vtxdirang1_jete",
+        "vtxmom1_jete",
+        "vtxmass1",
+        "vtxmult1",
+        "vtxmasspc",
+        "vtxprob",
+        "vtxlen2_jete",
+        "vtxsig2_jete",
+        "vtxdirang2_jete",
+        "vtxmom2_jete",
+        "vtxmass2",
+        "vtxmult2",
+        "vtxlen12_jete",
+        "vtxsig12_jete",
+        "vtxdirang12_jete",
+        "vtxmom_jete",
+        "vtxmass",
+        "vtxmult",
+        "1vtxprob",
+    ],
+    "FlavorTag.D0ProbFileName": [CONSTANTS["LCFIPlusD0ProbFile"]],
+    "FlavorTag.PIDAlgo": ["lcfiplus"],
+    "FlavorTag.WeightsDirectory": [CONSTANTS["LCFIPlusWeightsDir"]],
+    "FlavorTag.WeightsPrefix": [CONSTANTS["LCFIPlusWeightsPrefix"]],
+    "FlavorTag.Z0ProbFileName": [CONSTANTS["LCFIPlusZ0ProbFile"]],
+    "JetClustering.InputVertexCollectionName": ["BuildUpVertex"],
+    "JetClustering.JetAlgorithm": ["DurhamVertex"],
+    "JetClustering.MuonIDExternal": ["0"],
+    "JetClustering.MuonIDMaximum3DImpactParameter": ["5."],
+    "JetClustering.MuonIDMinimumD0Significance": ["5."],
+    "JetClustering.MuonIDMinimumProbability": ["0.5"],
+    "JetClustering.MuonIDMinimumZ0Significance": ["5."],
+    "JetClustering.PrimaryVertexCollectionName": ["PrimaryVertex"],
+    "JetClustering.UseBeamJets": ["0"],
+    "JetClustering.UseMuonID": ["1"],
+    "JetClustering.VertexSelectionK0MassWidth": ["0.02"],
+    "JetClustering.VertexSelectionMaximumDistance": ["30."],
+    "JetClustering.VertexSelectionMinimumDistance": ["0.3"],
+    "JetClustering.YAddedForJetLeptonLepton": ["100"],
+    "JetClustering.YAddedForJetLeptonVertex": ["100"],
+    "JetClustering.YAddedForJetVertexVertex": ["100"],
+    "JetClustering.YCut": ["0."],
+    "JetVertexRefiner.InputVertexCollectionName": ["BuildUpVertex"],
+    "JetVertexRefiner.MaxAngleSingle": ["0.5"],
+    "JetVertexRefiner.MaxCharmFlightLengthPerJetEnergy": ["0.1"],
+    "JetVertexRefiner.MaxPosSingle": ["30."],
+    "JetVertexRefiner.MaxSeparationPerPosSingle": ["0.1"],
+    "JetVertexRefiner.MinEnergySingle": ["1."],
+    "JetVertexRefiner.MinPosSingle": ["0.3"],
+    "JetVertexRefiner.OneVertexProbThreshold": ["0.001"],
+    "JetVertexRefiner.PrimaryVertexCollectionName": ["PrimaryVertex"],
+    "JetVertexRefiner.V0VertexCollectionName": ["BuildUpVertex_V0"],
+    "JetVertexRefiner.mind0sigSingle": ["5."],
+    "JetVertexRefiner.minz0sigSingle": ["5."],
+    "MCPCollection": [],
+    "MCPFORelation": [],
+    "MakeNtuple.AuxiliaryInfo": ["-1"],
+    "PFOCollection": ["PFOsminusphoton"],
+    "PrimaryVertexCollectionName": ["PrimaryVertex"],
+    "PrintEventNumber": ["0"],
+    "ReadSubdetectorEnergies": ["1"],
+    "TrackHitOrdering": ["1"],
+    "UpdateVertexRPDaughters": ["0"],
+    "UseMCP": ["0"],
+}
+
+for i in range(2, 7):
+    jcft = MarlinProcessorWrapper(f"JC{i}FT")
+    jcft.ProcessorType = "LcfiplusProcessor"
+    jcft.Parameters = JCFT_COMMON_PARAMETERS.copy()
+    jcft.Parameters.update(
+        {
+            "FlavorTag.JetCollectionName": [f"Refined{i}Jets"],
+            "JetClustering.NJetsRequested": [f"{i}"],
+            "JetClustering.OutputJetCollectionName": [f"Vertex{i}Jets"],
+            "JetVertexRefiner.InputJetCollectionName": [f"Vertex{i}Jets"],
+            "JetVertexRefiner.OutputJetCollectionName": [f"Refined{i}Jets"],
+            "JetVertexRefiner.OutputVertexCollectionName": [f"RefinedVertex{i}Jets"],
+        }
+    )
+    algList.append(jcft)
+
+    err_flow = MarlinProcessorWrapper(f"EF{i}")
+    err_flow.ProcessorType = "ErrorFlow"
+    err_flow.Parameters = {
+        "InputMCTruthLinkCollection": ["RecoMCTruthLink"],
+        "InputPFOCollection": [f"Refined{i}Jets"],
+        "OutputPFOCollection": [f"Refined{i}JetsEF"],
+    }
+    algList.append(err_flow)
+
+ComputeCorrectAngulardEdX = MarlinProcessorWrapper("ComputeCorrectAngulardEdX")
+ComputeCorrectAngulardEdX.ProcessorType = "AngularCorrection_dEdxProcessor"
+ComputeCorrectAngulardEdX.Parameters = {
+    "AngularCorrectionParameters": ["0.970205", "0.0007506", "4.41781e-8", "5.8222e-8"],
+    "LDCTrackCollection": ["MarlinTrkTracks"],
+}
+
+LikelihoodPID = MarlinProcessorWrapper("LikelihoodPID")
+LikelihoodPID.ProcessorType = "LikelihoodPIDProcessor"
+LikelihoodPID.Parameters = {
+    "CostMatrix": [
+        "1.0e-50",
+        "1.0",
+        "1.5",
+        "1.0",
+        "1.5",
+        "1.0",
+        "1.0e-50",
+        "3.0",
+        "1.0",
+        "1.0",
+        "1.0",
+        "1.0",
+        "1.0e-50",
+        "1.0",
+        "3.0",
+        "1.0",
+        "1.0",
+        "4.0",
+        "1.0e-50",
+        "2.0",
+        "1.0",
+        "1.0",
+        "5.0",
+        "1.0",
+        "1.0e-50",
+    ],
+    "Debug": ["0"],
+    "EnergyBoundaries": ["0", "1.0e+07"],
+    "FilePDFName": [
+        f"{CONSTANTS['ProductionDir']}/HighLevelReco/PIDFiles/LikelihoodPID_Standard_l5_v01.root"
+    ],
+    "FileWeightFormupiSeparationName": [
+        f"{CONSTANTS['ProductionDir']}/HighLevelReco/PIDFiles/LowMomMuPiSeparation/TMVAClassification_BDTG_l5_{i:02d}GeVP_clusterinfo.weights.xml"
+        for i in range(2, 21)
+    ],
+    "PIDMethodsToRun_version": ["v2"],
+    "RecoParticleCollection": ["PandoraPFOs"],
+    "UseBayesian": ["2"],
+    "UseLowMomentumMuPiSeparation": ["true"],
+    "dEdxErrorFactor": ["7.55"],
+    "dEdxNormalization": ["1.350e-7"],
+    "dEdxParameter_electron": [
+        "-0.00232937",
+        "-3.88424e+13",
+        "-37881.1",
+        "-1.56837",
+        "0",
+    ],
+    "dEdxParameter_kaon": [
+        "0.0792784",
+        "3798.12",
+        "4.06952e+07",
+        "0.450671",
+        "0.00050169",
+    ],
+    "dEdxParameter_muon": [
+        "0.0717375",
+        "-16596.5",
+        "-4.84028e+07",
+        "0.356728",
+        "0.000371431",
+    ],
+    "dEdxParameter_pion": [
+        "0.0733683",
+        "51678.4",
+        "8.19644e+07",
+        "0.453505",
+        "0.000404984",
+    ],
+    "dEdxParameter_proton": [
+        "0.0770318",
+        "1053.24",
+        "4.95076e+06",
+        "0.281489",
+        "0.000168616",
+    ],
+}
+
+LeptonID = MarlinProcessorWrapper("LeptonID")
+LeptonID.OutputLevel = INFO
+LeptonID.ProcessorType = "LeptonIDProcessor"
+LeptonID.Parameters = {
+    "BuildTree": ["false"],
+    "EvalMVA": ["true"],
+    "weightfile": [
+        "HighLevelReco/PIDFiles/CPID/LeptonID_multi_jet_dEdx_800t_3d_cm50r50_BDTG.weights.xml"
+    ],
+}
+
+# Common parameters for ComprehensivePID processors
+COMPREHENSIVE_PID_COMMON_PARAMETERS = {
+    "PFOCollection": ["PandoraPFOs"],
+    "RecoMCTruthLink": ["RecoMCTruthLink"],
+    "TOF100.S": ["TOFEstimators100ps"],
+    "TTreeFileName": [""],
+    "backgroundPDGs": [],
+    "cutD0": ["0"],
+    "cutLamMax": ["0"],
+    "cutLamMin": ["0"],
+    "cutNTracksMax": ["-1"],
+    "cutNTracksMin": ["1"],
+    "cutZ0": ["0"],
+    "dEdx_RCD.F": [
+        "-1.28883368e-02",
+        "2.72959919e+01",
+        "1.10560871e+01",
+        "-1.74534200e+00",
+        "-9.84887586e-07",
+        "6.49143971e-02",
+        "1.55775592e+03",
+        "9.31848047e+08",
+        "2.32201725e-01",
+        "2.50492066e-04",
+        "6.54955215e-02",
+        "8.26239081e+04",
+        "1.92933904e+07",
+        "2.52743206e-01",
+        "2.26657525e-04",
+        "7.52235689e-02",
+        "1.59710415e+04",
+        "1.79625604e+06",
+        "3.15315795e-01",
+        "2.30414997e-04",
+        "7.92251260e-02",
+        "6.38129720e+04",
+        "3.82995071e+04",
+        "2.80793601e-01",
+        "7.14371743e-04",
+        "1",
+    ],
+    "fileFormat": [".png"],
+    "inputAlgoSpecs": ["dEdx_RCD:dEdx_RCD", "TOF:TOF100", "Pandora", "LeptonID"],
+    "modeExtract": ["true"],
+    "modeInfer": ["true"],
+    "modeTrain": ["false"],
+    "signalPDGs": ["11", "13", "211", "321", "2212"],
+    "trainingObservables": [],
+}
+
+ComprehensivePID_singleP = MarlinProcessorWrapper("ComprehensivePID_singleP")
+ComprehensivePID_singleP.ProcessorType = "ComprehensivePIDProcessor"
+ComprehensivePID_singleP.Parameters = COMPREHENSIVE_PID_COMMON_PARAMETERS.copy()
+ComprehensivePID_singleP.Parameters.update(
+    {
+        "CPID_singleP_16bins_cons.S": [
+            "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass",
+            "SplitMode=Random:NormMode=NumEvents:!V",
+            "!V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5",
+            "dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900",
+        ],
+        "momLog": ["true"],
+        "momMax": ["100"],
+        "momMin": ["1"],
+        "momNBins": ["12"],
+        "plotFolder": ["CPID_Plots/singleP/"],
+        "reffile": ["HighLevelReco/PIDFiles/CPID/Ref_singleP_16bins_conservative.txt"],
+        "trainModelSpecs": ["TMVA_BDT_MC:CPID_singleP_16bins_cons"],
+    }
+)
+
+ComprehensivePID_2fZhad = MarlinProcessorWrapper("ComprehensivePID_2fZhad")
+ComprehensivePID_2fZhad.ProcessorType = "ComprehensivePIDProcessor"
+ComprehensivePID_2fZhad.Parameters = COMPREHENSIVE_PID_COMMON_PARAMETERS.copy()
+ComprehensivePID_2fZhad.Parameters.update(
+    {
+        "CPID_2fZhad_18bins_cons.S": [
+            "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass",
+            "SplitMode=Random:NormMode=NumEvents:!V",
+            "!V:!H:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=30:MaxDepth=5",
+            "dEdx_RCD_piDis>-900&&dEdx_RCD_kaDis>-900",
+        ],
+        "plotFolder": ["CPID_Plots/2fZhad/"],
+        "reffile": ["HighLevelReco/PIDFiles/CPID/Ref_2fZhad_18bins_conservative.txt"],
+        "trainModelSpecs": ["TMVA_BDT_MC:CPID_2fZhad_18bins_cons"],
+    }
+)
+
+WWCategorisation = MarlinProcessorWrapper("WWCategorisation")
+WWCategorisation.ProcessorType = "WWCategorisationProcessor"
+WWCategorisation.Parameters = {
+    "ConfusionMatrixFileName": [""],
+    "IsolatedElectrons": ["IsolatedElectrons"],
+    "IsolatedMuons": ["IsolatedMuons"],
+    "IsolatedPhotons": ["IsolatedPhotons"],
+    "IsolatedTaus": ["IsolatedTaus"],
+    "PFOsminusphoton": ["PFOsminusphoton"],
+    "TTreeFileName": [""],
+}
+
+ParticleIDFilter = MarlinProcessorWrapper("ParticleIDFilter")
+ParticleIDFilter.OutputLevel = INFO
+ParticleIDFilter.ProcessorType = "ReconstructedParticleParticleIDFilterProcessor"
+ParticleIDFilter.Parameters = {
+    "FilterPIDAlgos": [
+        "BasicVariablePID",
+        "LikelihoodPID",
+        "LowMomMuID",
+        "ShowerShapesPID",
+        "dEdxPID",
+    ],
+    "RecoParticleCollection": ["PandoraPFOs"],
+}
+
+
+if minidst_args.rundEdxCorrections:
+    algList.append(ComputeCorrectAngulardEdX)
+    algList.append(LikelihoodPID)
+    algList.append(LeptonID)
+    algList.append(ComprehensivePID_singleP)
+    algList.append(ComprehensivePID_2fZhad)
+
+algList.append(WWCategorisation)
+algList.append(ParticleIDFilter)
+
+DROP_COLLECTIONS = [
+    "ClusterMCTruthLink",
+    "MCTruthClusterLink",
+    "MCTruthMarlinTrkTracksLink",
+    "MarlinTrkTracksMCTruthLink",
+    "DistilledPFOs",
+    "GammaGammaCandidateEtaPrimes",
+    "GammaGammaCandidateEtas",
+    "GammaGammaCandidatePi0s",
+    "GammaGammaParticles",
+    "V0RecoParticles",
+    "V0Vertices",
+    "ProngRecoParticles",
+    "ProngVertices",
+    "KinkRecoParticles",
+    "KinkVertices",
+    "SplitRecoParticles",
+    "SplitVertices",
+    "BuildUpVertex_RP",
+    "BuildUpVertex",
+    "BuildUpVertex_V0_RP",
+    "BuildUpVertex_V0",
+    "PFOsminusmu",
+    "PFOsminuse",
+    "PFOsminustau",
+    "PFOsminusphoton",
+    "Vertex2Jets",
+    "Vertex3Jets",
+    "Vertex4Jets",
+    "Vertex5Jets",
+    "Vertex6Jets",
+    "Refined2Jets_rel",
+    "Refined3Jets_rel",
+    "Refined4Jets_rel",
+    "Refined5Jets_rel",
+    "Refined6Jets_rel",
+    "Refined2Jets_vtx",
+    "Refined3Jets_vtx",
+    "Refined4Jets_vtx",
+    "Refined5Jets_vtx",
+    "Refined6Jets_vtx",
+    "Refined2Jets_vtx_RP",
+    "Refined3Jets_vtx_RP",
+    "Refined4Jets_vtx_RP",
+    "Refined5Jets_vtx_RP",
+    "Refined6Jets_vtx_RP",
+    "RefinedVertex2Jets",
+    "RefinedVertex3Jets",
+    "RefinedVertex4Jets",
+    "RefinedVertex5Jets",
+    "RefinedVertex6Jets",
+    "RefinedVertex2Jets_RP",
+    "RefinedVertex3Jets_RP",
+    "RefinedVertex4Jets_RP",
+    "RefinedVertex5Jets_RP",
+    "RefinedVertex6Jets_RP",
+    "Refined2JetsEF",
+    "Refined3JetsEF",
+    "Refined4JetsEF",
+    "Refined5JetsEF",
+    "Refined6JetsEF",
+    "BCALMCTruthLink",
+    "MCTruthBcalLink",
+    "MCTruthTrackLink",
+    "TrackMCTruthLink",
+]
+
+if minidst_args.lcioOutput != "only":
+    coll_patcher = MarlinProcessorWrapper(
+        "CollPatcher", ProcessorType="PatchCollections"
+    )
+    coll_patcher.Parameters = {
+        "PatchCollections": parse_collection_patch_file(
+            MINIDST_COLLECTION_CONTENTS_FILE
+        )
+    }
+    algList.append(coll_patcher)
+
+    output_commands = [f"drop {c}" for c in DROP_COLLECTIONS] + [
+        # Drop all Clusters and Tracks
+        "drop type edm4hep::ClusterCollection",
+        "drop type edm4hep::TrackCollection",
+        # Drop some additional collections that are created in LCIO -> EDM4hep
+        # conversion
+        "drop BuildUpVertex_*",
+        "drop GammaGammaCandidate*_startVertices",
+        "drop KinkRecoParticles_startVertices",
+        "drop KinkVertices_associatedParticles",
+        "drop MarlinTrkTracks*_dQdx",
+        "drop SplitRecoParticles_startVertices",
+        "drop SplitVertices_associatedParticles",
+        "drop V0RecoParticles_startVertices",
+        "drop V0Vertices_associatedParticles",
+        "drop Vertex?Jets_*",
+        "drop ProngRecoParticles_startVertices",
+        "drop ProngVertices_associatedParticles",
+    ]
+    io_handler.add_edm4hep_writer(
+        f"{minidst_args.outputFileBase}-miniDST.edm4hep.root", output_commands
+    )
+
+
+if minidst_args.lcioOutput in ("on", "only"):
+    LCIOOutputProcessor = MarlinProcessorWrapper("LCIOOutputProcessor")
+    LCIOOutputProcessor.ProcessorType = "LCIOOutputProcessor"
+    LCIOOutputProcessor.Parameters = {
+        "CompressionLevel": ["6"],
+        "DropCollectionNames": DROP_COLLECTIONS,
+        "DropCollectionTypes": ["Track", "Cluster"],
+        "LCIOOutputFile": [f"{minidst_args.outputFileBase}-miniDST.slcio"],
+        "LCIOWriteMode": ["WRITE_NEW"],
+    }
+
+    algList.append(LCIOOutputProcessor)
+
+
+io_handler.finalize_converters()
+
+ApplicationMgr(
+    TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=svcList, OutputLevel=ERROR
+)
