@@ -726,6 +726,8 @@ if minidst_args.lcioOutput != "only":
         "drop V0RecoParticles_startVertices",
         "drop V0Vertices_associatedParticles",
         "drop Vertex?Jets_*",
+        "drop ProngRecoParticles_startVertices",
+        "drop ProngVertices_associatedParticles",
     ]
     io_handler.add_edm4hep_writer(
         f"{minidst_args.outputFileBase}-miniDST.edm4hep.root", output_commands
