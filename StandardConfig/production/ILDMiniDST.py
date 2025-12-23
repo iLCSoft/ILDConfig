@@ -739,7 +739,7 @@ if minidst_args.lcioOutput in ("on", "only"):
         "CompressionLevel": ["6"],
         "DropCollectionNames": DROP_COLLECTIONS,
         "DropCollectionTypes": ["Track", "Cluster"],
-        "LCIOOutputFile": [f"{minidst_args.outputFileBase}.slcio"],
+        "LCIOOutputFile": [f"{minidst_args.outputFileBase}-miniDST.slcio"],
         "LCIOWriteMode": ["WRITE_NEW"],
     }
 
