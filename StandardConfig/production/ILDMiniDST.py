@@ -6,6 +6,9 @@ from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 from k4MarlinWrapper.io_helpers import IOHandlerHelper
 
+from py_utils import parse_collection_patch_file
+
+MINIDST_COLLECTION_CONTENTS_FILE = "collections_minidst.txt"
 
 parser.add_argument(
     "--inputFiles",
@@ -698,6 +701,16 @@ DROP_COLLECTIONS = [
 ]
 
 if minidst_args.lcioOutput != "only":
+    coll_patcher = MarlinProcessorWrapper(
+        "CollPatcher", ProcessorType="PatchCollections"
+    )
+    coll_patcher.Parameters = {
+        "PatchCollections": parse_collection_patch_file(
+            MINIDST_COLLECTION_CONTENTS_FILE
+        )
+    }
+    algList.append(coll_patcher)
+
     output_commands = [f"drop {c}" for c in DROP_COLLECTIONS] + [
         # Drop all Clusters and Tracks
         "drop type edm4hep::ClusterCollection",
