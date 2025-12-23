@@ -579,7 +579,6 @@ ComprehensivePID_singleP.Parameters.update(
 )
 
 ComprehensivePID_2fZhad = MarlinProcessorWrapper("ComprehensivePID_2fZhad")
-ComprehensivePID_2fZhad.OutputLevel = DEBUG
 ComprehensivePID_2fZhad.ProcessorType = "ComprehensivePIDProcessor"
 ComprehensivePID_2fZhad.Parameters = COMPREHENSIVE_PID_COMMON_PARAMETERS.copy()
 ComprehensivePID_2fZhad.Parameters.update(
