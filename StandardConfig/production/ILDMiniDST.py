@@ -512,7 +512,7 @@ COMPREHENSIVE_PID_COMMON_PARAMETERS = {
     "PFOCollection": ["PandoraPFOs"],
     "RecoMCTruthLink": ["RecoMCTruthLink"],
     "TOF100.S": ["TOFEstimators100ps"],
-    "TTreeFileName": [],
+    "TTreeFileName": [""],
     "backgroundPDGs": [],
     "cutD0": ["0"],
     "cutLamMax": ["0"],
@@ -598,13 +598,13 @@ ComprehensivePID_2fZhad.Parameters.update(
 WWCategorisation = MarlinProcessorWrapper("WWCategorisation")
 WWCategorisation.ProcessorType = "WWCategorisationProcessor"
 WWCategorisation.Parameters = {
-    "ConfusionMatrixFileName": [],
+    "ConfusionMatrixFileName": [""],
     "IsolatedElectrons": ["IsolatedElectrons"],
     "IsolatedMuons": ["IsolatedMuons"],
     "IsolatedPhotons": ["IsolatedPhotons"],
     "IsolatedTaus": ["IsolatedTaus"],
     "PFOsminusphoton": ["PFOsminusphoton"],
-    "TTreeFileName": [],
+    "TTreeFileName": [""],
 }
 
 ParticleIDFilter = MarlinProcessorWrapper("ParticleIDFilter")
