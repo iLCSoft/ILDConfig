@@ -1,0 +1,12 @@
+
+<!--Overlay background settings-->
+<constant name="ExpectedBgWW" value="0.1256495436" />
+<constant name="ExpectedBgWB" value="0.297459204" />
+<constant name="ExpectedBgBW" value="0.29722665" />
+<constant name="ExpectedBgBB" value="0.829787658" />
+
+<!--Beam size (unit mm). Values from ILC TDR, Vol1 p11: 250 GeV baseline-->
+<constant name="LCFIPlusBeamspotConstraint" value="true" />
+<constant name="BeamSizeX" value="313.e-6" />
+<constant name="BeamSizeY" value="3.14e-6" />
+<constant name="BeamSizeZ" value="202.e-3" />

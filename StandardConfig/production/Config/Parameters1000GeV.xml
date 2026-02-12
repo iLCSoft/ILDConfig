@@ -1,12 +1,1 @@
-
-<!--Overlay background settings-->
-<constant name="ExpectedBgWW" value="0.526" />
-<constant name="ExpectedBgWB" value="0.634" />
-<constant name="ExpectedBgBW" value="0.634" />
-<constant name="ExpectedBgBB" value="0.744" />
-
-<!--Beam size (unit mm). Values from ILC TDR, Vol1 p11: 1 TeV B-->
-<constant name="LCFIPlusBeamspotConstraint" value="true" />
-<constant name="BeamSizeX" value="335.e-6" />
-<constant name="BeamSizeY" value="2.7e-6" />
-<constant name="BeamSizeZ" value="146.8e-3" />
+ILC/Parameters1000GeV.xml

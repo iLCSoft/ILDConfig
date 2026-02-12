@@ -1,12 +1,1 @@
-
-<!--Overlay background settings-->
-<constant name="ExpectedBgWW" value="Parameter not yet provided. Please update me !" />
-<constant name="ExpectedBgWB" value="Parameter not yet provided. Please update me !" />
-<constant name="ExpectedBgBW" value="Parameter not yet provided. Please update me !" />
-<constant name="ExpectedBgBB" value="Parameter not yet provided. Please update me !" />
-
-<!--Beam size (unit mm)-->
-<constant name="LCFIPlusBeamspotConstraint" value="true" />
-<constant name="BeamSizeX" value="683.5e-6" />
-<constant name="BeamSizeY" value="5.9e-6" />
-<constant name="BeamSizeZ" value="Parameter not yet provided. Please update me !" />
+ILC/Parameters350GeV.xml

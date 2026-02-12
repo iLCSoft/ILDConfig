@@ -1,13 +1,1 @@
-
-<!--Overlay background settings-->
-<constant name="ExpectedBgWW" value="0.211" />
-<constant name="ExpectedBgWB" value="0.24605" />
-<constant name="ExpectedBgBW" value="0.243873" />
-<constant name="ExpectedBgBB" value="0.35063" />
-
-<!--Beam size (unit mm). Values from ILC TDR, Vol1 p11: 500 GeV with L upgrade-->
-<constant name="LCFIPlusBeamspotConstraint" value="true" />
-<constant name="BeamSizeX" value="474.e-6" />
-<constant name="BeamSizeY" value="5.9e-6" />
-<constant name="BeamSizeZ" value="196.e-3" />
-
+ILC/Parameters500GeV.xml
