@@ -4,26 +4,26 @@ from pathlib import Path
 from typing import Any, Union
 
 from Configurables import (
+    AlgTimingAuditor,
+    AuditorSvc,
+    EventDataSvc,
     GeoSvc,
     MarlinProcessorWrapper,
-    EventDataSvc,
-    AuditorSvc,
-    AlgTimingAuditor,
 )
 from Gaudi.Configuration import INFO
 from k4FWCore import ApplicationMgr, IOSvc
 from k4FWCore.parseArgs import parser
-from k4MarlinWrapper.parseConstants import parseConstants
 from k4MarlinWrapper.io_helpers import IOHandlerHelper
+from k4MarlinWrapper.parseConstants import parseConstants
 
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
 sys.path.append(Path(__file__).parent)
 from py_utils import (
     SequenceLoader,
+    get_drop_collections,
     import_from,
     parse_collection_patch_file,
-    get_drop_collections,
 )
 
 # only non-FCCMDI models
