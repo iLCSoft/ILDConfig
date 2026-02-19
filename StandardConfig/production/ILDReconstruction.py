@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+from typing import Any, Union
 
 from Configurables import (
     GeoSvc,
@@ -143,6 +144,15 @@ def get_compact_file_path(detector_model: str):
     return f"{os.path.normpath(os.environ['K4GEO'])}/ILD/compact/{detector_model}/{detector_model}.xml"
 
 
+def get_cms_energy_config(
+    compact_file_path: Union[str, Path, os.PathLike], cms_energy: int
+) -> Any:
+    """returns the cms energy config of the detector model identified by the compact file"""
+    if "FCCee" in Path(compact_file_path).parts:
+        return import_from(f"Config/FCCee/Parameters{cms_energy}GeV.cfg").PARAMETERS
+    return import_from(f"Config/ILC/Parameters{cms_energy}GeV.cfg").PARAMETERS
+
+
 reco_args = parser.parse_known_args()[0]
 
 algList = []
@@ -171,10 +181,7 @@ CONSTANTS.update(det_calib_constants)
 
 parseConstants(CONSTANTS)
 
-
-cms_energy_config = import_from(
-    f"Config/Parameters{reco_args.cmsEnergy}GeV.cfg"
-).PARAMETERS
+cms_energy_config = get_cms_energy_config(compact_file, reco_args.cmsEnergy)
 
 sequenceLoader = SequenceLoader(
     algList,
