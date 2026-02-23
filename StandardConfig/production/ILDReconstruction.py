@@ -1,7 +1,7 @@
 import os
 import sys
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
 
 from Configurables import (
     AlgTimingAuditor,
@@ -145,7 +145,7 @@ def get_compact_file_path(detector_model: str):
 
 
 def get_cms_energy_config(
-    compact_file_path: Union[str, Path, os.PathLike], cms_energy: int
+    compact_file_path: str | Path | os.PathLike, cms_energy: int
 ) -> Any:
     """returns the cms energy config of the detector model identified by the compact file"""
     if "FCCee" in Path(compact_file_path).parts:
