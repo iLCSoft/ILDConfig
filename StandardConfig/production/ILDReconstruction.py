@@ -89,9 +89,9 @@ parser.add_argument(
 parser.add_argument(
     "--cmsEnergy",
     help="The center-of-mass energy to assume for reconstruction in GeV",
-    choices=(250, 350, 500, 1000),
+    choices=(91, 160, 240, 250, 350, 365, 500, 1000),
     type=int,
-    default=250,
+    default=None,
 )
 parser.add_argument(
     "--detectorModel",
@@ -145,12 +145,15 @@ def get_compact_file_path(detector_model: str):
 
 
 def get_cms_energy_config(
-    compact_file_path: str | Path | os.PathLike, cms_energy: int
+    compact_file_path: str | Path | os.PathLike, cms_energy: int | None
 ) -> Any:
     """returns the cms energy config of the detector model identified by the compact file"""
-    if "FCCee" in Path(compact_file_path).parts:
-        return import_from(f"Config/FCCee/Parameters{cms_energy}GeV.cfg").PARAMETERS
-    return import_from(f"Config/ILC/Parameters{cms_energy}GeV.cfg").PARAMETERS
+    is_FCCee_model = "FCCee" in Path(compact_file_path).parts
+    # choose correct default cms energy if not specified
+    energy = cms_energy or (240 if is_FCCee_model else 250)
+    # choose correct dir for chosen collider
+    collider = "FCCee" if is_FCCee_model else "ILC"
+    return import_from(f"Config/{collider}/Parameters{energy:03d}GeV.cfg").PARAMETERS
 
 
 reco_args = parser.parse_known_args()[0]
