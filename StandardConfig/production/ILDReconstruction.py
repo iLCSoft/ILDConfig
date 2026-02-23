@@ -146,14 +146,16 @@ def get_compact_file_path(detector_model: str):
 
 def get_cms_energy_config(
     compact_file_path: str | Path | os.PathLike, cms_energy: int | None
-) -> Any:
+) -> tuple[int, Any]:
     """returns the cms energy config of the detector model identified by the compact file"""
     is_FCCee_model = "FCCee" in Path(compact_file_path).parts
     # choose correct default cms energy if not specified
     energy = cms_energy or (240 if is_FCCee_model else 250)
     # choose correct dir for chosen collider
     collider = "FCCee" if is_FCCee_model else "ILC"
-    return import_from(f"Config/{collider}/Parameters{energy:03d}GeV.cfg").PARAMETERS
+    return energy, import_from(
+        f"Config/{collider}/Parameters{energy:03d}GeV.cfg"
+    ).PARAMETERS
 
 
 reco_args = parser.parse_known_args()[0]
@@ -174,8 +176,9 @@ geoSvc.OutputLevel = INFO
 geoSvc.EnableGeant4Geo = False
 svcList.append(geoSvc)
 
+cms_e, cms_energy_config = get_cms_energy_config(compact_file, reco_args.cmsEnergy)
 CONSTANTS = {
-    "CMSEnergy": str(reco_args.cmsEnergy),
+    "CMSEnergy": str(cms_e),
     "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
 }
 
@@ -183,8 +186,6 @@ det_calib_constants = import_from(f"Calibration/Calibration_{det_model}.cfg").CO
 CONSTANTS.update(det_calib_constants)
 
 parseConstants(CONSTANTS)
-
-cms_energy_config = get_cms_energy_config(compact_file, reco_args.cmsEnergy)
 
 sequenceLoader = SequenceLoader(
     algList,
