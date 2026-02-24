@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from Configurables import MarlinProcessorWrapper
+
 from py_utils import encode_CT_steps_dict_to_legacy_list
 
 CT_MAX_DIST = "0.03"  # RANDOM VALUE COPYIED FROM CLDRECO

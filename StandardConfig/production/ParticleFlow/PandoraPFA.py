@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-from Gaudi.Configuration import ERROR
-
 from Configurables import MarlinProcessorWrapper
+from Gaudi.Configuration import ERROR
 
 MyDDMarlinPandora = MarlinProcessorWrapper("MyDDMarlinPandora")
 MyDDMarlinPandora.ProcessorType = "DDPandoraPFANewProcessor"
