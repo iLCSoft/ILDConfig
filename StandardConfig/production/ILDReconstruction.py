@@ -146,16 +146,18 @@ def get_compact_file_path(detector_model: str):
 
 def get_cms_energy_config(
     compact_file_path: str | Path | os.PathLike, cms_energy: int | None
-) -> tuple[int, Any]:
-    """returns the cms energy config of the detector model identified by the compact file"""
-    is_FCCee_model = "FCCee" in Path(compact_file_path).parts
+) -> tuple[bool, int, Any]:
+    """returns the collider type, resolved cms energy, and associated config parameters"""
+    _is_FCCee_model = "FCCee" in Path(compact_file_path).parts
     # choose correct default cms energy if not specified
-    energy = cms_energy or (240 if is_FCCee_model else 250)
+    energy = cms_energy or (240 if _is_FCCee_model else 250)
     # choose correct dir for chosen collider
-    collider = "FCCee" if is_FCCee_model else "ILC"
-    return energy, import_from(
-        f"Config/{collider}/Parameters{energy:03d}GeV.cfg"
-    ).PARAMETERS
+    collider = "FCCee" if _is_FCCee_model else "ILC"
+    return (
+        _is_FCCee_model,
+        energy,
+        import_from(f"Config/{collider}/Parameters{energy:03d}GeV.cfg").PARAMETERS,
+    )
 
 
 reco_args = parser.parse_known_args()[0]
@@ -176,7 +178,9 @@ geoSvc.OutputLevel = INFO
 geoSvc.EnableGeant4Geo = False
 svcList.append(geoSvc)
 
-cms_e, cms_energy_config = get_cms_energy_config(compact_file, reco_args.cmsEnergy)
+is_FCCee_model, cms_e, cms_energy_config = get_cms_energy_config(
+    compact_file, reco_args.cmsEnergy
+)
 CONSTANTS = {
     "CMSEnergy": str(cms_e),
     "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
@@ -245,7 +249,8 @@ if not reco_args.trackingOnly:
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-    sequenceLoader.load("HighLevelReco/HighLevelReco")
+    if not is_FCCee_model:
+        sequenceLoader.load("HighLevelReco/HighLevelReco")
 
     MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
     MyPfoAnalysis.ProcessorType = "PfoAnalysis"
