@@ -45,6 +45,7 @@ MyClupatraProcessor.Parameters = {
 MyConformalTracking = MarlinProcessorWrapper("MyConformalTracking")
 MyConformalTracking.ProcessorType = "ConformalTrackingV2"
 conformal_tracking_steps_config = {
+    # Based on CLD's Reconstruction in CLDConfig
     "VertexBarrel": {
         "collections": ["VertexBarrelTrackerHits"],
         "params": {
@@ -73,6 +74,10 @@ conformal_tracking_steps_config = {
         "flags": ["HighPTFit", "VertexToTracker"],
         "functions": ["CombineCollections", "ExtendTracks"],
     },
+    # Second pass (likely "inclusive seeding"): Based on the looser MaxCellAngle (0.05)
+    # and combined collections, this step presumably aims to recover lower-pT
+    # or transition-region tracks from hits not consumed in previous steps.
+    # Note: This logic is inferred from parameters and has not been verified in the source code.
     "LowerCellAngle1": {
         "collections": ["VertexBarrelTrackerHits", "VertexEndcapTrackerHits"],
         "params": {
