@@ -169,7 +169,11 @@ evtsvc = EventDataSvc("EventDataSvc")
 svcList.append(evtsvc)
 iosvc = IOSvc()
 
-det_model = reco_args.detectorModel
+det_model = (
+    reco_args.detectorModel
+    if not reco_args.compactFile
+    else Path(reco_args.compactFile).stem
+)
 compact_file = reco_args.compactFile or get_compact_file_path(det_model)
 
 geoSvc = GeoSvc("GeoSvc")
@@ -222,11 +226,6 @@ if reco_args.runOverlay:
 ecal_technology = CONSTANTS["EcalTechnology"]
 hcal_technology = CONSTANTS["HcalTechnology"]
 
-# identify specified detector model
-if reco_args.compactFile:
-    det_model = Path(reco_args.compactFile).stem
-else:
-    det_model = reco_args.detectorModel
 # load relevant tracking
 if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
