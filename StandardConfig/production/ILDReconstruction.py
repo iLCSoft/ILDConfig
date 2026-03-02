@@ -26,12 +26,13 @@ from py_utils import (
     parse_collection_patch_file,
 )
 
+BASELINE_DET_MOD = "ILD_l5_o1_v02"
 # only non-FCCMDI models
 DETECTOR_MODELS = (
+    BASELINE_DET_MOD,
     "ILD_l2_v02",
     "ILD_l4_o1_v02",
     "ILD_l4_o2_v02",
-    "ILD_l5_o1_v02",
     "ILD_l5_o1_v03",
     "ILD_l5_o1_v04",
     "ILD_l5_o1_v05",
@@ -65,15 +66,41 @@ ALL_DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
 
 REC_COLLECTION_CONTENTS_FILE = "collections_rec_level.txt"
 
+det_mod_g = parser.add_mutually_exclusive_group(required=False)
+det_mod_g.add_argument(
+    "--compactFile",
+    help="Path to a custom DD4hep XML compact file to define the detector geometry",
+    type=str,
+    default=None,
+)
+det_mod_g.add_argument(
+    "--detectorModel",
+    help="Name of a registered detector model to use for reconstruction",
+    choices=ALL_DETECTOR_MODELS,
+    type=str,
+    default=None,
+)
+
+beam_cal_reco_g = parser.add_mutually_exclusive_group(required=False)
+beam_cal_reco_g.add_argument(
+    "--runBeamCalReco",
+    help="Run the BeamCal reco",
+    action="store_true",
+    dest="runBeamCalReco",
+)
+beam_cal_reco_g.add_argument(
+    "--noBeamCalReco",
+    help="Don't run the BeamCal reco",
+    action="store_false",
+    dest="runBeamCalReco",
+)
+
 parser.add_argument(
     "--inputFiles",
     action="extend",
     nargs="+",
     metavar=["file1", "file2"],
     help="One or multiple input files",
-)
-parser.add_argument(
-    "--compactFile", help="Compact detector file to use", type=str, default=""
 )
 parser.add_argument(
     "--outputFileBase",
@@ -95,13 +122,6 @@ parser.add_argument(
     default=None,
 )
 parser.add_argument(
-    "--detectorModel",
-    help="Which detector model to run reconstruction for",
-    choices=DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS,
-    type=str,
-    default="ILD_l5_o1_v02",
-)
-parser.add_argument(
     "--perfectPFA",
     help="Run perfect PandoraPFA",
     action="store_true",
@@ -111,19 +131,6 @@ parser.add_argument(
     help="Run background overlay. NOTE: You have to make sure that the Overlay algorithms in "
     " BgOverlay/BgOverlay.py are provided with the necessary overlay files",
     action="store_true",
-)
-
-parser.add_argument(
-    "--runBeamCalReco",
-    help="Run the BeamCal reco",
-    action="store_true",
-    dest="runBeamCalReco",
-)
-parser.add_argument(
-    "--noBeamCalReco",
-    help="Don't run the BeamCal reco",
-    action="store_false",
-    dest="runBeamCalReco",
 )
 parser.add_argument(
     "--beamCalCalibFactor",
@@ -170,12 +177,14 @@ evtsvc = EventDataSvc("EventDataSvc")
 svcList.append(evtsvc)
 iosvc = IOSvc()
 
-det_model = (
-    reco_args.detectorModel
-    if not reco_args.compactFile
-    else Path(reco_args.compactFile).stem
-)
-compact_file = reco_args.compactFile or get_compact_file_path(det_model)
+if reco_args.compactFile:
+    compact_file = reco_args.compactFile
+    # Derive det_model name from the file
+    det_model = Path(compact_file).stem
+else:
+    det_model = reco_args.detectorModel or BASELINE_DET_MOD
+    compact_file = get_compact_file_path(det_model)
+
 # Ensure the detector model is registered in the known models list.
 # This is required to correctly resolve paths and select the appropriate reconstruction sequence.
 assert det_model in ALL_DETECTOR_MODELS, (
