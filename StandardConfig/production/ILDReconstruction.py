@@ -376,7 +376,7 @@ svcList.append(auditorSvc)
 auditorSvc.Auditors = [AlgTimingAuditor()]
 
 app_mgr = ApplicationMgr(
-    TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
+    TopAlg=algList, EvtSel="NONE", EvtMax=-1, ExtSvc=svcList, OutputLevel=INFO
 )
 
 app_mgr.AuditAlgorithms = True
