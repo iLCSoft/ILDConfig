@@ -143,6 +143,16 @@ parser.add_argument(
     help="Only Tracking is performed; built for reco testing purposes",
     action="store_true",
 )
+parser.add_argument(
+    "--noAIDA",
+    help="Discard output of AIDA processor",
+    action="store_true",
+)
+parser.add_argument(
+    "--noPFO",
+    help="Disable PFO processor and output",
+    action="store_true",
+)
 
 
 def get_compact_file_path(detector_model: str):
@@ -224,6 +234,7 @@ MyAIDAProcessor.Parameters = {
     "Compress": ["1"],
     "FileName": [f"{reco_args.outputFileBase}_AIDA"],
     "FileType": ["root"],
+    "DiscardOutput": ["true" if reco_args.noAIDA else "false"],
 }
 algList.append(MyAIDAProcessor)
 
@@ -266,47 +277,59 @@ if not reco_args.trackingOnly:
     if not is_FCCee_model:
         sequenceLoader.load("HighLevelReco/HighLevelReco")
 
-    MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
-    MyPfoAnalysis.ProcessorType = "PfoAnalysis"
-    MyPfoAnalysis.Parameters = {
-        "BCalCollections": ["BCAL"],
-        "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
-        "CollectCalibrationDetails": ["0"],
-        "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
-        "ECalCollections": [
-            "EcalBarrelCollectionRec",
-            "EcalBarrelCollectionGapHits",
-            "EcalEndcapsCollectionRec",
-            "EcalEndcapsCollectionGapHits",
-            "EcalEndcapRingCollectionRec",
-        ],
-        "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
-        "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
-        "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
-        "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
-        "HCalCollections": [
-            "HcalBarrelCollectionRec",
-            "HcalEndcapsCollectionRec",
-            "HcalEndcapRingCollectionRec",
-        ],
-        "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
-        "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
-        "LCalCollections": ["LCAL"],
-        "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
-        "LHCalCollections": ["LHCAL"],
-        "LHCalCollectionsSimCaloHit": ["LHCalCollection"],
-        "LookForQuarksWithMotherZ": ["2"],
-        "MCParticleCollection": ["MCParticle"],
-        "MCPfoSelectionLowEnergyNPCutOff": ["1.2"],
-        "MCPfoSelectionMomentum": ["0.01"],
-        "MCPfoSelectionRadius": ["500."],
-        "MuonCollections": ["MUON"],
-        "MuonCollectionsSimCaloHit": ["YokeBarrelCollection", "YokeEndcapsCollection"],
-        "PfoCollection": ["PandoraPFOs"],
-        "Printing": ["0"],
-        "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
-    }
-    algList.append(MyPfoAnalysis)
+    if not reco_args.noPFO:
+        MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
+        MyPfoAnalysis.ProcessorType = "PfoAnalysis"
+        MyPfoAnalysis.Parameters = {
+            "BCalCollections": ["BCAL"],
+            "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
+            "CollectCalibrationDetails": ["0"],
+            "ECalBarrelCollectionsSimCaloHit": [
+                CONSTANTS["ECalBarrelSimHitCollections"]
+            ],
+            "ECalCollections": [
+                "EcalBarrelCollectionRec",
+                "EcalBarrelCollectionGapHits",
+                "EcalEndcapsCollectionRec",
+                "EcalEndcapsCollectionGapHits",
+                "EcalEndcapRingCollectionRec",
+            ],
+            "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
+            "ECalEndCapCollectionsSimCaloHit": [
+                CONSTANTS["ECalEndcapSimHitCollections"]
+            ],
+            "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
+            "HCalBarrelCollectionsSimCaloHit": [
+                CONSTANTS["HCalBarrelSimHitCollections"]
+            ],
+            "HCalCollections": [
+                "HcalBarrelCollectionRec",
+                "HcalEndcapsCollectionRec",
+                "HcalEndcapRingCollectionRec",
+            ],
+            "HCalEndCapCollectionsSimCaloHit": [
+                CONSTANTS["HCalEndcapSimHitCollections"]
+            ],
+            "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
+            "LCalCollections": ["LCAL"],
+            "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
+            "LHCalCollections": ["LHCAL"],
+            "LHCalCollectionsSimCaloHit": ["LHCalCollection"],
+            "LookForQuarksWithMotherZ": ["2"],
+            "MCParticleCollection": ["MCParticle"],
+            "MCPfoSelectionLowEnergyNPCutOff": ["1.2"],
+            "MCPfoSelectionMomentum": ["0.01"],
+            "MCPfoSelectionRadius": ["500."],
+            "MuonCollections": ["MUON"],
+            "MuonCollectionsSimCaloHit": [
+                "YokeBarrelCollection",
+                "YokeEndcapsCollection",
+            ],
+            "PfoCollection": ["PandoraPFOs"],
+            "Printing": ["0"],
+            "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
+        }
+        algList.append(MyPfoAnalysis)
 
 if reco_args.lcioOutput != "only":
     # Make sure that all collections are always available by patching in missing
