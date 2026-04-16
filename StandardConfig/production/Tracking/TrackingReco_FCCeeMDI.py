@@ -9,6 +9,37 @@ MCPartColName = ["MCParticle"]  # MCParticleCollectionName
 VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
 VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
 
+MyClupatraProcessorOG = MarlinProcessorWrapper("MyClupatraProcessorOG")
+MyClupatraProcessorOG.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessorOG.Parameters = {
+    "Chi2Cut": ["100"],
+    "CreateDebugCollections": ["false", "true"],
+    "DistanceCut": ["40"],
+    "DuplicatePadRowFraction": ["0.1"],
+    "EnergyLossOn": ["true"],
+    "MaxDeltaChi2": ["35"],
+    "MaxStepWithoutHit": ["6"],
+    "MinLayerFractionWithMultiplicity": ["0.5"],
+    "MinLayerNumberWithMultiplicity": ["3"],
+    "MinimumClusterSize": ["6"],
+    "MultipleScatteringOn": ["false", "true"],
+    "NumberOfZBins": ["150"],
+    "OutputCollection": ["ClupatraTracks"],
+    "PadRowRange": ["15"],
+    "SITHitCollection": ["InnerTrackerBarrelHits"],
+    "SITDetectorName": ["InnerTrackerBarrel"],
+    "SegmentCollectionName": ["ClupatraTrackSegments2"],
+    "SmoothOn": ["false"],
+    "TPCHitCollection": ["TPCTrackerHits"],
+    "TrackEndsOuterCentralDist": ["25"],
+    "TrackEndsOuterForwardDist": ["40"],
+    "TrackIsCurlerOmega": ["0.001"],
+    "TrackStartsInnerDist": ["25"],
+    "TrackSystemName": ["DDKalTest"],
+    "VXDHitCollection": ["VertexBarrelTrackerHits"],
+    "VXDDetectorName": ["VertexBarrel"],
+    "pickUpSiHits": ["false"],
+}
 
 MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
 MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
@@ -430,6 +461,7 @@ MyRefitProcessorProton.Parameters = {
 
 TrackingReco_FCCeeMDISequence = [
     MyClupatraProcessor,
+    MyClupatraProcessorOG,
     MyConformalTracking,
     # MyFullLDCTracking_MarlinTrk,
     # MySiliconTracking_MarlinTrk,
