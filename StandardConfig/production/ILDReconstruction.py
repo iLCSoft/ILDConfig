@@ -245,7 +245,7 @@ hcal_technology = CONSTANTS["HcalTechnology"]
 if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
     sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
-elif det_model in DETECTOR_MODELS:
+else:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
 
