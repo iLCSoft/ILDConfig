@@ -101,6 +101,7 @@ parser.add_argument(
     nargs="+",
     metavar=["file1", "file2"],
     help="One or multiple input files",
+    required=True,
 )
 parser.add_argument(
     "--outputFileBase",
