@@ -62,7 +62,10 @@ FCCeeMDI_DETECTOR_MODELS = (  # only add models located in $K4GEO/ILD/ here
     "ILD_l5_v11",
     *FCCeeMDI_DETECTOR_MODELS_common_MDI,
 )
-ALL_DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
+ALL_VALID_DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
+# simulation models must not be used for reconstruction
+INVALID_DETECTOR_MODELS = ("ILD_l5_v02", "ILD_s5_v02", "ILD_l4_v02", "ILD_s4_v02")
+assert set(ALL_VALID_DETECTOR_MODELS).isdisjoint(INVALID_DETECTOR_MODELS)
 
 REC_COLLECTION_CONTENTS_FILE = "collections_rec_level.txt"
 
@@ -76,7 +79,7 @@ det_mod_g.add_argument(
 det_mod_g.add_argument(
     "--detectorModel",
     help="Name of a registered detector model to use for reconstruction",
-    choices=ALL_DETECTOR_MODELS,
+    choices=ALL_VALID_DETECTOR_MODELS,
     type=str,
     default=None,
 )
@@ -198,8 +201,14 @@ else:
 
 # Ensure the detector model is registered in the known models list.
 # This is required to correctly resolve paths and select the appropriate reconstruction sequence.
-assert det_model in ALL_DETECTOR_MODELS, (
-    f"Detector model '{det_model}' is not registered in ALL_DETECTOR_MODELS"
+assert det_model in ALL_VALID_DETECTOR_MODELS, (
+    f"Detector model '{det_model}' is not registered in ALL_VALID_DETECTOR_MODELS!"
+)
+# Provide an understandable error message why those models are invalid
+assert det_model not in INVALID_DETECTOR_MODELS, (
+    "This detector model is intended only for parallel simulation of different "
+    "calorimeter options and must not be used for reconstruction. Reconstruction "
+    "requires a model with a specified calorimeter option! See k4geo for details!"
 )
 
 geoSvc = GeoSvc("GeoSvc")
