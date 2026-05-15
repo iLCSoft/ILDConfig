@@ -157,6 +157,11 @@ parser.add_argument(
     help="Disable PFO processor and output",
     action="store_true",
 )
+parser.add_argument(
+    "--usingParticleGun",
+    help="Indicate that input was generated using particle gun",
+    action="store_true",
+)
 
 
 def get_compact_file_path(detector_model: str):
@@ -232,7 +237,11 @@ parseConstants(CONSTANTS)
 
 sequenceLoader = SequenceLoader(
     algList,
-    global_vars={"CONSTANTS": CONSTANTS, "cms_energy_config": cms_energy_config},
+    global_vars={
+        "CONSTANTS": CONSTANTS,
+        "cms_energy_config": cms_energy_config,
+        "using_particle_gun": reco_args.usingParticleGun,
+    },
 )
 
 io_handler = IOHandlerHelper(algList, iosvc)
