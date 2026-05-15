@@ -258,7 +258,7 @@ MyRecoMCTruthLinker.Parameters = {
         "SETSpacePointRelations",
     ],
     "UseTrackerHitRelations": ["true"],
-    "UsingParticleGun": ["false"],
+    "UsingParticleGun": [str(using_particle_gun).lower()],
 }
 
 VertexFinder = MarlinProcessorWrapper("VertexFinder")
