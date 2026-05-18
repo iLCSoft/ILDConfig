@@ -146,16 +146,17 @@ MyDistilledPFOCreator.Parameters = {
 
 MyLikelihoodPID = MarlinProcessorWrapper("MyLikelihoodPID")
 MyLikelihoodPID.ProcessorType = "LikelihoodPIDProcessor"
+# fmt: off
+likelihood_pid_cost_matrix = [
+    "1.0e-50", "1.0", "1.5", "1.0", "1.5",
+    "1.0", "1.0e-50", "3.0", "1.0", "1.0",
+    "1.0", "1.0", "1.0e-50", "1.0", "3.0",
+    "1.0", "1.0", "4.0", "1.0e-50", "2.0",
+    "1.0", "1.0", "5.0", "1.0", "1.0e-50",
+]
+# fmt: on
 MyLikelihoodPID.Parameters = {
-    # fmt: off
-    "CostMatrix": [
-        "1.0e-50", "1.0", "1.5", "1.0", "1.5",
-        "1.0", "1.0e-50", "3.0", "1.0", "1.0",
-        "1.0", "1.0", "1.0e-50", "1.0", "3.0",
-        "1.0", "1.0", "4.0", "1.0e-50", "2.0",
-        "1.0", "1.0", "5.0", "1.0", "1.0e-50",
-    ],
-    # fmt: on
+    "CostMatrix": likelihood_pid_cost_matrix,
     "Debug": ["0"],
     "EnergyBoundaries": ["0", "1.0e+07"],
     "FilePDFName": [CONSTANTS["PidPDFFile"]],
