@@ -162,6 +162,11 @@ parser.add_argument(
     help="Indicate that input was generated using particle gun",
     action="store_true",
 )
+parser.add_argument(
+    "--doHLR",
+    help="FCC models: do High Level Reco",
+    action="store_true",
+)
 
 
 def get_compact_file_path(detector_model: str):
@@ -293,6 +298,8 @@ if not reco_args.trackingOnly:
 
     if not is_FCCee_model:
         sequenceLoader.load("HighLevelReco/HighLevelReco")
+    elif reco_args.doHLR:
+        sequenceLoader.load("HighLevelReco/HighLevelReco_FCCee")
 
     if not reco_args.noPFO:
         MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
