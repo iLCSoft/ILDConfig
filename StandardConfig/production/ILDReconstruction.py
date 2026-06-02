@@ -162,6 +162,11 @@ parser.add_argument(
     help="Indicate that input was generated using particle gun",
     action="store_true",
 )
+parser.add_argument(
+    "--trackMerge",
+    help="Run the Silicon-TPC-track-merging for ILD@FCC-ee",
+    action="store_true",
+)
 
 
 def get_compact_file_path(detector_model: str):
@@ -273,6 +278,8 @@ hcal_technology = CONSTANTS["HcalTechnology"]
 if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
     sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
+    if reco_args.trackMerge:
+        sequenceLoader.load("Tracking/TrackMerging_FCCee")
 elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
