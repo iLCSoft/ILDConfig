@@ -211,7 +211,7 @@ MyRecoMCTruthLinker.Parameters = {
     "ClusterMCTruthLinkName": ["ClusterMCTruthLink"],
     "FullRecoRelation": ["true"],
     "KeepDaughtersPDG": ["22", "111", "310", "13", "211", "321"],
-    "MCParticleCollection": ["MCParticles"],
+    "MCParticleCollection": ["MCParticle"],
     "MCParticlesSkimmedName": ["MCParticlesSkimmed"],
     "MCTruthClusterLinkName": ["MCTruthClusterLink"],
     "MCTruthRecoLinkName": ["MCTruthRecoLink"],
@@ -253,7 +253,7 @@ MyRecoMCTruthLinker.Parameters = {
     ],
     "TrackCollection": ["RefittedCluWithSiTracks"],  # ["MarlinTrkTracks"],
     "TrackMCTruthLinkName": [
-        "RefittedCluWithSiTrackRelations"
+        "LinkerCluWithSiTrackRelations"
     ],  # ["MarlinTrkTracksMCTruthLink"],
     "TrackerHitsRelInputCollections": [
         #        "VXDTrackerHitRelations",
@@ -346,5 +346,5 @@ HighLevelReco_FCCeeSequence = [
     MyRecoMCTruthLinker,
     VertexFinder,
     TrackLengthProcessor,
-    *TOF_processors,
+    # *TOF_processors,
 ]
