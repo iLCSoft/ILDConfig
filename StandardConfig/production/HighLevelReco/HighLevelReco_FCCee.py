@@ -215,7 +215,9 @@ MyRecoMCTruthLinker.Parameters = {
     "MCParticlesSkimmedName": ["MCParticlesSkimmed"],
     "MCTruthClusterLinkName": ["MCTruthClusterLink"],
     "MCTruthRecoLinkName": ["MCTruthRecoLink"],
-    "MCTruthTrackLinkName": ["MCTruthMarlinTrkTracksLink"],
+    "MCTruthTrackLinkName": [
+        "MCTruthRefittedCluWithSiTracksLink"
+    ],  # ["MCTruthMarlinTrkTracksLink"],
     "RecoMCTruthLinkName": ["RecoMCTruthLink"],
     "RecoParticleCollection": ["PandoraPFOs"],
     "SimCaloHitCollections": [
