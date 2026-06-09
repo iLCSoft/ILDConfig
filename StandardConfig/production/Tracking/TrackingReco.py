@@ -34,6 +34,7 @@ MyClupatraProcessor.Parameters = {
 
 MySiliconTracking_MarlinTrk = MarlinProcessorWrapper("MySiliconTracking_MarlinTrk")
 MySiliconTracking_MarlinTrk.ProcessorType = "SiliconTracking_MarlinTrk"
+# fmt: off
 MySiliconTracking_MarlinTrk.Parameters = {
     "AngleCutForMerging": ["0.1"],
     "AplySimpleUpdatedCoreBin": ["true"],
@@ -58,7 +59,6 @@ MySiliconTracking_MarlinTrk.Parameters = {
     "InitialTrackErrorPhi0": ["100"],
     "InitialTrackErrorTanL": ["100"],
     "InitialTrackErrorZ0": ["1e+06"],
-    # fmt: off
     "LayerCombinations": [
         "8","6","5",  "8","6","4",  "8","6","3",  "8","6","2",
         "8","5","3",  "8","5","2",  "8","4","3",  "8","4","2",
@@ -80,7 +80,6 @@ MySiliconTracking_MarlinTrk.Parameters = {
         "5","3","1",    "5","3","0",    "5","2","1",    "5","2","0",
         "4","3","1",    "4","3","0",    "4","2","1",    "4","2","0",
     ],
-    # fmt: on
     "MaxChi2PerHit": ["100"],
     "MaxHitsPerSector": ["100"],
     "MinDistCutAttach": ["2.5"],
@@ -102,6 +101,7 @@ MySiliconTracking_MarlinTrk.Parameters = {
     "UseSimpleAttachHitToTrack": ["true"],
     "VTXHitCollectionName": ["VXDTrackerHits"],
 }
+# fmt: on
 
 MyForwardTracking = MarlinProcessorWrapper("MyForwardTracking")
 MyForwardTracking.ProcessorType = "ForwardTracking"
