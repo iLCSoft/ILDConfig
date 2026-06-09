@@ -37,7 +37,7 @@ MyClupatraProcessor.Parameters = {
     "TrackIsCurlerOmega": ["0.001"],
     "TrackStartsInnerDist": ["25"],
     "TrackSystemName": ["DDKalTest"],
-    "VXDHitCollection": ["VertexBarrelTrackerHits"],
+    "VXDHitCollection": VertexBarrelHitCollectionNames,
     "VXDDetectorName": ["VertexBarrel"],
     "pickUpSiHits": ["true"],
 }
@@ -47,7 +47,7 @@ MyConformalTracking.ProcessorType = "ConformalTrackingV2"
 conformal_tracking_steps_config = {
     # Based on CLD's Reconstruction in CLDConfig
     "VertexBarrel": {
-        "collections": ["VertexBarrelTrackerHits"],
+        "collections": VertexBarrelHitCollectionNames,
         "params": {
             "MaxCellAngle": 0.01,
             "MaxCellAngleRZ": 0.01,
@@ -61,7 +61,7 @@ conformal_tracking_steps_config = {
         "functions": ["CombineCollections", "BuildNewTracks"],
     },
     "VertexEncap": {
-        "collections": ["VertexEndcapTrackerHits"],
+        "collections": VertexEndcapHitCollectionNames,
         "params": {
             "MaxCellAngle": 0.01,
             "MaxCellAngleRZ": 0.01,
@@ -79,7 +79,7 @@ conformal_tracking_steps_config = {
     # or transition-region tracks from hits not consumed in previous steps.
     # Note: This logic is inferred from parameters and has not been verified in the source code.
     "LowerCellAngle1": {
-        "collections": ["VertexBarrelTrackerHits", "VertexEndcapTrackerHits"],
+        "collections": VertexBarrelHitCollectionNames + VertexEndcapHitCollectionNames,
         "params": {
             "MaxCellAngle": 0.05,
             "MaxCellAngleRZ": 0.05,
