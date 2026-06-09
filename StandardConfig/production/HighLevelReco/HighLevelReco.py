@@ -309,45 +309,18 @@ TrackLengthProcessor = MarlinProcessorWrapper("TrackLengthProcessor")
 TrackLengthProcessor.ProcessorType = "TrackLengthProcessor"
 TrackLengthProcessor.Parameters = {"ReconstructedParticleCollection": ["PandoraPFOs"]}
 
-TOFEstimators0ps = MarlinProcessorWrapper("TOFEstimators0ps")
-TOFEstimators0ps.ProcessorType = "TOFEstimators"
-TOFEstimators0ps.Parameters = {
-    "ExtrapolateToEcal": ["true"],
-    "MaxEcalLayer": ["10"],
-    "ReconstructedParticleCollection": ["PandoraPFOs"],
-    "TimeResolution": ["0"],
-    "TofMethod": ["closest"],
-}
-
-TOFEstimators10ps = MarlinProcessorWrapper("TOFEstimators10ps")
-TOFEstimators10ps.ProcessorType = "TOFEstimators"
-TOFEstimators10ps.Parameters = {
-    "ExtrapolateToEcal": ["true"],
-    "MaxEcalLayer": ["10"],
-    "ReconstructedParticleCollection": ["PandoraPFOs"],
-    "TimeResolution": ["10."],
-    "TofMethod": ["closest"],
-}
-
-TOFEstimators50ps = MarlinProcessorWrapper("TOFEstimators50ps")
-TOFEstimators50ps.ProcessorType = "TOFEstimators"
-TOFEstimators50ps.Parameters = {
-    "ExtrapolateToEcal": ["true"],
-    "MaxEcalLayer": ["10"],
-    "ReconstructedParticleCollection": ["PandoraPFOs"],
-    "TimeResolution": ["50"],
-    "TofMethod": ["closest"],
-}
-
-TOFEstimators100ps = MarlinProcessorWrapper("TOFEstimators100ps")
-TOFEstimators100ps.ProcessorType = "TOFEstimators"
-TOFEstimators100ps.Parameters = {
-    "ExtrapolateToEcal": ["true"],
-    "MaxEcalLayer": ["10"],
-    "ReconstructedParticleCollection": ["PandoraPFOs"],
-    "TimeResolution": ["100"],
-    "TofMethod": ["closest"],
-}
+TOF_processors = []
+for res in [0, 10, 50, 100]:
+    proc = MarlinProcessorWrapper(f"TOFEstimators{res}ps")
+    proc.ProcessorType = "TOFEstimators"
+    proc.Parameters = {
+        "ExtrapolateToEcal": ["true"],
+        "MaxEcalLayer": ["10"],
+        "ReconstructedParticleCollection": ["PandoraPFOs"],
+        "TimeResolution": [str(res)],
+        "TofMethod": ["closest"],
+    }
+    TOF_processors.append(proc)
 
 HighLevelRecoSequence = [
     MyAdd4MomCovMatrixCharged,
@@ -363,8 +336,5 @@ HighLevelRecoSequence = [
     MyRecoMCTruthLinker,
     VertexFinder,
     TrackLengthProcessor,
-    TOFEstimators0ps,
-    TOFEstimators10ps,
-    TOFEstimators50ps,
-    TOFEstimators100ps,
+    *TOF_processors,
 ]
