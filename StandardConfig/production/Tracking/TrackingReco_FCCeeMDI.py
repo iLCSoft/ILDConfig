@@ -9,9 +9,9 @@ MCPartColName = ["MCParticle"]  # MCParticleCollectionName
 VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
 VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
 
-MyClupatraProcessorOG = MarlinProcessorWrapper("MyClupatraProcessorOG")
-MyClupatraProcessorOG.ProcessorType = "ClupatraProcessor"
-MyClupatraProcessorOG.Parameters = {
+MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessorOG")
+MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessor.Parameters = {
     "Chi2Cut": ["100"],
     "CreateDebugCollections": ["false", "true"],
     "DistanceCut": ["40"],
@@ -41,9 +41,9 @@ MyClupatraProcessorOG.Parameters = {
     "pickUpSiHits": ["false"],
 }
 
-MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
-MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
-MyClupatraProcessor.Parameters = {
+MyClupatraProcessorFCC = MarlinProcessorWrapper("MyClupatraProcessor")
+MyClupatraProcessorFCC.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessorFCC.Parameters = {
     "Chi2Cut": ["100"],
     "CreateDebugCollections": ["false", "true"],
     "DistanceCut": ["40"],
@@ -460,8 +460,8 @@ MyRefitProcessorProton.Parameters = {
 }
 
 TrackingReco_FCCeeMDISequence = [
+    MyClupatraProcessorFCC,
     MyClupatraProcessor,
-    MyClupatraProcessorOG,
     MyConformalTracking,
     # MyFullLDCTracking_MarlinTrk,
     # MySiliconTracking_MarlinTrk,
