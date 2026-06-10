@@ -20,12 +20,12 @@ jobs:
       fail-fast: false
       matrix:
         detector_model: [ILD_l5_o1_v02]
-        key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
-        os: [el9]
+        key4hep_build: [sw-nightlies.hsf.org]
+        os: [el9, ubuntu2404, ubuntu2604]
         include:
           - detector_model: ILD_l5_o1_v02
-            key4hep_build: sw-nightlies.hsf.org
-            os: ubuntu2404
+            key4hep_build: sw.hsf.org
+            os: el9
 
     steps:
       - uses: actions/checkout@v4
@@ -68,12 +68,12 @@ jobs:
       fail-fast: false
       matrix:
         detector_model: [ILD_l5_o1_v02]
-        key4hep_build: [sw.hsf.org, sw-nightlies.hsf.org]
-        os: [el9]
+        key4hep_build: [sw-nightlies.hsf.org]
+        os: [el9, ubuntu2404, ubuntu2604]
         include:
           - detector_model: ILD_l5_o1_v02
-            key4hep_build: sw-nightlies.hsf.org
-            os: ubuntu2404
+            key4hep_build: sw.hsf.org
+            os: el9
 
     steps:
       - uses: actions/checkout@v4
@@ -116,7 +116,7 @@ jobs:
       matrix:
         detector_model: [ILD_FCCee_v01, ILD_FCCee_v02]
         key4hep_build: [sw-nightlies.hsf.org]
-        os: [ubuntu2404, el9]
+        os: [el9, ubuntu2404, ubuntu2604]
 
     steps:
       - uses: actions/checkout@v4
