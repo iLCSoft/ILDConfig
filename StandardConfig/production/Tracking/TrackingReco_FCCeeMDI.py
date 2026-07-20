@@ -4,7 +4,7 @@ from Configurables import MarlinProcessorWrapper
 
 from py_utils import encode_CT_steps_dict_to_legacy_list
 
-CT_MAX_DIST = "0.03"  # RANDOM VALUE COPYIED FROM CLDRECO
+CT_MAX_DIST = "0.05"  # RANDOM VALUE COPYIED FROM CLDRECO
 MCPartColName = ["MCParticle"]  # MCParticleCollectionName
 VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
 VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
@@ -38,7 +38,7 @@ MyClupatraProcessor.Parameters = {
     "TrackStartsInnerDist": ["25"],
     "TrackSystemName": ["DDKalTest"],
     "VXDHitCollection": ["VertexBarrelTrackerHits"],
-    "VXDDetectorName": ["VertexBarrel"],
+    "VXDDetectorName": ["Vertex"],
     "pickUpSiHits": ["true"],
 }
 
@@ -46,7 +46,7 @@ MyConformalTracking = MarlinProcessorWrapper("MyConformalTracking")
 MyConformalTracking.ProcessorType = "ConformalTrackingV2"
 conformal_tracking_steps_config = {
     # Based on CLD's Reconstruction in CLDConfig
-    "VertexBarrel": {
+    "Vertex": {
         "collections": ["VertexBarrelTrackerHits"],
         "params": {
             "MaxCellAngle": 0.01,
@@ -60,7 +60,7 @@ conformal_tracking_steps_config = {
         "flags": ["HighPTFit", "VertexToTracker"],
         "functions": ["CombineCollections", "BuildNewTracks"],
     },
-    "VertexEncap": {
+    "Vertex": {
         "collections": ["VertexEndcapTrackerHits"],
         "params": {
             "MaxCellAngle": 0.01,
@@ -92,20 +92,20 @@ conformal_tracking_steps_config = {
         "flags": ["HighPTFit", "VertexToTracker", "RadialSearch"],
         "functions": ["CombineCollections", "BuildNewTracks"],
     },
-    #    "LowerCellAngle2": {
-    #        "collections": "",
-    #        "params": {
-    #            "MaxCellAngle": 0.1,
-    #            "MaxCellAngleRZ": 0.1,
-    #            "Chi2Cut": 2000,
-    #            "MinClustersOnTrack": 4,
-    #            "MaxDistance": CT_MAX_DIST,
-    #            "SlopeZRange": 10.0,
-    #            "HighPTCut": 10.0,
-    #        },
-    #        "flags": ["HighPTFit", "VertexToTracker", "RadialSearch"],
-    #        "functions": ["BuildNewTracks","SortTracks"],
-    #    },
+    "LowerCellAngle2": {
+        "collections": [""],
+        "params": {
+            "MaxCellAngle": 0.1,
+            "MaxCellAngleRZ": 0.1,
+            "Chi2Cut": 2000,
+            "MinClustersOnTrack": 4,
+            "MaxDistance": CT_MAX_DIST,
+            "SlopeZRange": 10.0,
+            "HighPTCut": 10.0,
+        },
+        "flags": ["HighPTFit", "VertexToTracker", "RadialSearch"],
+        "functions": ["BuildNewTracks","SortTracks"],
+    },
     "Tracker": {
         "collections": ["InnerTrackerBarrelHits", "InnerTrackerEndcapHits"],
         "params": {
