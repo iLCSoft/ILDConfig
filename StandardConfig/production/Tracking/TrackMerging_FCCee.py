@@ -52,6 +52,23 @@ MCP_COLL_NAME = "MCParticles"
 #   "refitter":    refitter-specific settings
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# TrackMerger matching tolerances
+#
+# TrackMerger considers two tracks a match if the differences of their track
+# parameters at the adjoining hit are within the configured tolerances. Each
+# of the 5 track parameters (D0, Z0, phi, omega, tanLambda) has its own
+# tolerance property; a negative value disables that parameter, i.e. it is
+# not considered for matching. The properties are:
+#   D0Tolerance, Z0Tolerance, PhiTolerance, OmegaTolerance, TanLambdaTolerance
+#
+# The defaults set in TrackMerger.cpp reproduce the original criterion
+# (D0Tolerance=0.5, Z0Tolerance=2.5, everything else negative/disabled), so
+# this dict only needs entries for parameters you want to override, e.g.
+# {"PhiTolerance": 0.05} to also require phi compatibility, or
+# {"D0Tolerance": -1} to turn the D0 check off.
+# ---------------------------------------------------------------------------
+
 TRACK_VARIATIONS = {
     "Greedy": {
         "collections": {
@@ -62,6 +79,7 @@ TRACK_VARIATIONS = {
         "merger": {
             "enabled": True,
             "greedy": True,
+            "thresholds": {},  # empty -> use TrackMerger defaults (D0Tolerance=0.5, Z0Tolerance=2.5)
         },
         "refitter": {
             "enabled": True,
@@ -76,6 +94,7 @@ TRACK_VARIATIONS = {
         "merger": {
             "enabled": True,
             "greedy": False,
+            "thresholds": {},  # empty -> use TrackMerger defaults (D0Tolerance=0.5, Z0Tolerance=2.5)
         },
         "refitter": {
             "enabled": True,
@@ -116,10 +135,11 @@ for track_type, var in TRACK_VARIATIONS.items():
     colls = var["collections"]
     merger = TrackMerger(
         f"{track_type}TrackMerger",
-        InputSiTracks=SI_TRACK_COLL_NAME,
-        InputCluTracks=CLU_TRACK_COLL_NAME,
+        InputInnerTracks=SI_TRACK_COLL_NAME,
+        InputOuterTracks=CLU_TRACK_COLL_NAME,
         OutTracks=colls["merge_candidates"],
         Greedy=var["merger"]["greedy"],
+        **var["merger"].get("thresholds", {}),
     )
     merger.OutputLevel = INFO
     TrackMerging_FCCeeSequence.append(merger)
