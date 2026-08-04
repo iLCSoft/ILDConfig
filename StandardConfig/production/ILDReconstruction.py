@@ -363,6 +363,8 @@ if reco_args.lcioOutput != "only":
 
     output_commands = ["keep *"]
     output_commands.extend(get_drop_collections(CONSTANTS, True))
+    # get_drop_collections incorrectly splits "type edm4hep::..." into two separate drops
+    output_commands.append("drop type edm4hep::RecDqdxCollection")
     io_handler.add_edm4hep_writer(
         f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands
     )
