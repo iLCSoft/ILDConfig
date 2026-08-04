@@ -163,6 +163,34 @@ parser.add_argument(
     action="store_true",
 )
 
+parser.add_argument(
+    "--VXDBarrelDigitiserResolutionU", 
+    action="store", 
+    default=["0.003"], 
+    help="Resolution in U direction for VXD Barrel digitisation", nargs="+"
+)
+
+parser.add_argument(
+    "--VXDBarrelDigitiserResolutionV", 
+    action="store", 
+    default=["0.003"], 
+    help="Resolution in V direction for VXD Barrel digitisation", nargs="+"
+)
+
+parser.add_argument(
+    "--VXDEndcapDigitiserResolutionU", 
+    action="store", 
+    default=["0.003"], 
+    help="Resolution in U direction for VXD Endcap digitisation", nargs="+"
+)
+
+parser.add_argument(
+    "--VXDEndcapDigitiserResolutionV", 
+    action="store", 
+    default=["0.003"], 
+    help="Resolution in V direction for VXD Endcap digitisation", nargs="+"
+)
+
 
 def get_compact_file_path(detector_model: str):
     """returns the compact file path to a specified detector model starting with the path stored in the 'K4GEO' environment variable"""
@@ -241,6 +269,10 @@ sequenceLoader = SequenceLoader(
         "CONSTANTS": CONSTANTS,
         "cms_energy_config": cms_energy_config,
         "using_particle_gun": reco_args.usingParticleGun,
+        "VXDBarrelDigitiserResolutionU": reco_args.VXDBarrelDigitiserResolutionU,
+        "VXDBarrelDigitiserResolutionV": reco_args.VXDBarrelDigitiserResolutionV,
+        "VXDEndcapDigitiserResolutionU": reco_args.VXDEndcapDigitiserResolutionU,
+        "VXDEndcapDigitiserResolutionV": reco_args.VXDEndcapDigitiserResolutionV,
     },
 )
 
@@ -295,6 +327,67 @@ if not reco_args.trackingOnly:
 
     if not is_FCCee_model:
         sequenceLoader.load("HighLevelReco/HighLevelReco")
+    else:
+        MyRecoMCTruthLinker = MarlinProcessorWrapper("MyRecoMCTruthLinker")
+        MyRecoMCTruthLinker.ProcessorType = "RecoMCTruthLinker"
+        MyRecoMCTruthLinker.Parameters = {
+            "CalohitMCTruthLinkName": ["CalohitMCTruthLink"],
+            "ClusterCollection": ["PandoraClusters"],
+            "ClusterMCTruthLinkName": ["ClusterMCTruthLink"],
+            "FullRecoRelation": ["true"],
+            "KeepDaughtersPDG": ["22", "111", "310", "13", "211", "321"],
+            "MCParticleCollection": ["MCParticle"],
+            "MCParticlesSkimmedName": ["MCParticlesSkimmed"],
+            "MCTruthClusterLinkName": ["MCTruthClusterLink"],
+            "MCTruthRecoLinkName": ["MCTruthRecoLink"],
+            "MCTruthTrackLinkName": ["MCTruthMarlinTrkTracksLink"],
+            "RecoMCTruthLinkName": ["RecoMCTruthLink"],
+            "RecoParticleCollection": ["PandoraPFOs"],
+            "SimCaloHitCollections": [
+                "BeamCalCollection",
+                "LHCalCollection",
+                "LumiCalCollection",
+                CONSTANTS["ECalSimHitCollections"],
+                CONSTANTS["HCalSimHitCollections"],
+                "YokeBarrelCollection",
+                "YokeEndcapsCollection",
+            ],
+            "SimCalorimeterHitRelationNames": [
+                "EcalBarrelRelationsSimRec",
+                "EcalEndcapRingRelationsSimRec",
+                "EcalEndcapsRelationsSimRec",
+                "HcalBarrelRelationsSimRec",
+                "HcalEndcapRingRelationsSimRec",
+                "HcalEndcapsRelationsSimRec",
+                "RelationLHcalHit",
+                "RelationMuonHit",
+                "RelationLcalHit",
+                "RelationBCalHit",
+            ],
+            "SimTrackerHitCollections": [
+                "VXDCollection",
+                "SITCollection",
+                "FTD_PIXELCollection",
+                "FTD_STRIPCollection",
+                "TPCCollection",
+                "SETCollection",
+            ],
+            "TrackCollection": ["MarlinTrkTracks"],
+            "TrackMCTruthLinkName": ["MarlinTrkTracksMCTruthLink"],
+            "TrackerHitsRelInputCollections": [
+                "VXDTrackerHitRelations",
+                "SITTrackerHitRelations",
+                "FTDPixelTrackerHitRelations",
+                "FTDSpacePointRelations",
+                "TPCTrackerHitRelations",
+                "SETSpacePointRelations",
+            ],
+            "UseTrackerHitRelations": ["true"],
+            "UsingParticleGun": ["true"],
+        }
+        algList.append(MyRecoMCTruthLinker)
+
+
 
     if not reco_args.noPFO:
         MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
