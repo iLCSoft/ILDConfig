@@ -255,7 +255,7 @@ MyRecoMCTruthLinker.Parameters = {
     ],
     "TrackCollection": ["RefittedCluWithSiTracks"],  # ["MarlinTrkTracks"],
     "TrackMCTruthLinkName": [
-        "LinkerCluWithSiTrackRelations"
+        "RefittedCluWithSiTracksMCTruthLink"
     ],  # ["MarlinTrkTracksMCTruthLink"],
     "TrackerHitsRelInputCollections": [
         #        "VXDTrackerHitRelations",
