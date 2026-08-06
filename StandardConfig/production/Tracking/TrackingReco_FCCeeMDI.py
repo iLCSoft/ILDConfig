@@ -9,10 +9,41 @@ MCPartColName = ["MCParticle"]  # MCParticleCollectionName
 VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
 VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
 
-
-MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
+MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessorOG")
 MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
 MyClupatraProcessor.Parameters = {
+    "Chi2Cut": ["100"],
+    "CreateDebugCollections": ["false", "true"],
+    "DistanceCut": ["40"],
+    "DuplicatePadRowFraction": ["0.1"],
+    "EnergyLossOn": ["true"],
+    "MaxDeltaChi2": ["35"],
+    "MaxStepWithoutHit": ["6"],
+    "MinLayerFractionWithMultiplicity": ["0.5"],
+    "MinLayerNumberWithMultiplicity": ["3"],
+    "MinimumClusterSize": ["6"],
+    "MultipleScatteringOn": ["false", "true"],
+    "NumberOfZBins": ["150"],
+    "OutputCollection": ["ClupatraTracks"],
+    "PadRowRange": ["15"],
+    "SITHitCollection": ["InnerTrackerBarrelHits"],
+    "SITDetectorName": ["InnerTrackerBarrel"],
+    "SegmentCollectionName": ["ClupatraTrackSegments"],
+    "SmoothOn": ["false"],
+    "TPCHitCollection": ["TPCTrackerHits"],
+    "TrackEndsOuterCentralDist": ["25"],
+    "TrackEndsOuterForwardDist": ["40"],
+    "TrackIsCurlerOmega": ["0.001"],
+    "TrackStartsInnerDist": ["25"],
+    "TrackSystemName": ["DDKalTest"],
+    "VXDHitCollection": ["VertexBarrelTrackerHits"],
+    "VXDDetectorName": ["VertexBarrel"],
+    "pickUpSiHits": ["false"],
+}
+
+MyClupatraProcessorFCC = MarlinProcessorWrapper("MyClupatraProcessor")
+MyClupatraProcessorFCC.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessorFCC.Parameters = {
     "Chi2Cut": ["100"],
     "CreateDebugCollections": ["false", "true"],
     "DistanceCut": ["40"],
@@ -29,7 +60,7 @@ MyClupatraProcessor.Parameters = {
     "PadRowRange": ["15"],
     "SITHitCollection": ["InnerTrackerBarrelHits"],
     "SITDetectorName": ["InnerTrackerBarrel"],
-    "SegmentCollectionName": ["ClupatraTrackSegments"],
+    "SegmentCollectionName": ["MarlinTrkTrackSegments"],
     "SmoothOn": ["false"],
     "TPCHitCollection": ["TPCTrackerHits"],
     "TrackEndsOuterCentralDist": ["25"],
@@ -429,6 +460,7 @@ MyRefitProcessorProton.Parameters = {
 }
 
 TrackingReco_FCCeeMDISequence = [
+    MyClupatraProcessorFCC,
     MyClupatraProcessor,
     MyConformalTracking,
     # MyFullLDCTracking_MarlinTrk,
