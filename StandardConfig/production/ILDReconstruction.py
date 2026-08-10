@@ -244,6 +244,7 @@ sequenceLoader = SequenceLoader(
         "CONSTANTS": CONSTANTS,
         "cms_energy_config": cms_energy_config,
         "using_particle_gun": reco_args.usingParticleGun,
+        "track_merging": reco_args.trackMerge,
     },
 )
 
@@ -278,8 +279,9 @@ hcal_technology = CONSTANTS["HcalTechnology"]
 if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
     sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
-    if reco_args.trackMerge:
-        sequenceLoader.load("Tracking/TrackMerging_FCCee")
+    # this sequence also refits the Clupatra tracks (MarlinTrkTracks)
+    # which must happen regardless of --trackMerge
+    sequenceLoader.load("Tracking/TrackMerging_FCCee")
 elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")

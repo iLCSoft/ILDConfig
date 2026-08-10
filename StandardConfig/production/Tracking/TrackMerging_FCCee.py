@@ -77,12 +77,12 @@ TRACK_VARIATIONS = {
             "refit_rel": "RefittedGreedyMergedTrackRelations",
         },
         "merger": {
-            "enabled": True,
+            "enabled": track_merging,
             "greedy": True,
             "thresholds": {},  # empty -> use TrackMerger defaults (D0Tolerance=0.5, Z0Tolerance=2.5)
         },
         "refitter": {
-            "enabled": True,
+            "enabled": track_merging,
         },
     },
     "Ambiguous": {
@@ -92,12 +92,12 @@ TRACK_VARIATIONS = {
             "refit_rel": "RefittedAmbiguousMergedTrackRelations",
         },
         "merger": {
-            "enabled": True,
+            "enabled": track_merging,
             "greedy": False,
             "thresholds": {},  # empty -> use TrackMerger defaults (D0Tolerance=0.5, Z0Tolerance=2.5)
         },
         "refitter": {
-            "enabled": True,
+            "enabled": track_merging,
         },
     },
     "CluWithSi": {
@@ -110,7 +110,7 @@ TRACK_VARIATIONS = {
             "enabled": False,
         },
         "refitter": {
-            "enabled": True,
+            "enabled": True,  # always refit MarlinTrkTracks, regardless of --trackMerge flag
         },
     },
 }
