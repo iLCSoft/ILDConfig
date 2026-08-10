@@ -13,9 +13,7 @@ MyAddClusterProperties.Parameters = {
     "PFOCollectionName": ["PandoraPFOs"],
 }
 
-MyComputeShowerShapesProcessor = MarlinProcessorWrapper(
-    "MyComputeShowerShapesProcessor"
-)
+MyComputeShowerShapesProcessor = MarlinProcessorWrapper("MyComputeShowerShapesProcessor")
 MyComputeShowerShapesProcessor.ProcessorType = "ComputeShowerShapesProcessor"
 MyComputeShowerShapesProcessor.Parameters = {
     "ClusterCollectionName": ["PandoraClusters"],
@@ -291,9 +289,7 @@ VertexFinder.Parameters = {
     "BuildUpVertexCollectionName": ["BuildUpVertex"],
     "PFOCollection": ["PandoraPFOs"],
     "PrimaryVertexCollectionName": ["PrimaryVertex"],
-    "PrimaryVertexFinder.BeamspotConstraint": [
-        cms_energy_config["LCFIPlusBeamspotConstraint"]
-    ],
+    "PrimaryVertexFinder.BeamspotConstraint": [cms_energy_config["LCFIPlusBeamspotConstraint"]],
     "PrimaryVertexFinder.BeamspotSmearing": ["0"],
     "PrimaryVertexFinder.Chi2Threshold": ["25."],
     "PrimaryVertexFinder.TrackMaxD0": ["20."],
