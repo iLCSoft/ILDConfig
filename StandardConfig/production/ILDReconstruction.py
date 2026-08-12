@@ -350,17 +350,17 @@ if not reco_args.trackingOnly:
         }
         algList.append(MyPfoAnalysis)
 
-if reco_args.lcioOutput != "only":
-    # Make sure that all collections are always available by patching in missing
-    # ones on-the-fly
-    collPatcherRec = MarlinProcessorWrapper(
-        "CollPatcherREC", ProcessorType="PatchCollections"
-    )
-    collPatcherRec.Parameters = {
-        "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
-    }
-    algList.append(collPatcherRec)
+# Make sure that all collections are always available by patching in missing
+# ones on-the-fly
+collPatcherRec = MarlinProcessorWrapper(
+    "CollPatcherREC", ProcessorType="PatchCollections"
+)
+collPatcherRec.Parameters = {
+    "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
+}
+algList.append(collPatcherRec)
 
+if reco_args.lcioOutput != "only":
     output_commands = ["keep *"]
     output_commands.extend(get_drop_collections(CONSTANTS, True))
     # get_drop_collections incorrectly splits "type edm4hep::..." into two separate drops
