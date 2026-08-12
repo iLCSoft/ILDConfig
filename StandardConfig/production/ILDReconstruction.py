@@ -325,9 +325,7 @@ if not reco_args.trackingOnly:
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-    if not is_FCCee_model:
-        sequenceLoader.load("HighLevelReco/HighLevelReco")
-    else:
+    if is_FCCee_model:
         MyRecoMCTruthLinker = MarlinProcessorWrapper("MyRecoMCTruthLinker")
         MyRecoMCTruthLinker.ProcessorType = "RecoMCTruthLinker"
         MyRecoMCTruthLinker.Parameters = {
@@ -386,6 +384,8 @@ if not reco_args.trackingOnly:
             "UsingParticleGun": ["true"],
         }
         algList.append(MyRecoMCTruthLinker)
+    else:
+        sequenceLoader.load("HighLevelReco/HighLevelReco")
 
 
 
