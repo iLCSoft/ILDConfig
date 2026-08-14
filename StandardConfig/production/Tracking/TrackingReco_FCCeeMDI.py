@@ -9,10 +9,41 @@ MCPartColName = ["MCParticle"]  # MCParticleCollectionName
 VertexBarrelHitCollectionNames = ["VertexBarrelTrackerHits"]
 VertexEndcapHitCollectionNames = ["VertexEndcapTrackerHits"]
 
-
-MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessor")
+MyClupatraProcessor = MarlinProcessorWrapper("MyClupatraProcessorOG")
 MyClupatraProcessor.ProcessorType = "ClupatraProcessor"
 MyClupatraProcessor.Parameters = {
+    "Chi2Cut": ["100"],
+    "CreateDebugCollections": ["false", "true"],
+    "DistanceCut": ["40"],
+    "DuplicatePadRowFraction": ["0.1"],
+    "EnergyLossOn": ["true"],
+    "MaxDeltaChi2": ["35"],
+    "MaxStepWithoutHit": ["6"],
+    "MinLayerFractionWithMultiplicity": ["0.5"],
+    "MinLayerNumberWithMultiplicity": ["3"],
+    "MinimumClusterSize": ["6"],
+    "MultipleScatteringOn": ["false", "true"],
+    "NumberOfZBins": ["150"],
+    "OutputCollection": ["ClupatraTracks"],
+    "PadRowRange": ["15"],
+    "SITHitCollection": ["InnerTrackerBarrelHits"],
+    "SITDetectorName": ["InnerTrackerBarrel"],
+    "SegmentCollectionName": ["ClupatraTrackSegments"],
+    "SmoothOn": ["false"],
+    "TPCHitCollection": ["TPCTrackerHits"],
+    "TrackEndsOuterCentralDist": ["25"],
+    "TrackEndsOuterForwardDist": ["40"],
+    "TrackIsCurlerOmega": ["0.001"],
+    "TrackStartsInnerDist": ["25"],
+    "TrackSystemName": ["DDKalTest"],
+    "VXDHitCollection": ["VertexBarrelTrackerHits"],
+    "VXDDetectorName": ["Vertex"],
+    "VXDDetectorName": ["VertexBarrel"],
+    "pickUpSiHits": ["false"],
+}
+
+MyClupatraProcessorFCC.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessorFCC.Parameters = {
     "Chi2Cut": ["100"],
     "CreateDebugCollections": ["false", "true"],
     "DistanceCut": ["40"],
@@ -29,7 +60,7 @@ MyClupatraProcessor.Parameters = {
     "PadRowRange": ["15"],
     "SITHitCollection": ["InnerTrackerBarrelHits"],
     "SITDetectorName": ["InnerTrackerBarrel"],
-    "SegmentCollectionName": ["ClupatraTrackSegments"],
+    "SegmentCollectionName": ["MarlinTrkTrackSegments"],
     "SmoothOn": ["false"],
     "TPCHitCollection": ["TPCTrackerHits"],
     "TrackEndsOuterCentralDist": ["25"],
@@ -37,8 +68,8 @@ MyClupatraProcessor.Parameters = {
     "TrackIsCurlerOmega": ["0.001"],
     "TrackStartsInnerDist": ["25"],
     "TrackSystemName": ["DDKalTest"],
-    "VXDHitCollection": ["VertexBarrelTrackerHits"],
-    "VXDDetectorName": ["Vertex"],
+    "VXDHitCollection": VertexBarrelHitCollectionNames,
+    "VXDDetectorName": ["VertexBarrel"],
     "pickUpSiHits": ["true"],
 }
 
@@ -79,7 +110,7 @@ conformal_tracking_steps_config = {
     # or transition-region tracks from hits not consumed in previous steps.
     # Note: This logic is inferred from parameters and has not been verified in the source code.
     "LowerCellAngle1": {
-        "collections": ["VertexBarrelTrackerHits", "VertexEndcapTrackerHits"],
+        "collections": VertexBarrelHitCollectionNames + VertexEndcapHitCollectionNames,
         "params": {
             "MaxCellAngle": 0.05,
             "MaxCellAngleRZ": 0.05,
@@ -429,6 +460,7 @@ MyRefitProcessorProton.Parameters = {
 }
 
 TrackingReco_FCCeeMDISequence = [
+    MyClupatraProcessorFCC,
     MyClupatraProcessor,
     MyConformalTracking,
     # MyFullLDCTracking_MarlinTrk,
