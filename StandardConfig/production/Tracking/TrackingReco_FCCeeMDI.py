@@ -42,6 +42,7 @@ MyClupatraProcessor.Parameters = {
     "pickUpSiHits": ["false"],
 }
 
+MyClupatraProcessorFCC = MarlinProcessorWrapper("MyClupatraProcessor")
 MyClupatraProcessorFCC.ProcessorType = "ClupatraProcessor"
 MyClupatraProcessorFCC.Parameters = {
     "Chi2Cut": ["100"],
