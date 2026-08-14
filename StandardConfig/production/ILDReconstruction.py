@@ -291,10 +291,7 @@ if not reco_args.trackingOnly:
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-    if is_FCCee_model:
-        sequenceLoader.load("HighLevelReco/HighLevelReco_FCCee")
-    else:
-        sequenceLoader.load("HighLevelReco/HighLevelReco")
+    sequenceLoader.load(f"HighLevelReco/HighLevelReco{'_FCCee' if is_FCCee_model else ''}")
 
     if not reco_args.noPFO:
         MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
