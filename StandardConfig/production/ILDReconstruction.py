@@ -167,28 +167,28 @@ parser.add_argument(
     "--VXDBarrelDigitiserResolutionU", 
     action="store", 
     default=["0.003"], 
-    help="Resolution in U direction for VXD Barrel digitisation", nargs="+"
+    help="Resolution in U direction for VXD Barrel digitisation. Only used for FCC models", nargs="+"
 )
 
 parser.add_argument(
     "--VXDBarrelDigitiserResolutionV", 
     action="store", 
     default=["0.003"], 
-    help="Resolution in V direction for VXD Barrel digitisation", nargs="+"
+    help="Resolution in V direction for VXD Barrel digitisation. Only used for FCC models", nargs="+"
 )
 
 parser.add_argument(
     "--VXDEndcapDigitiserResolutionU", 
     action="store", 
     default=["0.003"], 
-    help="Resolution in U direction for VXD Endcap digitisation", nargs="+"
+    help="Resolution in U direction for VXD Endcap digitisation. Only used for FCC models", nargs="+"
 )
 
 parser.add_argument(
     "--VXDEndcapDigitiserResolutionV", 
     action="store", 
     default=["0.003"], 
-    help="Resolution in V direction for VXD Endcap digitisation", nargs="+"
+    help="Resolution in V direction for VXD Endcap digitisation. Only used for FCC models", nargs="+"
 )
 
 
@@ -325,69 +325,8 @@ if not reco_args.trackingOnly:
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-    if is_FCCee_model:
-        MyRecoMCTruthLinker = MarlinProcessorWrapper("MyRecoMCTruthLinker")
-        MyRecoMCTruthLinker.ProcessorType = "RecoMCTruthLinker"
-        MyRecoMCTruthLinker.Parameters = {
-            "CalohitMCTruthLinkName": ["CalohitMCTruthLink"],
-            "ClusterCollection": ["PandoraClusters"],
-            "ClusterMCTruthLinkName": ["ClusterMCTruthLink"],
-            "FullRecoRelation": ["true"],
-            "KeepDaughtersPDG": ["22", "111", "310", "13", "211", "321"],
-            "MCParticleCollection": ["MCParticle"],
-            "MCParticlesSkimmedName": ["MCParticlesSkimmed"],
-            "MCTruthClusterLinkName": ["MCTruthClusterLink"],
-            "MCTruthRecoLinkName": ["MCTruthRecoLink"],
-            "MCTruthTrackLinkName": ["MCTruthMarlinTrkTracksLink"],
-            "RecoMCTruthLinkName": ["RecoMCTruthLink"],
-            "RecoParticleCollection": ["PandoraPFOs"],
-            "SimCaloHitCollections": [
-                "BeamCalCollection",
-                "LHCalCollection",
-                "LumiCalCollection",
-                CONSTANTS["ECalSimHitCollections"],
-                CONSTANTS["HCalSimHitCollections"],
-                "YokeBarrelCollection",
-                "YokeEndcapsCollection",
-            ],
-            "SimCalorimeterHitRelationNames": [
-                "EcalBarrelRelationsSimRec",
-                "EcalEndcapRingRelationsSimRec",
-                "EcalEndcapsRelationsSimRec",
-                "HcalBarrelRelationsSimRec",
-                "HcalEndcapRingRelationsSimRec",
-                "HcalEndcapsRelationsSimRec",
-                "RelationLHcalHit",
-                "RelationMuonHit",
-                "RelationLcalHit",
-                "RelationBCalHit",
-            ],
-            "SimTrackerHitCollections": [
-                "VXDCollection",
-                "SITCollection",
-                "FTD_PIXELCollection",
-                "FTD_STRIPCollection",
-                "TPCCollection",
-                "SETCollection",
-            ],
-            "TrackCollection": ["MarlinTrkTracks"],
-            "TrackMCTruthLinkName": ["MarlinTrkTracksMCTruthLink"],
-            "TrackerHitsRelInputCollections": [
-                "VXDTrackerHitRelations",
-                "SITTrackerHitRelations",
-                "FTDPixelTrackerHitRelations",
-                "FTDSpacePointRelations",
-                "TPCTrackerHitRelations",
-                "SETSpacePointRelations",
-            ],
-            "UseTrackerHitRelations": ["true"],
-            "UsingParticleGun": ["true"],
-        }
-        algList.append(MyRecoMCTruthLinker)
-    else:
+    if not is_FCCee_model:
         sequenceLoader.load("HighLevelReco/HighLevelReco")
-
-
 
     if not reco_args.noPFO:
         MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
