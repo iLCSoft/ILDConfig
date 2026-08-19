@@ -163,6 +163,38 @@ parser.add_argument(
     action="store_true",
 )
 
+parser.add_argument(
+    "--VXDBarrelDigitiserResolutionU",
+    action="store",
+    default=["0.003"],
+    help="Resolution in U direction for VXD Barrel digitisation. Only used for FCC models",
+    nargs="+",
+)
+
+parser.add_argument(
+    "--VXDBarrelDigitiserResolutionV",
+    action="store",
+    default=["0.003"],
+    help="Resolution in V direction for VXD Barrel digitisation. Only used for FCC models",
+    nargs="+",
+)
+
+parser.add_argument(
+    "--VXDEndcapDigitiserResolutionU",
+    action="store",
+    default=["0.003"],
+    help="Resolution in U direction for VXD Endcap digitisation. Only used for FCC models",
+    nargs="+",
+)
+
+parser.add_argument(
+    "--VXDEndcapDigitiserResolutionV",
+    action="store",
+    default=["0.003"],
+    help="Resolution in V direction for VXD Endcap digitisation. Only used for FCC models",
+    nargs="+",
+)
+
 
 def get_compact_file_path(detector_model: str):
     """returns the compact file path to a specified detector model starting with the path stored in the 'K4GEO' environment variable"""
@@ -239,6 +271,10 @@ sequenceLoader = SequenceLoader(
         "CONSTANTS": CONSTANTS,
         "cms_energy_config": cms_energy_config,
         "using_particle_gun": reco_args.usingParticleGun,
+        "VXDBarrelDigitiserResolutionU": reco_args.VXDBarrelDigitiserResolutionU,
+        "VXDBarrelDigitiserResolutionV": reco_args.VXDBarrelDigitiserResolutionV,
+        "VXDEndcapDigitiserResolutionU": reco_args.VXDEndcapDigitiserResolutionU,
+        "VXDEndcapDigitiserResolutionV": reco_args.VXDEndcapDigitiserResolutionV,
     },
 )
 

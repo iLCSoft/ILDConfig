@@ -10,11 +10,11 @@ VertexBarrelDigitiser = MarlinProcessorWrapper("VertexBarrelDigitiser")
 VertexBarrelDigitiser.ProcessorType = "DDPlanarDigiProcessor"
 VertexBarrelDigitiser.Parameters = {
     "IsStrip": ["false"],
-    "ResolutionU": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
-    "ResolutionV": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
+    "ResolutionU": [str(x) for x in VXDBarrelDigitiserResolutionU],
+    "ResolutionV": [str(x) for x in VXDBarrelDigitiserResolutionV],
     "SimTrackHitCollectionName": ["VertexBarrelCollection"],
     "SimTrkHitRelCollection": ["VertexBarrelTrackerHitRelations"],
-    "SubDetectorName": ["VertexBarrel"],
+    "SubDetectorName": ["Vertex"],
     "TrackerHitCollectionName": ["VertexBarrelTrackerHits"],
 }
 
@@ -22,11 +22,11 @@ VertexEndcapDigitiser = MarlinProcessorWrapper("VertexEndcapDigitiser")
 VertexEndcapDigitiser.ProcessorType = "DDPlanarDigiProcessor"
 VertexEndcapDigitiser.Parameters = {
     "IsStrip": ["false"],
-    "ResolutionU": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
-    "ResolutionV": ["0.003", "0.003", "0.003", "0.003", "0.003", "0.003"],
+    "ResolutionU": [str(x) for x in VXDEndcapDigitiserResolutionU],
+    "ResolutionV": [str(x) for x in VXDEndcapDigitiserResolutionV],
     "SimTrackHitCollectionName": ["VertexEndcapCollection"],
     "SimTrkHitRelCollection": ["VertexEndcapTrackerHitRelations"],
-    "SubDetectorName": ["VertexEndcap"],
+    "SubDetectorName": ["Vertex"],
     "TrackerHitCollectionName": ["VertexEndcapTrackerHits"],
 }
 
