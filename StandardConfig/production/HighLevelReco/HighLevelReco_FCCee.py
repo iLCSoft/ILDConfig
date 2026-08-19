@@ -213,12 +213,14 @@ MyRecoMCTruthLinker.Parameters = {
     "MCParticlesSkimmedName": ["MCParticlesSkimmed"],
     "MCTruthClusterLinkName": ["MCTruthClusterLink"],
     "MCTruthRecoLinkName": ["MCTruthRecoLink"],
-    "MCTruthTrackLinkName": ["MCTruthMarlinTrkTracksLink"],
+    "MCTruthTrackLinkName": [
+        "MCTruthMarlinTrkTracksLink"
+    ],  # ["MCTruthRefittedCluWithSiTracksLink"].
     "RecoMCTruthLinkName": ["RecoMCTruthLink"],
     "RecoParticleCollection": ["PandoraPFOs"],
     "SimCaloHitCollections": [
-        "BeamCalCollection",
-        "LHCalCollection",
+        # "BeamCalCollection",
+        # "LHCalCollection",
         "LumiCalCollection",
         CONSTANTS["ECalSimHitCollections"],
         CONSTANTS["HCalSimHitCollections"],
@@ -232,26 +234,35 @@ MyRecoMCTruthLinker.Parameters = {
         "HcalBarrelRelationsSimRec",
         "HcalEndcapRingRelationsSimRec",
         "HcalEndcapsRelationsSimRec",
-        "RelationLHcalHit",
+        # "RelationLHcalHit",
         "RelationMuonHit",
         "RelationLcalHit",
-        "RelationBCalHit",
+        # "RelationBCalHit",
     ],
     "SimTrackerHitCollections": [
-        "VXDCollection",
-        "SITCollection",
-        "FTD_PIXELCollection",
-        "FTD_STRIPCollection",
+        #         "VXDCollection",
+        #         "SITCollection",
+        #         "FTD_PIXELCollection",
+        #         "FTD_STRIPCollection",
+        "VertexBarrelCollection",
+        "VertexEndcapCollection",
+        "InnerTrackerBarrelCollection",
+        "InnerTrackerEndcapCollection",
         "TPCCollection",
         "SETCollection",
     ],
-    "TrackCollection": ["MarlinTrkTracks"],
+    "TrackCollection": ["MarlinTrkTracks"],  # ["RefittedCluWithSiTracks"],
     "TrackMCTruthLinkName": ["MarlinTrkTracksMCTruthLink"],
+    # "RefittedCluWithSiTracksMCTruthLink"
     "TrackerHitsRelInputCollections": [
-        "VXDTrackerHitRelations",
-        "SITTrackerHitRelations",
-        "FTDPixelTrackerHitRelations",
-        "FTDSpacePointRelations",
+        #        "VXDTrackerHitRelations",
+        #        "SITTrackerHitRelations",
+        #        "FTDPixelTrackerHitRelations",
+        #        "FTDSpacePointRelations",
+        "VertexBarrelTrackerHitRelations",
+        "VertexEndcapTrackerHitRelations",
+        "InnerTrackerBarrelHitRelations",
+        "InnerTrackerEndcapHitRelations",
         "TPCTrackerHitRelations",
         "SETSpacePointRelations",
     ],
@@ -318,7 +329,7 @@ for res in [0, 10, 50, 100]:
     }
     TOF_processors.append(proc)
 
-HighLevelRecoSequence = [
+HighLevelReco_FCCeeSequence = [
     MyAdd4MomCovMatrixCharged,
     MyAddClusterProperties,
     MyComputeShowerShapesProcessor,

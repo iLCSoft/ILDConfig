@@ -1,0 +1,13 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff-format
+        entry: ruff format --force-exclude
+        types: [python]
+        language: system
+      - id: ruff-isort
+        name: ruff-isort
+        entry: ruff check --select I --fix --force-exclude
+        types: [python]
+        language: system

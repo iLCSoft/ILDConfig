@@ -250,9 +250,7 @@ geoSvc.OutputLevel = INFO
 geoSvc.EnableGeant4Geo = False
 svcList.append(geoSvc)
 
-is_FCCee_model, cms_e, cms_energy_config = get_cms_energy_config(
-    compact_file, reco_args.cmsEnergy
-)
+is_FCCee_model, cms_e, cms_energy_config = get_cms_energy_config(compact_file, reco_args.cmsEnergy)
 CONSTANTS = {
     "CMSEnergy": str(cms_e),
     "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
@@ -325,8 +323,7 @@ if not reco_args.trackingOnly:
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-    if not is_FCCee_model:
-        sequenceLoader.load("HighLevelReco/HighLevelReco")
+    sequenceLoader.load(f"HighLevelReco/HighLevelReco{'_FCCee' if is_FCCee_model else ''}")
 
     if not reco_args.noPFO:
         MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
@@ -335,9 +332,7 @@ if not reco_args.trackingOnly:
             "BCalCollections": ["BCAL"],
             "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
             "CollectCalibrationDetails": ["0"],
-            "ECalBarrelCollectionsSimCaloHit": [
-                CONSTANTS["ECalBarrelSimHitCollections"]
-            ],
+            "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
             "ECalCollections": [
                 "EcalBarrelCollectionRec",
                 "EcalBarrelCollectionGapHits",
@@ -346,21 +341,15 @@ if not reco_args.trackingOnly:
                 "EcalEndcapRingCollectionRec",
             ],
             "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
-            "ECalEndCapCollectionsSimCaloHit": [
-                CONSTANTS["ECalEndcapSimHitCollections"]
-            ],
+            "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
             "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
-            "HCalBarrelCollectionsSimCaloHit": [
-                CONSTANTS["HCalBarrelSimHitCollections"]
-            ],
+            "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
             "HCalCollections": [
                 "HcalBarrelCollectionRec",
                 "HcalEndcapsCollectionRec",
                 "HcalEndcapRingCollectionRec",
             ],
-            "HCalEndCapCollectionsSimCaloHit": [
-                CONSTANTS["HCalEndcapSimHitCollections"]
-            ],
+            "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
             "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
             "LCalCollections": ["LCAL"],
             "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
@@ -384,9 +373,7 @@ if not reco_args.trackingOnly:
 
 # Make sure that all collections are always available by patching in missing
 # ones on-the-fly
-collPatcherRec = MarlinProcessorWrapper(
-    "CollPatcherREC", ProcessorType="PatchCollections"
-)
+collPatcherRec = MarlinProcessorWrapper("CollPatcherREC", ProcessorType="PatchCollections")
 collPatcherRec.Parameters = {
     "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
 }
@@ -397,9 +384,7 @@ if reco_args.lcioOutput != "only":
     output_commands.extend(get_drop_collections(CONSTANTS, True))
     # get_drop_collections incorrectly splits "type edm4hep::..." into two separate drops
     output_commands.append("drop type edm4hep::RecDqdxCollection")
-    io_handler.add_edm4hep_writer(
-        f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands
-    )
+    io_handler.add_edm4hep_writer(f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands)
 
 
 if reco_args.lcioOutput in ("on", "only"):
@@ -451,9 +436,7 @@ auditorSvc = AuditorSvc()
 svcList.append(auditorSvc)
 auditorSvc.Auditors = [AlgTimingAuditor()]
 
-app_mgr = ApplicationMgr(
-    TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
-)
+app_mgr = ApplicationMgr(TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO)
 
 app_mgr.AuditAlgorithms = True
 app_mgr.AuditTools = True

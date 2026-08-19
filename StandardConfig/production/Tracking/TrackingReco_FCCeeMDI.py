@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from Configurables import MarlinProcessorWrapper
-
 from py_utils import encode_CT_steps_dict_to_legacy_list
 
 CT_MAX_DIST = "0.05"  # COPYIED FROM CLDRECO, valid for vertex detector with first layer close to IP (like in CLD_o2)
