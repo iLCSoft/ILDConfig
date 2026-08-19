@@ -135,7 +135,7 @@ conformal_tracking_steps_config = {
             "HighPTCut": 10.0,
         },
         "flags": ["HighPTFit", "VertexToTracker", "RadialSearch"],
-        "functions": ["BuildNewTracks","SortTracks"],
+        "functions": ["BuildNewTracks", "SortTracks"],
     },
     "Tracker": {
         "collections": ["InnerTrackerBarrelHits", "InnerTrackerEndcapHits"],

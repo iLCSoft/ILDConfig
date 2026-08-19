@@ -164,31 +164,35 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--VXDBarrelDigitiserResolutionU", 
-    action="store", 
-    default=["0.003"], 
-    help="Resolution in U direction for VXD Barrel digitisation. Only used for FCC models", nargs="+"
+    "--VXDBarrelDigitiserResolutionU",
+    action="store",
+    default=["0.003"],
+    help="Resolution in U direction for VXD Barrel digitisation. Only used for FCC models",
+    nargs="+",
 )
 
 parser.add_argument(
-    "--VXDBarrelDigitiserResolutionV", 
-    action="store", 
-    default=["0.003"], 
-    help="Resolution in V direction for VXD Barrel digitisation. Only used for FCC models", nargs="+"
+    "--VXDBarrelDigitiserResolutionV",
+    action="store",
+    default=["0.003"],
+    help="Resolution in V direction for VXD Barrel digitisation. Only used for FCC models",
+    nargs="+",
 )
 
 parser.add_argument(
-    "--VXDEndcapDigitiserResolutionU", 
-    action="store", 
-    default=["0.003"], 
-    help="Resolution in U direction for VXD Endcap digitisation. Only used for FCC models", nargs="+"
+    "--VXDEndcapDigitiserResolutionU",
+    action="store",
+    default=["0.003"],
+    help="Resolution in U direction for VXD Endcap digitisation. Only used for FCC models",
+    nargs="+",
 )
 
 parser.add_argument(
-    "--VXDEndcapDigitiserResolutionV", 
-    action="store", 
-    default=["0.003"], 
-    help="Resolution in V direction for VXD Endcap digitisation. Only used for FCC models", nargs="+"
+    "--VXDEndcapDigitiserResolutionV",
+    action="store",
+    default=["0.003"],
+    help="Resolution in V direction for VXD Endcap digitisation. Only used for FCC models",
+    nargs="+",
 )
 
 
