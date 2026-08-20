@@ -41,7 +41,7 @@ from Gaudi.Configuration import INFO  # , DEBUG
 
 SI_TRACK_COLL_NAME = "SiTracksCT"
 CLU_TRACK_COLL_NAME = "ClupatraTracks"
-CLU_W_SI_TRACK_COLL_NAME = "MarlinTrkTracks"
+CLU_W_SI_TRACK_COLL_NAME = "ClupatraFCCTracks"
 MCP_COLL_NAME = "MCParticles"
 
 # ---------------------------------------------------------------------------
@@ -103,8 +103,8 @@ TRACK_VARIATIONS = {
     "CluWithSi": {
         "collections": {
             "merge_candidates": CLU_W_SI_TRACK_COLL_NAME,  # already exists, no merger
-            "refit_output": "RefittedCluWithSiTracks",
-            "refit_rel": "RefittedCluWithSiTrackRelations",
+            "refit_output": "MarlinTrkTracks",
+            "refit_rel": "MarlinTrkTrackRelation",
         },
         "merger": {
             "enabled": False,
