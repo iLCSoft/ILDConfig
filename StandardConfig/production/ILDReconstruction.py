@@ -162,6 +162,11 @@ parser.add_argument(
     help="Indicate that input was generated using particle gun",
     action="store_true",
 )
+parser.add_argument(
+    "--trackMerge",
+    help="Run the Silicon-TPC-track-merging for ILD@FCC-ee",
+    action="store_true",
+)
 
 
 def get_compact_file_path(detector_model: str):
@@ -239,6 +244,7 @@ sequenceLoader = SequenceLoader(
         "CONSTANTS": CONSTANTS,
         "cms_energy_config": cms_energy_config,
         "using_particle_gun": reco_args.usingParticleGun,
+        "track_merging": reco_args.trackMerge,
     },
 )
 
@@ -273,6 +279,9 @@ hcal_technology = CONSTANTS["HcalTechnology"]
 if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
     sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
+    # this sequence also refits the Clupatra tracks (MarlinTrkTracks)
+    # which must happen regardless of --trackMerge
+    sequenceLoader.load("Tracking/TrackMerging_FCCee")
 elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
@@ -352,6 +361,7 @@ if reco_args.lcioOutput != "only":
     output_commands.extend(get_drop_collections(CONSTANTS, True))
     # get_drop_collections incorrectly splits "type edm4hep::..." into two separate drops
     output_commands.append("drop type edm4hep::RecDqdxCollection")
+    output_commands.append("drop type edm4hep::ParticleIDCollection")
     io_handler.add_edm4hep_writer(f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands)
 
 

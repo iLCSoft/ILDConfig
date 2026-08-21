@@ -35,7 +35,7 @@ MyClupatraProcessor.Parameters = {
     "TrackIsCurlerOmega": ["0.001"],
     "TrackStartsInnerDist": ["25"],
     "TrackSystemName": ["DDKalTest"],
-    "VXDHitCollection": ["VertexBarrelTrackerHits"],
+    "VXDHitCollection": VertexBarrelHitCollectionNames,
     "VXDDetectorName": ["VertexBarrel"],
     "pickUpSiHits": ["false"],
 }
@@ -55,7 +55,7 @@ MyClupatraProcessorFCC.Parameters = {
     "MinimumClusterSize": ["6"],
     "MultipleScatteringOn": ["false", "true"],
     "NumberOfZBins": ["150"],
-    "OutputCollection": ["MarlinTrkTracks"],
+    "OutputCollection": ["ClupatraFCCTracks"],
     "PadRowRange": ["15"],
     "SITHitCollection": ["InnerTrackerBarrelHits"],
     "SITDetectorName": ["InnerTrackerBarrel"],
@@ -390,7 +390,7 @@ MyCompute_dEdxProcessor.ProcessorType = "Compute_dEdxProcessor"
 MyCompute_dEdxProcessor.Parameters = {
     "AngularCorrectionParameters": ["0.635762", "-0.0573237"],
     "EnergyLossErrorTPC": ["0.054"],
-    "LDCTrackCollection": ["MarlinTrkTracks"],
+    "LDCTrackCollection": ["ClupatraFCCTracks"],
     "LowerTruncationFraction": ["0.08"],
     "NumberofHitsCorrectionParameters": ["1.468"],
     "StrategyCompHist": ["false"],
@@ -410,14 +410,14 @@ MyV0Finder.Parameters = {
     "MassRangeGamma": ["0.01"],
     "MassRangeK0S": ["0.02"],
     "MassRangeL0": ["0.02"],
-    "TrackCollection": ["MarlinTrkTracks"],
+    "TrackCollection": ["ClupatraFCCTracks"],
 }
 
 MyKinkFinder = MarlinProcessorWrapper("MyKinkFinder")
 MyKinkFinder.ProcessorType = "KinkFinder"
 MyKinkFinder.Parameters = {
     "DebugPrinting": ["0"],
-    "TrackCollection": ["MarlinTrkTracks"],
+    "TrackCollection": ["ClupatraFCCTracks"],
 }
 
 MyRefitProcessorKaon = MarlinProcessorWrapper("MyRefitProcessorKaon")
@@ -431,7 +431,7 @@ MyRefitProcessorKaon.Parameters = {
     "InitialTrackErrorTanL": ["100"],
     "InitialTrackErrorZ0": ["1e+06"],
     "InitialTrackState": ["3"],
-    "InputTrackCollectionName": ["MarlinTrkTracks"],
+    "InputTrackCollectionName": ["ClupatraFCCTracks"],
     "InputTrackRelCollection": [],
     "OutputTrackCollectionName": ["MarlinTrkTracksKaon"],
     "OutputTrackRelCollection": ["MarlinTrkTracksKaonMCP"],
@@ -450,7 +450,7 @@ MyRefitProcessorProton.Parameters = {
     "InitialTrackErrorTanL": ["100"],
     "InitialTrackErrorZ0": ["1e+06"],
     "InitialTrackState": ["3"],
-    "InputTrackCollectionName": ["MarlinTrkTracks"],
+    "InputTrackCollectionName": ["ClupatraFCCTracks"],
     "InputTrackRelCollection": [],
     "OutputTrackCollectionName": ["MarlinTrkTracksProton"],
     "OutputTrackRelCollection": ["MarlinTrkTracksProtonMCP"],
