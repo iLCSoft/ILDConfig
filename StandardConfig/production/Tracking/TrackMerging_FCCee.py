@@ -29,13 +29,15 @@ MCP_COLL_NAME = "MCParticles"
 # tolerance property; a negative value disables that parameter, i.e. it is
 # not considered for matching. The properties are:
 #   D0Tolerance, Z0Tolerance, PhiTolerance, OmegaTolerance, TanLambdaTolerance
-#
-# The defaults set in TrackMerger.cpp reproduce the original criterion
-# (D0Tolerance=0.5, Z0Tolerance=2.5, everything else negative/disabled), so
-# this dict only needs entries for parameters you want to override, e.g.
-# {"PhiTolerance": 0.05} to also require phi compatibility, or
-# {"D0Tolerance": -1} to turn the D0 check off.
 # ---------------------------------------------------------------------------
+
+DEFAULT_THRESHOLDS = {
+    "D0Tolerance": 0.5,
+    "Z0Tolerance": 2.5,
+    "PhiTolerance": -1.0,
+    "OmegaTolerance": -1.0,
+    "TanLambdaTolerance": -1.0,
+}
 
 TRACK_VARIATIONS = {
     "Greedy": {
@@ -47,7 +49,7 @@ TRACK_VARIATIONS = {
         "merger": {
             "enabled": track_merging,
             "greedy": True,
-            "thresholds": {},  # empty -> use TrackMerger defaults (D0Tolerance=0.5, Z0Tolerance=2.5)
+            "thresholds": DEFAULT_THRESHOLDS,
         },
         "refitter": {
             "enabled": track_merging,
@@ -62,7 +64,7 @@ TRACK_VARIATIONS = {
         "merger": {
             "enabled": track_merging,
             "greedy": False,
-            "thresholds": {},  # empty -> use TrackMerger defaults (D0Tolerance=0.5, Z0Tolerance=2.5)
+            "thresholds": DEFAULT_THRESHOLDS,
         },
         "refitter": {
             "enabled": track_merging,
