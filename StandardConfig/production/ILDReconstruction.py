@@ -18,7 +18,7 @@ from k4MarlinWrapper.parseConstants import parseConstants
 
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
-sys.path.append(Path(__file__).parent)
+sys.path.append(str(Path(__file__).parent))
 from py_utils import (
     SequenceLoader,
     get_drop_collections,
