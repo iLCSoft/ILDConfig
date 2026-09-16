@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+import sys
+from pathlib import Path
+
 from Gaudi.Configuration import ERROR, FATAL, INFO, DEBUG
 
 from Configurables import EventDataSvc, MarlinProcessorWrapper, GeoSvc
@@ -6,6 +11,9 @@ from k4FWCore.parseArgs import parser
 from k4MarlinWrapper.parseConstants import parseConstants
 from k4MarlinWrapper.io_helpers import IOHandlerHelper
 
+# Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
+# importance than necessary)
+sys.path.append(str(Path(__file__).parent))
 from py_utils import parse_collection_patch_file
 
 MINIDST_COLLECTION_CONTENTS_FILE = "collections_minidst.txt"
