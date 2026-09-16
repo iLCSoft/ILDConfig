@@ -708,13 +708,9 @@ DROP_COLLECTIONS = [
 ]
 
 if minidst_args.lcioOutput != "only":
-    coll_patcher = MarlinProcessorWrapper(
-        "CollPatcher", ProcessorType="PatchCollections"
-    )
+    coll_patcher = MarlinProcessorWrapper("CollPatcher", ProcessorType="PatchCollections")
     coll_patcher.Parameters = {
-        "PatchCollections": parse_collection_patch_file(
-            MINIDST_COLLECTION_CONTENTS_FILE
-        )
+        "PatchCollections": parse_collection_patch_file(MINIDST_COLLECTION_CONTENTS_FILE)
     }
     algList.append(coll_patcher)
 
@@ -758,6 +754,4 @@ if minidst_args.lcioOutput in ("on", "only"):
 
 io_handler.finalize_converters()
 
-ApplicationMgr(
-    TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=svcList, OutputLevel=ERROR
-)
+ApplicationMgr(TopAlg=algList, EvtSel="NONE", EvtMax=10, ExtSvc=svcList, OutputLevel=ERROR)
