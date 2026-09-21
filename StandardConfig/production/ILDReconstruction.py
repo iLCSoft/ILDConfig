@@ -295,7 +295,7 @@ if not reco_args.trackingOnly:
     if reco_args.perfectPFA:
         sequenceLoader.load("ParticleFlow/PandoraPFAPerfect")
     else:
-        sequenceLoader.load("ParticleFlow/PandoraPFA")
+        sequenceLoader.load("ParticleFlow/PandoraPFA_Gaudi")
 
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
