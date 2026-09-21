@@ -18,7 +18,7 @@ from k4MarlinWrapper.parseConstants import parseConstants
 
 # Make sure we have the py_utils on the PYHTONPATH (but don't give them any more
 # importance than necessary)
-sys.path.append(Path(__file__).parent)
+sys.path.append(str(Path(__file__).parent))
 from py_utils import (
     SequenceLoader,
     get_drop_collections,
@@ -62,7 +62,10 @@ FCCeeMDI_DETECTOR_MODELS = (  # only add models located in $K4GEO/ILD/ here
     "ILD_l5_v11",
     *FCCeeMDI_DETECTOR_MODELS_common_MDI,
 )
-ALL_DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
+ALL_VALID_DETECTOR_MODELS = DETECTOR_MODELS + FCCeeMDI_DETECTOR_MODELS
+# simulation models must not be used for reconstruction
+INVALID_DETECTOR_MODELS = ("ILD_l5_v02", "ILD_s5_v02", "ILD_l4_v02", "ILD_s4_v02")
+assert set(ALL_VALID_DETECTOR_MODELS).isdisjoint(INVALID_DETECTOR_MODELS)
 
 REC_COLLECTION_CONTENTS_FILE = "collections_rec_level.txt"
 
@@ -76,7 +79,7 @@ det_mod_g.add_argument(
 det_mod_g.add_argument(
     "--detectorModel",
     help="Name of a registered detector model to use for reconstruction",
-    choices=ALL_DETECTOR_MODELS,
+    choices=ALL_VALID_DETECTOR_MODELS,
     type=str,
     default=None,
 )
@@ -101,6 +104,7 @@ parser.add_argument(
     nargs="+",
     metavar=["file1", "file2"],
     help="One or multiple input files",
+    required=True,
 )
 parser.add_argument(
     "--outputFileBase",
@@ -141,6 +145,26 @@ parser.add_argument(
 parser.add_argument(
     "--trackingOnly",
     help="Only Tracking is performed; built for reco testing purposes",
+    action="store_true",
+)
+parser.add_argument(
+    "--noAIDA",
+    help="Discard output of AIDA processor",
+    action="store_true",
+)
+parser.add_argument(
+    "--noPFO",
+    help="Disable PFO processor and output",
+    action="store_true",
+)
+parser.add_argument(
+    "--usingParticleGun",
+    help="Indicate that input was generated using particle gun",
+    action="store_true",
+)
+parser.add_argument(
+    "--trackMerge",
+    help="Run the Silicon-TPC-track-merging for ILD@FCC-ee",
     action="store_true",
 )
 
@@ -187,8 +211,14 @@ else:
 
 # Ensure the detector model is registered in the known models list.
 # This is required to correctly resolve paths and select the appropriate reconstruction sequence.
-assert det_model in ALL_DETECTOR_MODELS, (
-    f"Detector model '{det_model}' is not registered in ALL_DETECTOR_MODELS"
+assert det_model in ALL_VALID_DETECTOR_MODELS, (
+    f"Detector model '{det_model}' is not registered in ALL_VALID_DETECTOR_MODELS!"
+)
+# Provide an understandable error message why those models are invalid
+assert det_model not in INVALID_DETECTOR_MODELS, (
+    "This detector model is intended only for parallel simulation of different "
+    "calorimeter options and must not be used for reconstruction. Reconstruction "
+    "requires a model with a specified calorimeter option! See k4geo for details!"
 )
 
 geoSvc = GeoSvc("GeoSvc")
@@ -197,9 +227,7 @@ geoSvc.OutputLevel = INFO
 geoSvc.EnableGeant4Geo = False
 svcList.append(geoSvc)
 
-is_FCCee_model, cms_e, cms_energy_config = get_cms_energy_config(
-    compact_file, reco_args.cmsEnergy
-)
+is_FCCee_model, cms_e, cms_energy_config = get_cms_energy_config(compact_file, reco_args.cmsEnergy)
 CONSTANTS = {
     "CMSEnergy": str(cms_e),
     "BeamCalCalibrationFactor": str(reco_args.beamCalCalibFactor),
@@ -212,7 +240,12 @@ parseConstants(CONSTANTS)
 
 sequenceLoader = SequenceLoader(
     algList,
-    global_vars={"CONSTANTS": CONSTANTS, "cms_energy_config": cms_energy_config},
+    global_vars={
+        "CONSTANTS": CONSTANTS,
+        "cms_energy_config": cms_energy_config,
+        "using_particle_gun": reco_args.usingParticleGun,
+        "track_merging": reco_args.trackMerge,
+    },
 )
 
 io_handler = IOHandlerHelper(algList, iosvc)
@@ -224,6 +257,7 @@ MyAIDAProcessor.Parameters = {
     "Compress": ["1"],
     "FileName": [f"{reco_args.outputFileBase}_AIDA"],
     "FileType": ["root"],
+    "DiscardOutput": ["true" if reco_args.noAIDA else "false"],
 }
 algList.append(MyAIDAProcessor)
 
@@ -245,6 +279,9 @@ hcal_technology = CONSTANTS["HcalTechnology"]
 if det_model in FCCeeMDI_DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi_FCCeeMDI")
     sequenceLoader.load("Tracking/TrackingReco_FCCeeMDI")
+    # this sequence also refits the Clupatra tracks (MarlinTrkTracks)
+    # which must happen regardless of --trackMerge
+    sequenceLoader.load("Tracking/TrackMerging_FCCee")
 else:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
@@ -263,67 +300,69 @@ if not reco_args.trackingOnly:
     if reco_args.runBeamCalReco:
         sequenceLoader.load("HighLevelReco/BeamCalReco")
 
-    if not is_FCCee_model:
-        sequenceLoader.load("HighLevelReco/HighLevelReco")
+    sequenceLoader.load(f"HighLevelReco/HighLevelReco{'_FCCee' if is_FCCee_model else ''}")
 
-    MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
-    MyPfoAnalysis.ProcessorType = "PfoAnalysis"
-    MyPfoAnalysis.Parameters = {
-        "BCalCollections": ["BCAL"],
-        "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
-        "CollectCalibrationDetails": ["0"],
-        "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
-        "ECalCollections": [
-            "EcalBarrelCollectionRec",
-            "EcalBarrelCollectionGapHits",
-            "EcalEndcapsCollectionRec",
-            "EcalEndcapsCollectionGapHits",
-            "EcalEndcapRingCollectionRec",
-        ],
-        "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
-        "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
-        "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
-        "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
-        "HCalCollections": [
-            "HcalBarrelCollectionRec",
-            "HcalEndcapsCollectionRec",
-            "HcalEndcapRingCollectionRec",
-        ],
-        "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
-        "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
-        "LCalCollections": ["LCAL"],
-        "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
-        "LHCalCollections": ["LHCAL"],
-        "LHCalCollectionsSimCaloHit": ["LHCalCollection"],
-        "LookForQuarksWithMotherZ": ["2"],
-        "MCParticleCollection": ["MCParticle"],
-        "MCPfoSelectionLowEnergyNPCutOff": ["1.2"],
-        "MCPfoSelectionMomentum": ["0.01"],
-        "MCPfoSelectionRadius": ["500."],
-        "MuonCollections": ["MUON"],
-        "MuonCollectionsSimCaloHit": ["YokeBarrelCollection", "YokeEndcapsCollection"],
-        "PfoCollection": ["PandoraPFOs"],
-        "Printing": ["0"],
-        "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
-    }
-    algList.append(MyPfoAnalysis)
+    if not reco_args.noPFO:
+        MyPfoAnalysis = MarlinProcessorWrapper("MyPfoAnalysis")
+        MyPfoAnalysis.ProcessorType = "PfoAnalysis"
+        MyPfoAnalysis.Parameters = {
+            "BCalCollections": ["BCAL"],
+            "BCalCollectionsSimCaloHit": ["BeamCalCollection"],
+            "CollectCalibrationDetails": ["0"],
+            "ECalBarrelCollectionsSimCaloHit": [CONSTANTS["ECalBarrelSimHitCollections"]],
+            "ECalCollections": [
+                "EcalBarrelCollectionRec",
+                "EcalBarrelCollectionGapHits",
+                "EcalEndcapsCollectionRec",
+                "EcalEndcapsCollectionGapHits",
+                "EcalEndcapRingCollectionRec",
+            ],
+            "ECalCollectionsSimCaloHit": [CONSTANTS["ECalSimHitCollections"]],
+            "ECalEndCapCollectionsSimCaloHit": [CONSTANTS["ECalEndcapSimHitCollections"]],
+            "ECalOtherCollectionsSimCaloHit": [CONSTANTS["ECalRingSimHitCollections"]],
+            "HCalBarrelCollectionsSimCaloHit": [CONSTANTS["HCalBarrelSimHitCollections"]],
+            "HCalCollections": [
+                "HcalBarrelCollectionRec",
+                "HcalEndcapsCollectionRec",
+                "HcalEndcapRingCollectionRec",
+            ],
+            "HCalEndCapCollectionsSimCaloHit": [CONSTANTS["HCalEndcapSimHitCollections"]],
+            "HCalOtherCollectionsSimCaloHit": [CONSTANTS["HCalRingSimHitCollections"]],
+            "LCalCollections": ["LCAL"],
+            "LCalCollectionsSimCaloHit": ["LumiCalCollection"],
+            "LHCalCollections": ["LHCAL"],
+            "LHCalCollectionsSimCaloHit": ["LHCalCollection"],
+            "LookForQuarksWithMotherZ": ["2"],
+            "MCParticleCollection": ["MCParticle"],
+            "MCPfoSelectionLowEnergyNPCutOff": ["1.2"],
+            "MCPfoSelectionMomentum": ["0.01"],
+            "MCPfoSelectionRadius": ["500."],
+            "MuonCollections": ["MUON"],
+            "MuonCollectionsSimCaloHit": [
+                "YokeBarrelCollection",
+                "YokeEndcapsCollection",
+            ],
+            "PfoCollection": ["PandoraPFOs"],
+            "Printing": ["0"],
+            "RootFile": [f"{reco_args.outputFileBase}_PfoAnalysis.root"],
+        }
+        algList.append(MyPfoAnalysis)
+
+# Make sure that all collections are always available by patching in missing
+# ones on-the-fly
+collPatcherRec = MarlinProcessorWrapper("CollPatcherREC", ProcessorType="PatchCollections")
+collPatcherRec.Parameters = {
+    "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
+}
+algList.append(collPatcherRec)
 
 if reco_args.lcioOutput != "only":
-    # Make sure that all collections are always available by patching in missing
-    # ones on-the-fly
-    collPatcherRec = MarlinProcessorWrapper(
-        "CollPatcherREC", ProcessorType="PatchCollections"
-    )
-    collPatcherRec.Parameters = {
-        "PatchCollections": parse_collection_patch_file(REC_COLLECTION_CONTENTS_FILE)
-    }
-    algList.append(collPatcherRec)
-
     output_commands = ["keep *"]
     output_commands.extend(get_drop_collections(CONSTANTS, True))
-    io_handler.add_edm4hep_writer(
-        f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands
-    )
+    # get_drop_collections incorrectly splits "type edm4hep::..." into two separate drops
+    output_commands.append("drop type edm4hep::RecDqdxCollection")
+    output_commands.append("drop type edm4hep::ParticleIDCollection")
+    io_handler.add_edm4hep_writer(f"{reco_args.outputFileBase}_REC.edm4hep.root", output_commands)
 
 
 if reco_args.lcioOutput in ("on", "only"):
@@ -375,9 +414,7 @@ auditorSvc = AuditorSvc()
 svcList.append(auditorSvc)
 auditorSvc.Auditors = [AlgTimingAuditor()]
 
-app_mgr = ApplicationMgr(
-    TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO
-)
+app_mgr = ApplicationMgr(TopAlg=algList, EvtSel="NONE", EvtMax=3, ExtSvc=svcList, OutputLevel=INFO)
 
 app_mgr.AuditAlgorithms = True
 app_mgr.AuditTools = True

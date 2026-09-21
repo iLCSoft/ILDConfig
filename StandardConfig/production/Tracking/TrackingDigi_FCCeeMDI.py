@@ -42,9 +42,7 @@ InnerPlanarDigiProcessor.Parameters = {
     "TrackerHitCollectionName": ["InnerTrackerBarrelHits"],
 }
 
-InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
-    "InnerEndcapPlanarDigiProcessor"
-)
+InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper("InnerEndcapPlanarDigiProcessor")
 InnerEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
 InnerEndcapPlanarDigiProcessor.Parameters = {
     "IsStrip": ["false"],

@@ -1,6 +1,9 @@
 # ILDConfig
 This package contains ilcsoft configuration files for running simulation and reconstruction for the ILD detector in iLCSoft with lcio, Marlin and DD4hep.
 
+> [!IMPORTANT]
+> ILD models for _FCC-ee_ (referred to as _ILD@FCC-ee_) are available. However, their documentation is located exclusively in the [`fcc-config`](https://github.com/HEP-FCC/FCC-config/tree/main/FCCee/FullSim/ILD_FCCee) repository.
+
 ILDConfig is distributed under the [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [![License](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)

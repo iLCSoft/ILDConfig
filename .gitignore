@@ -16,5 +16,8 @@
 # Side product of running Marlin
 MarlinStdRecoParsed.xml
 
+# Side product of running DDKalTest
+DDKalTest_*
+
 # Output for ranlux
 Ranlux.coonf

@@ -201,24 +201,42 @@ MyLikelihoodPID.Parameters = {
     ],
 }
 
-MyRecoMCTruthLinker = MarlinProcessorWrapper("MyRecoMCTruthLinker")
-MyRecoMCTruthLinker.ProcessorType = "RecoMCTruthLinker"
-MyRecoMCTruthLinker.Parameters = {
-    "CalohitMCTruthLinkName": ["CalohitMCTruthLink"],
+# ---------------------------------------------------------------------------
+# Track truth linking
+# ---------------------------------------------------------------------------
+_TRACK_TRUTH_LINK_SHARED_PARAMS = {
+    "MCParticleCollection": ["MCParticle"],
     "ClusterCollection": ["PandoraClusters"],
-    "ClusterMCTruthLinkName": ["ClusterMCTruthLink"],
+    "RecoParticleCollection": ["PandoraPFOs"],
     "FullRecoRelation": ["true"],
     "KeepDaughtersPDG": ["22", "111", "310", "13", "211", "321"],
-    "MCParticleCollection": ["MCParticle"],
-    "MCParticlesSkimmedName": ["MCParticlesSkimmed"],
-    "MCTruthClusterLinkName": ["MCTruthClusterLink"],
-    "MCTruthRecoLinkName": ["MCTruthRecoLink"],
-    "MCTruthTrackLinkName": ["MCTruthMarlinTrkTracksLink"],
-    "RecoMCTruthLinkName": ["RecoMCTruthLink"],
-    "RecoParticleCollection": ["PandoraPFOs"],
+    "SimTrackerHitCollections": [
+        #         "VXDCollection",
+        #         "SITCollection",
+        #         "FTD_PIXELCollection",
+        #         "FTD_STRIPCollection",
+        "VertexBarrelCollection",
+        "VertexEndcapCollection",
+        "InnerTrackerBarrelCollection",
+        "InnerTrackerEndcapCollection",
+        "TPCCollection",
+        "SETCollection",
+    ],
+    "TrackerHitsRelInputCollections": [
+        #        "VXDTrackerHitRelations",
+        #        "SITTrackerHitRelations",
+        #        "FTDPixelTrackerHitRelations",
+        #        "FTDSpacePointRelations",
+        "VertexBarrelTrackerHitRelations",
+        "VertexEndcapTrackerHitRelations",
+        "InnerTrackerBarrelHitRelations",
+        "InnerTrackerEndcapHitRelations",
+        "TPCTrackerHitRelations",
+        "SETSpacePointRelations",
+    ],
     "SimCaloHitCollections": [
-        "BeamCalCollection",
-        "LHCalCollection",
+        # "BeamCalCollection",
+        # "LHCalCollection",
         "LumiCalCollection",
         CONSTANTS["ECalSimHitCollections"],
         CONSTANTS["HCalSimHitCollections"],
@@ -232,32 +250,45 @@ MyRecoMCTruthLinker.Parameters = {
         "HcalBarrelRelationsSimRec",
         "HcalEndcapRingRelationsSimRec",
         "HcalEndcapsRelationsSimRec",
-        "RelationLHcalHit",
+        # "RelationLHcalHit",
         "RelationMuonHit",
         "RelationLcalHit",
-        "RelationBCalHit",
-    ],
-    "SimTrackerHitCollections": [
-        "VXDCollection",
-        "SITCollection",
-        "FTD_PIXELCollection",
-        "FTD_STRIPCollection",
-        "TPCCollection",
-        "SETCollection",
-    ],
-    "TrackCollection": ["MarlinTrkTracks"],
-    "TrackMCTruthLinkName": ["MarlinTrkTracksMCTruthLink"],
-    "TrackerHitsRelInputCollections": [
-        "VXDTrackerHitRelations",
-        "SITTrackerHitRelations",
-        "FTDPixelTrackerHitRelations",
-        "FTDSpacePointRelations",
-        "TPCTrackerHitRelations",
-        "SETSpacePointRelations",
+        # "RelationBCalHit",
     ],
     "UseTrackerHitRelations": ["true"],
     "UsingParticleGun": [str(using_particle_gun).lower()],
 }
+
+# Track collections to truth-link: MarlinTrkTracks always, plus the
+# Silicon-TPC merged & refitted track collections from TrackMerging_FCCee.py
+# (Greedy and Ambiguous variants) when --trackMerge is set.
+TRACK_TRUTH_LINK_COLLECTIONS = ["MarlinTrkTracks"]
+if track_merging:
+    TRACK_TRUTH_LINK_COLLECTIONS += [
+        "RefittedGreedyMergedTracks",
+        "RefittedAmbiguousMergedTracks",
+    ]
+
+RecoMCTruthLinkers = []
+for track_collection in TRACK_TRUTH_LINK_COLLECTIONS:
+    is_primary = track_collection == "MarlinTrkTracks"
+
+    linker = MarlinProcessorWrapper(f"MyRecoMCTruthLinker{track_collection}")
+    linker.ProcessorType = "RecoMCTruthLinker"
+    linker.Parameters = _TRACK_TRUTH_LINK_SHARED_PARAMS | {
+        # track-coll-level: defined once per track-coll
+        "TrackCollection": [track_collection],
+        "TrackMCTruthLinkName": [f"{track_collection}MCTruthLink"],
+        "MCTruthTrackLinkName": [f"MCTruth{track_collection}Link"],
+        # event-level colls: only defined once per event
+        "RecoMCTruthLinkName": ["RecoMCTruthLink"] if is_primary else [""],
+        "MCTruthRecoLinkName": ["MCTruthRecoLink"] if is_primary else [""],
+        "MCParticlesSkimmedName": ["MCParticlesSkimmed"] if is_primary else [""],
+        "ClusterMCTruthLinkName": ["ClusterMCTruthLink"] if is_primary else [""],
+        "MCTruthClusterLinkName": ["MCTruthClusterLink"] if is_primary else [""],
+        "CalohitMCTruthLinkName": ["CalohitMCTruthLink"] if is_primary else [""],
+    }
+    RecoMCTruthLinkers.append(linker)
 
 VertexFinder = MarlinProcessorWrapper("VertexFinder")
 VertexFinder.ProcessorType = "LcfiplusProcessor"
@@ -318,7 +349,7 @@ for res in [0, 10, 50, 100]:
     }
     TOF_processors.append(proc)
 
-HighLevelRecoSequence = [
+HighLevelReco_FCCeeSequence = [
     MyAdd4MomCovMatrixCharged,
     MyAddClusterProperties,
     MyComputeShowerShapesProcessor,
@@ -329,7 +360,7 @@ HighLevelRecoSequence = [
     MyGammaGammaSolutionFinder,
     MyDistilledPFOCreator,
     MyLikelihoodPID,
-    MyRecoMCTruthLinker,
+    *RecoMCTruthLinkers,
     VertexFinder,
     TrackLengthProcessor,
     *TOF_processors,

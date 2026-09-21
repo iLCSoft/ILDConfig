@@ -17,6 +17,9 @@ This document describes :
 
 For more information on the iLCSoft tools refer to the [iLCSoft Portal](http://ilcsoft.desy.de) or directly to the [source code documentation](https://github.com/iLCSoft/ilcsoftDoc/blob/master/CodeDocumentation.md) of the individual packages.
 
+> [!IMPORTANT]
+> ILD models for _FCC-ee_ (referred to as _ILD@FCC-ee_) are available. However, their documentation is located exclusively in the [`fcc-config`](https://github.com/HEP-FCC/FCC-config/tree/main/FCCee/FullSim/ILD_FCCee) repository.
+
 ## Structure of this directory
 
 The structure of this directory relies on a functionality introduced in Marlin v01-14 that allows to include xml file within the top-level Marlin steering file. The different sub-directories are thus used for splitting the reconstruction in smaller blocks: Tracking Digi and Reco, CaloDigi, PFA, HLR, etc ...

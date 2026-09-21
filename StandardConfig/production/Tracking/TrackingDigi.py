@@ -16,9 +16,7 @@ MySplitCollectionByLayer.Parameters = {
     ],
 }
 
-VXDPlanarDigiProcessor_CMOSVXD5 = MarlinProcessorWrapper(
-    "VXDPlanarDigiProcessor_CMOSVXD5"
-)
+VXDPlanarDigiProcessor_CMOSVXD5 = MarlinProcessorWrapper("VXDPlanarDigiProcessor_CMOSVXD5")
 VXDPlanarDigiProcessor_CMOSVXD5.ProcessorType = "DDPlanarDigiProcessor"
 VXDPlanarDigiProcessor_CMOSVXD5.Parameters = {
     "ForceHitsOntoSurface": ["true"],

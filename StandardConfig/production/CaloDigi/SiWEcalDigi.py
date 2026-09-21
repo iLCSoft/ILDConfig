@@ -2,18 +2,14 @@
 
 from Configurables import MarlinProcessorWrapper
 
-MergeCollectionsEcalBarrelHits = MarlinProcessorWrapper(
-    "MergeCollectionsEcalBarrelHits"
-)
+MergeCollectionsEcalBarrelHits = MarlinProcessorWrapper("MergeCollectionsEcalBarrelHits")
 MergeCollectionsEcalBarrelHits.ProcessorType = "MergeCollections"
 MergeCollectionsEcalBarrelHits.Parameters = {
     "InputCollections": ["ECalBarrelSiHitsEven", "ECalBarrelSiHitsOdd"],
     "OutputCollection": ["EcalBarrelCollection"],
 }
 
-MergeCollectionsEcalEndcapHits = MarlinProcessorWrapper(
-    "MergeCollectionsEcalEndcapHits"
-)
+MergeCollectionsEcalEndcapHits = MarlinProcessorWrapper("MergeCollectionsEcalEndcapHits")
 MergeCollectionsEcalEndcapHits.ProcessorType = "MergeCollections"
 MergeCollectionsEcalEndcapHits.Parameters = {
     "InputCollections": ["ECalEndcapSiHitsEven", "ECalEndcapSiHitsOdd"],

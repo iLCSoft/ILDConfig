@@ -1,9 +1,9 @@
-import os
-from io import TextIOWrapper
-from typing import Union, Optional, Dict, Any, List
-import importlib.util
 import importlib.abc
+import importlib.util
+import os
 from importlib.machinery import SourceFileLoader
+from io import TextIOWrapper
+from typing import Any, Dict, List, Optional, Union
 
 
 def import_from(
@@ -89,9 +89,7 @@ class SequenceLoader:
     define all of them.
     """
 
-    def __init__(
-        self, alg_list: list, global_vars: Optional[Dict[str, Any]] = None
-    ) -> None:
+    def __init__(self, alg_list: list, global_vars: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the SequenceLoader
 
         This initializes a SequenceLoader with the list of algorithms to which

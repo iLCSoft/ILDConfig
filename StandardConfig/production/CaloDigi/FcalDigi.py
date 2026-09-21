@@ -2,7 +2,6 @@
 
 from Configurables import MarlinProcessorWrapper
 
-
 MySimpleBCalDigi = MarlinProcessorWrapper("MySimpleBCalDigi")
 MySimpleBCalDigi.ProcessorType = "SimpleFCalDigi"
 MySimpleBCalDigi.Parameters = {
