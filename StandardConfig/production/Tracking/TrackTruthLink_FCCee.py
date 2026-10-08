@@ -36,7 +36,7 @@ _TRACK_TRUTH_LINK_SHARED_PARAMS = {
 }
 
 # Track collections to truth-link: same as in HighLevelReco_FCCee.py
-TRACK_TRUTH_LINK_COLLECTIONS = ["MarlinTrkTracks", "SiTracksCT"]
+TRACK_TRUTH_LINK_COLLECTIONS = ["MarlinTrkTracks", "SiTracksCT", "ClupatraTracks", "ClupatraFCCTracks"]
 if track_merging:
     TRACK_TRUTH_LINK_COLLECTIONS += [
         "RefittedGreedyMergedTracks",
