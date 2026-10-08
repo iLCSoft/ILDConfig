@@ -70,7 +70,10 @@ MyClupatraProcessorFCC.Parameters = {
     "TrackSystemName": ["DDKalTest"],
     "VXDHitCollection": VertexBarrelHitCollectionNames,
     "VXDDetectorName": ["VertexBarrel"],
+    "SETHitCollection": ["SETTrackerHits"],
+    "SETDetectorName": ["SET"],
     "pickUpSiHits": ["true"],
+    "Verbosity": ["MESSAGE"],
 }
 
 MyConformalTracking = MarlinProcessorWrapper("MyConformalTracking")

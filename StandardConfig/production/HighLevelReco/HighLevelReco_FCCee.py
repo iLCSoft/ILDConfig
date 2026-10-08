@@ -221,6 +221,7 @@ _TRACK_TRUTH_LINK_SHARED_PARAMS = {
         "InnerTrackerEndcapCollection",
         "TPCCollection",
         "SETCollection",
+        "SETSpacePoints",
     ],
     "TrackerHitsRelInputCollections": [
         #        "VXDTrackerHitRelations",
@@ -232,6 +233,7 @@ _TRACK_TRUTH_LINK_SHARED_PARAMS = {
         "InnerTrackerBarrelHitRelations",
         "InnerTrackerEndcapHitRelations",
         "TPCTrackerHitRelations",
+        "SETTrackerHitRelations",
         "SETSpacePointRelations",
     ],
     "SimCaloHitCollections": [
