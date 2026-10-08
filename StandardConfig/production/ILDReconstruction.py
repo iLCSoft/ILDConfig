@@ -288,7 +288,10 @@ elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
 
-if not reco_args.trackingOnly:
+if reco_args.trackingOnly:
+    # no high level reco: still create the track <-> MCParticle truth links
+    sequenceLoader.load(f"Tracking/TrackTruthLink{'_FCCee' if is_FCCee_model else ''}")
+else:
     sequenceLoader.load(f"CaloDigi/{ecal_technology}Digi")
     sequenceLoader.load(f"CaloDigi/{hcal_technology}Digi")
     sequenceLoader.load("CaloDigi/FcalDigi")
