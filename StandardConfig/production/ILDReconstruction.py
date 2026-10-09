@@ -282,6 +282,8 @@ if det_model in FCCeeMDI_DETECTOR_MODELS:
     # this sequence also refits the Clupatra tracks (MarlinTrkTracks)
     # which must happen regardless of --trackMerge
     sequenceLoader.load("Tracking/TrackMerging_FCCee")
+    # dE/dx, V0 finding and PID refits on the final MarlinTrkTracks
+    sequenceLoader.load("Tracking/TrackingPostReco_FCCeeMDI")
 elif det_model in DETECTOR_MODELS:
     sequenceLoader.load("Tracking/TrackingDigi")
     sequenceLoader.load("Tracking/TrackingReco")
