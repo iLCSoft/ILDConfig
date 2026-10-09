@@ -270,6 +270,8 @@ TRACK_TRUTH_LINK_COLLECTIONS = [
     "ClupatraTracks",
     "ClupatraSitTracks",
     "ClupatraSitSetTracks",
+    "RefittedClupatraTracks",
+    "RefittedClupatraSitTracks",
 ]
 if track_merging:
     TRACK_TRUTH_LINK_COLLECTIONS += [
