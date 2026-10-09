@@ -40,7 +40,8 @@ TRACK_TRUTH_LINK_COLLECTIONS = [
     "MarlinTrkTracks",
     "SiTracksCT",
     "ClupatraTracks",
-    "ClupatraFCCTracks",
+    "ClupatraSitTracks",
+    "ClupatraSitSetTracks",
 ]
 if track_merging:
     TRACK_TRUTH_LINK_COLLECTIONS += [

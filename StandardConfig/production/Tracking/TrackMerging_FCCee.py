@@ -9,7 +9,7 @@ from Gaudi.Configuration import INFO  # , DEBUG
 
 SI_TRACK_COLL_NAME = "SiTracksCT"
 CLU_TRACK_COLL_NAME = "ClupatraTracks"
-CLU_W_SI_TRACK_COLL_NAME = "ClupatraFCCTracks"
+CLU_W_SI_TRACK_COLL_NAME = "ClupatraSitSetTracks"
 MCP_COLL_NAME = "MCParticles"
 
 # ---------------------------------------------------------------------------
