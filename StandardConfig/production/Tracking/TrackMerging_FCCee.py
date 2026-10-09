@@ -119,6 +119,7 @@ SHARED_REFITTING_CONFIG = {
     "InitialTrackErrorTanL": ["100"],
     "InitialTrackErrorZ0": ["1e+06"],
     "InitialTrackState": ["3"], # lcio::TrackState::AtLastHit
+    "SkipFailedFits": ["true"],
     "TrackSystemName": ["DDKalTest"],
     "InputTrackRelCollection": [],
 }
