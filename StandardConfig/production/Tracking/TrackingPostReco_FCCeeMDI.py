@@ -55,7 +55,9 @@ MyRefitProcessorKaon.Parameters = {
     "InputTrackRelCollection": [],
     "OutputTrackCollectionName": ["MarlinTrkTracksKaon"],
     "OutputTrackRelCollection": ["MarlinTrkTracksKaonMCP"],
-    "SkipFailedFits": ["false"],  # keep failed fits so that the output stays index-aligned with MarlinTrkTracks
+    "SkipFailedFits": [
+        "false"
+    ],  # keep failed fits so that the output stays index-aligned with MarlinTrkTracks
     "ParticleMass": ["0.493677"],
     "TrackSystemName": ["DDKalTest"],
 }
@@ -75,7 +77,9 @@ MyRefitProcessorProton.Parameters = {
     "InputTrackRelCollection": [],
     "OutputTrackCollectionName": ["MarlinTrkTracksProton"],
     "OutputTrackRelCollection": ["MarlinTrkTracksProtonMCP"],
-    "SkipFailedFits": ["false"],  # keep failed fits so that the output stays index-aligned with MarlinTrkTracks
+    "SkipFailedFits": [
+        "false"
+    ],  # keep failed fits so that the output stays index-aligned with MarlinTrkTracks
     "ParticleMass": ["0.93828"],
     "TrackSystemName": ["DDKalTest"],
 }

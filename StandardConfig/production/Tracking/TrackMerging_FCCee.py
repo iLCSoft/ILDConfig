@@ -112,13 +112,13 @@ for track_type, var in TRACK_VARIATIONS.items():
 
 SHARED_REFITTING_CONFIG = {
     "EnergyLossOn": ["true"],
-    "FitDirection": ["-1"], # backward fit for a good IP track state
+    "FitDirection": ["-1"],  # backward fit for a good IP track state
     "InitialTrackErrorD0": ["1e+06"],
     "InitialTrackErrorOmega": ["0.00001"],
     "InitialTrackErrorPhi0": ["100"],
     "InitialTrackErrorTanL": ["100"],
     "InitialTrackErrorZ0": ["1e+06"],
-    "InitialTrackState": ["3"], # lcio::TrackState::AtLastHit
+    "InitialTrackState": ["3"],  # lcio::TrackState::AtLastHit
     "SkipFailedFits": ["true"],
     "TrackSystemName": ["DDKalTest"],
     "InputTrackRelCollection": [],
