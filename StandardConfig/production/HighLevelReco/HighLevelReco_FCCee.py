@@ -262,7 +262,12 @@ _TRACK_TRUTH_LINK_SHARED_PARAMS = {
 # Track collections to truth-link: MarlinTrkTracks always, plus the
 # Silicon-TPC merged & refitted track collections from TrackMerging_FCCee.py
 # (Greedy and Ambiguous variants) when --trackMerge is set.
-TRACK_TRUTH_LINK_COLLECTIONS = ["MarlinTrkTracks", "SiTracksCT", "ClupatraTracks", "ClupatraFCCTracks"]
+TRACK_TRUTH_LINK_COLLECTIONS = [
+    "MarlinTrkTracks",
+    "SiTracksCT",
+    "ClupatraTracks",
+    "ClupatraFCCTracks",
+]
 if track_merging:
     TRACK_TRUTH_LINK_COLLECTIONS += [
         "RefittedGreedyMergedTracks",
