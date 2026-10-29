@@ -21,23 +21,41 @@ MCP_COLL_NAME = "MCParticles"
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# TrackMerger matching tolerances
+# TrackMerger matching criteria
 #
-# TrackMerger considers two tracks a match if the differences of their track
-# parameters at the adjoining hit are within the configured tolerances. Each
-# of the 5 track parameters (D0, Z0, phi, omega, tanLambda) has its own
-# tolerance property; a negative value disables that parameter, i.e. it is
-# not considered for matching. The properties are:
-#   D0Tolerance, Z0Tolerance, PhiTolerance, OmegaTolerance, TanLambdaTolerance
+# TrackMerger considers two tracks a match if their track parameters at the
+# adjoining hit are compatible for each of the 5 parameters. A negative cut
+# disables that parameter, i.e. it is not considered for matching.
+# UseSignificance selects which set of cuts is applied:
+#   True:  significances |diff| / sqrt(var(inner) + var(outer)) from the
+#          track state covariances; omega is compared as signed pT, which
+#          needs the B field from the GeoSvc. Properties:
+#          D0Significance, Z0Significance, PhiSignificance, PtSignificance,
+#          TanLambdaSignificance
+#   False: absolute differences. Properties:
+#          D0Tolerance, Z0Tolerance, PhiTolerance, OmegaTolerance,
+#          TanLambdaTolerance
 # ---------------------------------------------------------------------------
 
-DEFAULT_THRESHOLDS = {
-    "D0Tolerance": 0.5,
-    "Z0Tolerance": 2.5,
+SIGNIFICANCE_THRESHOLDS = {
+    "UseSignificance": True,
+    "D0Significance": 3.0,
+    "Z0Significance": 3.0,
+    "PhiSignificance": 3.0,
+    "PtSignificance": 3.0,
+    "TanLambdaSignificance": 3.0,
+}
+
+ABSOLUTE_THRESHOLDS = {
+    "UseSignificance": False,
+    "D0Tolerance": 0.5,  # mm
+    "Z0Tolerance": 2.5,  # mm
     "PhiTolerance": -1.0,
     "OmegaTolerance": -1.0,
     "TanLambdaTolerance": -1.0,
 }
+
+DEFAULT_THRESHOLDS = SIGNIFICANCE_THRESHOLDS
 
 TRACK_VARIATIONS = {
     "Greedy": {
