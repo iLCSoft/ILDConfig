@@ -9,7 +9,8 @@ from Gaudi.Configuration import INFO  # , DEBUG
 
 SI_TRACK_COLL_NAME = "SiTracksCT"
 CLU_TRACK_COLL_NAME = "ClupatraTracks"
-CLU_W_SI_TRACK_COLL_NAME = "ClupatraFCCTracks"
+CLU_W_SIT_TRACK_COLL_NAME = "ClupatraSitTracks"
+CLU_W_SIT_SET_TRACK_COLL_NAME = "ClupatraSitSetTracks"
 MCP_COLL_NAME = "MCParticles"
 
 # ---------------------------------------------------------------------------
@@ -88,9 +89,36 @@ TRACK_VARIATIONS = {
             "enabled": track_merging,
         },
     },
-    "CluWithSi": {
+    # refits of all Clupatra variants with the same configuration, e.g. to compare the hit pick-up options
+    "Clu": {
         "collections": {
-            "merge_candidates": CLU_W_SI_TRACK_COLL_NAME,  # already exists, no merger
+            "merge_candidates": CLU_TRACK_COLL_NAME,  # already exists, no merger
+            "refit_output": "RefittedClupatraTracks",
+            "refit_rel": "RefittedClupatraTrackRelations",
+        },
+        "merger": {
+            "enabled": False,
+        },
+        "refitter": {
+            "enabled": True,
+        },
+    },
+    "CluWithSit": {
+        "collections": {
+            "merge_candidates": CLU_W_SIT_TRACK_COLL_NAME,  # already exists, no merger
+            "refit_output": "RefittedClupatraSitTracks",
+            "refit_rel": "RefittedClupatraSitTrackRelations",
+        },
+        "merger": {
+            "enabled": False,
+        },
+        "refitter": {
+            "enabled": True,
+        },
+    },
+    "CluWithSitSet": {
+        "collections": {
+            "merge_candidates": CLU_W_SIT_SET_TRACK_COLL_NAME,  # already exists, no merger
             "refit_output": "MarlinTrkTracks",
             "refit_rel": "MarlinTrkTrackRelation",
         },

@@ -40,36 +40,25 @@ MyClupatraProcessor.Parameters = {
     "pickUpSiHits": ["false"],
 }
 
-MyClupatraProcessorFCC = MarlinProcessorWrapper("MyClupatraProcessor")
-MyClupatraProcessorFCC.ProcessorType = "ClupatraProcessor"
-MyClupatraProcessorFCC.Parameters = {
-    "Chi2Cut": ["100"],
-    "CreateDebugCollections": ["false", "true"],
-    "DistanceCut": ["40"],
-    "DuplicatePadRowFraction": ["0.1"],
-    "EnergyLossOn": ["true"],
-    "MaxDeltaChi2": ["35"],
-    "MaxStepWithoutHit": ["6"],
-    "MinLayerFractionWithMultiplicity": ["0.5"],
-    "MinLayerNumberWithMultiplicity": ["3"],
-    "MinimumClusterSize": ["6"],
-    "MultipleScatteringOn": ["false", "true"],
-    "NumberOfZBins": ["150"],
-    "OutputCollection": ["ClupatraFCCTracks"],
-    "PadRowRange": ["15"],
-    "SITHitCollection": ["InnerTrackerBarrelHits"],
-    "SITDetectorName": ["InnerTrackerBarrel"],
-    "SegmentCollectionName": ["MarlinTrkTrackSegments"],
-    "SmoothOn": ["false"],
-    "TPCHitCollection": ["TPCTrackerHits"],
-    "TrackEndsOuterCentralDist": ["25"],
-    "TrackEndsOuterForwardDist": ["40"],
-    "TrackIsCurlerOmega": ["0.001"],
-    "TrackStartsInnerDist": ["25"],
-    "TrackSystemName": ["DDKalTest"],
-    "VXDHitCollection": VertexBarrelHitCollectionNames,
-    "VXDDetectorName": ["VertexBarrel"],
+# same as MyClupatraProcessor (pure TPC), but additionally picks up inner Si hits (VXD, IT)
+MyClupatraProcessorSit = MarlinProcessorWrapper("MyClupatraProcessorSit")
+MyClupatraProcessorSit.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessorSit.Parameters = dict(MyClupatraProcessor.Parameters) | {
+    "OutputCollection": ["ClupatraSitTracks"],
+    "SegmentCollectionName": ["ClupatraSitTrackSegments"],
     "pickUpSiHits": ["true"],
+    "Verbosity": ["MESSAGE"],
+}
+
+# same as MyClupatraProcessorSit, but additionally picks up SET hits:
+# Clupatra only picks up SET hits if SETHitCollection is set
+MyClupatraProcessorSitSet = MarlinProcessorWrapper("MyClupatraProcessorSitSet")
+MyClupatraProcessorSitSet.ProcessorType = "ClupatraProcessor"
+MyClupatraProcessorSitSet.Parameters = dict(MyClupatraProcessorSit.Parameters) | {
+    "OutputCollection": ["ClupatraSitSetTracks"],
+    "SegmentCollectionName": ["MarlinTrkTrackSegments"],
+    "SETHitCollection": ["SETTrackerHits"],
+    "SETDetectorName": ["SET"],
 }
 
 MyConformalTracking = MarlinProcessorWrapper("MyConformalTracking")
@@ -386,7 +375,8 @@ MyFullLDCTracking_MarlinTrk.Parameters = {
 }
 
 TrackingReco_FCCeeMDISequence = [
-    MyClupatraProcessorFCC,
+    MyClupatraProcessorSit,
+    MyClupatraProcessorSitSet,
     MyClupatraProcessor,
     MyConformalTracking,
     # MyFullLDCTracking_MarlinTrk,
