@@ -37,7 +37,6 @@ MyClupatraProcessor.Parameters = {
     "TrackSystemName": ["DDKalTest"],
     "VXDHitCollection": ["VertexBarrelTrackerHits"],
     "VXDHitCollection": VertexBarrelHitCollectionNames,
-    "VXDDetectorName": ["Vertex"],
     "VXDDetectorName": ["VertexBarrel"],
     "pickUpSiHits": ["false"],
 }
