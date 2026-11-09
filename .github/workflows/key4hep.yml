@@ -91,10 +91,18 @@ jobs:
                   --steeringFile ddsim_steer.py
             echo "::endgroup::"
             echo "::group::Run reconstruction"
+            set -o pipefail
             k4run ILDReconstruction.py \
                   --inputFiles=bbudsc_3evt_SIM.edm4hep.root \
                   --outputFileBase=bbudsc_3evt_GaudiRec \
-                  --detectorModel=${{ matrix.detector_model }}
+                  --detectorModel=${{ matrix.detector_model }} \
+                  --randomSeed=42 2>&1 | tee reco.log
+            echo "::endgroup::"
+            echo "::group::Check random seed was passed to Marlin"
+            if ! grep "Setting global Marlin random seed to 42" reco.log; then
+              echo "::error::Random seed was not passed to Marlin"
+              exit 1
+            fi
             echo "::endgroup::"
             echo "::group::Run simulation (LCIO output)"
             ddsim --inputFiles Examples/bbudsc_3evt/bbudsc_3evt.stdhep \

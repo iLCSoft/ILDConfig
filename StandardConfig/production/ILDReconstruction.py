@@ -8,7 +8,9 @@ from Configurables import (
     AuditorSvc,
     EventDataSvc,
     GeoSvc,
+    HepRndm__Engine_CLHEP__RanluxEngine_,
     MarlinProcessorWrapper,
+    RndmGenSvc,
 )
 from Gaudi.Configuration import INFO
 from k4FWCore import ApplicationMgr, IOSvc
@@ -167,6 +169,12 @@ parser.add_argument(
     help="Run the Silicon-TPC-track-merging for ILD@FCC-ee",
     action="store_true",
 )
+parser.add_argument(
+    "--randomSeed",
+    help="The global random seed that is used to seed all (wrapped) Marlin processors",
+    type=int,
+    default=None,
+)
 
 parser.add_argument(
     "--VXDBarrelDigitiserResolutionU",
@@ -231,6 +239,16 @@ svcList = []
 
 evtsvc = EventDataSvc("EventDataSvc")
 svcList.append(evtsvc)
+
+# The MarlinProcessorWrapper takes the first seed of the engine of the random
+# service as the global Marlin random seed. All Marlin seeds derive from there
+rndmEngine = HepRndm__Engine_CLHEP__RanluxEngine_("RndmGenSvc.Engine")
+if reco_args.randomSeed is not None:
+    rndmEngine.Seeds = [reco_args.randomSeed]
+rndmGenSvc = RndmGenSvc("RndmGenSvc")
+rndmGenSvc.Engine = rndmEngine.getType()
+svcList.append(rndmGenSvc)
+
 iosvc = IOSvc()
 
 if reco_args.compactFile:
