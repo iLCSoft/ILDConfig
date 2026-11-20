@@ -265,14 +265,8 @@ _TRACK_TRUTH_LINK_SHARED_PARAMS = {
 TRACK_TRUTH_LINK_COLLECTIONS = [
     "MarlinTrkTracks",
     "SiTracksCT",
-    "ClupatraTracks",
-    "ClupatraFCCTracks",
+    "ClupatraSETTracks",
 ]
-if track_merging:
-    TRACK_TRUTH_LINK_COLLECTIONS += [
-        "RefittedGreedyMergedTracks",
-        "RefittedAmbiguousMergedTracks",
-    ]
 
 RecoMCTruthLinkers = []
 for track_collection in TRACK_TRUTH_LINK_COLLECTIONS:
@@ -369,4 +363,7 @@ HighLevelReco_FCCeeSequence = [
     VertexFinder,
     TrackLengthProcessor,
     *TOF_processors,
+    #<processor name="LeptonID"/>
+    #<processor name="ComprehensivePID_singleP"/>
+    #<processor name="ComprehensivePID_2fZhad"/>
 ]
