@@ -26,8 +26,8 @@ MyClupatraProcessor.Parameters = {
     "NumberOfZBins": ["150"],
     "OutputCollection": ["ClupatraSETTracks"],
     "PadRowRange": ["15"],
-    #"SITHitCollection": ["InnerTrackerBarrelHits"],
-    #"SITDetectorName": ["InnerTrackerBarrel"],
+    # "SITHitCollection": ["InnerTrackerBarrelHits"],
+    # "SITDetectorName": ["InnerTrackerBarrel"],
     "SegmentCollectionName": ["MarlinTrkTrackSegments"],
     "SmoothOn": ["false"],
     "TPCHitCollection": ["TPCTrackerHits"],
@@ -36,8 +36,8 @@ MyClupatraProcessor.Parameters = {
     "TrackIsCurlerOmega": ["0.001"],
     "TrackStartsInnerDist": ["25"],
     "TrackSystemName": ["DDKalTest"],
-    #"VXDHitCollection": VertexBarrelHitCollectionNames,
-    #"VXDDetectorName": ["VertexBarrel"],
+    # "VXDHitCollection": VertexBarrelHitCollectionNames,
+    # "VXDDetectorName": ["VertexBarrel"],
     "pickUpSiHits": ["true"],
 }
 
@@ -151,13 +151,13 @@ MyConformalTracking.Parameters = {
 }
 
 MatchingThresholds = {
-    "D0Tolerance": -1.0, # 0.5
-    "Z0Tolerance": -1.0, # 2.5
+    "D0Tolerance": -1.0,
+    "Z0Tolerance": -1.0,
     "PhiTolerance": -1.0,
     "OmegaTolerance": -1.0,
     "TanLambdaTolerance": -1.0,
-    "D0Significance": 10.0, # 3.0
-    "Z0Significance": 15.0, # 3.0
+    "D0Significance": 10.0,
+    "Z0Significance": 15.0,
     "PhiSignificance": 100.0,
     "PtSignificance": -1.0,
     "TanLambdaSignificance": 100.0,
@@ -167,8 +167,8 @@ MyTrackMerger = TrackMerger("TrackMerger",
     InputOuterTracks="ClupatraSETTracks",
     OutTracks="MergedTracks",
     **MatchingThresholds,
-    UseSignificance = True,
-    maxChi2PerHit = 100,
+    UseSignificance=True,
+    maxChi2PerHit=100,
 )
 
 MyRefitter = MarlinProcessorWrapper("Refitter")
@@ -188,7 +188,6 @@ MyRefitter.Parameters = {
     "OutputTrackCollectionName": ["MarlinTrkTracks"],
     "OutputTrackRelCollection": ["MarlinTrkTrackRelation"],
     "SkipFailedFits": ["true"],
-    #"Verbosity": ["DEBUG"],
 }
 
 MyCompute_dEdxProcessor = MarlinProcessorWrapper("MyCompute_dEdxProcessor")
@@ -224,8 +223,8 @@ MyKinkFinder.ProcessorType = "KinkFinder"
 MyKinkFinder.Parameters = {
     "DebugPrinting": ["0"],
     "TrackCollection": ["MarlinTrkTracks"],
-    "VXDName" : ["VertexBarrel"],
-    "SITName" : ["InnerTrackerBarrel"],
+    "VXDName": ["VertexBarrel"],
+    "SITName": ["InnerTrackerBarrel"],
 }
 
 MyRefitProcessorKaon = MarlinProcessorWrapper("MyRefitProcessorKaon")
@@ -248,7 +247,6 @@ MyRefitProcessorKaon.Parameters = {
     ],  # keep failed fits so that the output stays index-aligned with MarlinTrkTracks
     "ParticleMass": ["0.493677"],
     "TrackSystemName": ["DDKalTest"],
-    #"Verbosity": ["DEBUG"],
 }
 
 MyRefitProcessorProton = MarlinProcessorWrapper("MyRefitProcessorProton")
