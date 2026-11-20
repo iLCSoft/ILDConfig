@@ -363,7 +363,8 @@ HighLevelReco_FCCeeSequence = [
     VertexFinder,
     TrackLengthProcessor,
     *TOF_processors,
-    #<processor name="LeptonID"/>
-    #<processor name="ComprehensivePID_singleP"/>
-    #<processor name="ComprehensivePID_2fZhad"/>
+    # to do: add the following parts of the current MiniDST.xml here
+    # <processor name="LeptonID"/>
+    # <processor name="ComprehensivePID_singleP"/>
+    # <processor name="ComprehensivePID_2fZhad"/>
 ]
