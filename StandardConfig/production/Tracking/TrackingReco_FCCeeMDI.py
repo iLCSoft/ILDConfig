@@ -162,7 +162,8 @@ MatchingThresholds = {
     "PtSignificance": -1.0,
     "TanLambdaSignificance": 100.0,
 }
-MyTrackMerger = TrackMerger("TrackMerger",
+MyTrackMerger = TrackMerger(
+    "TrackMerger",
     InputInnerTracks="SiTracksCT",
     InputOuterTracks="ClupatraSETTracks",
     OutTracks="MergedTracks",
