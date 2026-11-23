@@ -106,7 +106,15 @@ jobs:
             k4run ILDReconstruction.py \
                   --inputFiles=bbudsc_3evt_SIM.slcio \
                   --outputFileBase=bbudsc_3evt_GaudiRec_LCIO_input \
-                  --detectorModel=${{ matrix.detector_model }}
+                  --detectorModel=${{ matrix.detector_model }} \
+                  --lcioOutput=on
+            echo "::endgroup::"
+            echo "::group::Run mini-DSTing (LCIO input)"
+            k4run ILDMiniDST.py \
+                 --inputFiles=bbudsc_3evt_GaudiRec_LCIO_input_DST.slcio \
+                 --compactFile $k4geo_DIR/ILD/compact/${{ matrix.detector_model }}/${{ matrix.detector_model }}.xml
+            echo "::endgroup::"
+
 
   # Reconstruction with the ILD@FCCee models using EDM4hep inputs and outputs
   gaudi-ILDatFCCee-reco:
