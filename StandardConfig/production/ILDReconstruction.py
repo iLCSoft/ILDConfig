@@ -162,11 +162,6 @@ parser.add_argument(
     help="Indicate that input was generated using particle gun",
     action="store_true",
 )
-parser.add_argument(
-    "--trackMerge",
-    help="OBSOLETE, kept for backwards compatibility - track merging is now always done",
-    action="store_true",
-)
 
 parser.add_argument(
     "--VXDBarrelDigitiserResolutionU",
