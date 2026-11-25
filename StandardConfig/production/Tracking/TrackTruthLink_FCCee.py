@@ -39,14 +39,8 @@ _TRACK_TRUTH_LINK_SHARED_PARAMS = {
 TRACK_TRUTH_LINK_COLLECTIONS = [
     "MarlinTrkTracks",
     "SiTracksCT",
-    "ClupatraTracks",
-    "ClupatraFCCTracks",
+    "ClupatraSETTracks",
 ]
-if track_merging:
-    TRACK_TRUTH_LINK_COLLECTIONS += [
-        "RefittedGreedyMergedTracks",
-        "RefittedAmbiguousMergedTracks",
-    ]
 
 TrackTruthLinkers = []
 for track_collection in TRACK_TRUTH_LINK_COLLECTIONS:
